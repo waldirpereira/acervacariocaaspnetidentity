@@ -1,6 +1,5 @@
 using System.Reflection;
 using System.Security.Principal;
-using Acerva.Modelo;
 using Acerva.Modelo.Validadores;
 using Acerva.Web.Controllers.Helpers;
 using Acerva.Web.Ninject;
@@ -75,7 +74,7 @@ namespace Acerva.Web.App_Start
                 .ToMethod(context => HttpContext.Current != null ? HttpContext.Current.User : null)
                 .InRequestScope();
             
-            AssemblyScanner.FindValidatorsInAssembly(Assembly.GetAssembly(typeof(EquipeValidator)))
+            AssemblyScanner.FindValidatorsInAssembly(Assembly.GetAssembly(typeof(RegionalValidator)))
                 .ForEach(match => kernel.Bind(match.InterfaceType)
                 .To(match.ValidatorType));
 

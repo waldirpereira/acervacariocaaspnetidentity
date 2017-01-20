@@ -299,42 +299,17 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AppplicationBaseController.cs" />
     <Compile Include="Controllers\Helpers\RegionalControllerHelper.cs" />
-    <Compile Include="Controllers\ImportacaoController.cs" />
-    <Compile Include="Controllers\MinhaAcervaController.cs" />
     <Compile Include="Controllers\RegionalController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\PalpiteController.cs" />
-    <Compile Include="Controllers\EquipeController.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Extensions\ValidatorExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\CadastroAcervas\AcervaViewModel.cs" />
-    <Compile Include="Models\CadastroAcervas\CadastroAcervaMapperProfile.cs" />
-    <Compile Include="Models\CadastroAcervas\RegionalViewModel.cs" />
-    <Compile Include="Models\CadastroAcervas\CriterioViewModel.cs" />
-    <Compile Include="Models\CadastroAcervas\RegraViewModel.cs" />
-    <Compile Include="Models\CadastroAcervas\ParticipacaoViewModel.cs" />
-    <Compile Include="Models\CadastroAcervas\IdentityUserViewModel.cs" />
     <Compile Include="Models\CadastroRegionais\CadastroRegionalMapperProfile.cs" />
     <Compile Include="Models\CadastroRegionais\RegionalViewModel.cs" />
-    <Compile Include="Models\CadastroRegionais\EquipeViewModel.cs" />
-    <Compile Include="Models\CadastroRegionais\PartidaViewModel.cs" />
-    <Compile Include="Models\CadastroRegionais\RodadaViewModel.cs" />
-    <Compile Include="Models\CadastroEquipes\CadastroEquipeMapperProfile.cs" />
-    <Compile Include="Models\CadastroEquipes\EquipeViewModel.cs" />
-    <Compile Include="Models\CadastroPalpites\AcervaViewModel.cs" />
-    <Compile Include="Models\CadastroPalpites\CadastroPalpiteMapperProfile.cs" />
-    <Compile Include="Models\CadastroPalpites\RegionalViewModel.cs" />
-    <Compile Include="Models\CadastroPalpites\CriterioViewModel.cs" />
-    <Compile Include="Models\CadastroPalpites\EquipeViewModel.cs" />
-    <Compile Include="Models\CadastroPalpites\IdentityUserViewModel.cs" />
-    <Compile Include="Models\CadastroPalpites\PalpiteViewModel.cs" />
-    <Compile Include="Models\CadastroPalpites\ParticipacaoViewModel.cs" />
-    <Compile Include="Models\CadastroPalpites\PartidaViewModel.cs" />
     <Compile Include="Models\GrowlMessage.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Ninject\HttpFiltersNinjectModule.cs" />
@@ -342,33 +317,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Content Include="Content\Aplicacao\css\admin.css" />
-    <Content Include="Content\Aplicacao\images\escudos\america-mg.png" />
-    <Content Include="Content\Aplicacao\images\escudos\atletico-mg.png" />
-    <Content Include="Content\Aplicacao\images\escudos\atletico-pr.png" />
-    <Content Include="Content\Aplicacao\images\escudos\avai.png" />
-    <Content Include="Content\Aplicacao\images\escudos\bahia.png" />
-    <Content Include="Content\Aplicacao\images\escudos\botafogo.png" />
-    <Content Include="Content\Aplicacao\images\escudos\chapecoense.png" />
-    <Content Include="Content\Aplicacao\images\escudos\corinthians.png" />
-    <Content Include="Content\Aplicacao\images\escudos\coritiba.png" />
-    <Content Include="Content\Aplicacao\images\escudos\criciuma.png" />
-    <Content Include="Content\Aplicacao\images\escudos\cruzeiro.png" />
-    <Content Include="Content\Aplicacao\images\escudos\figueirense.png" />
-    <Content Include="Content\Aplicacao\images\escudos\flamengo.png" />
-    <Content Include="Content\Aplicacao\images\escudos\fluminense.png" />
-    <Content Include="Content\Aplicacao\images\escudos\goias.png" />
-    <Content Include="Content\Aplicacao\images\escudos\gremio.png" />
-    <Content Include="Content\Aplicacao\images\escudos\internacional.png" />
-    <Content Include="Content\Aplicacao\images\escudos\palmeiras.png" />
-    <Content Include="Content\Aplicacao\images\escudos\parana.png" />
-    <Content Include="Content\Aplicacao\images\escudos\ponte-preta.png" />
-    <Content Include="Content\Aplicacao\images\escudos\santa-cruz.png" />
-    <Content Include="Content\Aplicacao\images\escudos\santos.png" />
-    <Content Include="Content\Aplicacao\images\escudos\sao-paulo.png" />
-    <Content Include="Content\Aplicacao\images\escudos\sport.png" />
-    <Content Include="Content\Aplicacao\images\escudos\vasco.png" />
-    <Content Include="Content\Aplicacao\images\escudos\vitoria.png" />
-    <Content Include="Content\testeImportacao.html" />
     <Content Include="Content\vendor\angular-hotkeys\hotkeys.css" />
     <Content Include="Content\vendor\angular-hotkeys\hotkeys.min.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-theme.css" />
@@ -383,13 +331,6 @@
     <Content Include="Scripts\Aplicacao\Inicio\acerva.inicio.controller.js" />
     <Content Include="Scripts\Aplicacao\Inicio\acerva.inicio.module.js" />
     <Content Include="Scripts\Aplicacao\Inicio\acerva.inicio.service.js" />
-    <Content Include="Scripts\Aplicacao\MinhaAcerva\acerva.minhaacerva.cadastro.controller.js" />
-    <Content Include="Scripts\Aplicacao\MinhaAcerva\acerva.minhaacerva.controller.js" />
-    <Content Include="Scripts\Aplicacao\MinhaAcerva\acerva.minhaacerva.module.js" />
-    <Content Include="Scripts\Aplicacao\MinhaAcerva\acerva.minhaacerva.service.js" />
-    <Content Include="Scripts\Aplicacao\Palpite\acerva.palpite.controller.js" />
-    <Content Include="Scripts\Aplicacao\Palpite\acerva.palpite.module.js" />
-    <Content Include="Scripts\Aplicacao\Palpite\acerva.palpite.service.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
@@ -402,10 +343,6 @@
     <Content Include="Scripts\vendor\chart\Chart.js" />
     <Content Include="Scripts\vendor\chart\Chart.min.js" />
     <Content Include="Scripts\vendor\datatables-tabletools\dataTables.tableTools.js" />
-    <Content Include="Views\MinhaAcerva\Index.cshtml" />
-    <Content Include="Views\MinhaAcerva\_ListaMinhasAcervas.cshtml" />
-    <Content Include="Views\MinhaAcerva\_CadastroMinhaAcerva.cshtml" />
-    <Content Include="Views\Home\_ListaMinhasAcervas.cshtml" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-theme.css.map" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap.css.map" />
     <Content Include="Content\vendor\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
@@ -420,9 +357,8 @@
     <None Include="Properties\PublishProfiles\Local.pubxml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\_ListaArquivos.cshtml" />
-    <Content Include="Views\Palpite\Index.cshtml" />
-    <Content Include="Views\Palpite\_ListaPalpites.cshtml" />
     <Content Include="Views\Home\ConfirmSent.cshtml" />
+    <Content Include="Views\Home\_PaginaInicial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Aplicacao\fonts\acerva-iconfont.svg" />
@@ -489,10 +425,6 @@
     <Content Include="Scripts\Aplicacao\Regional\acerva.regional.controller.js" />
     <Content Include="Scripts\Aplicacao\Regional\acerva.regional.module.js" />
     <Content Include="Scripts\Aplicacao\Regional\acerva.regional.service.js" />
-    <Content Include="Scripts\Aplicacao\Equipe\acerva.equipe.cadastro.controller.js" />
-    <Content Include="Scripts\Aplicacao\Equipe\acerva.equipe.controller.js" />
-    <Content Include="Scripts\Aplicacao\Equipe\acerva.equipe.module.js" />
-    <Content Include="Scripts\Aplicacao\Equipe\acerva.equipe.service.js" />
     <Content Include="Scripts\vendor\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\vendor\ai.0.15.0-build58334.min.js" />
     <Content Include="Scripts\vendor\angular-animate.js" />
@@ -1373,10 +1305,7 @@
     <Content Include="Views\Manage\SetPassword.cshtml" />
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Equipe\Index.cshtml" />
     <Content Include="Scripts\version.json" />
-    <Content Include="Views\Equipe\_ListaEquipes.cshtml" />
-    <Content Include="Views\Equipe\_CadastroEquipe.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Regional\_CadastroRegional.cshtml" />
     <Content Include="Views\Regional\_ListaRegionais.cshtml" />
@@ -1384,10 +1313,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Aplicacao\images\" />
     <Folder Include="Content\vendor\datatables-tabletools\images\psd\" />
     <Folder Include="Log\" />
     <Folder Include="Views\AppplicationBase\" />
-    <Folder Include="Views\Importacao\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\vendor\bootstrap\fonts\glyphicons-halflings-regular.woff" />

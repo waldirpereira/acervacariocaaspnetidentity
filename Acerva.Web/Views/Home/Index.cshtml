@@ -110,7 +110,7 @@ else
 {
     <script type="text/ng-template" id="index.html">
         <div class="animate-show-only">
-            @Html.Partial("_ListaMinhasAcervas")
+            @Html.Partial("_PaginaInicial")
         </div>
     </script>
 }
@@ -134,7 +134,7 @@ else
             (function () {
                 angular.module("acerva")
                     .constant("ROTAS", {
-                        buscaTodosMinhasAcervas: "@Url.Action("BuscaMinhasAcervasParaListagem", "MinhaAcerva")"
+                        buscaNoticias: "@Url.Action("BuscaNoticias")"
                     });
                 })();
         </script>

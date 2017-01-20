@@ -6,8 +6,8 @@
 
     function InicioFactory($http, $timeout, ROTAS) {
         return {
-            buscaListaMinhasAcervas: function () {
-                return $http.get(ROTAS.buscaTodosMinhasAcervas)
+            buscaNoticias: function () {
+                return $http.get(ROTAS.buscaNoticias)
                     .then(retornaDadoDoXhr);
             }
         }

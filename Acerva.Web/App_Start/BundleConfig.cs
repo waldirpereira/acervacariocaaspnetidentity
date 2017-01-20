@@ -93,11 +93,8 @@ namespace Acerva.Web
         {
             Layout(bundles);
 
-            CadastroEquipes(bundles);
             CadastroRegionais(bundles);
-            CadastroMinhasAcervas(bundles);
             Inicio(bundles);
-            Palpite(bundles);
             Admin(bundles);
 
             bundles.Add(new ScriptBundle("~/bundles/admin")
@@ -167,16 +164,6 @@ namespace Acerva.Web
             );
         }
 
-        private static void CadastroEquipes(BundleCollection bundles)
-        {
-            const string path = ScriptsAplicacaoFolder + "Equipe/";
-            bundles.Add(new ScriptBundle("~/bundles/equipe")
-                .Include(path + "acerva.equipe.module.js")
-                .Include(path + "acerva.equipe.service.js")
-                .Include(path + "acerva.equipe.controller.js")
-                .Include(path + "acerva.equipe.cadastro.controller.js")
-            );
-        }
         private static void CadastroRegionais(BundleCollection bundles)
         {
             const string path = ScriptsAplicacaoFolder + "Regional/";
@@ -187,18 +174,7 @@ namespace Acerva.Web
                 .Include(path + "acerva.regional.cadastro.controller.js")
             );
         }
-        private static void CadastroMinhasAcervas(BundleCollection bundles)
-        {
-            const string path = ScriptsAplicacaoFolder + "MinhaAcerva/";
-            bundles.Add(new ScriptBundle("~/bundles/minhaAcerva")
-                .Include(path + "acerva.minhaacerva.module.js")
-                .Include(path + "acerva.minhaacerva.service.js")
-                .Include(path + "acerva.minhaacerva.controller.js")
-                .Include(path + "acerva.minhaacerva.cadastro.controller.js")
-                .Include(Chart)
-                .Include(AngularChart)
-            );
-        }
+
         private static void Inicio(BundleCollection bundles)
         {
             const string path = ScriptsAplicacaoFolder + "Inicio/";
@@ -208,15 +184,7 @@ namespace Acerva.Web
                 .Include(path + "acerva.inicio.controller.js")
             );
         }
-        private static void Palpite(BundleCollection bundles)
-        {
-            const string path = ScriptsAplicacaoFolder + "Palpite/";
-            bundles.Add(new ScriptBundle("~/bundles/palpite")
-                .Include(path + "acerva.palpite.module.js")
-                .Include(path + "acerva.palpite.service.js")
-                .Include(path + "acerva.palpite.controller.js")
-            );
-        }
+
         private static void Admin(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/cssBundles/admin")

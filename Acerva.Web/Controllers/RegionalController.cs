@@ -26,7 +26,8 @@ namespace Acerva.Web.Controllers
         private readonly RegionalControllerHelper _helper;
         private readonly IIdentity _user;
         
-        public RegionalController(ICadastroRegionais cadastroRegionais, IValidator<Regional> validator, IPrincipal user, ICadastroUsuarios cadastroUsuarios, RegionalControllerHelper helper) : base(cadastroUsuarios)
+        public RegionalController(ICadastroRegionais cadastroRegionais, IValidator<Regional> validator, 
+            IPrincipal user, ICadastroUsuarios cadastroUsuarios, RegionalControllerHelper helper) : base(cadastroUsuarios)
         {
             _cadastroRegionais = cadastroRegionais;
             _validator = validator;
@@ -48,12 +49,9 @@ namespace Acerva.Web.Controllers
 
         public ActionResult BuscaTiposDominio()
         {
-            var equipesJson = _cadastroRegionais.BuscaEquipes()
-                .Select(Mapper.Map<EquipeViewModel>);
-
             return new JsonNetResult(new
             {
-                Equipes = equipesJson
+                
             });
         }
 
@@ -75,9 +73,6 @@ namespace Acerva.Web.Controllers
             var regional = ehNovo ? new Regional() : _cadastroRegionais.Busca(regionalViewModel.Codigo);
 
             regionalViewModel.Nome = regionalViewModel.Nome.Trim();
-
-            var partidasTerminadasNestaAtualizacao = _helper.PegaPartidasTerminadasNestaAtualizacao(regionalViewModel, regional);
-            _helper.CalculaPontuacoesParaPartidasTerminadas(partidasTerminadasNestaAtualizacao);
 
             Mapper.Map(regionalViewModel, regional);
 
@@ -130,20 +125,6 @@ namespace Acerva.Web.Controllers
                 .Any(e => e.Nome.ToUpperInvariant() == nomeUpper && e.Codigo != regional.Codigo);
 
             return temComMesmoNome;
-        }
-
-        public ActionResult BuscaPlacares(int codigoRodada)
-        {
-            var rodada = _cadastroRegionais.BuscaRodada(codigoRodada);
-            if (rodada == null)
-                return null;
-
-            var controller = DependencyResolver.Current.GetService<ImportacaoController>();
-
-            controller.BuscaAtualizacoesPartidasDaRodada(rodada);
-
-            var partidasJson = rodada.Partidas.Select(Mapper.Map<PartidaViewModel>);
-            return new JsonNetResult(partidasJson);
         }
     }
 }

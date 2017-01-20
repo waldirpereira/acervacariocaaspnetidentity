@@ -11,18 +11,18 @@
             carregando: false
         };
 
-        ctrl.listaMinhasAcervas = [];
+        ctrl.listaNoticias = [];
 
         init();
 
         function init() {
             ctrl.status.carregando = true;
-            atualizaListaMinhasAcervas();
+            atualizaListaNoticias();
         }
 
-        function atualizaListaMinhasAcervas() {
-            Inicio.buscaListaMinhasAcervas().then(function (minhasAcervas) {
-                ctrl.listaMinhasAcervas = minhasAcervas;
+        function atualizaListaNoticias() {
+            Inicio.buscaNoticias().then(function (noticias) {
+                ctrl.listaNoticias = noticias;
                 ctrl.status.carregando = false;
             });
         }

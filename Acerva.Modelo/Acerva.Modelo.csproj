@@ -53,22 +53,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Regional.cs" />
-    <Compile Include="Acerva.cs" />
     <Compile Include="IdentityRole.cs" />
     <Compile Include="IdentityUser.cs" />
-    <Compile Include="Palpite.cs" />
-    <Compile Include="Criterio.cs" />
-    <Compile Include="Participacao.cs" />
-    <Compile Include="Partida.cs" />
-    <Compile Include="Regra.cs" />
-    <Compile Include="Rodada.cs" />
     <Compile Include="Sistema.cs" />
-    <Compile Include="Equipe.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Time.cs" />
     <Compile Include="Validadores\RegionalValidator.cs" />
-    <Compile Include="Validadores\AcervaValidator.cs" />
-    <Compile Include="Validadores\EquipeValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

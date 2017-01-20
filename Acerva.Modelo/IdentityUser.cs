@@ -97,14 +97,7 @@ namespace Acerva.Modelo
         ///     Used to record failures for the purposes of lockout
         /// </summary>
         public virtual int AccessFailedCount { get; set; }
-
-        private IEnumerable<Participacao> _participacoes = new List<Participacao>();
-        public virtual IEnumerable<Participacao> Participacoes
-        {
-            get { return _participacoes; }
-            set { _participacoes = value; }
-        }
-
+        
         public virtual async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<IdentityUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

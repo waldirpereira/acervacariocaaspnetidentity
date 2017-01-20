@@ -17,11 +17,6 @@
                     params: { codigo: codigo }
                 }).then(retornaDadoDoXhr);
             },
-            carregarPlacares: function (codigoRodada) {
-                return $http.get(ROTAS.carregaPlacares, {
-                    params: { codigoRodada: codigoRodada }
-                }).then(retornaDadoDoXhr);
-            },
             salvaRegional: function (regional) {
                 return $http.post(ROTAS.salva,
                     { regionalViewModel: regional }

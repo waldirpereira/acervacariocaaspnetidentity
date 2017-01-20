@@ -13,12 +13,8 @@ using Acerva.Infra.Web;
 using Acerva.Modelo;
 using Acerva.Modelo.Mapeamento;
 using Acerva.Web.AttributeAdapters;
-using Acerva.Web.Models.CadastroAcervas;
 using Acerva.Web.Models.CadastroRegionais;
-using Acerva.Web.Models.CadastroEquipes;
-using Acerva.Web.Models.CadastroPalpites;
 using FluentNHibernate.Cfg;
-using Hangfire;
 using log4net;
 using log4net.Config;
 using NHibernate;
@@ -57,7 +53,7 @@ namespace Acerva.Web
         {
             var sessionFactory = Fluently.Configure()
                 .Mappings(
-                    m => m.FluentMappings.AddFromAssemblyOf<EquipeClassMap>()
+                    m => m.FluentMappings.AddFromAssemblyOf<RegionalClassMap>()
                 )
                 .BuildSessionFactory();
 
@@ -157,10 +153,7 @@ namespace Acerva.Web
             // https://github.com/AutoMapper/AutoMapper/wiki/Configuration
             Mapper.Initialize(cfg =>
             {
-                cfg.AddProfile<CadastroEquipeMapperProfile>();
                 cfg.AddProfile<CadastroRegionalMapperProfile>();
-                cfg.AddProfile<CadastroAcervaMapperProfile>();
-                cfg.AddProfile<CadastroPalpiteMapperProfile>();
             });
             //Mapper.AssertConfigurationIsValid();
 

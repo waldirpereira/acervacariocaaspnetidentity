@@ -35,13 +35,8 @@
                     <li>@Html.ActionLink("Sobre", "About", "Home")</li>
                     @if (Request.IsAuthenticated && User.IsInRole("ADMIN"))
                     {
-                        <li>@Html.ActionLink("Equipes", "Index", "Equipe")</li>
                         <li>@Html.ActionLink("Regionais", "Index", "Regional")</li>
                         <li>@Html.ActionLink("Admin", "Index", "Admin")</li>
-                    }
-                    @if (Request.IsAuthenticated)
-                    {
-                        <li>@Html.ActionLink("ACervAs", "Index", "MinhaAcerva")</li>
                     }
                     <li>@Html.ActionLink("Contatos", "Contact", "Home")</li>
                 </ul>

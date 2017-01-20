@@ -17,10 +17,6 @@ namespace Acerva.Modelo.Mapeamento
             Map(u => u.UserName, "UserName");
             Map(u => u.Email, "Email");
             Map(u => u.CreationDate, "CreationDate");
-
-            HasMany(u => u.Participacoes)
-                .KeyColumn("codigo_usuario")
-                .Inverse();
         }
     }
 }

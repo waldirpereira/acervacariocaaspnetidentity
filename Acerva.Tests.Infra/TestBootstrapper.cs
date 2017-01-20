@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Acerva.Modelo.Mapeamento;
-using Acerva.Web.Models.CadastroAcervas;
+using Acerva.Web.Models.CadastroRegionais;
 using FluentNHibernate.Cfg;
 using log4net.Config;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -21,7 +21,7 @@ namespace Acerva.Tests.Infra
 
             Mapper.Initialize(cfg =>
             {
-                cfg.AddProfile<CadastroAcervaMapperProfile>();
+                cfg.AddProfile<CadastroRegionalMapperProfile>();
             });
         }
 
@@ -29,7 +29,7 @@ namespace Acerva.Tests.Infra
         {
             var sessionFactory = Fluently.Configure()
                 .Mappings(
-                    m => m.FluentMappings.AddFromAssemblyOf<AcervaClassMap>()
+                    m => m.FluentMappings.AddFromAssemblyOf<RegionalClassMap>()
                 )
                 .BuildSessionFactory();
 

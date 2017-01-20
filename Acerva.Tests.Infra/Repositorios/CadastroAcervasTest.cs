@@ -5,26 +5,25 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Acerva.Tests.Infra.Repositorios
 {
     [TestClass]
-    public class CadastroAcervasTest : TesteComBancoDeDadosBase
+    public class CadastroRegionaisTest : TesteComBancoDeDadosBase
     {
-        private static ICadastroAcervas _repositorio;
+        private static ICadastroRegionais _repositorio;
 
         protected override void ExecutaAntesDeCadaTeste()
         {
-            _repositorio = new CadastroAcervas(Session, new CadastroUsuarios(Session));
+            _repositorio = new CadastroRegionais(Session);
         }
 
-        [TestMethod]
-        public void DeveriaSalvarAcervaComNovoParticipante()
-        {
-            // given
-            var acerva = _repositorio.Busca(5);
-            acerva.Participacoes.Add(new Participacao {Codigo = 0, Usuario = new IdentityUser { Email = "horadochute@gmail.com", Name = "Hora"}, PontuacaoInicial = 0 });
+        //[TestMethod]
+        //public void DeveriaSalvarRegional()
+        //{
+        //    // given
+        //    var regional = _repositorio.Busca(1);
+            
+        //    // when
+        //    _repositorio.Salva(regional);
 
-            // when
-            _repositorio.Salva(acerva);
-
-            // then
-        }
+        //    // then
+        //}
     }
 }

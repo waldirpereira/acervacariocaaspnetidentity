@@ -28,28 +28,6 @@ namespace Acerva.Infra.Repositorios
             _session.Flush();
             _session.SaveOrUpdate(regional);
         }
-        public ITransaction BeginTransaction()
-        {
-            return _session.BeginTransaction();
-        }
-        public void CommitTransaction(ITransaction transaction)
-        {
-            transaction.Commit();
-        }
-
-        public void SalvaPalpite(Palpite palpite)
-        {
-            _session.Evict(palpite.Partida);
-            _session.Evict(palpite.Criterio);
-            _session.Flush();
-            _session.SaveOrUpdate(palpite);
-        }
-
-        public IEnumerable<Equipe> BuscaEquipesDoRegional(int codigoRegional)
-        {
-            return _session.Get<Regional>(codigoRegional).Equipes;
-        }
-
         public int BuscaProximoCodigo()
         {
             var lista = _session.Query<Regional>();
@@ -67,28 +45,6 @@ namespace Acerva.Infra.Repositorios
         public IEnumerable<Regional> BuscaTodos()
         {
             return _session.Query<Regional>();
-        }
-
-        public IEnumerable<Equipe> BuscaEquipes()
-        {
-            return _session.Query<Equipe>();
-        }
-
-        public IEnumerable<Palpite> PegaPalpitesDeUmaPartida(int codigoPartida)
-        {
-            return _session.Query<Palpite>().Where(p => p.Partida.Codigo == codigoPartida);
-        }
-
-        public Regra BuscaRegraDoCriterioParaAcerva(Criterio criterio, Modelo.Acerva acerva)
-        {
-            var regra = _session.Query<Regra>()
-                .FirstOrDefault(r => r.Acerva.Codigo == acerva.Codigo && r.Criterio.Codigo == criterio.Codigo);
-            return regra;
-        }
-
-        public Rodada BuscaRodada(int codigoRodada)
-        {
-            return _session.Get<Rodada>(codigoRodada);
         }
     }
 }

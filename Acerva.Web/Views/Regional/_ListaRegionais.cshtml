@@ -9,8 +9,6 @@
                 <tr>
                     <th style="width: 60px;">Código</th>
                     <th>Nome</th>
-                    <th style="width: 40px;">Equipes</th>
-                    <th style="width: 40px;">Rodadas</th>
                     <th style="width: 40px;">Ativo?</th>
                     <th class="sorting_disabled" style="width: 60px;"></th>
                 </tr>
@@ -25,12 +23,6 @@
                     <td>
                         <a title="Editar Regional"
                            ng-href="#/Edit/{{m.codigo}}">{{m.nome}}</a>
-                    </td>
-                    <td>
-                        {{m.equipes.length}}
-                    </td>
-                    <td>
-                        {{m.rodadas.length}}
                     </td>
                     <td>
                         <input type="hidden" ng-value="!m.ativo"/>
@@ -89,9 +81,6 @@
                             <span class="label label-danger pull-right" ng-if="!m.ativo">inativo</span>
                         </span>
                         <br />
-                        <dfn style="display: block;">{{m.equipes.length}} equipe{{m.equipes.length > 1 ? 's' : ''}}</dfn>
-                        <dfn style="display: block;">{{m.rodadas.length}} rodada{{m.rodadas.length > 1 ? 's' : ''}}</dfn>
-                        <br/>
                         <a class="btn btn-info btn-xs" title="Editar {{ m.nome }}"
                            ng-if="m.ativo"
                            href="#/Edit/{{m.codigo}}">

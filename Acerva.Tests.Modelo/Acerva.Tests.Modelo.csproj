@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CriterioTest.cs" />
     <Compile Include="EqualsHashCodeContract.cs" />
     <Compile Include="EqualsHashCodeContractTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

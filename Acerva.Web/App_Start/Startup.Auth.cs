@@ -6,10 +6,8 @@ using log4net;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
-using Microsoft.Owin.Logging;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Facebook;
-using Microsoft.Owin.Security.Google;
 using Owin;
 
 namespace Acerva.Web

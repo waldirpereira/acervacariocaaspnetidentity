@@ -1,0 +1,81 @@
+﻿@using Acerva.Modelo
+@model Dictionary<string, IEnumerable<FileInfo>>
+@{
+    ViewBag.Title = "Administração";
+    IEnumerable<FileInfo> listaArquivosLog;
+    Model.TryGetValue("Log", out listaArquivosLog);
+}
+
+<div class="row">
+    <div class="col-sm-2 col-menu">
+        <h4>Admin</h4>
+        <ul class="nav nav-pills nav-stacked">
+            <li><a data-toggle="tab" href="#tabLogs">Logs</a></li>
+            <li><a data-toggle="tab" href="#tabElmah">Elmah</a></li>
+            <li><a data-toggle="tab" href="#tabOutros">Outros</a></li>
+        </ul>
+    </div>
+    <div class="col-sm-10 col-content">
+        <div class="tab-content">
+            <div class="tab-pane" id="tabLogs">
+                <h2>Logs</h2>
+                @Html.Partial("_ListaArquivos", listaArquivosLog)
+            </div>
+            <div class="tab-pane" id="tabElmah">
+                <h2>Elmah</h2>
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src="@Url.Content("~/admin/elmah.axd")"></iframe>
+                </div>
+            </div>
+            <div class="tab-pane" id="tabOutros">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h2>Outros</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h4>Bundles</h4>
+                        Bundles habilitados: <span id="statusBundles">@BundleTable.EnableOptimizations</span><br />
+                        <button class="btn btn-info" id="btnHabilitaBundles">Habilita bundles</button>
+                        <button class="btn btn-warning" id="btnDesabilitaBundles">Desabilita bundles</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h4>Cache do NHibernate</h4>
+                        <button class="btn btn-danger" id="btnLimpaCache">Limpar cache de segundo nível</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h4>Versão Asp Net</h4>
+                        <button class="btn btn-danger" id="btnMostraVersaoAspNet">Versão Asp Net</button>
+                        <div id="divVersaoAspNet" style="margin-top: 10px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section styles {
+    @Styles.Render("~/cssBundles/admin")
+}
+
+@section dependencies {
+    @Scripts.Render("~/bundles/admin")
+}
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Admin.configura({
+                LimpaCacheDeSegundoNivelDoNHibernate: '@Url.Action("LimpaCacheDeSegundoNivelDoNHibernate")',
+                AlteraHabilitacaoBundles: '@Url.Action("AlteraHabilitacaoBundles")',
+                MostraVersaoAspNet: '@Url.Action("BuscaVersaoAspNet")'
+            });
+        });
+    </script>
+}

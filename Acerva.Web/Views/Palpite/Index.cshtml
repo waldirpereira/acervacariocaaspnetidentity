@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Palpites";
+    ViewBag.AngularApp = "acerva.palpite";
+    var action = ViewContext.RouteData.GetRequiredString("action");
+    var id = ViewContext.RouteData.Values["id"];
+}
+<h4>Palpites</h4>
+
+<div ng-view ng-cloak></div>
+@Html.AntiForgeryToken()
+
+@Html.ValidationMessage("CustomError")
+<script type="text/ng-template" id="index.html">
+    <div class="animate-show-only">
+        @Html.Partial("_ListaPalpites")
+    </div>
+</script>
+
+@section styles {
+    @Styles.Render("~/cssBundles/angularForm")
+    @Styles.Render(BundleConfig.BundleStylesDataTables)
+}
+
+@section dependencies {
+    @if (ViewBag.Id == null)
+    {
+        @Scripts.Render("~/bundles/palpite")
+    }
+}
+
+@section scripts {
+    @if (action == "Index")
+    {
+        <script type="text/javascript">
+    (function () {
+        angular.module("acerva")
+            .constant("ROTAS", {
+                buscaParticipacao: "@Url.Action("BuscaParticipacao")",
+                salva: "@Url.Action("Salva")",
+                minhasAcervas: "@Url.Action("Index", "MinhaAcerva")"
+            });
+        })();
+        </script>
+    }
+    else
+    {
+        var url = Url.Action("Index") + "#/" + action + "/" + id;
+        <script type="text/javascript">
+            (function () {
+                window.location = '@url';
+            })();
+        </script>
+    }
+}

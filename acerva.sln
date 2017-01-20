@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acerva.Web", "Acerva.Web\Acerva.Web.csproj", "{CCB86FB4-DB08-4440-B54C-9FC5E5D9DFDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acerva.Tests.Web", "Acerva.Tests.Web\Acerva.Tests.Web.csproj", "{199C212D-596A-497B-A0C2-C3DFA199E106}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acerva.Infra", "Acerva.Infra\Acerva.Infra.csproj", "{E3BBB7FF-5160-4A61-A46F-A875B69307E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acerva.Modelo", "Acerva.Modelo\Acerva.Modelo.csproj", "{35CBB8B6-0456-4345-ADAF-A95905022B7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acerva.Modelo.Mapeamento", "Acerva.Modelo.Mapeamento\Acerva.Modelo.Mapeamento.csproj", "{6234F278-BD05-4E57-9485-6C263FA3D39D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acerva.Tests.Infra", "Acerva.Tests.Infra\Acerva.Tests.Infra.csproj", "{0F4AAE65-FFD6-43F8-AC1D-798DC247D846}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acerva.Tests.Modelo", "Acerva.Tests.Modelo\Acerva.Tests.Modelo.csproj", "{CA613A43-BEE7-465B-BB56-13BF7017620A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CCB86FB4-DB08-4440-B54C-9FC5E5D9DFDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCB86FB4-DB08-4440-B54C-9FC5E5D9DFDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCB86FB4-DB08-4440-B54C-9FC5E5D9DFDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCB86FB4-DB08-4440-B54C-9FC5E5D9DFDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{199C212D-596A-497B-A0C2-C3DFA199E106}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{199C212D-596A-497B-A0C2-C3DFA199E106}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{199C212D-596A-497B-A0C2-C3DFA199E106}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{199C212D-596A-497B-A0C2-C3DFA199E106}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3BBB7FF-5160-4A61-A46F-A875B69307E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3BBB7FF-5160-4A61-A46F-A875B69307E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3BBB7FF-5160-4A61-A46F-A875B69307E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3BBB7FF-5160-4A61-A46F-A875B69307E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35CBB8B6-0456-4345-ADAF-A95905022B7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35CBB8B6-0456-4345-ADAF-A95905022B7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35CBB8B6-0456-4345-ADAF-A95905022B7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35CBB8B6-0456-4345-ADAF-A95905022B7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6234F278-BD05-4E57-9485-6C263FA3D39D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6234F278-BD05-4E57-9485-6C263FA3D39D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6234F278-BD05-4E57-9485-6C263FA3D39D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6234F278-BD05-4E57-9485-6C263FA3D39D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F4AAE65-FFD6-43F8-AC1D-798DC247D846}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F4AAE65-FFD6-43F8-AC1D-798DC247D846}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F4AAE65-FFD6-43F8-AC1D-798DC247D846}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F4AAE65-FFD6-43F8-AC1D-798DC247D846}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA613A43-BEE7-465B-BB56-13BF7017620A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA613A43-BEE7-465B-BB56-13BF7017620A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA613A43-BEE7-465B-BB56-13BF7017620A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA613A43-BEE7-465B-BB56-13BF7017620A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

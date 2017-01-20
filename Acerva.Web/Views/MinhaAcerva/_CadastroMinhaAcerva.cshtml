@@ -1,0 +1,312 @@
+﻿<form name="formMinhaAcerva" novalidate>
+    <div class="panel panel-primary">
+        <div class="panel-heading" ng-show="ctrl.status.carregando">&nbsp;</div>
+        <div class="panel-heading" ng-hide="ctrl.status.carregando">{{ ctrl.modeloOriginal.codigo ? "Edição da ACervA Carioca '" + ctrl.modelo.nome + "'": "Nova ACervA Carioca" }}</div>
+
+        <div ng-show="ctrl.status.carregando" class="text-center"><div class="loader"></div></div>
+        <div ng-hide="ctrl.status.carregando">
+            <div class="panel-body" ng-hide="ctrl.status.carregando">
+                <fieldset ng-disabled="ctrl.status.bloqueado">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            @NgHelpers.NgSelectComBuscaRespeitandoStatusBloqueado("ctrl", new NgHelpers.NgSelectOptions("regional", "ctrl.modelo", "nome",
+                                                "regional in ctrl.dominio.regionais | filter: {nome: $select.search} | orderBy : 'nome' track by regional.codigo",
+                                                "regional.nome | highlight: $select.search")
+                       {
+                           Obrigatorio = true
+                       })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formMinhaAcerva.nome")>
+                                <label class="control-label" for="nome">Nome</label>
+                                <input type="text" class="form-control" name="nome" autocomplete="off" required
+                                       ng-model="ctrl.modelo.nome" />
+                                <p ng-show="formMinhaAcerva.nome.$invalid && !formMinhaAcerva.nome.$pristine" class="help-block">O nome é obrigatório</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <uib-tabset>
+                                <uib-tab>
+                                    <uib-tab-heading>
+                                        <span class="glyphicon glyphicon-user"></span> 
+                                        <span class="hidden-xs">Participantes</span>
+                                    </uib-tab-heading>
+                                    <div class="col-sm-12 containerParticipantes" style="padding-left: 0; padding-right: 0;">
+
+                                        <table class="table table-bordered table-striped table-responsive table-hover table-condensed hidden-xs" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 70px;">Posição</th>
+                                                    <th>Nome</th>
+                                                    <th>E-mail</th>
+                                                    <th style="width: 90px;">Pontuação inicial</th>
+                                                    <th style="width: 90px;">Pontuação atual</th>
+                                                    <th style="width: 110px;">Inclusão</th>
+                                                    <th style="width: 120px;"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="p in ctrl.modelo.participacoes | orderBy: ['posicao', 'dataHoraInclusao'] track by p.codigo"
+                                                    ng-form="formParticipante">
+                                                    <td style="vertical-align: middle;">
+                                                        <span><strong>{{p.posicao}}{{p.posicao > 0 ? 'º' : ''}}</strong></span>
+                                                        <span ng-if="p.posicaoRodadaAnterior" class="pull-right">
+                                                            &nbsp;<span ng-if="p.posicaoRodadaAnterior - p.posicao > 0">+</span><span>{{p.posicaoRodadaAnterior - p.posicao}}</span>
+                                                            <span class="glyphicon" ng-class="{'glyphicon-arrow-up text-success': p.posicaoRodadaAnterior - p.posicao > 0, 'glyphicon-arrow-down text-danger': p.posicaoRodadaAnterior - p.posicao < 0, 'glyphicon-pause rotate text-warning': p.posicaoRodadaAnterior - p.posicao === 0}"></span>
+                                                        </span>
+                                                    </td>
+
+                                                    <td ng-show="ctrl.participacaoEmEdicao.codigo !== p.codigo || p.usuario.id === ctrl.modelo.usuarioResponsavel.id" style="vertical-align: middle;">
+                                                        <a ng-href="@Url.Action("Index", "Palpite")#/{{p.codigo}}"
+                                                           ng-disabled="!ctrl.modelo || ctrl.status.salvando || !p.usuario.id"><span style="font-weight: bold;">{{ p.usuario.name }}</span></a>
+                                                        <span class="label label-success"
+                                                              ng-if="p.usuario.id === ctrl.modelo.usuarioResponsavel.id">
+                                                            administrador
+                                                        </span>
+                                                    </td>
+                                                    <td ng-show="ctrl.participacaoEmEdicao.codigo === p.codigo && p.usuario.id !== ctrl.modelo.usuarioResponsavel.id" style="vertical-align: middle;">
+                                                        <input type="text" class="form-control input-sm" name="name" required autocomplete="off"
+                                                               ng-disabled="p.codigo > 0"
+                                                               placeholder="Nome"
+                                                               ng-model="p.usuario.name" />
+                                                    </td>
+
+                                                    <td ng-show="ctrl.participacaoEmEdicao.codigo !== p.codigo || p.usuario.id === ctrl.modelo.usuarioResponsavel.id" style="vertical-align: middle;">
+                                                        {{ p.usuario.email }}
+                                                    </td>
+                                                    <td ng-show="ctrl.participacaoEmEdicao.codigo === p.codigo && p.usuario.id !== ctrl.modelo.usuarioResponsavel.id" style="vertical-align: middle;">
+                                                        <input type="text" class="form-control input-sm" name="email" required autocomplete="off"
+                                                               ng-disabled="p.codigo > 0"
+                                                               placeholder="E-mail"
+                                                               ng-model="p.usuario.email" />
+                                                    </td>
+
+                                                    <td ng-if="ctrl.participacaoEmEdicao.codigo != p.codigo" style="vertical-align: middle; text-align: right;">
+                                                        {{p.pontuacaoInicial}}
+                                                    </td>
+                                                    <td ng-if="ctrl.participacaoEmEdicao.codigo == p.codigo" style="vertical-align: middle; text-align: right;">
+                                                        <input type="text" class="form-control input-sm" name="pontuacaoInicial" required autocomplete="off"
+                                                               ng-model="p.pontuacaoInicial" />
+                                                    </td>
+
+                                                    <td style="vertical-align: middle; text-align: right;">
+                                                        <strong>{{p.pontuacaoAtual}}</strong>
+                                                    </td>
+
+                                                    <td style="vertical-align: middle; text-align: right;">
+                                                        {{ p.dataHoraInclusao | date : "dd/MM/yyyy hh:mm" }}
+                                                    </td>
+
+                                                    <td style="vertical-align: middle;">
+                                                        <button type="button" class="btn btn-info btn-xs escondeEmFieldsetDisabled" title="Editar"
+                                                                ng-if="!ctrl.participacaoEmEdicao || ctrl.participacaoEmEdicao.codigo !== p.codigo"
+                                                                ng-click="ctrl.editaParticipacao(p)">
+                                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                                        </button>
+                                                        <button type="button" class="btn btn-danger btn-xs escondeEmFieldsetDisabled" title="Excluir"
+                                                                ng-if="!ctrl.participacaoEmEdicao && p.usuario.id !== ctrl.modelo.usuarioResponsavel.id"
+                                                                acerva-confirm
+                                                                confirm-action="ctrl.excluiParticipacao(p)"
+                                                                confirm-window-type="danger"
+                                                                confirm-text="Confirma a exclusão do participante de e-mail {{ p.usuario.email }}?">
+                                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                        </button>
+                                                        <button type="button" class="btn btn-success btn-xs escondeEmFieldsetDisabled" title="Salvar"
+                                                                ng-if="ctrl.participacaoEmEdicao.codigo === p.codigo"
+                                                                ng-disabled="formParticipante.$invalid"
+                                                                ng-click="ctrl.salvaParticipacao()">
+                                                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                                        </button>
+                                                        <button type="button" class="btn btn-danger btn-xs escondeEmFieldsetDisabled" title="Cancelar"
+                                                                ng-if="ctrl.participacaoEmEdicao.codigo === p.codigo"
+                                                                ng-click="ctrl.cancelaEdicaoParticipacao()">
+                                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                                        </button>
+                                                        <button type="button" class="btn btn-default btn-xs escondeEmFieldsetDisabled" title="Reenviar convite"
+                                                                ng-if="!ctrl.participacaoEmEdicao && p.usuario.id !== ctrl.modelo.usuarioResponsavel.id && p.codigo > 0"
+                                                                acerva-confirm
+                                                                confirm-action="ctrl.reenviaConviteParticipacao(p)"
+                                                                confirm-window-type="info"
+                                                                confirm-text="Confirma o reenvio do convite para o participante de e-mail {{ p.usuario.email }}?">
+                                                            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <table class="table table-bordered table-striped table-responsive table-hover table-condensed visible-xs" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th>Participante</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="p in ctrl.modelo.participacoes | orderBy: ['posicao', 'dataHoraInclusao'] track by p.codigo" style="margin-bottom: 5px;">
+                                                    <td>
+                                                        <span ng-show="ctrl.participacaoEmEdicao.codigo !== p.codigo || p.usuario.id === ctrl.modelo.usuarioResponsavel.id">
+                                                            <span><strong>{{p.posicao}}{{p.posicao > 0 ? 'º' : ''}}</strong></span>
+                                                            <span>
+                                                                <a ng-href="@Url.Action("Index", "Palpite")#/{{p.codigo}}"
+                                                                   ng-disabled="!ctrl.modelo || ctrl.status.salvando || !p.usuario.id"><span style="font-weight: bold;">{{ p.usuario.name }}</span></a>
+                                                            </span>
+                                                            <span class="label label-success" ng-if="p.usuario.id === ctrl.modelo.usuarioResponsavel.id">administrador</span>
+                                                            <span>(<strong>{{p.pontuacaoAtual}}{{p.pontuacaoAtual !== undefined ? ' pts' : 'novo'}}</strong>)</span>
+                                                            <span ng-if="p.posicaoRodadaAnterior" class="pull-right">
+                                                                &nbsp;<span ng-if="p.posicaoRodadaAnterior - p.posicao > 0">+</span><span>{{p.posicaoRodadaAnterior - p.posicao}}</span>
+                                                                <span class="glyphicon" ng-class="{'glyphicon-arrow-up text-success': p.posicaoRodadaAnterior - p.posicao > 0, 'glyphicon-arrow-down text-danger': p.posicaoRodadaAnterior - p.posicao < 0, 'glyphicon-pause rotate text-warning': p.posicaoRodadaAnterior - p.posicao === 0}"></span>
+                                                            </span>
+                                                        </span>
+                                                        <span ng-show="ctrl.participacaoEmEdicao.codigo === p.codigo && p.usuario.id !== ctrl.modelo.usuarioResponsavel.id">
+                                                            Nome:<br />
+                                                            <input type="text" class="form-control input-sm" name="name" required autocomplete="off"
+                                                                   placeholder="Nome"
+                                                                   ng-model="p.usuario.name" />
+                                                        </span>
+
+                                                        <br />
+
+                                                        <span ng-show="ctrl.participacaoEmEdicao.codigo !== p.codigo || p.usuario.id === ctrl.modelo.usuarioResponsavel.id" style="vertical-align: middle;">
+                                                            <dfn>{{ p.usuario.email }}</dfn>
+                                                        </span>
+                                                        <span ng-show="ctrl.participacaoEmEdicao.codigo === p.codigo && p.usuario.id !== ctrl.modelo.usuarioResponsavel.id" style="vertical-align: middle;">
+                                                            E-mail:<br />
+                                                            <input type="text" class="form-control input-sm" name="email" required autocomplete="off"
+                                                                   placeholder="E-mail"
+                                                                   ng-model="p.usuario.email" />
+                                                        </span>
+
+                                                        <br />
+
+                                                        <span ng-if="ctrl.participacaoEmEdicao.codigo != p.codigo" style="vertical-align: middle; text-align: right;">
+                                                            Pontuação inicial: {{p.pontuacaoInicial}}
+                                                        </span>
+                                                        <span ng-if="ctrl.participacaoEmEdicao.codigo == p.codigo" style="vertical-align: middle; text-align: right;">
+                                                            Pontuação inicial:<br />
+                                                            <input type="text" class="form-control input-sm" name="pontuacaoInicial" required autocomplete="off"
+                                                                   ng-model="p.pontuacaoInicial" />
+                                                        </span>
+
+                                                        <br />
+
+                                                        <button type="button" class="btn btn-info btn-xs escondeEmFieldsetDisabled" title="Editar"
+                                                                ng-if="!ctrl.participacaoEmEdicao || ctrl.participacaoEmEdicao.codigo !== p.codigo"
+                                                                ng-click="ctrl.editaParticipacao(p)">
+                                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                                        </button>
+                                                        <button type="button" class="btn btn-danger btn-xs escondeEmFieldsetDisabled" title="Excluir"
+                                                                ng-if="!ctrl.participacaoEmEdicao && p.usuario.id !== ctrl.modelo.usuarioResponsavel.id"
+                                                                acerva-confirm
+                                                                confirm-action="ctrl.excluiParticipacao(p)"
+                                                                confirm-window-type="danger"
+                                                                confirm-text="Confirma a exclusão do participante de e-mail {{ p.usuario.email }}?">
+                                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                        </button>
+                                                        <button type="button" class="btn btn-success btn-xs escondeEmFieldsetDisabled" title="Salvar"
+                                                                ng-if="ctrl.participacaoEmEdicao.codigo === p.codigo"
+                                                                ng-disabled="formParticipante.$invalid"
+                                                                ng-click="ctrl.salvaParticipacao()">
+                                                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                                        </button>
+                                                        <button type="button" class="btn btn-danger btn-xs escondeEmFieldsetDisabled" title="Cancelar"
+                                                                ng-if="ctrl.participacaoEmEdicao.codigo === p.codigo"
+                                                                ng-click="ctrl.cancelaEdicaoParticipacao()">
+                                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                                        </button>
+                                                        <button type="button" class="btn btn-default btn-xs escondeEmFieldsetDisabled" title="Reenviar convite"
+                                                                ng-if="!ctrl.participacaoEmEdicao && p.usuario.id !== ctrl.modelo.usuarioResponsavel.id && p.codigo > 0"
+                                                                acerva-confirm
+                                                                confirm-action="ctrl.reenviaConviteParticipacao(p)"
+                                                                confirm-window-type="info"
+                                                                confirm-text="Confirma o reenvio do convite para o participante de e-mail {{ p.usuario.email }}?">
+                                                            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <button type="button" class="btn btn-default escondeEmFieldsetDisabled"
+                                                ng-click="ctrl.incluiParticipacao()"
+                                                ng-disabled="ctrl.participacaoEmEdicao">
+                                            Incluir participante
+                                        </button>
+                                    </div>
+
+                                </uib-tab>
+                                <uib-tab>
+                                    <uib-tab-heading>
+                                        <span class="glyphicon glyphicon-th-list"></span> 
+                                        <span class="hidden-xs">Regras</span>
+                                    </uib-tab-heading>
+                                    <div class="col-sm-8 containerRegras" style="padding-left: 0; padding-right: 0;">
+                                        <table class="table table-bordered table-striped table-responsive table-hover table-condensed" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th>Regra</th>
+                                                    <th style="width: 40px;">Pontuação</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="r in ctrl.modelo.regras | orderBy: 'ordem' track by r.codigo"
+                                                    ng-form="formRegra">
+
+                                                    <td style="vertical-align: middle;">
+                                                        <span style="font-weight: bold;">{{ r.criterio.nome }}</span>
+                                                    </td>
+
+                                                    <td style="vertical-align: middle; text-align: right;">
+                                                        <input type="text" class="form-control input-sm" name="pontuacao" id="pontuacao" required autocomplete="off"
+                                                               ng-model="r.pontuacao" />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </uib-tab>
+                                <uib-tab>
+                                    <uib-tab-heading>
+                                        <span class="glyphicon glyphicon-random" style="margin-right: 5px;"></span>
+                                        <span class="hidden-xs">Evolução</span>
+                                    </uib-tab-heading>
+                                    <div style="padding: 5px;">
+                                        <canvas id="line" class="chart chart-line" chart-data="ctrl.graficoEvolucao.data" height="{{(ctrl.graficoEvolucao.data.length * 20) + 50}}"
+                                                chart-labels="ctrl.graficoEvolucao.labels" chart-series="ctrl.graficoEvolucao.series" chart-options="ctrl.graficoEvolucao.options"
+                                                chart-dataset-override="ctrl.graficoEvolucao.datasetOverride"></canvas>
+                                        <div id="chartjs-tooltip"></div>
+                                    </div>
+                                </uib-tab>
+                            </uib-tabset>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="pull-right">
+                            <a ng-if="ctrl.buscaCodigoParticipacao() && ctrl.modeloOriginal.codigo" class="btn btn-success" ng-href="@Url.Action("Index", "Palpite")#/{{ctrl.buscaCodigoParticipacao()}}"
+                               ng-disabled="!ctrl.modelo || ctrl.status.salvando">
+                                <span class="hidden-xs">Palpites</span>
+                                <span class="visible-xs">Palp.</span>
+                            </a>
+                            <a class="btn btn-default" href="#/"
+                               ng-disabled="!ctrl.modelo || ctrl.status.salvando">
+                                <span class="hidden-xs">Cancelar</span>
+                                <span class="visible-xs">Canc.</span>
+                            </a>
+                            <button type="submit" class="btn btn-primary" ng-hide="ctrl.status.bloqueado" ng-disabled="formMinhaAcerva.$invalid || ctrl.status.salvando" ng-click="ctrl.salvaMinhaAcerva()">
+                                <span class="hidden-xs">Salvar</span>
+                                <span class="visible-xs">Salv.</span>
+                                <i class="icon icon-spin2 glyphicon-spin" ng-show="ctrl.status.salvando"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

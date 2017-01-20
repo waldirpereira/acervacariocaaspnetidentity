@@ -1,0 +1,59 @@
+﻿@model IEnumerable<FileInfo>
+@{
+    Layout = "";
+}
+
+@if (!Model.Any())
+{
+    <span>Não foi encontrado nenhum arquivo ou não foi possível abrir a pasta</span>
+}
+<table>
+    <thead>
+        <tr>
+            <th>
+                Arquivo
+            </th>
+            <th>
+                Tamanho
+            </th>
+            <th>
+                Última escrita
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var file in Model)
+            {
+                var tamanhoEmBytes = file.Length;
+                double tamanhoAjustado;
+                string unidadeTamanho;
+
+                if (tamanhoEmBytes < 1024)
+                {
+                    tamanhoAjustado = tamanhoEmBytes;
+                    unidadeTamanho = "B";
+                }
+                else if (tamanhoEmBytes < 1024 * 1024)
+                {
+                    tamanhoAjustado = tamanhoEmBytes / 1024.0;
+                    unidadeTamanho = "KB";
+                }
+                else
+                {
+                    tamanhoAjustado = tamanhoEmBytes / (1024.0 * 1024.0);
+                    unidadeTamanho = "MB";
+                }
+                <tr>
+                    <td style="width: 60%;">
+                        <a href="@Url.Action("DownloadFile", new { fileName = file.Name, folder = file.Directory })">@file.Name</a>
+                    </td>
+                    <td style="width: 10%;">
+                        @string.Format("{0:0.##} {1}", tamanhoAjustado, unidadeTamanho)
+                    </td>
+                    <td style="width: 30%;">
+                        @file.LastWriteTime
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>

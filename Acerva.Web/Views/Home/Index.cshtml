@@ -1,0 +1,151 @@
+﻿@using Acerva.Modelo
+@using Acerva.Web.Models
+@model global::Acerva.Web.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Início";
+    ViewBag.AngularApp = "acerva.inicio";
+    var action = ViewContext.RouteData.GetRequiredString("action");
+    var id = ViewContext.RouteData.Values["id"];
+}
+<br/>
+
+<div ng-view ng-cloak></div>
+@Html.AntiForgeryToken()
+
+@if (!Request.IsAuthenticated)
+{
+    <script type="text/ng-template" id="index.html">
+    </script>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">Entre com uma conta já existente...</div>
+                <div class="panel-body">
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <h4>Use uma conta local para login.</h4>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-10">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <div class="checkbox" style="margin-left: 20px;">
+                                    @Html.CheckBox("RememberMe")
+                                    <label>Lembrar de mim?</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Login" class="btn btn-default" />
+                            </div>
+                        </div>
+                        <p>
+                            @Html.ActionLink("Esqueceu sua senha?", "ForgotPassword", "Account")
+                        </p>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="panel panel-success">
+                <div class="panel-heading">...ou cadastre-se com uma nova conta!</div>
+                <div class="panel-body">
+                    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <h4>Crie uma nova conta.</h4>
+                        <hr />
+                        @Html.ValidationSummary("", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Name, new { @class = "col-md-4 control-label" })
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email, new { @class = "col-md-4 control-label" })
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Password, new { @class = "col-md-4 control-label" })
+                            <div class="col-md-8">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-4 control-label" })
+                            <div class="col-md-8">
+                                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" class="btn btn-default" value="Registrar" />
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <script type="text/ng-template" id="index.html">
+        <div class="animate-show-only">
+            @Html.Partial("_ListaMinhasAcervas")
+        </div>
+    </script>
+}
+
+@section styles {
+    @Styles.Render("~/cssBundles/angularForm")
+    @Styles.Render(BundleConfig.BundleStylesDataTables)
+}
+
+@section dependencies {
+    @if (ViewBag.Id == null)
+    {
+        @Scripts.Render("~/bundles/inicio")
+    }
+}
+
+@section scripts {
+    @if (action == "Index")
+    {
+        <script type="text/javascript">
+            (function () {
+                angular.module("acerva")
+                    .constant("ROTAS", {
+                        buscaTodosMinhasAcervas: "@Url.Action("BuscaMinhasAcervasParaListagem", "MinhaAcerva")"
+                    });
+                })();
+        </script>
+    }
+    else
+    {
+        var url = Url.Action("Index") + "#/" + action + "/" + id;
+        <script type="text/javascript">
+            (function () {
+                window.location = '@url';
+            })();
+        </script>
+    }
+}

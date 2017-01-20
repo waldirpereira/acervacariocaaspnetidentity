@@ -1,0 +1,320 @@
+﻿<form name="formParticipacao" novalidate>
+    <div class="panel panel-primary">
+        <div class="panel-heading">Edição dos palpites</div>
+
+        <div ng-show="ctrl.status.carregando" class="text-center">
+            <div class="loader"></div>
+        </div>
+        <div ng-hide="ctrl.status.carregando">
+            <div class="panel-body">
+                <fieldset ng-disabled="ctrl.status.bloqueado">
+                    <div class="row" ng-if="ctrl.status.bloqueado">
+                        <div class="col-sm-12">
+                            <div class="alert alert-dismissible alert-warning">
+                                A edição está bloqueada pois a ACervA Carioca está inativo.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="form-group">
+                                <label class="control-label" for="nomeRegional">Regional</label>
+                                <input type="text" class="form-control" name="nomeRegional" disabled="disabled"
+                                       ng-model="ctrl.modelo.nomeRegional" />
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="form-group">
+                                <label class="control-label" for="nomeAcerva">ACervA Carioca</label>
+                                <input type="text" class="form-control" name="nomeAcerva" disabled="disabled"
+                                       ng-model="ctrl.modelo.nomeAcerva" />
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="form-group">
+                                <label class="control-label" for="nomeParticipante">Participante</label>
+                                <input type="text" class="form-control" name="nomeParticipante" disabled="disabled"
+                                       ng-model="ctrl.modelo.usuario.name" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="panel panel-default hidden-xs">
+                                <div class="panel-heading">Rodadas</div>
+                                <div class="panel-body">
+                                    <div style="width: 100%;">
+                                        <ul style="list-style: none; padding-left: 0; margin-bottom: 1px;">
+                                            <li ng-repeat="r in ctrl.listaRodadas | orderBy: 'ordem' track by r.codigo"
+                                                style="display: inline;">
+                                                <a class="btn btn-sm btn-rodada habilitaEmFieldsetDisabled" ng-class="{true: 'btn-primary', false: 'btn-default'}[r.codigo === ctrl.rodadaEmEdicao.codigo]"  ng-click="ctrl.alteraPalpitesDaRodada(r);">{{r.nome}}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group visible-xs">
+                                <label class="control-label" for="rodada">Rodada</label>
+                                <select name="rodada" class="form-control"
+                                        ng-options="r as r.nome for r in ctrl.listaRodadas | orderBy: 'ordem' track by r.codigo"
+                                        ng-model="ctrl.rodadaEmEdicao"
+                                        ng-selected="r.codigo === ctrl.rodadaEmEdicao.codigo"
+                                        ng-change="ctrl.alteraPalpitesDaRodada(ctrl.rodadaEmEdicao);"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row player">
+                        <div class="col-sm-12 containerPartidasDaRodada">
+                            <div class="panel panel-primary" ng-if="ctrl.palpitesDaRodadaEmEdicao">
+                                <div class="panel-heading" style="display: list-item;">
+                                    <a class="btn btn-default btn-xs habilitaEmFieldsetDisabled" style="float: left; margin-top: -5px;"
+                                       hotkey="{left: ctrl.alteraPalpitesDaRodadaAnterior}"
+                                       ng-click="ctrl.alteraPalpitesDaRodadaAnterior();"
+                                       ng-disabled="!ctrl.buscaRodadaAnterior()"><span class="glyphicon glyphicon-backward"></span><span class="hidden-xs">&nbsp;Anterior</span></a>
+                                    <span class="hidden-xs" style="float: left; margin-left: 10px;">Palpites da rodada</span>
+                                    <span class="visible-xs" style="float: left; margin-left: 10px;">Rodada</span>
+                                    <span style="float: left; margin-left: 5px;">{{ctrl.rodadaEmEdicao.nome}}</span>
+                                    <a class="btn btn-default btn-xs pull-right habilitaEmFieldsetDisabled" style="margin-top: -5px;"
+                                       ng-click="ctrl.alteraPalpitesDaRodadaPosterior();"
+                                       hotkey="{right: ctrl.alteraPalpitesDaRodadaPosterior}"
+                                       ng-disabled="!ctrl.buscaRodadaPosterior()"><span class="hidden-xs">Próxima&nbsp;</span><span class="glyphicon glyphicon-forward"></span></a>
+                                </div>
+                                <div class="panel-body">
+                                    <table class="table table-bordered table-striped table-responsive table-hover table-condensed hidden-xs" style="width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2" style="width: 110px;">Data</th>
+                                                <th rowspan="2" style="width: 75px;">Hora</th>
+                                                <th colspan="2" style="text-align: center;">Mandante</th>
+                                                <th colspan="2" style="text-align: center;">Visitante</th>
+                                                <th rowspan="2" style="width: 50px;">Fechada</th>
+                                                <th rowspan="2" style="width: 60px;">Pontos</th>
+                                                <th rowspan="2">Critério</th>
+                                            </tr>
+                                            <tr>
+                                                <th style="text-align: center; width: 200px;">Equipe</th>
+                                                <th style="text-align: center; width: 70px;">Placar</th>
+                                                <th style="text-align: center; width: 70px;">Placar</th>
+                                                <th style="text-align: center; width: 200px;">Equipe</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-if="ctrl.podeEditarAlgumaPartida()" class="placar-padrao">
+                                                <td colspan="3"></td>
+                                                <td style="vertical-align: middle;">
+                                                    @*<div class="input-group spinner">*@
+                                                    <input type="number" select-on-focus next-on-enter-or-tab class="form-control input-sm" ng-model="ctrl.placarMandantePadrao" min="0" max="255">
+                                                    @*<div class="input-group-btn-vertical">
+                                                            <button class="btn btn-default spinner-button" type="button" ng-click="ctrl.placarMandantePadrao = ctrl.incrementa(ctrl.placarMandantePadrao);"><i class="glyphicon glyphicon-plus"></i></button>
+                                                            <button class="btn btn-default spinner-button" type="button" ng-click="ctrl.placarMandantePadrao = ctrl.decrementa(ctrl.placarMandantePadrao);"><i class="glyphicon glyphicon-minus"></i></button>
+                                                        </div>*@
+                                                    @*</div>*@
+                                                </td>
+                                                <td style="vertical-align: middle;">
+                                                    @*<div class="input-group spinner">*@
+                                                    <input type="number" select-on-focus next-on-enter-or-tab class="form-control input-sm" ng-model="ctrl.placarVisitantePadrao" min="0" max="255">
+                                                    @*<div class="input-group-btn-vertical">
+                                                            <button class="btn btn-default spinner-button" type="button" ng-click="ctrl.placarVisitantePadrao = ctrl.incrementa(ctrl.placarVisitantePadrao);"><i class="glyphicon glyphicon-plus"></i></button>
+                                                            <button class="btn btn-default spinner-button" type="button" ng-click="ctrl.placarVisitantePadrao = ctrl.decrementa(ctrl.placarVisitantePadrao);"><i class="glyphicon glyphicon-minus"></i></button>
+                                                        </div>*@
+                                                    @*</div>*@
+                                                </td>
+                                                <td colspan="4">
+                                                    <button type="button" class="btn btn-default escondeEmFieldsetDisabled"
+                                                            ng-click="ctrl.replicaPlacarPadrao()">
+                                                        Replicar placar <span class="glyphicon glyphicon-backward rotate" style="top: 5px;" />
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr ng-repeat="p in ctrl.palpitesDaRodadaEmEdicao | orderBy: ['partida.data', 'partida.horario.hour', 'partida.horario.minute', 'partida.codigo'] track by p.codigo"
+                                                ng-init="ctrl.pontuacaoTotal=($index===0?null:ctrl.pontuacaoTotal);"
+                                                ng-form="formPartida">
+
+                                                <td style="vertical-align: middle;">
+                                                    <span style="font-weight: bold;">{{ p.partida.data | date :  "dd/MM/yyyy" }}</span>
+                                                </td>
+
+                                                <td style="vertical-align: middle;">
+                                                    <span style="font-weight: bold;">{{ ("0"+p.partida.horario.hour).slice(-2) }}:{{ ("0"+p.partida.horario.minute).slice(-2) }}</span>
+                                                </td>
+
+                                                <td style="vertical-align: middle; text-align: right;">
+                                                    <span style="font-weight: bold;">{{ p.partida.equipeMandante.nome }}</span>
+                                                    <img ng-if="p.partida.equipeMandante.escudo" ng-src="@Url.Content("~/Content/Aplicacao/images/escudos/"){{p.partida.equipeMandante.escudo}}" height="20" />
+                                                </td>
+
+                                                <td ng-if="!ctrl.podeEditarPartida(p.partida)" style="vertical-align: middle; text-align: center;">
+                                                    <span ng-if="p.partida.placarMandante !== null && p.partida.terminada" style="font-weight: bold; background-color: silver; padding: 5px; float: left;">{{ p.partida.placarMandante }}</span>
+                                                    <span style="font-weight: bold; padding: 5px; float: right;">{{ p.placarMandante }}</span>
+                                                </td>
+                                                <td ng-if="ctrl.podeEditarPartida(p.partida)" style="vertical-align: middle;">
+                                                    @*<div class="input-group spinner">*@
+                                                    <input type="number" select-on-focus next-on-enter-or-tab class="form-control input-sm" ng-model="p.placarMandante" min="0" max="255">
+                                                    @*<div class="input-group-btn-vertical">
+                                                            <button class="btn btn-default spinner-button" type="button" ng-click="p.placarMandante = ctrl.incrementa(p.placarMandante);"><i class="glyphicon glyphicon-plus"></i></button>
+                                                            <button class="btn btn-default spinner-button" type="button" ng-click="p.placarMandante = ctrl.decrementa(p.placarMandante);"><i class="glyphicon glyphicon-minus"></i></button>
+                                                        </div>*@
+                                                    @*</div>*@
+                                                </td>
+
+                                                <td ng-if="!ctrl.podeEditarPartida(p.partida)" style="vertical-align: middle; text-align: center;">
+                                                    <span style="font-weight: bold; padding: 5px; float: left;">{{ p.placarVisitante }}</span>
+                                                    <span ng-if="p.partida.placarVisitante !== null && p.partida.terminada" style="font-weight: bold; background-color: silver; padding: 5px; float: right;">{{p.partida.placarVisitante}}</span>
+                                                </td>
+                                                <td ng-if="ctrl.podeEditarPartida(p.partida)" style="vertical-align: middle;">
+                                                    @*<div class="input-group spinner">*@
+                                                    <input type="number" select-on-focus next-on-enter-or-tab class="form-control input-sm" ng-model="p.placarVisitante" min="0" max="255">
+                                                    @*<div class="input-group-btn-vertical">
+                                                            <button class="btn btn-default spinner-button" type="button" ng-click="p.placarVisitante = ctrl.incrementa(p.placarVisitante);"><i class="glyphicon glyphicon-plus"></i></button>
+                                                            <button class="btn btn-default spinner-button" type="button" ng-click="p.placarVisitante = ctrl.decrementa(p.placarVisitante);"><i class="glyphicon glyphicon-minus"></i></button>
+                                                        </div>*@
+                                                    @*</div>*@
+                                                </td>
+
+                                                <td style="vertical-align: middle; text-align: left;">
+                                                    <img ng-if="p.partida.equipeVisitante.escudo" ng-src="@Url.Content("~/Content/Aplicacao/images/escudos/"){{p.partida.equipeVisitante.escudo}}" height="20" />
+                                                    <span style="font-weight: bold;">{{ p.partida.equipeVisitante.nome }}</span>
+                                                </td>
+
+                                                <td style="vertical-align: middle;">
+                                                    <input type="checkbox" ng-checked="p.partida.terminada" disabled />
+                                                </td>
+
+                                                <td style="vertical-align: middle; text-align: center;"
+                                                    ng-init="ctrl.pontuacaoTotal=(p.pontuacao !== null ? ctrl.pontuacaoTotal+p.pontuacao : ctrl.pontuacaoTotal)">
+                                                    <span style="font-weight: bold;">{{ p.pontuacao }}</span>
+                                                </td>
+
+                                                <td style="vertical-align: middle;">
+                                                    <span>{{ p.criterio.nome }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr class="pontuacao-total"
+                                                ng-if="ctrl.pontuacaoTotal !== undefined && ctrl.pontuacaoTotal !== null">
+                                                <td colspan="7"><strong>TOTAL</strong></td>
+                                                <td style="vertical-align: middle; text-align: center;">
+                                                    <span style="font-weight: bold;">{{ ctrl.pontuacaoTotal }}</span>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <table class="table table-bordered table-striped table-responsive table-hover table-condensed visible-xs" style="width: 100%;">
+                                        <tbody>
+                                            <tr ng-if="ctrl.podeEditarAlgumaPartida()" class="placar-padrao">
+                                                <td style="width: 40px;"></td>
+                                                <td style="vertical-align: middle;">
+                                                    @*<div class="input-group spinner">*@
+                                                    <input type="number" select-on-focus next-on-enter-or-tab class="form-control input-sm" ng-model="ctrl.placarMandantePadrao" min="0" max="255">
+                                                    @*<div class="input-group-btn-vertical">
+                                                            <button class="btn btn-default spinner-button" type="button" ng-click="ctrl.placarMandantePadrao = ctrl.incrementa(ctrl.placarMandantePadrao);"><i class="glyphicon glyphicon-plus"></i></button>
+                                                            <button class="btn btn-default spinner-button" type="button" ng-click="ctrl.placarMandantePadrao = ctrl.decrementa(ctrl.placarMandantePadrao);"><i class="glyphicon glyphicon-minus"></i></button>
+                                                        </div>*@
+                                                    @*</div>*@
+                                                </td>
+                                                <td style="vertical-align: middle;">
+                                                    @*<div class="input-group spinner">*@
+                                                    <input type="number" select-on-focus next-on-enter-or-tab class="form-control input-sm" ng-model="ctrl.placarVisitantePadrao" min="0" max="255">
+                                                    @*<div class="input-group-btn-vertical">
+                                                            <button class="btn btn-default spinner-button" type="button" ng-click="ctrl.placarVisitantePadrao = ctrl.incrementa(ctrl.placarVisitantePadrao);"><i class="glyphicon glyphicon-plus"></i></button>
+                                                            <button class="btn btn-default spinner-button" type="button" ng-click="ctrl.placarVisitantePadrao = ctrl.decrementa(ctrl.placarVisitantePadrao);"><i class="glyphicon glyphicon-minus"></i></button>
+                                                        </div>*@
+                                                    @*</div>*@
+                                                </td>
+                                                <td style="width: 40px;">
+                                                    <button type="button" class="btn btn-default escondeEmFieldsetDisabled" style="padding: 5px;"
+                                                            ng-click="ctrl.replicaPlacarPadrao()">
+                                                        <span class="glyphicon glyphicon-backward rotate" style="top: 5px;"></span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody ng-repeat="p in ctrl.palpitesDaRodadaEmEdicao | orderBy: ['partida.data', 'partida.horario.hour', 'partida.horario.minute'] track by p.codigo"
+                                               ng-init="ctrl.pontuacaoTotalXs=($index===0?null:ctrl.pontuacaoTotalXs);"
+                                               ng-form="formPartida">
+                                            <tr>
+                                                <td colspan="4">
+                                                    <strong>{{ p.partida.data | date : "dd/MM/yyyy" }} {{ ("0"+p.partida.horario.hour).slice(-2) }}:{{ ("0"+p.partida.horario.minute).slice(-2) }}</strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="vertical-align: middle; text-align: center; width: 40px;">
+                                                    <img ng-if="p.partida.equipeMandante.escudo" ng-src="@Url.Content("~/Content/Aplicacao/images/escudos/"){{p.partida.equipeMandante.escudo}}" height="20" /><br />
+                                                    <span style="font-weight: bold;">{{ p.partida.equipeMandante.sigla }}</span>
+                                                </td>
+
+                                                <td ng-if="ctrl.podeEditarPartida(p.partida)" style="vertical-align: middle; text-align: center;">
+                                                    @*<div class="input-group spinner">*@
+                                                    <input type="number" select-on-focus next-on-enter-or-tab class="form-control input-sm" ng-model="p.placarMandante" min="0" max="255">
+                                                    @*<div class="input-group-btn-vertical">
+                                                            <button class="btn btn-default spinner-button" type="button" ng-click="p.placarMandante = ctrl.incrementa(p.placarMandante);"><i class="glyphicon glyphicon-plus"></i></button>
+                                                            <button class="btn btn-default spinner-button" type="button" ng-click="p.placarMandante = ctrl.decrementa(p.placarMandante);"><i class="glyphicon glyphicon-minus"></i></button>
+                                                        </div>*@
+                                                    @*</div>*@
+                                                </td>
+                                                <td ng-if="ctrl.podeEditarPartida(p.partida)" style="vertical-align: middle; text-align: center;">
+                                                    @*<div class="input-group spinner">*@
+                                                    <input type="number" select-on-focus next-on-enter-or-tab class="form-control input-sm" ng-model="p.placarVisitante" min="0" max="255">
+                                                    @*<div class="input-group-btn-vertical">
+                                                            <button class="btn btn-default spinner-button" type="button" ng-click="p.placarVisitante = ctrl.incrementa(p.placarVisitante);"><i class="glyphicon glyphicon-plus"></i></button>
+                                                            <button class="btn btn-default spinner-button" type="button" ng-click="p.placarVisitante = ctrl.decrementa(p.placarVisitante);"><i class="glyphicon glyphicon-minus"></i></button>
+                                                        </div>*@
+                                                    @*</div>*@
+
+                                                </td>
+                                                <td ng-if="!ctrl.podeEditarPartida(p.partida)" style="vertical-align: middle; text-align: center;">
+
+                                                    <span ng-if="p.partida.placarMandante !== null && p.partida.terminada" style="font-weight: bold; background-color: silver; padding: 5px; float: left;">{{ p.partida.placarMandante }}</span>
+                                                    <span style="font-weight: bold; padding: 5px; float: right;">{{ p.placarMandante }}</span>
+                                                </td>
+                                                <td ng-if="!ctrl.podeEditarPartida(p.partida)" style="vertical-align: middle; text-align: center;">
+                                                    <span style="font-weight: bold; padding: 5px; float: left;">{{ p.placarVisitante }}</span>
+                                                    <span ng-if="p.partida.placarVisitante !== null && p.partida.terminada" style="font-weight: bold; background-color: silver; padding: 5px; float: right;">{{p.partida.placarVisitante}}</span>
+
+                                                </td>
+
+                                                <td style="vertical-align: middle; text-align: center; width: 40px;">
+                                                    <img ng-if="p.partida.equipeVisitante.escudo" ng-src="@Url.Content("~/Content/Aplicacao/images/escudos/"){{p.partida.equipeVisitante.escudo}}" height="20" /><br />
+                                                    <span style="font-weight: bold;">{{ p.partida.equipeVisitante.sigla }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr ng-if="p.pontuacao !== undefined && p.pontuacao !== null"
+                                                ng-init="ctrl.pontuacaoTotalXs=(p.pontuacao !== null ? ctrl.pontuacaoTotalXs+p.pontuacao : ctrl.pontuacaoTotalXs)">
+                                                <td colspan="4">
+                                                    <span style="font-weight: bold;">{{ p.pontuacao }}</span> {{ p.criterio ? '(' + p.criterio.nome + ')' : ''}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody>
+                                            <tr class="pontuacao-total"
+                                                ng-if="ctrl.pontuacaoTotalXs !== undefined && ctrl.pontuacaoTotalXs !== null">
+                                                <td colspan="4"><strong>TOTAL: {{ ctrl.pontuacaoTotalXs }}</strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </fieldset>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="pull-right">
+                            <a class="btn btn-default" ng-href="@Url.Action("Index", "MinhaAcerva")#/Edit/{{ctrl.modelo.codigoAcerva}}"
+                               ng-disabled="!ctrl.modelo || ctrl.status.salvando">Voltar para ACervA</a>
+                            <button type="submit" class="btn btn-primary" ng-hide="ctrl.status.bloqueado" ng-disabled="formParticipacao.$invalid || ctrl.status.salvando" ng-click="ctrl.salvaPalpites()">Salvar<i class="icon icon-spin2 glyphicon-spin" ng-show="ctrl.status.salvando"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

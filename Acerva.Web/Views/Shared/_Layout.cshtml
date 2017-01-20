@@ -1,0 +1,88 @@
+﻿@using Acerva.Modelo
+@using Microsoft.AspNet.Identity
+
+@{
+    var pageTitle = Sistema.NomeSistema;
+    if (ViewBag.Title != null)
+    {
+        pageTitle += " - " + ViewBag.Title;
+    }    
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@pageTitle</title>
+    @Styles.Render("~/cssBundles/sitecommon")
+
+    @RenderSection("styles", required: false)
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" style="max-height: 50px;">
+        <div>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink(Sistema.NomeSistema, "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Sobre", "About", "Home")</li>
+                    @if (Request.IsAuthenticated && User.IsInRole("ADMIN"))
+                    {
+                        <li>@Html.ActionLink("Equipes", "Index", "Equipe")</li>
+                        <li>@Html.ActionLink("Regionais", "Index", "Regional")</li>
+                        <li>@Html.ActionLink("Admin", "Index", "Admin")</li>
+                    }
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("ACervAs", "Index", "MinhaAcerva")</li>
+                    }
+                    <li>@Html.ActionLink("Contatos", "Contact", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div>
+        <div id="main" class="principal" ng-app="@ViewBag.AngularApp">
+            <div ng-controller="LayoutController as ctrl">
+                <acerva-growl alerta="ctrl.mensagem"></acerva-growl>
+            </div>
+            @RenderBody()
+        </div>
+
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - @Sistema.NomeSistema - versão @(Content.VersaoDoSistemaFormatada())</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/layout")
+    @RenderSection("dependencies", false)
+    <script type="text/javascript">
+        $(document).ready(function () {
+            AcervaApp.Layout.inicializaPagina(
+            {
+                pathSwfDataTablesDataTools: '@AcervaInclude.PathSwfDataTablesTableTools(Url)',
+                user: {
+                    id: '@Context.User.Identity.GetUserId()',
+                    email: '@Context.User.Identity.GetUserName()',
+                    userName: '@Context.User.Identity.GetUserName()',
+                    name: '@ViewData["Name"]'
+                }
+            });
+
+            if (typeof (PageLoad) != "undefined") {
+                PageLoad();
+            }
+        });
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

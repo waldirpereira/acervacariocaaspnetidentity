@@ -1,0 +1,20 @@
+﻿@using Acerva.Modelo
+@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = Sistema.NomeSistema + " - Erro";
+    var errorMessage = ViewBag.errorMessage;
+}
+
+<h2 class="text-danger">Erro! :(</h2>
+<h3 class="text-danger">Ocorreu um erro enquanto sua requisição era processada.</h3>
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <h4>Motivo: @Html.Raw(errorMessage)</h4>
+}
+
+@if (Model != null)
+{
+    <pre>@Model.Exception.ToString()</pre>
+}

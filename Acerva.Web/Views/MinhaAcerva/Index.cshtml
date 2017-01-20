@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Minhas ACervAs";
+    ViewBag.AngularApp = "acerva.minhaAcerva";
+    var action = ViewContext.RouteData.GetRequiredString("action");
+    var id = ViewContext.RouteData.Values["id"];
+}
+<h4>Minhas ACervAs</h4>
+
+<div ng-view ng-cloak></div>
+@Html.AntiForgeryToken()
+
+<script type="text/ng-template" id="index.html">
+    <div class="animate-show-only">
+        @Html.Partial("_ListaMinhasAcervas")
+    </div>
+</script>
+
+<script type="text/ng-template" id="edit.html">
+    <div class="animate-show-only">
+        @Html.Partial("_CadastroMinhaAcerva")
+    </div>
+</script>
+
+@section styles {
+    @Styles.Render("~/cssBundles/angularForm")
+    @Styles.Render(BundleConfig.BundleStylesDataTables)
+}
+
+@section dependencies {
+    @if (ViewBag.Id == null)
+    {
+        @Scripts.Render("~/bundles/minhaAcerva")
+    }
+}
+
+@section scripts {
+    @if (action == "Index")
+    {
+        <script type="text/javascript">
+    (function () {
+        angular.module("acerva")
+            .constant("ROTAS", {
+                buscaTodosMinhasAcervas: "@Url.Action("BuscaMinhasAcervasParaListagem", "MinhaAcerva")",
+                buscaTiposDominio: "@Url.Action("BuscaTiposDominio", "MinhaAcerva")",
+                busca: "@Url.Action("Busca", "MinhaAcerva")",
+                buscaEvolucao: "@Url.Action("BuscaEvolucao", "MinhaAcerva")",
+                salvaMinhaAcerva: "@Url.Action("SalvaMinhaAcerva", "MinhaAcerva")",
+                alteraAtivacao: "@Url.Action("AlteraAtivacao", "MinhaAcerva")",
+                reenviaConviteParticipacao: "@Url.Action("ReenviaConviteParticipacao", "MinhaAcerva")"
+            });
+        })();
+        </script>
+    }
+    else
+    {
+        var url = Url.Action("Index") + "#/" + action + "/" + id;
+        <script type="text/javascript">
+            (function () {
+                window.location = '@url';
+            })();
+        </script>
+    }
+}

@@ -1,0 +1,58 @@
+﻿<form name="formEquipe" novalidate>
+    <div class="panel panel-primary">
+        <div class="panel-heading" ng-show="ctrl.status.carregando">Carregando<i class="icon icon-spin2 glyphicon-spin"></i></div>
+        <div class="panel-heading" ng-hide="ctrl.status.carregando">{{ ctrl.modeloOriginal.codigo ? "Edição da equipe '" + ctrl.modelo.nome + "'": "Nova equipe" }}</div>
+        <div class="panel-body" ng-hide="ctrl.status.carregando">
+            <fieldset ng-disabled="ctrl.status.bloqueado">
+                <div class="row" ng-if="ctrl.status.bloqueado">
+                    <div class="col-sm-12">
+                        <div class="alert alert-dismissible alert-warning">
+                            A edição está bloqueada pois a equipe está inativa.
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formEquipe.nome")>
+                            <label class="control-label" for="nome">Nome</label>
+                            <input type="text" class="form-control" name="nome" autocomplete="off" required
+                                   ng-model="ctrl.modelo.nome" />
+                            <p ng-show="formEquipe.nome.$invalid && !formEquipe.nome.$pristine" class="help-block">O nome é obrigatório</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formEquipe.sigla")>
+                            <label class="control-label" for="sigla">Sigla</label>
+                            <input type="text" class="form-control" name="sigla" autocomplete="off" required
+                                   ng-model="ctrl.modelo.sigla" />
+                            <p ng-show="formEquipe.sigla.$invalid && !formEquipe.sigla.$pristine" class="help-block">A sigla é obrigatória</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formEquipe.escudo")>
+                            <label class="control-label" for="escudo">Escudo</label>
+                            <input type="text" class="form-control" name="escudo" autocomplete="off" required
+                                   ng-model="ctrl.modelo.escudo" />
+                            <p ng-show="formEquipe.escudo.$invalid && !formEquipe.escudo.$pristine" class="help-block">O escudo é obrigatório</p>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="pull-right">
+                        <a class="btn btn-default" href="#/"
+                           ng-disabled="!ctrl.modelo || ctrl.status.salvando">Cancelar</a>
+                        <button type="submit" class="btn btn-primary" ng-hide="ctrl.status.bloqueado" ng-disabled="formEquipe.$invalid || ctrl.status.salvando" ng-click="ctrl.salvaEquipe()">Salvar<i class="icon icon-spin2 glyphicon-spin" ng-show="ctrl.status.salvando"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

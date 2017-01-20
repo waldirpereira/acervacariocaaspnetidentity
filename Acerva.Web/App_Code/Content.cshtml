@@ -1,0 +1,71 @@
+﻿@using System.Web.Mvc
+@using Acerva.Web
+@using NHibernate
+@functions {
+    public const string NaoDisponivel = "ND";
+
+    private static string _dataSourceName;
+
+    public static string DataSourceName(ISession session)
+    {
+        if (_dataSourceName != null)
+            return _dataSourceName;
+
+        const string chaveDataSource = "data source";
+        var connectionString = session.Connection.ConnectionString;
+        var indiceChaveDataSource = connectionString.IndexOf(chaveDataSource, StringComparison.OrdinalIgnoreCase);
+        var indiceInicioDataSource = indiceChaveDataSource + chaveDataSource.Length + 1;
+        var indiceFinalDataSource = connectionString.IndexOf(';', indiceInicioDataSource);
+
+        var dataSourceCompleto = connectionString.Substring(indiceInicioDataSource, indiceFinalDataSource - indiceInicioDataSource).ToUpper();
+        var indiceUltimaBarra = dataSourceCompleto.LastIndexOf('/');
+        _dataSourceName = indiceUltimaBarra < 0 ? dataSourceCompleto : dataSourceCompleto.Substring(indiceUltimaBarra + 1);
+
+        return _dataSourceName;
+    }
+
+    public static string CumprimentoPelaHora()
+    {
+        var horaAtual = DateTime.Now.Hour;
+        if (horaAtual >= 0 && horaAtual < 12)
+        {
+            return "Bom dia";
+        }
+        if (horaAtual >= 12 && horaAtual < 18)
+        {
+            return "Boa tarde";
+        }
+        return "Boa noite";
+    }
+
+    public static string VersaoDoSistemaFormatada()
+    {
+        return MvcApplication.VersaoSistemaFormatada;
+    }
+
+    public static string TextoParaBoolean(bool? valor)
+    {
+        return valor.HasValue ? TextoParaBoolean(valor.Value) : "ND";
+    }
+
+    public static string TextoParaBoolean(bool valor)
+    {
+        return valor ? "Sim" : "Não";
+    }
+
+    public static string ScriptCacheablePath(string scriptName, UrlHelper url)
+    {
+        return url.Content("~/Scripts/" + scriptName);
+    }
+
+    public static string ScriptPath(string scriptName, UrlHelper url)
+    {
+        var src = string.Format("{0}?v={1}", url.Content("~/Scripts/" + scriptName), VersaoDoSistemaFormatada());
+        return src;
+    }
+
+    public static string StylePath(string styleName, UrlHelper url)
+    {
+        return url.Content("~/Content/" + styleName);
+    }
+}

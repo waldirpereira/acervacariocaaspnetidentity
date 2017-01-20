@@ -1,0 +1,245 @@
+﻿@functions{
+    public class NgOpcaoRadio
+    {
+        public NgOpcaoRadio(string valor)
+        {
+            Valor = valor;
+            Nome = valor;
+        }
+
+        public NgOpcaoRadio(string valor, string nome)
+            : this(valor)
+        {
+            Nome = nome;
+        }
+
+        public NgOpcaoRadio(string valor, string nome, string ngShow)
+            : this(valor, nome)
+        {
+            NgShow = ngShow;
+        }
+
+        public NgOpcaoRadio(Enum valor, string nome)
+        {
+            Valor = valor.ToString();
+            Nome = nome;
+        }
+
+        public string Valor { get; set; }
+        public string Nome { get; set; }
+        public string NgShow { get; set; }
+    }
+
+    public class NgSelectOptions
+    {
+        public NgSelectOptions(string nomePropriedade, string modelo, string atributoMostrado, string selecaoRepeat, string bindHtmlOpcao)
+        {
+            NomePropriedade = nomePropriedade;
+            Modelo = modelo;
+            AtributoMostrado = atributoMostrado;
+            SelecaoRepeat = selecaoRepeat;
+            BindHtmlOpcao = bindHtmlOpcao;
+        }
+
+        public string NomePropriedade { get; set; }
+        public string Modelo { get; set; }
+        public string AtributoMostrado { get; set; }
+        public string SelecaoRepeat { get; set; }
+        public string BindHtmlOpcao { get; set; }
+
+        public string Titulo { get; set; }
+        public string OnChange { get; set; }
+        public bool Multiplo { get; set; }
+        public bool Obrigatorio { get; set; }
+        public string TextoPlaceholder { get; set; }
+        public string ClasseCss { get; set; }
+        public bool AllowClear { get; set; }
+        public string NgDisabled { get; set; }
+        public string NgDisabledOption { get; set; }
+        public string ResetOn { get; set; }
+        public string NgHelpText { get; set; }
+        public string NgHelpTextNgIf { get; set; }
+    }
+
+    private static string CriaAtributoSeValorNaoEhNulo(string nomeAtributo, string valorAtributo)
+    {
+        return string.IsNullOrEmpty(valorAtributo) ? string.Empty : string.Format("{0}={1}", nomeAtributo, valorAtributo);
+    }
+}
+
+
+@helper NgDatepicker(string modelo, string nomePropriedade, string titulo = null, string isDisabled = null,
+    string isRequired = null, string limiteInferior = null, string limiteSuperior = null)
+{
+    if (!string.IsNullOrEmpty(titulo))
+    {
+            <label class="control-label" for="@nomePropriedade">@titulo</label>
+    }
+    var attrIsDisabled = CriaAtributoSeValorNaoEhNulo("is-disabled", isDisabled);
+    var attrIsRequired = CriaAtributoSeValorNaoEhNulo("is-required", isRequired);
+    var attrLimiteInferior = CriaAtributoSeValorNaoEhNulo("lower-limit", limiteInferior);
+    var attrLimiteSuperior = CriaAtributoSeValorNaoEhNulo("upper-limit", limiteSuperior);
+
+
+    <frte-datepicker name="@nomePropriedade"
+                     ng-model="@modelo.@nomePropriedade"
+                     @attrIsDisabled @attrIsRequired @attrLimiteInferior @attrLimiteSuperior></frte-datepicker>
+}
+
+@helper NgSelectComBuscaRespeitandoStatusBloqueado(string nomeController, NgSelectOptions options)
+{
+    if (string.IsNullOrEmpty(options.NgDisabled))
+    {
+        options.NgDisabled = nomeController + ".status.bloqueado";
+    }
+    else
+    {
+        options.NgDisabled = string.Format("(({0}) || {1}.status.bloqueado)", options.NgDisabled, nomeController);
+    }
+
+    @NgSelectComBusca(options);
+}
+
+@helper NgSelectComBusca(NgSelectOptions options)
+{
+    var attrMultiple = options.Multiplo ? "multiple" : string.Empty;
+    var match = (options.Multiplo ? "$item." : "$select.selected.") + options.AtributoMostrado;
+
+    var attrAllowClear = options.AllowClear ? "allow-clear=true" : string.Empty;
+    var attrClasseCss = !string.IsNullOrEmpty(options.ClasseCss) ? "class=" + options.ClasseCss : string.Empty;
+    var attrNgModel = string.IsNullOrEmpty(options.NomePropriedade) ? options.Modelo : string.Format("{0}.{1}",options.Modelo, options.NomePropriedade);
+    <div class="form-group">
+        @if (!string.IsNullOrEmpty(options.Titulo))
+        {
+            if (!string.IsNullOrEmpty(options.NgHelpText))
+            {
+                <label for="@options.NomePropriedade">@options.Titulo</label>@NgHelpText(options.NgHelpText, options.NgHelpTextNgIf)
+            }
+            else
+            {
+                <label for="@options.NomePropriedade">@options.Titulo</label>
+            }
+        }
+        <ui-select @attrMultiple theme="bootstrap" name="@options.NomePropriedade"
+                   ng-model="@attrNgModel"
+                   @attrClasseCss
+                   @if (options.Obrigatorio) { @: required
+                                      }
+                   @if (!string.IsNullOrEmpty(options.OnChange)) { @: on-select="@options.OnChange"
+                                          @: on-remove="@options.OnChange"
+                                      }
+                   @if (!string.IsNullOrEmpty(options.NgDisabled)) { @: ng-disabled="@options.NgDisabled"
+                                      }
+                   @if (!string.IsNullOrEmpty(options.ResetOn)) { @: acerva-reset-on="@options.ResetOn"
+                                      }>
+            <ui-select-match @attrAllowClear placeholder="@options.TextoPlaceholder">{{ @match }}</ui-select-match>
+            <ui-select-choices repeat="@options.SelecaoRepeat"
+                               @if (!string.IsNullOrEmpty(options.NgDisabledOption)) { @: ui-disable-choice="@options.NgDisabledOption"
+                                                   }>
+                <div ng-bind-html="trustAsHtml((@options.BindHtmlOpcao))"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+}
+
+@helper NgSelectParaDiametro(string modelo, string nomePropriedade, string titulo = null, bool multiplo = false, string filter = "", string onSelect = null, bool obrigatorio = false,
+    string textoPlaceholder = "", bool allowClear = false, string resetOn = null)
+{
+if (!string.IsNullOrEmpty(filter))
+{
+    filter = "| " + filter;
+}
+
+var selecaoRepeat = "d in ctrl.dominio.diametros | diametroStartsWith:$select.search " + filter + " | orderBy:'medida' track by d.codigo";
+
+    @NgSelectComBuscaRespeitandoStatusBloqueado("ctrl", new NgSelectOptions(nomePropriedade, modelo, "nome", selecaoRepeat, "d.nome | highlight: $select.search")
+{
+    Titulo = titulo,
+    Multiplo = multiplo,
+    OnChange = onSelect,
+    Obrigatorio = obrigatorio,
+    TextoPlaceholder = textoPlaceholder,
+    AllowClear = allowClear,
+    ResetOn = resetOn,
+    NgDisabled = "ctrl.status.bloqueado"
+})
+}
+
+@helper NgSwitch(string nomePropriedade, string modelo, string titulo = null, bool opcaoNd = false, string ngClickFunctionFullName = null)
+{
+var modeloComPropriedade = modelo + "." + nomePropriedade;
+if (!string.IsNullOrEmpty(titulo))
+{
+        <label class="control-label" for="@nomePropriedade">@titulo</label>
+        <br />
+}
+
+var ngClickInterpolation = string.IsNullOrEmpty(ngClickFunctionFullName) ? string.Empty : "ng-click={0}({1})";
+
+var attrNgClickTrue = string.Format(ngClickInterpolation, ngClickFunctionFullName, "true");
+var attrNgClickFalse = string.Format(ngClickInterpolation, ngClickFunctionFullName, "false");
+
+    <div class="btn-group">
+        <button class="btn btn-default" name="@nomePropriedade" ng-model="@modeloComPropriedade" uib-btn-radio="true" @attrNgClickTrue>Sim</button>
+        <button class="btn btn-default" name="@nomePropriedade" ng-model="@modeloComPropriedade" uib-btn-radio="false" @attrNgClickFalse>Não</button>
+
+        @if (opcaoNd)
+        {
+            var attrNgClickNd = string.Format(ngClickInterpolation, ngClickFunctionFullName, "null");
+            <button class="btn btn-default" name="@nomePropriedade" ng-model="@modeloComPropriedade" uib-btn-radio="null" @attrNgClickNd>N/D</button>
+        }
+    </div>
+}
+
+@helper NgRadioButtons(string nomePropriedade, string modelo, string titulo, string colecao, string propriedadeOpcao, string filter = null, string textoNd = null)
+{
+var filtro = string.IsNullOrEmpty(filter) ? string.Empty : "| " + filter;
+    <label for="@nomePropriedade">@titulo</label><br />
+    <div class="btn-group">
+        @if (!string.IsNullOrEmpty(textoNd))
+        {
+            <label class="btn btn-default" ng-model="@modelo.@nomePropriedade" uib-btn-radio="''">@textoNd</label>
+        }
+        <label class="btn btn-default" ng-model="@modelo.@nomePropriedade"
+               ng-repeat="item in @colecao @filtro"
+               uib-btn-radio="item">{{ item.@propriedadeOpcao}}</label>
+        </div>
+}
+
+@helper NgRadioButtons(string nomePropriedade, string modelo, string titulo, IEnumerable<NgOpcaoRadio> opcoes, string valorNd = null)
+{
+var modeloComPropriedade = modelo + "." + nomePropriedade;
+    <label for="@nomePropriedade">@titulo</label><br />
+    <div class="btn-group">
+        @foreach (var opcao in opcoes)
+        {
+            var attrNgShow = !string.IsNullOrEmpty(opcao.NgShow) ? "ng-show=" + opcao.NgShow : string.Empty;
+
+            <button class="btn btn-default" name="@nomePropriedade" @attrNgShow
+                    ng-model="@modeloComPropriedade"
+                    uib-btn-radio="'@opcao.Valor'">
+                @opcao.Nome
+                </button>
+        }
+        @if (!string.IsNullOrEmpty(valorNd))
+        {
+            <button class="btn btn-default" name="@nomePropriedade"
+                    ng-model="@modeloComPropriedade" uib-btn-radio="'@valorNd'">
+                N/D
+            </button>
+        }
+    </div>
+}
+
+
+
+@helper NgClassErrorOnInvalid(string nome)
+{
+    @:ng-class="{ 'has-error': @nome.$invalid && !@nome.$pristine}"
+}
+
+@helper NgHelpText(string text, string ngIf = null)
+{
+var attrNgIf = string.IsNullOrEmpty(ngIf) ? string.Empty : "ng-if=" + ngIf;
+    <span class='icon-info-circled' title='@text' @attrNgIf></span>
+}

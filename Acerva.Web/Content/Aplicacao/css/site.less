@@ -1,0 +1,220 @@
+﻿.animation(@params) {
+    -webkit-animation: @params;
+    -moz-animation: @params;
+    -ms-animation: @params;
+    -o-animation: @params;
+    animation: @params;
+}
+
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    font: 1.2em Helvetica, Arial, sans-serif;
+}
+
+.principal {
+    padding: 1em 1em;
+    position: relative;
+    width: 100%;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+footer {
+    margin-left: 10px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+// corrigindo problema da barra de rolagem horizontal
+//    https://github.com/twbs/bootstrap/issues/9862
+.row {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.container-fluid .row {
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+/* fonts */
+@font-face {
+    font-family: 'acerva-iconfont';
+    src: url('../fonts/acerva-iconfont.eot?72731172');
+    src: url('../fonts/acerva-iconfont.eot?72731172#iefix') format('embedded-opentype'), url('../fonts/acerva-iconfont.woff?72731172') format('woff'), url('../fonts/acerva-iconfont.ttf?72731172') format('truetype'), url('../fonts/acerva-iconfont.svg?72731172#forus-iconfont') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.font-icon-config {
+    font-family: "acerva-iconfont";
+    font-style: normal;
+    font-weight: normal;
+    speak: none;
+    display: inline-block;
+    text-decoration: inherit;
+    width: 1em;
+    margin-right: .2em;
+    text-align: center;
+    /* opacity: .8; */
+    /* For safety - reset parent styles, that can break glyph codes*/
+    font-variant: normal;
+    text-transform: none;
+    /* fix buttons height, for twitter bootstrap */
+    line-height: 1em;
+    /* Animation center compensation - margins should be symmetric */
+    /* remove if not needed */
+    margin-left: .17em;
+}
+
+// Base styles (regardless of theme)
+.bs-callout {
+    margin: 10px 0;
+    padding: 15px 30px 15px 15px;
+    border-left: 5px solid #eee;
+    vertical-align: top;
+}
+
+.bs-callout code,
+.bs-callout .highlight {
+    background-color: #fff;
+}
+
+.hour {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.btn-group .btn-default.active {
+    background-color: #337ab7;
+    color: white;
+}
+
+.equipe .form-group {
+    margin-bottom: 0;
+}
+
+.growl-container > .growl-item.ng-enter {
+    .animation(fadeIn 0.5s)
+}
+
+.growl-container > .growl-item.ng-leave {
+    .animation(bounceOutRight 1s)
+}
+
+.containerPartidasDaRodada.affix {
+    left: calc(((100%/12)*2));
+    margin-left: 19px;
+    top: 60px;
+    width: calc((100%/12)*10);
+    padding-right: 62px;
+}
+@media (max-width: 768px) {
+    .containerPartidasDaRodada.affix {
+        position: static;
+        left: initial;
+        margin-left: initial;
+        width: initial;
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+}
+
+/*.input-sm {
+    height: 25px !important;
+}*/
+
+fieldset {
+    .escondeEmFieldsetDisabled {
+    }
+
+    .mostraEmFieldsetDisabled {
+        display: none;
+    }
+
+    input {
+        z-index: 0 !important; // para que o menu lateral apareca sobre os inputs
+    }
+}
+
+fieldset[disabled] {
+    .escondeEmFieldsetDisabled {
+        display: none;
+    }
+
+    .mostraEmFieldsetDisabled {
+        display: inline;
+    }
+
+    .habilitaEmFieldsetDisabled {
+        pointer-events: all !important; // O bootstrap redefine para "none" dentro de fieldset disabled
+        cursor: pointer;
+
+        &.btn {
+            opacity: 1;
+        }
+    }
+}
+
+tr.placar-padrao td {
+    background-color: #c5c5c5 !important;
+}
+tr.pontuacao-total td {
+    background-color: #e4e4e4 !important;
+}
+
+
+// http://css-tricks.com/snippets/css/text-rotation/
+.rotate {
+    /* Safari */
+    -webkit-transform: rotate(-90deg);
+    /* Firefox */
+    -moz-transform: rotate(-90deg);
+    /* IE */
+    -ms-transform: rotate(-90deg);
+    /* Opera */
+    -o-transform: rotate(-90deg);
+    /* Internet Explorer */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+
+div.navbar-inverse .navbar-collapse {
+    background-color: #149c82;
+}
+
+.form-horizontal .form-group {
+    margin-left: -5px;
+    margin-right: -5px;
+}
+
+
+/*Loader: http://www.w3schools.com/howto/howto_css_loader.asp*/
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    display: inline-block;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.btn-rodada {
+    margin-bottom: 5px;
+}

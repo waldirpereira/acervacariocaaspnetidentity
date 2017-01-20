@@ -16,7 +16,7 @@ namespace Acerva.Web.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Em nosso site você poderá criar e participar de ACervAs de uma maneira totalmente simplificada e segura.";
+            ViewBag.Message = "A ACervA Carioca é uma associação que visa incentivar o desenvolvimento da cultura da cerveja artesanal, no Rio de Janeiro e em todo o Brasil, promovendo encontros, palestras, cursos, concursos e degustações das mais variadas cervejas, em grande parte produzidas pelos próprios associados. Descubra e se delicie com essa cultura participando da associação e dos nossos encontros. E aprenda também a produzir cervejas diferenciadas e de alta qualidade.";
 
             return View();
         }

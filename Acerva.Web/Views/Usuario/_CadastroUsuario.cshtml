@@ -5,7 +5,7 @@
         <div class="panel-heading" ng-hide="ctrl.status.carregando">{{ ctrl.modeloOriginal.id ? "Edição do associado '" + ctrl.modelo.name + "'": "Novo associado" }}</div>
         <div class="panel-body" ng-hide="ctrl.status.carregando">
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-sm-6">
                     <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.name")>
                         <label class="control-label" for="name">Nome</label>
                         <input type="text" class="form-control" name="name" autocomplete="off" required
@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-sm-6">
                     <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.email")>
                         <label class="control-label" for="email">E-mail</label>
                         <input type="text" class="form-control" email="email" autocomplete="off" required
@@ -31,7 +31,8 @@
                                                 "regional in ctrl.dominio.regionais | filter: {nome: $select.search} | orderBy : 'nome' track by regional.codigo",
                                                 "regional.nome | highlight: $select.search")
                        {
-                           Obrigatorio = true
+                           Obrigatorio = true,
+                           Titulo = "Regional"
                        })
                 </div>
             </div>

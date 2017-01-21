@@ -175,7 +175,7 @@ namespace Acerva.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var user = new IdentityUser { UserName = model.Email, Email = model.Email, Name = model.Name };
+            var user = new Usuario { UserName = model.Email, Email = model.Email, Name = model.Name };
             IdentityResult result;
 
             var userBd = UserManager.FindByEmailAsync(model.Email).Result;
@@ -466,7 +466,7 @@ namespace Acerva.Web.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new IdentityUser { UserName = model.Email, Email = model.Email };
+                var user = new Usuario { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

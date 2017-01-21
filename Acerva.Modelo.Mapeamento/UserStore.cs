@@ -22,7 +22,7 @@ namespace Acerva.Modelo.Mapeamento
         IUserTwoFactorStore<TUser, string>,
         IUserLockoutStore<TUser, string>,
         IUserStore<TUser>
-        where TUser : IdentityUser
+        where TUser : Usuario
     {
         private UserTable<TUser> userTable;
         private RoleTable roleTable;

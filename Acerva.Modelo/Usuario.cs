@@ -5,13 +5,13 @@ using Microsoft.AspNet.Identity;
 
 namespace Acerva.Modelo
 {
-    public class IdentityUser : IUser, IEquatable<IdentityUser>
+    public class Usuario : IUser, IEquatable<Usuario>
     {
 
         /// <summary>
         /// Default constructor 
         /// </summary>
-        public IdentityUser()
+        public Usuario()
         {
             //Id = Guid.NewGuid().ToString();
         }
@@ -20,7 +20,7 @@ namespace Acerva.Modelo
         /// Constructor that takes user name as argument
         /// </summary>
         /// <param name="userName"></param>
-        public IdentityUser(string userName)
+        public Usuario(string userName)
             : this()
         {
             UserName = userName;
@@ -41,7 +41,7 @@ namespace Acerva.Modelo
         public virtual int AccessFailedCount { get; set; }
         public virtual Regional Regional { get; set; }
         
-        public virtual async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<IdentityUser> manager)
+        public virtual async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<Usuario> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity =
@@ -50,7 +50,7 @@ namespace Acerva.Modelo
             return userIdentity;
         }
 
-        public virtual bool Equals(IdentityUser other)
+        public virtual bool Equals(Usuario other)
         {
             return GetHashCode() == other.GetHashCode();
         }

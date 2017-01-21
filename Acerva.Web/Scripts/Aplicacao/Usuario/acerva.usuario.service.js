@@ -19,7 +19,7 @@
             },
             salvaUsuario: function (usuario) {
                 return $http.post(ROTAS.salva,
-                    { userViewModel: usuario }
+                    { usuarioViewModel: usuario }
                 ).then(retornaDadoDoXhr);
             },
             buscaTiposDominio: function () {

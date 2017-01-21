@@ -2,7 +2,7 @@
 
 namespace Acerva.Modelo.Validadores
 {
-    public class UserValidator : AbstractValidator<IdentityUser>
+    public class UserValidator : AbstractValidator<Usuario>
     {
         public UserValidator()
         {

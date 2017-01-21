@@ -299,7 +299,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AppplicationBaseController.cs" />
     <Compile Include="Controllers\Helpers\RegionalControllerHelper.cs" />
-    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\RegionalController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -311,7 +311,8 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CadastroRegionais\CadastroRegionalMapperProfile.cs" />
     <Compile Include="Models\CadastroUsuarios\CadastroUsuariosMapperProfile.cs" />
-    <Compile Include="Models\CadastroUsuarios\UserViewModel.cs" />
+    <Compile Include="Models\CadastroUsuarios\RegionalViewModel.cs" />
+    <Compile Include="Models\CadastroUsuarios\UsuarioViewModel.cs" />
     <Compile Include="Models\Home\HomeMapperProfile.cs" />
     <Compile Include="Models\Home\NoticiaViewModel.cs" />
     <Compile Include="Models\CadastroRegionais\RegionalViewModel.cs" />
@@ -368,9 +369,9 @@
     <Content Include="Views\Admin\_ListaArquivos.cshtml" />
     <Content Include="Views\Home\ConfirmSent.cshtml" />
     <Content Include="Views\Home\_PaginaInicial.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\User\_ListaUsuarios.cshtml" />
-    <Content Include="Views\User\_CadastroUsuario.cshtml" />
+    <Content Include="Views\Usuario\Index.cshtml" />
+    <Content Include="Views\Usuario\_ListaUsuarios.cshtml" />
+    <Content Include="Views\Usuario\_CadastroUsuario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Aplicacao\fonts\acerva-iconfont.svg" />

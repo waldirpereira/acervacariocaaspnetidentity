@@ -60,7 +60,7 @@ namespace Acerva.Modelo.Mapeamento
         /// <param name="user">The User</param>
         /// <param name="roleId">The Role's id</param>
         /// <returns></returns>
-        public int Insert(IdentityUser user, string roleId)
+        public int Insert(Usuario user, string roleId)
         {
             string commandText = "Insert into UserRoles (UserId, RoleId) values (@userId, @roleId)";
             Dictionary<string, object> parameters = new Dictionary<string, object>();

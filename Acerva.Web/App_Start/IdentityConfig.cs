@@ -73,19 +73,19 @@ namespace Acerva.Web
     }
 
     // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
-    public class ApplicationUserManager : UserManager<IdentityUser>
+    public class ApplicationUserManager : UserManager<Usuario>
     {
-        public ApplicationUserManager(IUserStore<IdentityUser> store)
+        public ApplicationUserManager(IUserStore<Usuario> store)
             : base(store)
         {
         }
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
-            var manager = new ApplicationUserManager(new UserStore<IdentityUser>(new MySQLDatabase()));
+            var manager = new ApplicationUserManager(new UserStore<Usuario>(new MySQLDatabase()));
 
             // Configure validation logic for usernames
-            manager.UserValidator = new UserValidator<IdentityUser>(manager)
+            manager.UserValidator = new UserValidator<Usuario>(manager)
             {
                 AllowOnlyAlphanumericUserNames = false,
                 RequireUniqueEmail = true
@@ -108,11 +108,11 @@ namespace Acerva.Web
 
             // Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the user
             // You can write your own provider and plug it in here.
-            //manager.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<IdentityUser>
+            //manager.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<Usuario>
             //{
             //    MessageFormat = "Your security code is {0}"
             //});
-            manager.RegisterTwoFactorProvider("EmailCode", new EmailTokenProvider<IdentityUser>
+            manager.RegisterTwoFactorProvider("EmailCode", new EmailTokenProvider<Usuario>
             {
                 Subject = "SecurityCode",
                 BodyFormat = "Seu código de segurança é {0}"
@@ -123,7 +123,7 @@ namespace Acerva.Web
             if (dataProtectionProvider != null)
             {
                 manager.UserTokenProvider =
-                    new DataProtectorTokenProvider<IdentityUser>(dataProtectionProvider.Create("ASP.NET Identity"))
+                    new DataProtectorTokenProvider<Usuario>(dataProtectionProvider.Create("ASP.NET Identity"))
                     {
                         TokenLifespan = TimeSpan.FromHours(3)
                     };
@@ -133,19 +133,19 @@ namespace Acerva.Web
     }
 
     // Configure the application sign-in manager which is used in this application.
-    public class ApplicationSignInManager : SignInManager<IdentityUser, string>
+    public class ApplicationSignInManager : SignInManager<Usuario, string>
     {
         public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager)
             : base(userManager, authenticationManager)
         {
         }
 
-        public ApplicationSignInManager(UserManager<IdentityUser, string> userManager, IAuthenticationManager authenticationManager)
+        public ApplicationSignInManager(UserManager<Usuario, string> userManager, IAuthenticationManager authenticationManager)
         : base(userManager, authenticationManager)
         {
         }
 
-        public override Task<ClaimsIdentity> CreateUserIdentityAsync(IdentityUser user)
+        public override Task<ClaimsIdentity> CreateUserIdentityAsync(Usuario user)
         {
             return user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);
         }

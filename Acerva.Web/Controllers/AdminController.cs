@@ -55,7 +55,7 @@ namespace Acerva.Web.Controllers
         public async Task<ActionResult> AdicionarPapelAdminAoUsuario(string userName)
         {
             var db = new MySQLDatabase();
-            var us = new UserStore<IdentityUser>(db);
+            var us = new UserStore<Usuario>(db);
             var rs = new RoleStore<IdentityRole>(db);
             var role = new IdentityRole("ADMIN");
 

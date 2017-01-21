@@ -8,7 +8,7 @@ namespace Acerva.Modelo.Mapeamento
     /// Class that represents the Users table in the MySQL Database
     /// </summary>
     public class UserTable<TUser>
-        where TUser : IdentityUser
+        where TUser : Usuario
     {
         private MySQLDatabase _database;
 

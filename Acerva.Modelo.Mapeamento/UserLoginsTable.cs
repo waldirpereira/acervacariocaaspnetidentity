@@ -26,7 +26,7 @@ namespace Acerva.Modelo.Mapeamento
         /// <param name="user">User to have login deleted</param>
         /// <param name="login">Login to be deleted from user</param>
         /// <returns></returns>
-        public int Delete(IdentityUser user, UserLoginInfo login)
+        public int Delete(Usuario user, UserLoginInfo login)
         {
             string commandText = "Delete from UserLogins where UserId = @userId and LoginProvider = @loginProvider and ProviderKey = @providerKey";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
@@ -57,7 +57,7 @@ namespace Acerva.Modelo.Mapeamento
         /// <param name="user">User to have new login added</param>
         /// <param name="login">Login to be added</param>
         /// <returns></returns>
-        public int Insert(IdentityUser user, UserLoginInfo login)
+        public int Insert(Usuario user, UserLoginInfo login)
         {
             string commandText = "Insert into UserLogins (LoginProvider, ProviderKey, UserId) values (@loginProvider, @providerKey, @userId)";
             Dictionary<string, object> parameters = new Dictionary<string, object>();

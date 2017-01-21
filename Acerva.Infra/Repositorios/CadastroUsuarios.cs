@@ -15,31 +15,31 @@ namespace Acerva.Infra.Repositorios
             _session = session;
         }
 
-        public IdentityUser Busca(string id)
+        public Usuario Busca(string id)
         {
-            return _session.Get<IdentityUser>(id);
+            return _session.Get<Usuario>(id);
         }
 
-        public void Salva(IdentityUser usuario)
+        public void Salva(Usuario usuario)
         {
             _session.Merge(usuario);
             _session.Flush();
         }
 
-        public IdentityUser BuscaPeloEmail(string email)
+        public Usuario BuscaPeloEmail(string email)
         {
-            var usuariosComMesmoEmail = _session.Query<IdentityUser>().Where(u => u.Email == email).ToList();
+            var usuariosComMesmoEmail = _session.Query<Usuario>().Where(u => u.Email == email).ToList();
             return usuariosComMesmoEmail.OrderBy(u => u.CreationDate).LastOrDefault(); //novos usuarios estarão com data 0000-00-00 00:00
         }
 
-        public IEnumerable<IdentityUser> BuscaTodos()
+        public IEnumerable<Usuario> BuscaTodos()
         {
-            return _session.Query<IdentityUser>();
+            return _session.Query<Usuario>();
         }
 
-        public IEnumerable<IdentityUser> BuscaParaListagem()
+        public IEnumerable<Usuario> BuscaParaListagem()
         {
-            return _session.Query<IdentityUser>();
+            return _session.Query<Usuario>();
         }
     }
 }

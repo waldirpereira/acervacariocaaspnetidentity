@@ -2,7 +2,7 @@ using FluentNHibernate.Mapping;
 
 namespace Acerva.Modelo.Mapeamento
 {
-    public class UsuarioClassMap : ClassMap<IdentityUser>
+    public class UsuarioClassMap : ClassMap<Usuario>
     {
         public UsuarioClassMap()
         {

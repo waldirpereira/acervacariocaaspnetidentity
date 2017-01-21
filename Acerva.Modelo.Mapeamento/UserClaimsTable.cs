@@ -78,7 +78,7 @@ namespace Acerva.Modelo.Mapeamento
         /// <param name="user">The user to have a claim deleted</param>
         /// <param name="claim">A claim to be deleted from user</param>
         /// <returns></returns>
-        public int Delete(IdentityUser user, Claim claim)
+        public int Delete(Usuario user, Claim claim)
         {
             string commandText = "Delete from UserClaims where UserId = @userId and @ClaimValue = @value and ClaimType = @type";
             Dictionary<string, object> parameters = new Dictionary<string, object>();

@@ -7,7 +7,11 @@ namespace Acerva.Web.Models.CadastroUsuarios
     {
         protected override void Configure()
         {
-            CreateMap<IdentityUser, UserViewModel>()
+            CreateMap<Usuario, UsuarioViewModel>()
+                .ReverseMap()
+                .ForMember(d => d.Regional, o => o.DoNotUseDestinationValue());
+
+            CreateMap<Regional, RegionalViewModel>()
                 .ReverseMap();
         }
     }

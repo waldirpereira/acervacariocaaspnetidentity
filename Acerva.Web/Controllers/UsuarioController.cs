@@ -14,19 +14,22 @@ using log4net;
 namespace Acerva.Web.Controllers
 {
     [Authorize]
-    [AcervaAuthorize(Roles = "ADMIN")]
-    public class UserController : ApplicationBaseController
+    [AcervaAuthorize(Roles = "ADMIN, DIRETOR, DELEGADO")]
+    public class UsuarioController : ApplicationBaseController
     {
         private static readonly ILog Log =
             LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        private readonly IValidator<IdentityUser> _validator;
+        private readonly IValidator<Usuario> _validator;
         private readonly ICadastroUsuarios _cadastroUsuarios;
+        private readonly ICadastroRegionais _cadastroRegionais;
 
-        public UserController(IValidator<IdentityUser> validator, ICadastroUsuarios cadastroUsuarios) : base(cadastroUsuarios)
+        public UsuarioController(IValidator<Usuario> validator, 
+            ICadastroUsuarios cadastroUsuarios, ICadastroRegionais cadastroRegionais) : base(cadastroUsuarios)
         {
             _validator = validator;
             _cadastroUsuarios = cadastroUsuarios;
+            _cadastroRegionais = cadastroRegionais;
         }
 
         public ActionResult Index()
@@ -37,39 +40,42 @@ namespace Acerva.Web.Controllers
         public ActionResult BuscaParaListagem()
         {
             var listaUsuariosJson = _cadastroUsuarios.BuscaParaListagem()
-                .Select(Mapper.Map<UserViewModel>);
+                .Select(Mapper.Map<UsuarioViewModel>);
             return new JsonNetResult(listaUsuariosJson);
         }
 
         public ActionResult BuscaTiposDominio()
         {
+            var regionaisJson = _cadastroRegionais.BuscaTodos()
+                .Select(Mapper.Map<RegionalViewModel>);
+
             return new JsonNetResult(new
             {
-                
+                Regionais = regionaisJson
             });
         }
 
         public ActionResult Busca(string id)
         {
             var user = _cadastroUsuarios.Busca(id);
-            var userJson = Mapper.Map<UserViewModel>(user);
+            var userJson = Mapper.Map<UsuarioViewModel>(user);
             return new JsonNetResult(userJson);
         }
 
         [Transacao]
         [HttpPost]
         [ValidateAjaxAntiForgeryToken]
-        public ActionResult Salva([JsonBinder]UserViewModel userViewModel)
+        public ActionResult Salva([JsonBinder]UsuarioViewModel usuarioViewModel)
         {
             Log.InfoFormat("Usuário está salvando o usuário {0} de código {1} e email {2}", 
-                userViewModel.Name, userViewModel.Id, userViewModel.Email);
+                usuarioViewModel.Name, usuarioViewModel.Id, usuarioViewModel.Email);
 
-            var ehNovo = userViewModel.Id == string.Empty;
-            var user = ehNovo ? new IdentityUser() : _cadastroUsuarios.Busca(userViewModel.Id);
+            var ehNovo = usuarioViewModel.Id == string.Empty;
+            var user = ehNovo ? new Usuario() : _cadastroUsuarios.Busca(usuarioViewModel.Id);
 
-            userViewModel.Name = userViewModel.Name.Trim();
+            usuarioViewModel.Name = usuarioViewModel.Name.Trim();
 
-            Mapper.Map(userViewModel, user);
+            Mapper.Map(usuarioViewModel, user);
 
             var validacao = _validator.Validate(user);
             if (!validacao.IsValid)
@@ -114,7 +120,7 @@ namespace Acerva.Web.Controllers
             return new JsonNetResult(new { growlMessage }, statusCode: JsonNetResult.HttpBadRequest);
         }
 
-        private bool ExisteComMesmoNome(IdentityUser user)
+        private bool ExisteComMesmoNome(Usuario user)
         {
             var nomeUpper = user.Name.ToUpperInvariant();
             var temComMesmoNome = _cadastroUsuarios

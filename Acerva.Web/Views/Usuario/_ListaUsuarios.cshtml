@@ -9,6 +9,7 @@
                     <tr>
                         <th>Nome</th>
                         <th style="width: 120px;">E-mail</th>
+                        <th style="width: 60px;">Regional</th>
                         <th class="sorting_disabled" style="width: 60px;"></th>
                     </tr>
                 </thead>
@@ -18,9 +19,8 @@
                             <a title="Editar associado"
                                ng-href="#/Edit/{{m.id}}">{{m.name}}</a>
                         </td>
-                        <td>
-                            {{m.email}}
-                        </td>
+                        <td>{{m.email}}</td>
+                        <td>{{m.regional.nome}}</td>
 
                         <td style="padding: 4px;">
                             <a class="btn btn-info btn-xs" title="Editar {{ m.name }}"
@@ -46,6 +46,9 @@
                                 <a title="Editar associado"
                                    ng-href="#/Edit/{{m.id}}">{{m.name}}</a>
                             </strong>
+                            <span class="label label-primary">
+                                {{m.regional.nome}}
+                            </span>
                             <br/>
                             <i>{{m.email}}</i>
                             <br/>

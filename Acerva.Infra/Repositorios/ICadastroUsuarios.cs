@@ -6,10 +6,10 @@ namespace Acerva.Infra.Repositorios
 {
     public interface ICadastroUsuarios
     {
-        IdentityUser Busca(string id);
-        void Salva(IdentityUser usuario);
-        IdentityUser BuscaPeloEmail(string email);
-        IEnumerable<IdentityUser> BuscaTodos();
-        IEnumerable<IdentityUser> BuscaParaListagem();
+        Usuario Busca(string id);
+        void Salva(Usuario usuario);
+        Usuario BuscaPeloEmail(string email);
+        IEnumerable<Usuario> BuscaTodos();
+        IEnumerable<Usuario> BuscaParaListagem();
     }
 }

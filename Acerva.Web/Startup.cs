@@ -1,6 +1,4 @@
-﻿using System.Web.Mvc;
-using Acerva.Web.Controllers;
-using Hangfire;
+﻿using Hangfire;
 using Hangfire.Dashboard;
 using Hangfire.MySql;
 using Microsoft.Owin;

@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NoticiaClassMap.cs" />
     <Compile Include="RegionalClassMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleStore.cs" />

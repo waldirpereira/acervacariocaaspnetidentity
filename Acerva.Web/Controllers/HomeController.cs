@@ -1,13 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 using System.Web.Mvc;
 using Acerva.Infra.Repositorios;
 using Acerva.Infra.Web;
+using Acerva.Web.Models.Home;
+using AutoMapper;
 
 namespace Acerva.Web.Controllers
 {
     public class HomeController : ApplicationBaseController
     {
-        public HomeController(ICadastroUsuarios cadastroUsuarios) : base(cadastroUsuarios) {}
+        private readonly ICadastroNoticias _cadastroNoticias;
+        public HomeController(ICadastroUsuarios cadastroUsuarios, ICadastroNoticias cadastroNoticias) : base(cadastroUsuarios)
+        {
+            _cadastroNoticias = cadastroNoticias;
+        }
 
         public ActionResult Index()
         {
@@ -35,12 +41,9 @@ namespace Acerva.Web.Controllers
 
         public ActionResult BuscaNoticias()
         {
-            var noticias = new List<string>
-            {
-                "noticia 1",
-                "noticia 2"
-            };
-            return new JsonNetResult(noticias);
+            var listaNoticiasJson = _cadastroNoticias.BuscaTodas()
+                .Select(Mapper.Map<NoticiaViewModel>);
+            return new JsonNetResult(listaNoticiasJson);
         }
     }
 }

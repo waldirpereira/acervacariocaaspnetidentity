@@ -1,12 +1,9 @@
 ﻿@{
     ViewBag.Title = "Bem vindo ao site da ACervA Carioca!";
 }
-<h4>@ViewBag.Title</h4>
-<h5>@ViewBag.Message</h5>
+<h3>@ViewBag.Title</h3>
 
-<h2>Sobre a nossa associação</h2>
-<p>A ACervA Carioca é uma associação que visa incentivar o desenvolvimento da cultura da cerveja artesanal, no Rio de Janeiro e em todo o Brasil, promovendo encontros, palestras, cursos, concursos e degustações das mais variadas cervejas, em grande parte produzidas pelos próprios associados. Descubra e se delicie com essa cultura participando da associação e dos nossos encontros. E aprenda também a produzir cervejas diferenciadas e de alta qualidade.</p>
-
-<ul>
-    <li ng-repeat="noticia in listaCtrl.listaNoticias">{{noticia}}</li>
-</ul>
+<div ng-repeat="noticia in listaCtrl.listaNoticias">
+    <h4>{{noticia.titulo}}</h4>
+    <span ng-bind-html="noticia.textoHtml"></span>
+</div>

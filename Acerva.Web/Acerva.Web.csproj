@@ -309,6 +309,8 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CadastroRegionais\CadastroRegionalMapperProfile.cs" />
+    <Compile Include="Models\Home\HomeMapperProfile.cs" />
+    <Compile Include="Models\Home\NoticiaViewModel.cs" />
     <Compile Include="Models\CadastroRegionais\RegionalViewModel.cs" />
     <Compile Include="Models\GrowlMessage.cs" />
     <Compile Include="Models\ManageViewModels.cs" />

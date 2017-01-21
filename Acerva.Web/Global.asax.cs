@@ -14,6 +14,7 @@ using Acerva.Modelo;
 using Acerva.Modelo.Mapeamento;
 using Acerva.Web.AttributeAdapters;
 using Acerva.Web.Models.CadastroRegionais;
+using Acerva.Web.Models.Home;
 using FluentNHibernate.Cfg;
 using log4net;
 using log4net.Config;
@@ -153,6 +154,7 @@ namespace Acerva.Web
             // https://github.com/AutoMapper/AutoMapper/wiki/Configuration
             Mapper.Initialize(cfg =>
             {
+                cfg.AddProfile<HomeMapperProfile>();
                 cfg.AddProfile<CadastroRegionalMapperProfile>();
             });
             //Mapper.AssertConfigurationIsValid();

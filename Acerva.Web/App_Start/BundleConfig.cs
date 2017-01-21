@@ -94,6 +94,7 @@ namespace Acerva.Web
             Layout(bundles);
 
             CadastroRegionais(bundles);
+            CadastroUsuarios(bundles);
             Inicio(bundles);
             Admin(bundles);
 
@@ -172,6 +173,17 @@ namespace Acerva.Web
                 .Include(path + "acerva.regional.service.js")
                 .Include(path + "acerva.regional.controller.js")
                 .Include(path + "acerva.regional.cadastro.controller.js")
+            );
+        }
+
+        private static void CadastroUsuarios(BundleCollection bundles)
+        {
+            const string path = ScriptsAplicacaoFolder + "usuario/";
+            bundles.Add(new ScriptBundle("~/bundles/user")
+                .Include(path + "acerva.usuario.module.js")
+                .Include(path + "acerva.usuario.service.js")
+                .Include(path + "acerva.usuario.controller.js")
+                .Include(path + "acerva.usuario.cadastro.controller.js")
             );
         }
 

@@ -3,10 +3,6 @@ using Microsoft.AspNet.Identity;
 
 namespace Acerva.Modelo
 {
-    /// <summary>
-    /// Class that implements the ASP.NET Identity
-    /// IRole interface 
-    /// </summary>
     public class IdentityRole : IRole
     {
         /// <summary>
@@ -31,14 +27,7 @@ namespace Acerva.Modelo
             Id = id;
         }
 
-        /// <summary>
-        /// Role ID
-        /// </summary>
         public string Id { get; set; }
-
-        /// <summary>
-        /// Role name
-        /// </summary>
         public string Name { get; set; }
     }
 }

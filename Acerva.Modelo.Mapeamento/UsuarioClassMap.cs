@@ -1,4 +1,3 @@
-using System;
 using FluentNHibernate.Mapping;
 
 namespace Acerva.Modelo.Mapeamento
@@ -8,8 +7,8 @@ namespace Acerva.Modelo.Mapeamento
         public UsuarioClassMap()
         {
             Table("users");
-            //Cache.ReadWrite();
-            ReadOnly();
+            Cache.ReadWrite();
+            //ReadOnly();
 
             Id(u => u.Id, "Id").GeneratedBy.Assigned();
             Map(u => u.Name, "Name");
@@ -17,6 +16,8 @@ namespace Acerva.Modelo.Mapeamento
             Map(u => u.UserName, "UserName");
             Map(u => u.Email, "Email");
             Map(u => u.CreationDate, "CreationDate");
+
+            References(u => u.Regional, "codigo_regional");
         }
     }
 }

@@ -1,0 +1,43 @@
+﻿@using Acerva.Modelo
+<form name="formUsuario" novalidate>
+    <div class="panel panel-primary">
+        <div class="panel-heading" ng-show="ctrl.status.carregando">Carregando<i class="icon icon-spin2 glyphicon-spin"></i></div>
+        <div class="panel-heading" ng-hide="ctrl.status.carregando">{{ ctrl.modeloOriginal.id ? "Edição do associado '" + ctrl.modelo.name + "'": "Novo associado" }}</div>
+        <div class="panel-body" ng-hide="ctrl.status.carregando">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.name")>
+                        <label class="control-label" for="name">Nome</label>
+                        <input type="text" class="form-control" name="name" autocomplete="off" required
+                               ng-model="ctrl.modelo.name"/>
+                        <p ng-show="formUsuario.name.$invalid && !formUsuario.name.$pristine" class="help-block">O nome é obrigatório</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.email")>
+                        <label class="control-label" for="email">E-mail</label>
+                        <input type="text" class="form-control" email="email" autocomplete="off" required
+                               ng-model="ctrl.modelo.email" />
+                        <p ng-show="formUsuario.email.$invalid && !formUsuario.email.$pristine" class="help-block">O e-mail é obrigatório</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="pull-right">
+                        <a class="btn btn-default" href="#/"
+                           ng-disabled="!ctrl.modelo || ctrl.status.salvando">Cancelar</a>
+                        <button type="submit" class="btn btn-primary" ng-hide="ctrl.status.bloqueado" ng-disabled="formUsuario.$invalid || ctrl.status.salvando || ctrl.partidaEmEdicao"
+                                ng-click="ctrl.salvaUsuario()">
+                            Salvar<i class="icon icon-spin2 glyphicon-spin" ng-show="ctrl.status.salvando"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

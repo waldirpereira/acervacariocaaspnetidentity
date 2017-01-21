@@ -36,6 +36,7 @@
                     @if (Request.IsAuthenticated && User.IsInRole("ADMIN"))
                     {
                         <li>@Html.ActionLink("Regionais", "Index", "Regional")</li>
+                        <li>@Html.ActionLink("Associados", "Index", "User")</li>
                         <li>@Html.ActionLink("Admin", "Index", "Admin")</li>
                     }
                     <li>@Html.ActionLink("Contatos", "Contact", "Home")</li>

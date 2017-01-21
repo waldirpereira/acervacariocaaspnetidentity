@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Acerva.Modelo;
 using NHibernate;
@@ -29,6 +30,16 @@ namespace Acerva.Infra.Repositorios
         {
             var usuariosComMesmoEmail = _session.Query<IdentityUser>().Where(u => u.Email == email).ToList();
             return usuariosComMesmoEmail.OrderBy(u => u.CreationDate).LastOrDefault(); //novos usuarios estarão com data 0000-00-00 00:00
+        }
+
+        public IEnumerable<IdentityUser> BuscaTodos()
+        {
+            return _session.Query<IdentityUser>();
+        }
+
+        public IEnumerable<IdentityUser> BuscaParaListagem()
+        {
+            return _session.Query<IdentityUser>();
         }
     }
 }

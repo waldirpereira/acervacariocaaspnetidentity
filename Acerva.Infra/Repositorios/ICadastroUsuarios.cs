@@ -12,5 +12,6 @@ namespace Acerva.Infra.Repositorios
         IEnumerable<Usuario> BuscaTodos();
         IEnumerable<Usuario> BuscaParaListagem();
         IEnumerable<Usuario> BuscaComTermo(string termo);
+        bool ExisteComMesmoNome(Usuario usuario);
     }
 }

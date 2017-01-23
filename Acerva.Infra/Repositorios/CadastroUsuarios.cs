@@ -48,5 +48,14 @@ namespace Acerva.Infra.Repositorios
                 .Where(p => (p.Name + "|&|" + p.Email).ToLower().Contains(termo.ToLower()))
                 .ToList();
         }
+
+        public bool ExisteComMesmoNome(Usuario usuario)
+        {
+            var nomeUpper = usuario.Name.ToUpperInvariant();
+            var temComMesmoNome = BuscaTodos()
+                .Any(e => e.Name.ToUpperInvariant() == nomeUpper && e.Id != usuario.Id);
+
+            return temComMesmoNome;
+        }
     }
 }

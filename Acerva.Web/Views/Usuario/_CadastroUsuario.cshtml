@@ -1,5 +1,4 @@
-﻿@using Acerva.Modelo
-<form name="formUsuario" novalidate>
+﻿<form name="formUsuario" novalidate>
     <div class="panel panel-primary">
         <div class="panel-heading" ng-show="ctrl.status.carregando">Carregando<i class="icon icon-spin2 glyphicon-spin"></i></div>
         <div class="panel-heading" ng-hide="ctrl.status.carregando">{{ ctrl.modeloOriginal.id ? "Edição do associado '" + ctrl.modelo.name + "'": "Novo associado" }}</div>
@@ -24,6 +23,26 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label" for="password">Senha</label>
+                        <input type="password" name="password" class="form-control" autocomplete="off" required
+                               ng-model="ctrl.modelo.password" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label" for="confirmPassword">Confirmação da senha</label>
+                        <input type="password" name="confirmPassword" class="form-control" autocomplete="off" required
+                               ng-model="ctrl.modelo.confirmPassword" />
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.usuarioIndicacao")>
@@ -60,24 +79,24 @@
             </div>
 
             <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 col-sm-6" ng-if="ctrl.tipoCadastro !== 'registro'">
                     @NgHelpers.NgSelectComBuscaRespeitandoStatusBloqueado("ctrl", new NgHelpers.NgSelectOptions("status", "ctrl.modelo", "nomeExibicao",
                                                 "status in ctrl.dominio.listaStatusUsuario | filter: {nomeExibicao: $select.search} | orderBy : 'codigo' track by status.codigo",
                                                 "status.nomeExibicao | highlight: $select.search")
-               {
-                   Obrigatorio = true,
-                   Titulo = "Status"
-               })
+                               {
+                                   Obrigatorio = true,
+                                   Titulo = "Status"
+                               })
                 </div>
 
                 <div class="col-xs-12 col-sm-6">
                     @NgHelpers.NgSelectComBuscaRespeitandoStatusBloqueado("ctrl", new NgHelpers.NgSelectOptions("regional", "ctrl.modelo", "nome",
                         "regional in ctrl.dominio.regionais | filter: {nome: $select.search} | orderBy : 'nome' track by regional.codigo",
                         "regional.nome | highlight: $select.search")
-               {
-                   Obrigatorio = true,
-                   Titulo = "Regional"
-               })
+                               {
+                                   Obrigatorio = true,
+                                   Titulo = "Regional"
+                               })
                 </div>
             </div>
         </div>

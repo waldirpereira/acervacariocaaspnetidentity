@@ -321,7 +321,10 @@
     <Compile Include="Models\Home\NoticiaViewModel.cs" />
     <Compile Include="Models\CadastroRegionais\RegionalViewModel.cs" />
     <Compile Include="Models\GrowlMessage.cs" />
+    <Compile Include="Models\Home\RegionalViewModel.cs" />
+    <Compile Include="Models\Home\UsuarioIndicacaoViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Home\UsuarioNovoViewModel.cs" />
     <Compile Include="Ninject\HttpFiltersNinjectModule.cs" />
     <Compile Include="Ninject\RepositoriosNoBancoDeDadosNinjectModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -343,6 +346,9 @@
     <Content Include="Scripts\Aplicacao\Inicio\acerva.inicio.controller.js" />
     <Content Include="Scripts\Aplicacao\Inicio\acerva.inicio.module.js" />
     <Content Include="Scripts\Aplicacao\Inicio\acerva.inicio.service.js" />
+    <Content Include="Scripts\Aplicacao\Registro\acerva.registro.controller.js" />
+    <Content Include="Scripts\Aplicacao\Registro\acerva.registro.module.js" />
+    <Content Include="Scripts\Aplicacao\Registro\acerva.registro.service.js" />
     <Content Include="Scripts\Aplicacao\Usuario\acerva.usuario.cadastro.controller.js" />
     <Content Include="Scripts\Aplicacao\Usuario\acerva.usuario.controller.js" />
     <Content Include="Scripts\Aplicacao\Usuario\acerva.usuario.module.js" />

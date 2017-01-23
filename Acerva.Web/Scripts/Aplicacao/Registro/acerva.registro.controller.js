@@ -1,10 +1,10 @@
 ﻿(function () {
     "use strict";
 
-    angular.module("acerva.usuario")
-        .controller("CadastroUsuarioController", ["$scope", "$timeout", "$routeParams", "$location", "ENUMS", "CanalMensagemGrowl", "Usuario", CadastroUsuarioController]);
+    angular.module("acerva.registro")
+        .controller("RegistroController", ["$scope", "$timeout", "$routeParams", "$location", "ENUMS", "Registro", RegistroController]);
 
-    function CadastroUsuarioController($scope, $timeout, $routeParams, $location, ENUMS, CanalMensagemGrowl, Usuario) {
+    function RegistroController($scope, $timeout, $routeParams, $location, ENUMS, Registro) {
         var ctrl = this;
         ctrl.status = {
             carregando: false,
@@ -15,6 +15,8 @@
         ctrl.modeloOriginal = {};
         ctrl.dominio = {};
 
+        ctrl.tipoCadastro = "registro";
+
         ctrl.salvaUsuario = salvaUsuario;
         ctrl.recuperaUsuariosIndicacao = recuperaUsuariosIndicacao;
 
@@ -24,19 +26,18 @@
         function init(id) {
             ctrl.status.carregando = true;
 
-            Usuario.buscaTiposDominio().then(function (tipos) {
+            Registro.buscaTiposDominio().then(function (tipos) {
                 angular.extend(ctrl.dominio, tipos);
 
                 ctrl.dominio.statusUsuario = ENUMS.statusUsuario;
-                ctrl.dominio.listaStatusUsuario = ENUMS.toArrayOfEnums(ENUMS.statusUsuario);
 
-                if (id === 0) {
-                    colocaUsuarioEmEdicao({});
+                if (!id) {
+                    colocaUsuarioEmEdicao({ status: ctrl.dominio.statusUsuario.inativo });
                     ctrl.status.carregando = false;
                     return;
                 }
 
-                return Usuario.buscaUsuario(id).then(function (usuario) {
+                return Registro.buscaUsuario(id).then(function (usuario) {
                     colocaUsuarioEmEdicao(usuario);
                     ctrl.status.carregando = false;
                 });
@@ -54,13 +55,13 @@
 
             ctrl.status.salvando = true;
             
-            Usuario.salvaUsuario(ctrl.modelo)
+            Registro.salvaUsuario(ctrl.modelo)
                 .then(function () {  })
                 .finally(function () { ctrl.status.salvando = false; });
         }
 
         function recuperaUsuariosIndicacao(termo) {
-            return Usuario.buscaUsuariosAtivosComTermo(termo).then(function (usuarios) {
+            return Registro.buscaUsuariosAtivosComTermo(termo).then(function (usuarios) {
                 return usuarios;
             });
         }

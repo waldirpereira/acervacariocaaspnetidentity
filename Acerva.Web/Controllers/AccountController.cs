@@ -1,31 +1,40 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Acerva.Infra.Repositorios;
+using Acerva.Infra.Web;
 using Acerva.Modelo;
+using Acerva.Web.Extensions;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Acerva.Web.Models;
+using Acerva.Web.Models.Home;
+using AutoMapper;
 using Facebook;
+using FluentValidation;
 using log4net;
-using Newtonsoft.Json;
 
 namespace Acerva.Web.Controllers
 {
     [Authorize]
     public class AccountController : ApplicationBaseController
     {
+        private readonly IValidator<Usuario> _validator;
+        private readonly ICadastroUsuarios _cadastroUsuarios;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private static readonly ILog Log =
             LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        public AccountController(ICadastroUsuarios cadastroUsuarios) : base(cadastroUsuarios)
+        public AccountController(IValidator<Usuario> validator, ICadastroUsuarios cadastroUsuarios) : base(cadastroUsuarios)
         {
+            _validator = validator;
+            _cadastroUsuarios = cadastroUsuarios;
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -169,28 +178,36 @@ namespace Acerva.Web.Controllers
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        [ValidateAjaxAntiForgeryToken]
+        public async Task<ActionResult> Register([JsonBinder]UsuarioNovoViewModel usuarioViewModel)
         {
             if (!ModelState.IsValid)
-                return View(model);
+                return View(usuarioViewModel);
 
-            var user = new Usuario { UserName = model.Email, Email = model.Email, Name = model.Name };
-            IdentityResult result;
+            var userBd = UserManager.FindByEmailAsync(usuarioViewModel.Email).Result;
 
-            var userBd = UserManager.FindByEmailAsync(model.Email).Result;
-            if (userBd != null && string.IsNullOrEmpty(userBd.PasswordHash))
+            if (userBd != null)
             {
-                user = userBd;
-                user.Name = model.Name;
-                await UserManager.UpdateAsync(user);
-                result = await UserManager.AddPasswordAsync(user.Id, model.Password);
+                return RetornaJsonDeAlerta(
+                        "Este e-mail já está cadastrado em nossa base. Utilize o \"Esqueci minha senha\" para recuperar seu acesso.");
             }
-            else
+
+            var usuario = new Usuario();
+            Mapper.Map(usuarioViewModel, usuario);
+            usuario.Id = Guid.NewGuid().ToString();
+            
+            var validacao = _validator.Validate(usuario);
+            if (!validacao.IsValid)
             {
-                user.Id = Guid.NewGuid().ToString();
-                result = await UserManager.CreateAsync(user, model.Password);
+                return RetornaJsonDeAlerta(validacao.GeraListaHtmlDeValidacoes());
             }
+
+            if (_cadastroUsuarios.ExisteComMesmoNome(usuario))
+            {
+                return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Já existe um usuário com o nome {0:unsafe}", usuario.Name));
+            }
+
+            var result = await UserManager.CreateAsync(usuario, usuarioViewModel.Password);
                 
             if (result.Succeeded)
             {
@@ -198,21 +215,26 @@ namespace Acerva.Web.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                var code = await UserManager.GenerateEmailConfirmationTokenAsync(usuario.Id);
+                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = usuario.Id, code = code }, protocol: Request.Url.Scheme);
 
-                Log.InfoFormat("E-mail de confirmação de conta sendo enviado para '{0}' com URL {1}", user.Email, callbackUrl);
+                Log.InfoFormat("E-mail de confirmação de conta sendo enviado para '{0}' com URL {1}", usuario.Email, callbackUrl);
 
-                await SendEmailConfirmationTokenAsync(user.Id, "Confirme seu e-mail");
+                await SendEmailConfirmationTokenAsync(usuario.Id, "Confirme seu e-mail");
                 
                 return RedirectToAction("ConfirmSent", "Home");
             }
-            AddErrors(result);
-
+            
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return RetornaJsonDeAlerta(result.Errors.Aggregate((x, y) => x + "<br/>" + y));
         }
 
+        private static ActionResult RetornaJsonDeAlerta(string mensagem)
+        {
+            var growlMessage = new GrowlMessage(GrowlMessageSeverity.Warning, mensagem, "Associado não salvo");
+
+            return new JsonNetResult(new { growlMessage }, statusCode: JsonNetResult.HttpBadRequest);
+        }
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]

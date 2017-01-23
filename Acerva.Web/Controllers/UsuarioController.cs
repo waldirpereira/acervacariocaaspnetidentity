@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
 using AutoMapper;
@@ -13,8 +14,6 @@ using log4net;
 
 namespace Acerva.Web.Controllers
 {
-    [Authorize]
-    [AcervaAuthorize(Roles = "ADMIN, DIRETOR, DELEGADO")]
     public class UsuarioController : ApplicationBaseController
     {
         private static readonly ILog Log =
@@ -65,29 +64,30 @@ namespace Acerva.Web.Controllers
         [Transacao]
         [HttpPost]
         [ValidateAjaxAntiForgeryToken]
+        [AcervaAuthorize(Roles = "ADMIN, DIRETOR, DELEGADO")]
         public ActionResult Salva([JsonBinder]UsuarioViewModel usuarioViewModel)
         {
             Log.InfoFormat("Usuário está salvando o usuário {0} de código {1} e email {2}", 
                 usuarioViewModel.Name, usuarioViewModel.Id, usuarioViewModel.Email);
 
             var ehNovo = string.IsNullOrEmpty(usuarioViewModel.Id);
-            var user = ehNovo ? new Usuario() : _cadastroUsuarios.Busca(usuarioViewModel.Id);
+            var usuario = ehNovo ? new Usuario{ Id = Guid.NewGuid().ToString() } : _cadastroUsuarios.Busca(usuarioViewModel.Id);
 
             usuarioViewModel.Name = usuarioViewModel.Name.Trim();
 
-            Mapper.Map(usuarioViewModel, user);
+            Mapper.Map(usuarioViewModel, usuario);
 
-            var validacao = _validator.Validate(user);
+            var validacao = _validator.Validate(usuario);
             if (!validacao.IsValid)
                 return RetornaJsonDeAlerta(validacao.GeraListaHtmlDeValidacoes());
 
-            if (ExisteComMesmoNome(user))
-                return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Já existe um usuário com o nome {0:unsafe}", user.Name));
+            if (_cadastroUsuarios.ExisteComMesmoNome(usuario))
+                return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Já existe um usuário com o nome {0:unsafe}", usuario.Name));
             
-            _cadastroUsuarios.Salva(user);
+            _cadastroUsuarios.Salva(usuario);
 
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success,
-                string.Format("Usuário <a href='{0}#/Edit/{1}'>{2}</a> foi salvo com sucesso", Url.Action("Index"), user.Id, user.Name),
+                string.Format("Usuário <a href='{0}#/Edit/{1}'>{2}</a> foi salvo com sucesso", Url.Action("Index"), usuario.Id, usuario.Name),
                 "Usuário salvo");
 
             return new JsonNetResult(new { growlMessage });
@@ -119,17 +119,7 @@ namespace Acerva.Web.Controllers
 
             return new JsonNetResult(new { growlMessage }, statusCode: JsonNetResult.HttpBadRequest);
         }
-
-        private bool ExisteComMesmoNome(Usuario user)
-        {
-            var nomeUpper = user.Name.ToUpperInvariant();
-            var temComMesmoNome = _cadastroUsuarios
-                .BuscaTodos()
-                .Any(e => e.Name.ToUpperInvariant() == nomeUpper && e.Id != user.Id);
-
-            return temComMesmoNome;
-        }
-
+        
         public ActionResult BuscaUsuariosAtivosComTermo(string termo)
         {
             var usuariosDisponiveis = _cadastroUsuarios.BuscaComTermo(termo)

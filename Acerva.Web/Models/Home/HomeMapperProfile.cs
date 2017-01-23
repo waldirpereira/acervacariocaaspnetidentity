@@ -9,6 +9,16 @@ namespace Acerva.Web.Models.Home
         {
             CreateMap<Noticia, NoticiaViewModel>()
                 .ReverseMap();
+
+            CreateMap<Usuario, UsuarioNovoViewModel>()
+                .ReverseMap()
+                .ForMember(d => d.UserName, o => o.ResolveUsing(s => s.Email));
+
+            CreateMap<Usuario, UsuarioIndicacaoViewModel>()
+                .ReverseMap();
+
+            CreateMap<Regional, RegionalViewModel>()
+                .ReverseMap();
         }
     }
 }

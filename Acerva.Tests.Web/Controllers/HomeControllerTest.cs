@@ -10,13 +10,15 @@ namespace Acerva.Tests.Web.Controllers
     public class HomeControllerTest
     {
         private Mock<ICadastroUsuarios> _cadastroUsuarios;
+        private Mock<ICadastroNoticias> _cadastroNoticias;
         private HomeController _controller;
 
         [TestInitialize]
         public void SetUp()
         {
             _cadastroUsuarios = new Mock<ICadastroUsuarios>();
-            _controller = new HomeController(_cadastroUsuarios.Object);
+            _cadastroNoticias = new Mock<ICadastroNoticias>();
+            _controller = new HomeController(_cadastroUsuarios.Object, _cadastroNoticias.Object);
             _controller.SetFakeUrlHelper();
         }
 

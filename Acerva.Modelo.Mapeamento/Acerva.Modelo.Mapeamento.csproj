@@ -46,6 +46,12 @@
       <HintPath>..\packages\NHibernate.4.0.4.4000\lib\net40\NHibernate.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SiplexCommon.EnumUtil">
+      <HintPath>..\packages\SiplexCommon.EnumUtil.1.0.1.0\lib\net40\SiplexCommon.EnumUtil.dll</HintPath>
+    </Reference>
+    <Reference Include="SiplexCommon.NHibernate">
+      <HintPath>..\packages\SiplexCommon.NHibernate.2.0.0.0\lib\net40\SiplexCommon.NHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

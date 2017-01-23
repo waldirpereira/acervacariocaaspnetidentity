@@ -12,6 +12,31 @@ body {
     font: 1.2em Helvetica, Arial, sans-serif;
 }
 
+a {
+    color:#f39c12;
+    &:hover {
+        color: #e74c3c; 
+    }
+}
+
+.ui-select-bootstrap .ui-select-choices-row>a {
+    color: silver !important;
+        &:hover, &:focus {
+            color: black !important;
+        }
+}
+
+.ui-select-bootstrap .ui-select-choices-row>a:hover, .ui-select-bootstrap .ui-select-choices-row>a:focus {
+    text-decoration: none;
+    color: #262626;
+    background-color: #f5f5f5;
+}
+
+.navbar-inverse {
+    background-color: #f39c12;
+    border-color: transparent;
+}
+
 .principal {
     padding: 1em 1em;
     position: relative;
@@ -189,10 +214,6 @@ tr.pontuacao-total td {
     -o-transform: rotate(-90deg);
     /* Internet Explorer */
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
-}
-
-div.navbar-inverse .navbar-collapse {
-    background-color: #149c82;
 }
 
 .form-horizontal .form-group {

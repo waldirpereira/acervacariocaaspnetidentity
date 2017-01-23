@@ -27,13 +27,23 @@
 
             <div class="row">
                 <div class="col-xs-12 col-sm-6">
+                    @NgHelpers.NgSelectComBuscaRespeitandoStatusBloqueado("ctrl", new NgHelpers.NgSelectOptions("status", "ctrl.modelo", "nomeExibicao",
+                                                "status in ctrl.dominio.listaStatusUsuario | filter: {nomeExibicao: $select.search} | orderBy : 'codigo' track by status.codigo",
+                                                "status.nomeExibicao | highlight: $select.search")
+                   {
+                       Obrigatorio = true,
+                       Titulo = "Status"
+                   })
+                </div>
+
+                <div class="col-xs-12 col-sm-6">
                     @NgHelpers.NgSelectComBuscaRespeitandoStatusBloqueado("ctrl", new NgHelpers.NgSelectOptions("regional", "ctrl.modelo", "nome",
-                                                "regional in ctrl.dominio.regionais | filter: {nome: $select.search} | orderBy : 'nome' track by regional.codigo",
-                                                "regional.nome | highlight: $select.search")
-                       {
-                           Obrigatorio = true,
-                           Titulo = "Regional"
-                       })
+                        "regional in ctrl.dominio.regionais | filter: {nome: $select.search} | orderBy : 'nome' track by regional.codigo",
+                        "regional.nome | highlight: $select.search")
+                    {
+                        Obrigatorio = true,
+                        Titulo = "Regional"
+                    })
                 </div>
             </div>
         </div>

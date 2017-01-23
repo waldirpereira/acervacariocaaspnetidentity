@@ -180,6 +180,9 @@
       <HintPath>..\packages\Ninject.MVC3.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SiplexCommon.EnumUtil">
+      <HintPath>..\packages\SiplexCommon.EnumUtil.1.0.1.0\lib\net40\SiplexCommon.EnumUtil.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -327,6 +330,8 @@
     <Content Include="Content\vendor\angular-hotkeys\hotkeys.min.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-theme.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="Content\vendor\bootswatch\darkly\css\bootstrap.css" />
+    <Content Include="Content\vendor\bootswatch\darkly\css\bootstrap.min.css" />
     <Content Include="Content\vendor\bootswatch\flatly\css\bootstrap.css" />
     <Content Include="Content\vendor\bootswatch\flatly\css\bootstrap.min.css" />
     <Content Include="Content\vendor\bootswatch\flatly\fonts\glyphicons-halflings-regular.svg" />
@@ -364,6 +369,9 @@
     <Content Include="Content\vendor\bootswatch\flatly\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\vendor\bootswatch\flatly\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\vendor\bootswatch\flatly\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\vendor\bootswatch\darkly\css\bootswatch.less" />
+    <Content Include="Content\vendor\bootswatch\darkly\css\variables.less" />
+    <Content Include="Content\vendor\bootswatch\darkly\css\mixins.less" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\_ListaArquivos.cshtml" />
@@ -1327,6 +1335,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Aplicacao\images\" />
+    <Folder Include="Content\vendor\bootswatch\darkly\css\fonts\" />
     <Folder Include="Content\vendor\datatables-tabletools\images\psd\" />
     <Folder Include="Log\" />
     <Folder Include="Views\AppplicationBase\" />

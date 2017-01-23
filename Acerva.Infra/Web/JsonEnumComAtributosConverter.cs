@@ -2,6 +2,7 @@
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SiplexCommon.EnumUtil;
 
 namespace Acerva.Infra.Web
 {

@@ -130,16 +130,4 @@ namespace Acerva.Web.Controllers
             return temComMesmoNome;
         }
     }
-
-    public enum StatusUsuario
-    {
-        [CodigoBd("I")]
-        Inativo,
-
-        [CodigoBd("A")]
-        Ativo,
-
-        [CodigoBd("N")]
-        Novo
-    }
 }

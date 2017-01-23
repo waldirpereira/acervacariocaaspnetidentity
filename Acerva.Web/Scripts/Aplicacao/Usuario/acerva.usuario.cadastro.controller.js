@@ -2,9 +2,9 @@
     "use strict";
 
     angular.module("acerva.usuario")
-        .controller("CadastroUsuarioController", ["$scope", "$timeout", "$routeParams", "$location", "CanalMensagemGrowl", "Usuario", CadastroUsuarioController]);
+        .controller("CadastroUsuarioController", ["$scope", "$timeout", "$routeParams", "$location", "ENUMS", "CanalMensagemGrowl", "Usuario", CadastroUsuarioController]);
 
-    function CadastroUsuarioController($scope, $timeout, $routeParams, $location, CanalMensagemGrowl, Usuario) {
+    function CadastroUsuarioController($scope, $timeout, $routeParams, $location, ENUMS, CanalMensagemGrowl, Usuario) {
         var ctrl = this;
         ctrl.status = {
             carregando: false,
@@ -25,6 +25,11 @@
 
             Usuario.buscaTiposDominio().then(function (tipos) {
                 angular.extend(ctrl.dominio, tipos);
+
+                ctrl.dominio = {
+                    statusUsuario: ENUMS.statusUsuario,
+                    listaStatusUsuario: ENUMS.toArrayOfEnums(ENUMS.statusUsuario)
+                };
 
                 if (id === 0) {
                     colocaUsuarioEmEdicao({ ativo: true });

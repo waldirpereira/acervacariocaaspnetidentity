@@ -40,6 +40,7 @@ namespace Acerva.Modelo
         public virtual bool LockoutEnabled { get; set; }
         public virtual int AccessFailedCount { get; set; }
         public virtual Regional Regional { get; set; }
+        public virtual StatusUsuario Status { get; set; }
         
         public virtual async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<Usuario> manager)
         {

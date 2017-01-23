@@ -11,6 +11,7 @@ using System.Web.Routing;
 using System.Xml.Linq;
 using Acerva.Infra.Web;
 using Newtonsoft.Json;
+using SiplexCommon.EnumUtil;
 
 namespace Acerva.Web.Extensions
 {

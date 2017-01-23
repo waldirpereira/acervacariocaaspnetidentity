@@ -9,7 +9,8 @@
                     <tr>
                         <th>Nome</th>
                         <th style="width: 120px;">E-mail</th>
-                        <th style="width: 60px;">Regional</th>
+                        <th style="width: 40px;">Status</th>
+                        <th style="width: 40px;">Regional</th>
                         <th class="sorting_disabled" style="width: 60px;"></th>
                     </tr>
                 </thead>
@@ -20,6 +21,13 @@
                                ng-href="#/Edit/{{m.id}}">{{m.name}}</a>
                         </td>
                         <td>{{m.email}}</td>
+                        <td><span class="label" ng-class="{
+                                  'label-success': m.status.codigoBd === listaCtrl.dominio.statusUsuario.ativo.codigoBd,
+                                  'label-danger': m.status.codigoBd === listaCtrl.dominio.statusUsuario.inativo.codigoBd,
+                                  'label-default': m.status.codigoBd === listaCtrl.dominio.statusUsuario.novo.codigoBd,
+                                  'label-warning': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoIndicacao.codigoBd,
+                                  'label-primary': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd
+                                  }">{{m.status.nomeExibicao}}</span></td>
                         <td>{{m.regional.nome}}</td>
 
                         <td style="padding: 4px;">
@@ -46,6 +54,13 @@
                                 <a title="Editar associado"
                                    ng-href="#/Edit/{{m.id}}">{{m.name}}</a>
                             </strong>
+                            <span class="label" ng-class="{
+                                  'label-success': m.status.codigoBd === listaCtrl.dominio.statusUsuario.ativo.codigoBd,
+                                  'label-danger': m.status.codigoBd === listaCtrl.dominio.statusUsuario.inativo.codigoBd,
+                                  'label-default': m.status.codigoBd === listaCtrl.dominio.statusUsuario.novo.codigoBd,
+                                  'label-warning': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoIndicacao.codigoBd,
+                                  'label-primary': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd
+                                  }">{{m.status.nomeExibicao}}</span>
                             <span class="label label-primary">
                                 {{m.regional.nome}}
                             </span>

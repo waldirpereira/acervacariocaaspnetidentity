@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Acerva.Modelo
+@using Acerva.Web.Extensions
+@{
     ViewBag.Title = "Associados";
     ViewBag.AngularApp = "acerva.usuario";
     var action = ViewContext.RouteData.GetRequiredString("action");
@@ -45,7 +47,8 @@
                 busca: "@Url.Action("Busca")",
                 salva: "@Url.Action("Salva")",
                 alteraStatus: "@Url.Action("AlteraStatus")"
-            });
+            })
+            .constant("ENUMS", @Html.GeraJsonDeEnums(typeof (StatusUsuario)));
         })();
         </script>
     }

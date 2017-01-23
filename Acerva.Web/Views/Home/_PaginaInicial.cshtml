@@ -4,6 +4,6 @@
 <h3>@ViewBag.Title</h3>
 
 <div ng-repeat="noticia in listaCtrl.listaNoticias">
-    <h4>{{noticia.titulo}}</h4>
+    <h4 class="text-primary">{{noticia.titulo}}</h4>
     <span ng-bind-html="noticia.textoHtml"></span>
 </div>

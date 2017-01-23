@@ -106,6 +106,9 @@
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SiplexCommon.EnumUtil">
+      <HintPath>..\packages\SiplexCommon.EnumUtil.1.0.1.0\lib\net40\SiplexCommon.EnumUtil.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
@@ -151,10 +154,8 @@
     <Compile Include="Repositorios\ICadastroNoticias.cs" />
     <Compile Include="Repositorios\ICadastroRegionais.cs" />
     <Compile Include="Repositorios\ICadastroUsuarios.cs" />
-    <Compile Include="Web\AbstractEnumStringAttribute.cs" />
     <Compile Include="Web\AcervaAuthorizeAttribute.cs" />
     <Compile Include="Web\ValidateAjaxAntiForgeryTokenAttribute.cs" />
-    <Compile Include="Web\CodigoBdAttribute.cs" />
     <Compile Include="Web\FlashMessage\CookieFlashMessagePresenter.cs" />
     <Compile Include="Web\FlashMessage\FlashMessage.cs" />
     <Compile Include="Web\FlashMessage\FlashMessageExtensions.cs" />
@@ -166,7 +167,6 @@
     <Compile Include="Web\JsonModelBinder.cs" />
     <Compile Include="Web\JsonNetResult.cs" />
     <Compile Include="Web\ModelBinder.cs" />
-    <Compile Include="Web\NomeExibicaoAttribute.cs" />
     <Compile Include="Web\TransacaoAttribute.cs" />
     <Compile Include="Web\TransacaoFilter.cs" />
   </ItemGroup>

@@ -8422,3 +8422,6 @@ ALTER TABLE `userroles`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+ALTER TABLE `users` ADD `status` CHAR(1) NOT NULL DEFAULT 'I' COMMENT '[A]tivo, [I]nativo, [N]ovo, a[G]uardando indicacao, aguardando [P]agamento de anuidade' AFTER `codigo_regional`;

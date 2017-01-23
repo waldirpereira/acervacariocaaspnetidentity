@@ -155,7 +155,7 @@ namespace Acerva.Web
             );
 
             bundles.Add(new LessBundle("~/cssBundles/sitecommon")
-                .Include(StylesVendorFolder + "bootswatch/flatly/css/bootstrap.css")
+                .Include(StylesVendorFolder + "bootswatch/darkly/css/bootstrap.css")
                 .Include(StylesAplicacaoFolder + "css/site.less")
                 .Include(StylesVendorFolder + "animate.css/animate.css")
                 .Include(StylesVendorFolder + "bootstrap-dialog/bootstrap-dialog.css")

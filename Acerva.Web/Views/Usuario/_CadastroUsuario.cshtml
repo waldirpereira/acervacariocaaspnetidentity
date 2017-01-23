@@ -9,7 +9,7 @@
                     <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.name")>
                         <label class="control-label" for="name">Nome</label>
                         <input type="text" class="form-control" name="name" autocomplete="off" required
-                               ng-model="ctrl.modelo.name"/>
+                               ng-model="ctrl.modelo.name" />
                         <p ng-show="formUsuario.name.$invalid && !formUsuario.name.$pristine" class="help-block">O nome é obrigatório</p>
                     </div>
                 </div>
@@ -19,8 +19,42 @@
                     <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.email")>
                         <label class="control-label" for="email">E-mail</label>
                         <input type="text" class="form-control" email="email" autocomplete="off" required
-                               ng-model="ctrl.modelo.email"/>
+                               ng-model="ctrl.modelo.email" />
                         <p ng-show="formUsuario.email.$invalid && !formUsuario.email.$pristine" class="help-block">O e-mail é obrigatório</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.usuarioIndicacao")>
+                        <label class="control-label" for="usuarioIndicacao">Indicação</label>
+                        <div class="input-group">
+                            <input type="text" name="usuarioIndicacao" id="usuarioIndicacao" class="form-control"
+                                   autocomplete="off"
+                                   ng-required="true"
+                                   placeholder="Digite pelo menos 3 caracteres para buscar"
+                                   ng-disabled="ctrl.modelo.usuarioIndicacao.id"
+                                   ng-model="ctrl.modelo.usuarioIndicacao"
+                                   typeahead-wait-ms="300"
+                                   typeahead-min-length="3"
+                                   uib-typeahead="usuarioIndicacao as usuarioIndicacao.name for usuarioIndicacao in ctrl.recuperaUsuariosIndicacao($viewValue)"
+                                   typeahead-editable="false"
+                                   typeahead-select-on-exact="true"
+                                   typeahead-select-on-blur="true"
+                                   typeahead-no-results="semResultadosParaUsuarioIndicacao"
+                                   typeahead-loading="buscandoUsuariosIndicacao" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default"
+                                        ng-disabled="!ctrl.modelo.usuarioIndicacao.id"
+                                        ng-click="ctrl.modelo.usuarioIndicacao = null">
+                                    Limpar
+                                </button>
+                            </span>
+                        </div>
+                        <i ng-show="buscandoUsuariosIndicacao" class="glyphicon glyphicon-refresh"></i>
+                        <div ng-show="semResultadosParaUsuarioIndicacao">
+                            <i class="glyphicon glyphicon-remove"></i> Nenhum associado encontrado
+                        </div>
                     </div>
                 </div>
             </div>
@@ -30,20 +64,20 @@
                     @NgHelpers.NgSelectComBuscaRespeitandoStatusBloqueado("ctrl", new NgHelpers.NgSelectOptions("status", "ctrl.modelo", "nomeExibicao",
                                                 "status in ctrl.dominio.listaStatusUsuario | filter: {nomeExibicao: $select.search} | orderBy : 'codigo' track by status.codigo",
                                                 "status.nomeExibicao | highlight: $select.search")
-                   {
-                       Obrigatorio = true,
-                       Titulo = "Status"
-                   })
+               {
+                   Obrigatorio = true,
+                   Titulo = "Status"
+               })
                 </div>
 
                 <div class="col-xs-12 col-sm-6">
                     @NgHelpers.NgSelectComBuscaRespeitandoStatusBloqueado("ctrl", new NgHelpers.NgSelectOptions("regional", "ctrl.modelo", "nome",
                         "regional in ctrl.dominio.regionais | filter: {nome: $select.search} | orderBy : 'nome' track by regional.codigo",
                         "regional.nome | highlight: $select.search")
-                    {
-                        Obrigatorio = true,
-                        Titulo = "Regional"
-                    })
+               {
+                   Obrigatorio = true,
+                   Titulo = "Regional"
+               })
                 </div>
             </div>
         </div>
@@ -52,7 +86,7 @@
                 <div class="col-sm-12">
                     <div class="pull-right">
                         <a class="btn btn-default" href="#/"
-                           ng-disabled="!ctrl.modelo || ctrl.status.salvando">Cancelar</a>
+                           ng-disabled="ctrl.status.salvando">Cancelar</a>
                         <button type="submit" class="btn btn-primary" ng-hide="ctrl.status.bloqueado" ng-disabled="formUsuario.$invalid || ctrl.status.salvando || ctrl.partidaEmEdicao"
                                 ng-click="ctrl.salvaUsuario()">
                             Salvar<i class="icon icon-spin2 glyphicon-spin" ng-show="ctrl.status.salvando"></i>

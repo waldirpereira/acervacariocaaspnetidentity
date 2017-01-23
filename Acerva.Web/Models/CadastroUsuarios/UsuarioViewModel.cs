@@ -9,5 +9,6 @@ namespace Acerva.Web.Models.CadastroUsuarios
         public virtual string Email { get; set; }
         public virtual RegionalViewModel Regional { get; set; }
         public virtual StatusUsuario Status { get; set; }
+        public virtual UsuarioIndicacaoViewModel UsuarioIndicacao { get; set; }
     }
 }

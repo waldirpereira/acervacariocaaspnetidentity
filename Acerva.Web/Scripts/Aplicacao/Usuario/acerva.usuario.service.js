@@ -32,6 +32,11 @@
                         cacheTiposDominio = tiposDominio;
                         return tiposDominio;
                     });
+            },
+            buscaUsuariosAtivosComTermo: function(termo) {
+                return $http.get(ROTAS.buscaUsuariosAtivosComTermo, {
+                    params: { termo: termo }
+                }).then(retornaDadoDoXhr);
             }
         }
 

@@ -11,5 +11,6 @@ namespace Acerva.Infra.Repositorios
         Usuario BuscaPeloEmail(string email);
         IEnumerable<Usuario> BuscaTodos();
         IEnumerable<Usuario> BuscaParaListagem();
+        IEnumerable<Usuario> BuscaComTermo(string termo);
     }
 }

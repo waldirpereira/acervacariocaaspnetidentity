@@ -11,6 +11,9 @@ namespace Acerva.Web.Models.CadastroUsuarios
                 .ReverseMap()
                 .ForMember(d => d.Regional, o => o.DoNotUseDestinationValue());
 
+            CreateMap<Usuario, UsuarioIndicacaoViewModel>()
+                .ReverseMap();
+
             CreateMap<Regional, RegionalViewModel>()
                 .ReverseMap();
         }

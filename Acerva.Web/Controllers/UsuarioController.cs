@@ -70,7 +70,7 @@ namespace Acerva.Web.Controllers
             Log.InfoFormat("Usuário está salvando o usuário {0} de código {1} e email {2}", 
                 usuarioViewModel.Name, usuarioViewModel.Id, usuarioViewModel.Email);
 
-            var ehNovo = usuarioViewModel.Id == string.Empty;
+            var ehNovo = string.IsNullOrEmpty(usuarioViewModel.Id);
             var user = ehNovo ? new Usuario() : _cadastroUsuarios.Busca(usuarioViewModel.Id);
 
             usuarioViewModel.Name = usuarioViewModel.Name.Trim();
@@ -83,7 +83,7 @@ namespace Acerva.Web.Controllers
 
             if (ExisteComMesmoNome(user))
                 return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Já existe um usuário com o nome {0:unsafe}", user.Name));
-
+            
             _cadastroUsuarios.Salva(user);
 
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success,
@@ -128,6 +128,20 @@ namespace Acerva.Web.Controllers
                 .Any(e => e.Name.ToUpperInvariant() == nomeUpper && e.Id != user.Id);
 
             return temComMesmoNome;
+        }
+
+        public ActionResult BuscaUsuariosAtivosComTermo(string termo)
+        {
+            var usuariosDisponiveis = _cadastroUsuarios.BuscaComTermo(termo)
+                .OrderBy(p => p.Name)
+                .Take(20)
+                .Select(p => new
+                {
+                    p.Id,
+                    p.Name
+                });
+
+            return new JsonNetResult(usuariosDisponiveis);
         }
     }
 }

@@ -16,6 +16,7 @@
         ctrl.dominio = {};
 
         ctrl.salvaUsuario = salvaUsuario;
+        ctrl.recuperaUsuariosIndicacao = recuperaUsuariosIndicacao;
 
         var id = $routeParams.id ? $routeParams.id : "";
         init(id);
@@ -26,10 +27,8 @@
             Usuario.buscaTiposDominio().then(function (tipos) {
                 angular.extend(ctrl.dominio, tipos);
 
-                ctrl.dominio = {
-                    statusUsuario: ENUMS.statusUsuario,
-                    listaStatusUsuario: ENUMS.toArrayOfEnums(ENUMS.statusUsuario)
-                };
+                ctrl.dominio.statusUsuario = ENUMS.statusUsuario;
+                ctrl.dominio.listaStatusUsuario = ENUMS.toArrayOfEnums(ENUMS.statusUsuario);
 
                 if (id === 0) {
                     colocaUsuarioEmEdicao({ ativo: true });
@@ -58,6 +57,12 @@
             Usuario.salvaUsuario(ctrl.modelo)
                 .then(function () {  })
                 .finally(function () { ctrl.status.salvando = false; });
+        }
+
+        function recuperaUsuariosIndicacao(termo) {
+            return Usuario.buscaUsuariosAtivosComTermo(termo).then(function (usuarios) {
+                return usuarios;
+            });
         }
     }
 

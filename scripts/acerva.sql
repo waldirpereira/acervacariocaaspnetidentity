@@ -8425,3 +8425,9 @@ ALTER TABLE `userroles`
 
 
 ALTER TABLE `users` ADD `status` CHAR(1) NOT NULL DEFAULT 'I' COMMENT '[A]tivo, [I]nativo, [N]ovo, a[G]uardando indicacao, aguardando [P]agamento de anuidade' AFTER `codigo_regional`;
+
+ALTER TABLE `users` ADD `id_indicacao` VARCHAR(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'id do usuario que indicou' AFTER `status`;
+
+ALTER TABLE `users` ADD INDEX(`id_indicacao`);
+
+ALTER TABLE `users` ADD CONSTRAINT `fk_users_users_indicacao` FOREIGN KEY (`id_indicacao`) REFERENCES `users`(`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT;

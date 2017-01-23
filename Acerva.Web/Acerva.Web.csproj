@@ -315,6 +315,7 @@
     <Compile Include="Models\CadastroRegionais\CadastroRegionalMapperProfile.cs" />
     <Compile Include="Models\CadastroUsuarios\CadastroUsuariosMapperProfile.cs" />
     <Compile Include="Models\CadastroUsuarios\RegionalViewModel.cs" />
+    <Compile Include="Models\CadastroUsuarios\UsuarioIndicacaoViewModel.cs" />
     <Compile Include="Models\CadastroUsuarios\UsuarioViewModel.cs" />
     <Compile Include="Models\Home\HomeMapperProfile.cs" />
     <Compile Include="Models\Home\NoticiaViewModel.cs" />

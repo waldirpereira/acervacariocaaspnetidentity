@@ -41,6 +41,7 @@ namespace Acerva.Modelo
         public virtual int AccessFailedCount { get; set; }
         public virtual Regional Regional { get; set; }
         public virtual StatusUsuario Status { get; set; }
+        public virtual Usuario UsuarioIndicacao { get; set; }
         
         public virtual async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<Usuario> manager)
         {

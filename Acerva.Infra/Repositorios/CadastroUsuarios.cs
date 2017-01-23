@@ -41,5 +41,12 @@ namespace Acerva.Infra.Repositorios
         {
             return _session.Query<Usuario>();
         }
+
+        public IEnumerable<Usuario> BuscaComTermo(string termo)
+        {
+            return _session.Query<Usuario>()
+                .Where(p => (p.Name + "|&|" + p.Email).ToLower().Contains(termo.ToLower()))
+                .ToList();
+        }
     }
 }

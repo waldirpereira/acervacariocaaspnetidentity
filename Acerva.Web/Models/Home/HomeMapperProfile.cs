@@ -12,7 +12,9 @@ namespace Acerva.Web.Models.Home
 
             CreateMap<Usuario, UsuarioNovoViewModel>()
                 .ReverseMap()
-                .ForMember(d => d.UserName, o => o.ResolveUsing(s => s.Email));
+                .ForMember(d => d.UserName, o => o.ResolveUsing(s => s.Email))
+                .ForMember(d => d.Regional, o => o.DoNotUseDestinationValue())
+                .ForMember(d => d.UsuarioIndicacao, o => o.DoNotUseDestinationValue());
 
             CreateMap<Usuario, UsuarioIndicacaoViewModel>()
                 .ReverseMap();

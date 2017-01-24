@@ -13,6 +13,14 @@ namespace Acerva.Modelo.Mapeamento
             Id(u => u.Id, "Id").GeneratedBy.Assigned();
             Map(u => u.Name, "Name");
             Map(u => u.PasswordHash, "PasswordHash");
+            Map(u => u.AccessFailedCount, "AccessFailedCount");
+            Map(u => u.EmailConfirmed, "EmailConfirmed");
+            Map(u => u.LockoutEnabled, "LockoutEnabled");
+            Map(u => u.LockoutEndDateUtc, "LockoutEndDateUtc");
+            Map(u => u.PhoneNumber, "PhoneNumber");
+            Map(u => u.PhoneNumberConfirmed, "PhoneNumberConfirmed");
+            Map(u => u.SecurityStamp, "SecurityStamp");
+            Map(u => u.TwoFactorEnabled, "TwoFactorEnabled");
             Map(u => u.UserName, "UserName");
             Map(u => u.Email, "Email");
             Map(u => u.CreationDate, "CreationDate");

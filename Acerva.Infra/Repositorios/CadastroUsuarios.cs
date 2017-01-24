@@ -19,11 +19,10 @@ namespace Acerva.Infra.Repositorios
         {
             return _session.Get<Usuario>(id);
         }
-
-        public void Salva(Usuario usuario)
+        
+        public void SalvaNovo(Usuario usuario)
         {
-            _session.Merge(usuario);
-            _session.Flush();
+            _session.Save(usuario);
         }
 
         public Usuario BuscaPeloEmail(string email)
@@ -56,6 +55,21 @@ namespace Acerva.Infra.Repositorios
                 .Any(e => e.Name.ToUpperInvariant() == nomeUpper && e.Id != usuario.Id);
 
             return temComMesmoNome;
+        }
+
+        public void BeginTransaction()
+        {
+            _session.BeginTransaction();
+        }
+
+        public void Commit()
+        {
+            _session.Transaction.Commit();
+        }
+
+        public void Rollback()
+        {
+            _session.Transaction.Rollback();
         }
     }
 }

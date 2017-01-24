@@ -382,7 +382,6 @@
     <None Include="Properties\PublishProfiles\Local.pubxml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\_ListaArquivos.cshtml" />
-    <Content Include="Views\Home\ConfirmSent.cshtml" />
     <Content Include="Views\Home\_PaginaInicial.cshtml" />
     <Content Include="Views\Usuario\Index.cshtml" />
     <Content Include="Views\Usuario\_ListaUsuarios.cshtml" />

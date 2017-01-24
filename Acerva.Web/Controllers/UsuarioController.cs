@@ -84,7 +84,8 @@ namespace Acerva.Web.Controllers
             if (_cadastroUsuarios.ExisteComMesmoNome(usuario))
                 return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Já existe um usuário com o nome {0:unsafe}", usuario.Name));
             
-            _cadastroUsuarios.Salva(usuario);
+            if (ehNovo)
+                _cadastroUsuarios.SalvaNovo(usuario);
 
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success,
                 string.Format("Usuário <a href='{0}#/Edit/{1}'>{2}</a> foi salvo com sucesso", Url.Action("Index"), usuario.Id, usuario.Name),

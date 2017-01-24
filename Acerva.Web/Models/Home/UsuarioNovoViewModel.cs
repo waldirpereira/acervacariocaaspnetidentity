@@ -5,6 +5,8 @@ namespace Acerva.Web.Models.Home
 {
     public class UsuarioNovoViewModel
     {
+        public virtual string Id { get; set; }
+
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = @"Nome")]

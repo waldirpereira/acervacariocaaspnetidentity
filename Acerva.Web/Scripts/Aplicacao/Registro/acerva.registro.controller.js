@@ -56,7 +56,12 @@
             ctrl.status.salvando = true;
             
             Registro.salvaUsuario(ctrl.modelo)
-                .then(function () {  })
+                .then(function(retorno) {
+                    if (retorno === "OK") {
+                        $location.path("/ConfirmSent");
+                        return;
+                    }
+                })
                 .finally(function () { ctrl.status.salvando = false; });
         }
 

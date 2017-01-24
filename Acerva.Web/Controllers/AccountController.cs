@@ -184,18 +184,24 @@ namespace Acerva.Web.Controllers
             if (!ModelState.IsValid)
                 return View(usuarioViewModel);
 
-            var userBd = UserManager.FindByEmailAsync(usuarioViewModel.Email).Result;
-
-            if (userBd != null)
+            if (_cadastroUsuarios.BuscaPeloEmail(usuarioViewModel.Email) != null)
             {
                 return RetornaJsonDeAlerta(
                         "Este e-mail já está cadastrado em nossa base. Utilize o \"Esqueci minha senha\" para recuperar seu acesso.");
             }
 
-            var usuario = new Usuario();
+            var ehNovo = string.IsNullOrEmpty(usuarioViewModel.Id);
+            var usuario = ehNovo ? new Usuario() : _cadastroUsuarios.Busca(usuarioViewModel.Id);
+
             Mapper.Map(usuarioViewModel, usuario);
-            usuario.Id = Guid.NewGuid().ToString();
-            
+            if (ehNovo)
+            {
+                usuario.Id = Guid.NewGuid().ToString();
+                usuario.CreationDate = DateTime.Now;
+                usuario.PasswordHash = UserManager.PasswordHasher.HashPassword(usuarioViewModel.Password);
+                usuario.SecurityStamp = Guid.NewGuid().ToString();
+            }
+
             var validacao = _validator.Validate(usuario);
             if (!validacao.IsValid)
             {
@@ -207,26 +213,24 @@ namespace Acerva.Web.Controllers
                 return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Já existe um usuário com o nome {0:unsafe}", usuario.Name));
             }
 
-            var result = await UserManager.CreateAsync(usuario, usuarioViewModel.Password);
-                
-            if (result.Succeeded)
+            try
             {
-                //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                _cadastroUsuarios.BeginTransaction();
 
-                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                // Send an email with this link
-                var code = await UserManager.GenerateEmailConfirmationTokenAsync(usuario.Id);
-                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = usuario.Id, code = code }, protocol: Request.Url.Scheme);
+                if (ehNovo)
+                    _cadastroUsuarios.SalvaNovo(usuario);
 
-                Log.InfoFormat("E-mail de confirmação de conta sendo enviado para '{0}' com URL {1}", usuario.Email, callbackUrl);
-
-                await SendEmailConfirmationTokenAsync(usuario.Id, "Confirme seu e-mail");
-                
-                return RedirectToAction("ConfirmSent", "Home");
+                _cadastroUsuarios.Commit();
             }
-            
-            // If we got this far, something failed, redisplay form
-            return RetornaJsonDeAlerta(result.Errors.Aggregate((x, y) => x + "<br/>" + y));
+            catch
+            {
+                _cadastroUsuarios.Rollback();
+            }
+
+            Log.InfoFormat("E-mail de confirmação de conta sendo enviado para '{0}'", usuario.Email);
+            await SendEmailConfirmationTokenAsync(usuario.Id, "Confirme seu e-mail");
+                
+            return new JsonNetResult("OK");
         }
 
         private static ActionResult RetornaJsonDeAlerta(string mensagem)

@@ -33,12 +33,7 @@ namespace Acerva.Web.Controllers
 
             return View();
         }
-
-        public ActionResult ConfirmSent()
-        {
-            return View("ConfirmSent");
-        }
-
+        
         public ActionResult BuscaNoticias()
         {
             var listaNoticiasJson = _cadastroNoticias.BuscaTodas()

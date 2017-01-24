@@ -7,10 +7,8 @@
         Response.Redirect(url);
     }
 
-    ViewBag.Title = "Registre-se";
+    ViewBag.Title = "Associe-se!";
     ViewBag.AngularApp = "acerva.registro";
-    var action = ViewContext.RouteData.GetRequiredString("action");
-    var id = ViewContext.RouteData.Values["id"];
 }
 
 <h2>@ViewBag.Title</h2>
@@ -22,6 +20,18 @@
     <div class="animate-show-only">
         <h4>Crie uma nova conta para se associar à ACervA Carioca.</h4>
         @Html.Partial("~/Views/Usuario/_CadastroUsuario.cshtml")
+    </div>
+</script>
+
+<script type="text/ng-template" id="confirmSent.html">
+    <div class="animate-show-only">
+        <p>
+            Um e-mail com um link de confirmação foi enviado para o e-mail cadastrado.<br />
+            Por favor verifique sua caixa de entrada.
+        </p>
+        <p>
+            Por favor @Html.ActionLink("clique aqui para efetuar seu login", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" }) caso já tenha confirmado sua conta.
+        </p>
     </div>
 </script>
 

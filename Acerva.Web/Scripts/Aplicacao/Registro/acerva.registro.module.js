@@ -18,6 +18,11 @@
                 controller: "RegistroController",
                 controllerAs: "ctrl"
             })
+            .when("/ConfirmSent", {
+                templateUrl: "confirmSent.html",
+                controller: "RegistroController",
+                controllerAs: "ctrl"
+            })
             .otherwise({
                 redirectTo: "/Create"
             });

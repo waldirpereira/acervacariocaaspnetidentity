@@ -23,7 +23,7 @@
                         <td>{{m.email}}</td>
                         <td><span class="label" ng-class="{
                                   'label-success': m.status.codigoBd === listaCtrl.dominio.statusUsuario.ativo.codigoBd,
-                                  'label-danger': m.status.codigoBd === listaCtrl.dominio.statusUsuario.inativo.codigoBd,
+                                  'label-danger': m.status.codigoBd === listaCtrl.dominio.statusUsuario.cancelado.codigoBd,
                                   'label-default': m.status.codigoBd === listaCtrl.dominio.statusUsuario.novo.codigoBd,
                                   'label-warning': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoIndicacao.codigoBd,
                                   'label-primary': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd
@@ -56,7 +56,7 @@
                             </strong>
                             <span class="label" ng-class="{
                                   'label-success': m.status.codigoBd === listaCtrl.dominio.statusUsuario.ativo.codigoBd,
-                                  'label-danger': m.status.codigoBd === listaCtrl.dominio.statusUsuario.inativo.codigoBd,
+                                  'label-danger': m.status.codigoBd === listaCtrl.dominio.statusUsuario.cancelado.codigoBd,
                                   'label-default': m.status.codigoBd === listaCtrl.dominio.statusUsuario.novo.codigoBd,
                                   'label-warning': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoIndicacao.codigoBd,
                                   'label-primary': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd

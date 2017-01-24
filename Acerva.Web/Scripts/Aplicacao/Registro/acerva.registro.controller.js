@@ -32,7 +32,7 @@
                 ctrl.dominio.statusUsuario = ENUMS.statusUsuario;
 
                 if (!id) {
-                    colocaUsuarioEmEdicao({ status: ctrl.dominio.statusUsuario.inativo });
+                    colocaUsuarioEmEdicao({ status: ctrl.dominio.statusUsuario.cancelado });
                     ctrl.status.carregando = false;
                     return;
                 }

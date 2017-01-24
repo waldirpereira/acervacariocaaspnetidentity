@@ -8,9 +8,9 @@ namespace Acerva.Modelo
     {
         NaoDefinido = 0,
 
-        [CodigoBd("I")]
-        [NomeExibicao("Inativo")]
-        Inativo,
+        [CodigoBd("C")]
+        [NomeExibicao("Cancelado")]
+        Cancelado,
 
         [CodigoBd("A")]
         [NomeExibicao("Ativo")]
@@ -20,12 +20,12 @@ namespace Acerva.Modelo
         [NomeExibicao("Novo")]
         Novo,
 
-        [CodigoBd("G")]
+        [CodigoBd("I")]
         [NomeExibicao("Ag. indicação")]
         AguardandoIndicacao,
 
         [CodigoBd("P")]
-        [NomeExibicao("Ag. anuidade")]
+        [NomeExibicao("Ag. pagto. anuidade")]
         AguardandoPagamentoAnuidade
     }
 }

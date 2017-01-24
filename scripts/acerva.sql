@@ -8424,10 +8424,14 @@ ALTER TABLE `userroles`
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 
-ALTER TABLE `users` ADD `status` CHAR(1) NOT NULL DEFAULT 'C' COMMENT '[A]tivo, [C]ancelado, [N]ovo, aguardando [I]ndicacao, aguardando [P]agamento de anuidade' AFTER `codigo_regional`;
+ALTER TABLE `users` ADD `status` CHAR(1) NOT NULL DEFAULT 'E' COMMENT 'aguardando confirmacao de [E]mail, [A]tivo, [C]ancelado, [N]ovo, aguardando [I]ndicacao, aguardando [P]agamento de anuidade' AFTER `codigo_regional`;
 
 ALTER TABLE `users` ADD `id_indicacao` VARCHAR(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'id do usuario que indicou' AFTER `status`;
 
 ALTER TABLE `users` ADD INDEX(`id_indicacao`);
 
 ALTER TABLE `users` ADD CONSTRAINT `fk_users_users_indicacao` FOREIGN KEY (`id_indicacao`) REFERENCES `users`(`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE `users` ADD `codigo_indicacao` VARCHAR(128) NULL AFTER `id_indicacao`;
+
+ALTER TABLE `users` CHANGE `codigo_indicacao` `codigo_indicacao` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;

@@ -9,6 +9,10 @@
             buscaNoticias: function () {
                 return $http.get(ROTAS.buscaNoticias)
                     .then(retornaDadoDoXhr);
+            },
+            buscaIndicacoesAConfirmar: function () {
+                return $http.get(ROTAS.buscaIndicacoesAConfirmar)
+                    .then(retornaDadoDoXhr);
             }
         }
         

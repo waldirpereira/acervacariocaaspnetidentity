@@ -1,7 +1,7 @@
 ﻿(function () {
     "use strict";
 
-    angular.module("acerva.inicio", ["acerva"]);
+    angular.module("acerva.indicacoes", ["acerva"]);
 
     angular.module("acerva")
         .config(["$routeProvider", routes]);
@@ -10,7 +10,7 @@
         $routeProvider
             .when("/", {
                 templateUrl: "index.html",
-                controller: "InicioController",
+                controller: "IndicacoesController",
                 controllerAs: "ctrl"
             })
             .otherwise({

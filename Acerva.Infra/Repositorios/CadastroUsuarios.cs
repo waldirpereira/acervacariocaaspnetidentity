@@ -71,5 +71,17 @@ namespace Acerva.Infra.Repositorios
         {
             _session.Transaction.Rollback();
         }
+
+        public void Atualiza(Usuario usuario)
+        {
+            _session.Merge(usuario);
+            _session.Flush();
+        }
+
+        public IEnumerable<Usuario> BuscaUsuariosIndicados(string id)
+        {
+            return _session.Query<Usuario>()
+                .Where(u => u.UsuarioIndicacao.Id == id);
+        }
     }
 }

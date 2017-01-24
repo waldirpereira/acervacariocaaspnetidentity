@@ -16,5 +16,7 @@ namespace Acerva.Infra.Repositorios
         void BeginTransaction();
         void Commit();
         void Rollback();
+        void Atualiza(Usuario usuario);
+        IEnumerable<Usuario> BuscaUsuariosIndicados(string id);
     }
 }

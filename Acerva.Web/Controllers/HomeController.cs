@@ -2,16 +2,20 @@
 using System.Web.Mvc;
 using Acerva.Infra.Repositorios;
 using Acerva.Infra.Web;
+using Acerva.Modelo;
 using Acerva.Web.Models.Home;
 using AutoMapper;
+using Microsoft.AspNet.Identity;
 
 namespace Acerva.Web.Controllers
 {
     public class HomeController : ApplicationBaseController
     {
+        private readonly ICadastroUsuarios _cadastroUsuarios;
         private readonly ICadastroNoticias _cadastroNoticias;
         public HomeController(ICadastroUsuarios cadastroUsuarios, ICadastroNoticias cadastroNoticias) : base(cadastroUsuarios)
         {
+            _cadastroUsuarios = cadastroUsuarios;
             _cadastroNoticias = cadastroNoticias;
         }
 
@@ -33,12 +37,30 @@ namespace Acerva.Web.Controllers
 
             return View();
         }
-        
+
+        public ActionResult IndicacoesAConfirmar()
+        {
+            ViewBag.Message = "Esta é a lista de pessoas que disseram ter sido indicadas por você e que aguardam sua confirmação.";
+
+            return View("IndicacoesAConfirmar");
+        }
+
+
         public ActionResult BuscaNoticias()
         {
             var listaNoticiasJson = _cadastroNoticias.BuscaTodas()
                 .Select(Mapper.Map<NoticiaViewModel>);
             return new JsonNetResult(listaNoticiasJson);
+        }
+
+        public ActionResult BuscaIndicacoesAConfirmar()
+        {
+            var usuarioLogado = HttpContext.User.Identity;
+            var listaUsuariosIndicados = _cadastroUsuarios.BuscaUsuariosIndicados(usuarioLogado.GetUserId())
+                .Where(u => u.Status == StatusUsuario.AguardandoIndicacao)
+                .Select(Mapper.Map<UsuarioIndicacaoViewModel>);
+
+            return new JsonNetResult(listaUsuariosIndicados);
         }
     }
 }

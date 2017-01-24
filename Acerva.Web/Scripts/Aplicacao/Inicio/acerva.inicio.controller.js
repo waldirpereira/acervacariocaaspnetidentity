@@ -12,16 +12,22 @@
         };
 
         ctrl.listaNoticias = [];
+        ctrl.indicacoesAConfirmar = [];
 
         init();
 
         function init() {
             ctrl.status.carregando = true;
-            atualizaListaNoticias();
+            atualizaListaNoticias()
+                .then(function() {
+                    Inicio.buscaIndicacoesAConfirmar().then(function(indicacoes) {
+                        ctrl.indicacoesAConfirmar = indicacoes.length;
+                    });
+                });
         }
 
         function atualizaListaNoticias() {
-            Inicio.buscaNoticias().then(function (noticias) {
+            return Inicio.buscaNoticias().then(function (noticias) {
                 ctrl.listaNoticias = noticias;
                 ctrl.status.carregando = false;
             });

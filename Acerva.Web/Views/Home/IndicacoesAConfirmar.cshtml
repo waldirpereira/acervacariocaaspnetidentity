@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "Indicações a confirmar";
+    ViewBag.AngularApp = "acerva.indicacoes";
+}
+
+<h4>@ViewBag.Title</h4>
+<h5>@ViewBag.Message</h5>
+
+<div ng-view ng-cloak></div>
+@Html.AntiForgeryToken()
+
+<script type="text/ng-template" id="index.html">
+    <ul class="list-group">
+        <li class="list-group-item clearfix" ng-repeat="usuario in ctrl.indicacoesAConfirmar track by usuario.id">
+            {{usuario.name}}
+            <span class="label label-primary">{{usuario.nomeRegional}}</span>
+            <div class="pull-right">
+                <a class="btn btn-success btn-xs" ng-click="ctrl.confirmaIndicacao(usuario.id)">Confirmar indicação</a>
+                <a class="btn btn-danger btn-xs"
+                   acerva-confirm
+                   confirm-action="ctrl.declinaIndicacao(usuario.id)"
+                   confirm-window-type="danger"
+                   confirm-text="Confirma a recusa da indicação de {{ usuario.name }}?">Recusar indicação</a>
+            </div>
+        </li>
+    </ul>
+</script>
+
+@section styles {
+    @Styles.Render("~/cssBundles/angularForm")
+    @Styles.Render(BundleConfig.BundleStylesDataTables)
+}
+
+@section dependencies {
+    @if (ViewBag.Id == null)
+    {
+        @Scripts.Render("~/bundles/indicacoes")
+    }
+}
+
+@section scripts {
+    <script type="text/javascript">
+        (function () {
+            angular.module("acerva")
+                .constant("ROTAS", {
+                    buscaIndicacoesAConfirmar: "@Url.Action("BuscaIndicacoesAConfirmar")",
+                    confirmaIndicacao: "@Url.Action("ConfirmDesignation", "Account")",
+                    declinaIndicacao: "@Url.Action("DenyDesignation", "Account")"
+                });
+        })();
+    </script>
+}

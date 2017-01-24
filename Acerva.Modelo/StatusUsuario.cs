@@ -8,6 +8,10 @@ namespace Acerva.Modelo
     {
         NaoDefinido = 0,
 
+        [CodigoBd("E")]
+        [NomeExibicao("Ag. confirmação e-mail")]
+        AguardandoConfirmacaoEmail,
+
         [CodigoBd("C")]
         [NomeExibicao("Cancelado")]
         Cancelado,

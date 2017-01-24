@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -26,15 +27,17 @@ namespace Acerva.Web.Controllers
     {
         private readonly IValidator<Usuario> _validator;
         private readonly ICadastroUsuarios _cadastroUsuarios;
+        private readonly IIdentity _user;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private static readonly ILog Log =
             LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        public AccountController(IValidator<Usuario> validator, ICadastroUsuarios cadastroUsuarios) : base(cadastroUsuarios)
+        public AccountController(IValidator<Usuario> validator, ICadastroUsuarios cadastroUsuarios, IPrincipal user) : base(cadastroUsuarios)
         {
             _validator = validator;
             _cadastroUsuarios = cadastroUsuarios;
+            _user = user.Identity;
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -229,7 +232,7 @@ namespace Acerva.Web.Controllers
 
             Log.InfoFormat("E-mail de confirmação de conta sendo enviado para '{0}'", usuario.Email);
             await SendEmailConfirmationTokenAsync(usuario.Id, "Confirme seu e-mail");
-                
+
             return new JsonNetResult("OK");
         }
 
@@ -239,6 +242,128 @@ namespace Acerva.Web.Controllers
 
             return new JsonNetResult(new { growlMessage }, statusCode: JsonNetResult.HttpBadRequest);
         }
+
+
+        [Transacao]
+        [AllowAnonymous]
+        public async Task<ActionResult> ConfirmDesignation(string userId, string code)
+        {
+            if (userId == null)
+            {
+                ViewBag.errorMessage = "Não foi fornecido id para o usuário a ser ativado.";
+                return View("Error");
+            }
+
+            var usuario = _cadastroUsuarios.Busca(userId);
+
+            var valido = ValidaAlteracaoIndicacao(usuario, code);
+            if (!valido)
+                return View("Error");
+
+            usuario.IndicacaoHash = null;
+            usuario.Status = StatusUsuario.AguardandoPagamentoAnuidade;
+
+            var mensagem = string.Format("Olá Financeiro,<br/><br/>" +
+                                             "A pessoa {0} acabou de ter sua indicação confirmada.<br/><br/>" +
+                                                 "Obrigado,<br/>ACervA Carioca", usuario.Name);
+
+            var identityMessage = new IdentityMessage
+            {
+                Destination = "financeiro@acervacarioca.com.br",
+                Subject = string.Format("Novo associado: {0}", usuario.Name),
+                Body = mensagem
+            };
+
+            _cadastroUsuarios.Atualiza(usuario);
+
+            await UserManager.EmailService.SendAsync(identityMessage);
+
+            if (code != null)
+                return View();
+
+            var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success,
+                "Indicação confirmada com sucesso!", "Indicação confirmada");
+
+            return new JsonNetResult(new { growlMessage });
+        }
+
+        private bool ValidaAlteracaoIndicacao(Usuario usuario, string code)
+        {
+            if (usuario == null)
+            {
+                ViewBag.errorMessage = "Não foi encontrado o usuário.";
+                return false;
+            }
+
+            if (code == null && !_user.IsAuthenticated)
+            {
+                ViewBag.errorMessage = "Código de confirmação não informado.";
+                return false;
+            }
+
+            var estaAutenticado = _user.IsAuthenticated;
+            if (estaAutenticado)
+            {
+                var usuarioLogado = HttpContext.User;
+                var usuarioLogadoBd = _cadastroUsuarios.Busca(usuarioLogado.Identity.GetUserId());
+                var ehUsuarioQueIndicou = usuarioLogadoBd.Id == usuario.UsuarioIndicacao.Id;
+                var ehAdminOuDiretor = usuarioLogado.IsInRole("ADMIN") || usuarioLogado.IsInRole("DIRETOR");
+                var ehDelegadoDaRegionalDoAssociadoATerIndicacaoConfirmada = usuarioLogado.IsInRole("DELEGADO") &&
+                                                                             usuarioLogadoBd.Regional.Codigo == usuario.Regional.Codigo;
+
+                if (code == null)
+                {
+                    if (ehUsuarioQueIndicou || ehAdminOuDiretor || ehDelegadoDaRegionalDoAssociadoATerIndicacaoConfirmada)
+                        return true;
+
+                    ViewBag.errorMessage = "Código de confirmação não informado.";
+                    return false;
+                }
+            }
+
+            if (usuario.IndicacaoHash == code)
+                return true;
+
+            ViewBag.errorMessage = "Código de confirmação inválido.";
+            return false;
+        }
+
+        [Transacao]
+        [AllowAnonymous]
+        public async Task<ActionResult> DenyDesignation(string userId, string code)
+        {
+            if (userId == null)
+            {
+                ViewBag.errorMessage = "Não foi fornecido id para o usuário.";
+                return View("Error");
+            }
+
+            var usuario = _cadastroUsuarios.Busca(userId);
+
+            var valido = ValidaAlteracaoIndicacao(usuario, code);
+            if (!valido)
+                return View("Error");
+
+            usuario.IndicacaoHash = null;
+            usuario.Status = StatusUsuario.Cancelado;
+
+            var mensagem = string.Format("Olá {0},<br/><br/>" +
+                                             "{1} acabou de informar que não indicou você para a ACervA Carioca.<br/><br/>" +
+                                                 "Atenciosamente,<br/>ACervA Carioca", usuario.Name, HttpContext.User.Identity.Name);
+
+            _cadastroUsuarios.Atualiza(usuario);
+
+            await UserManager.SendEmailAsync(usuario.Id, "Indicação recusada", mensagem);
+
+            if (code != null)
+                return View();
+
+            var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success,
+                "Indicação recusada com sucesso!", "Indicação recusada");
+
+            return new JsonNetResult(new { growlMessage });
+        }
+
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
@@ -248,10 +373,21 @@ namespace Acerva.Web.Controllers
             {
                 return View("Error");
             }
-            IdentityResult result;
+
+            var usuarioHibernate = _cadastroUsuarios.Busca(userId);
+            var codigoConfirmacaoIndicacao = await UserManager.GenerateUserTokenAsync("confirmacao", usuarioHibernate.Id);
+
+            var result = new IdentityResult();
             try
             {
-                result = await UserManager.ConfirmEmailAsync(userId, code);
+                result = await UserManager.ConfirmEmailAsync(usuarioHibernate.Id, code);
+
+                _cadastroUsuarios.BeginTransaction();
+                usuarioHibernate.Status = StatusUsuario.AguardandoIndicacao;
+                usuarioHibernate.IndicacaoHash = codigoConfirmacaoIndicacao;
+                usuarioHibernate.EmailConfirmed = true;
+                _cadastroUsuarios.Atualiza(usuarioHibernate);
+                _cadastroUsuarios.Commit();
             }
             catch (InvalidOperationException ioe)
             {
@@ -259,9 +395,31 @@ namespace Acerva.Web.Controllers
                 ViewBag.errorMessage = ioe.Message;
                 return View("Error");
             }
+            catch (Exception)
+            {
+                _cadastroUsuarios.Rollback();
+            }
 
             if (result.Succeeded)
             {
+
+                if (usuarioHibernate.UsuarioIndicacao == null)
+                {
+                    ViewBag.errorMessage = "Sem associado que indicou!";
+                    return View("Error");
+                }
+
+                var callbackUrl = Url.Action("ConfirmDesignation", "Account",
+                   new { userId = usuarioHibernate.Id, code = codigoConfirmacaoIndicacao }, protocol: Request.Url.Scheme);
+
+                var mensagem = string.Format("Olá {0},<br/><br/>" +
+                                             "Recebemos um novo pedido de associação à ACervA Carioca, de {1}, da regional {2}. Esta pessoa mencionou ter sido indicada por você.<br/><br/>" +
+                                             "Por favor confirme esta indicação clicando <a href=\"{3}\">aqui</a>.<br/><br/>" +
+                                                 "Se o link não funcionar, copie o endereço abaixo e cole em seu navegador.<br/><br/>{3}<br/><br/>" +
+                                                 "Obrigado,<br/>ACervA Carioca",
+                        usuarioHibernate.UsuarioIndicacao.Name, usuarioHibernate.Name, usuarioHibernate.Regional.Nome, callbackUrl);
+                await UserManager.SendEmailAsync(usuarioHibernate.UsuarioIndicacao.Id, "Confirme a indicação para ACervA Carioca", mensagem);
+
                 return View();
             }
 
@@ -393,7 +551,7 @@ namespace Acerva.Web.Controllers
             var code = await UserManager.GenerateEmailConfirmationTokenAsync(userID);
             var callbackUrl = Url.Action("ConfirmEmail", "Account",
                new { userId = userID, code = code }, protocol: Request.Url.Scheme);
-            
+
             var mensagem = string.Format("Por favor confirme seu e-mail de cadastro no {0} clicando <a href=\"{1}\">aqui</a>.<br/><br/>" +
                                              "Se o link não funcionar, copie o endereço abaixo e cole em seu navegador.<br/><br/>{1}<br/><br/>" +
                                              "Obrigado,<br/>Equipe {0}",
@@ -422,7 +580,7 @@ namespace Acerva.Web.Controllers
             }
             return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
         }
-        
+
         //
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
@@ -451,7 +609,8 @@ namespace Acerva.Web.Controllers
                 default:
                     var identity = AuthenticationManager.GetExternalIdentity(DefaultAuthenticationTypes.ExternalCookie);
                     var accessToken = identity.FindFirstValue("FacebookAccessToken");
-                    if (accessToken != null) { 
+                    if (accessToken != null)
+                    {
                         var fb = new FacebookClient(accessToken);
                         dynamic myInfo = fb.Get("/me?fields=email"); // specify the email field    
 

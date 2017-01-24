@@ -114,16 +114,10 @@ footer {
     padding: 15px 30px 15px 15px;
     border-left: 5px solid #eee;
     vertical-align: top;
-}
 
-.bs-callout code,
-.bs-callout .highlight {
-    background-color: #fff;
-}
-
-.hour {
-    padding-left: 5px;
-    padding-right: 5px;
+    code, .highlight {
+        background-color: #fff;
+    }
 }
 
 .btn-group .btn-default.active {
@@ -131,21 +125,17 @@ footer {
     color: white;
 }
 
-.equipe .form-group {
-    margin-bottom: 0;
+.growl-container {
+    > .growl-item.ng-enter {
+        .animation(fadeIn 0.5s)
+    }
+    > .growl-item.ng-leave {
+        .animation(bounceOutRight 1s)
+    }
+    .alert-success .growl-message a {
+        color: darkblue;
+    }
 }
-
-.growl-container > .growl-item.ng-enter {
-    .animation(fadeIn 0.5s)
-}
-
-.growl-container > .growl-item.ng-leave {
-    .animation(bounceOutRight 1s)
-}
-.growl-container .alert-success .growl-message a {
-    color: darkblue;
-}
-
 
 /*.input-sm {
     height: 25px !important;

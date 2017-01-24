@@ -96,6 +96,7 @@ namespace Acerva.Web
             CadastroRegionais(bundles);
             CadastroUsuarios(bundles);
             Inicio(bundles);
+            Indicacoes(bundles);
             Registro(bundles);
             Admin(bundles);
 
@@ -205,6 +206,16 @@ namespace Acerva.Web
                 .Include(path + "acerva.inicio.module.js")
                 .Include(path + "acerva.inicio.service.js")
                 .Include(path + "acerva.inicio.controller.js")
+            );
+        }
+
+        private static void Indicacoes(BundleCollection bundles)
+        {
+            const string path = ScriptsAplicacaoFolder + "Indicacoes/";
+            bundles.Add(new ScriptBundle("~/bundles/indicacoes")
+                .Include(path + "acerva.indicacoes.module.js")
+                .Include(path + "acerva.indicacoes.service.js")
+                .Include(path + "acerva.indicacoes.controller.js")
             );
         }
 

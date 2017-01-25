@@ -35,12 +35,11 @@
                     </td>
                     <td>{{m.email}}</td>
                     <td><span class="label" ng-class="{
-                                  'label-success': m.status.codigoBd === listaCtrl.dominio.statusUsuario.ativo.codigoBd,
-                                  'label-danger': m.status.codigoBd === listaCtrl.dominio.statusUsuario.cancelado.codigoBd,
-                                  'label-success': m.status.codigoBd === listaCtrl.dominio.statusUsuario.novo.codigoBd,
-                                  'label-warning': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoIndicacao.codigoBd,
-                                  'label-default': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoConfirmacaoEmail.codigoBd,
-                                  'label-primary': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd
+                                  'label-success': (m.status.codigoBd === listaCtrl.dominio.statusUsuario.ativo.codigoBd || m.status.codigoBd === listaCtrl.dominio.statusUsuario.novo.codigoBd),
+                                  'label-danger':   m.status.codigoBd === listaCtrl.dominio.statusUsuario.cancelado.codigoBd,
+                                  'label-warning':  m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoIndicacao.codigoBd,
+                                  'label-default':  m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoConfirmacaoEmail.codigoBd,
+                                  'label-primary':  m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd
                                   }">{{m.status.nomeExibicao}}</span></td>
                     <td>{{m.regional.nome}}</td>
 
@@ -69,12 +68,11 @@
                                ng-href="#/Edit/{{m.id}}">{{m.name}}</a>
                         </strong>
                         <span class="label" ng-class="{
-                                  'label-success': m.status.codigoBd === listaCtrl.dominio.statusUsuario.ativo.codigoBd,
-                                  'label-danger': m.status.codigoBd === listaCtrl.dominio.statusUsuario.cancelado.codigoBd,
-                                  'label-success': m.status.codigoBd === listaCtrl.dominio.statusUsuario.novo.codigoBd,
-                                  'label-warning': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoIndicacao.codigoBd,
-                                  'label-default': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoConfirmacaoEmail.codigoBd,
-                                  'label-primary': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd
+                                  'label-success': (m.status.codigoBd === listaCtrl.dominio.statusUsuario.ativo.codigoBd || m.status.codigoBd === listaCtrl.dominio.statusUsuario.novo.codigoBd),
+                                  'label-danger':   m.status.codigoBd === listaCtrl.dominio.statusUsuario.cancelado.codigoBd,
+                                  'label-warning':  m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoIndicacao.codigoBd,
+                                  'label-default':  m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoConfirmacaoEmail.codigoBd,
+                                  'label-primary':  m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd
                                   }">{{m.status.nomeExibicao}}</span>
                         <span class="label label-primary">
                             {{m.regional.nome}}

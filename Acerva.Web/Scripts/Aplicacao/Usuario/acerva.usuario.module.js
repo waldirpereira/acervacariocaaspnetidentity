@@ -1,10 +1,13 @@
 ﻿(function () {
     "use strict";
 
-    angular.module("acerva.usuario", ["acerva", "datatables"]);
+    angular.module("acerva.usuario", ["acerva", "datatables", "LocalStorageModule"]);
 
     angular.module("acerva")
-        .config(["$routeProvider", routes]);
+        .config(["$routeProvider", routes])
+        .config(function (localStorageServiceProvider) {
+            localStorageServiceProvider.setPrefix("acerva");
+        });
 
     function routes($routeProvider) {
         $routeProvider

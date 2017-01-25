@@ -17,6 +17,13 @@
 
         ctrl.salvaUsuario = salvaUsuario;
         ctrl.recuperaUsuariosIndicacao = recuperaUsuariosIndicacao;
+        ctrl.confirmaPagamento = confirmaPagamento;
+        ctrl.cobrancaGerada = cobrancaGerada;
+        ctrl.confirmaEmail = confirmaEmail;
+        ctrl.confirmaIndicacao = confirmaIndicacao;
+        ctrl.recusaIndicacao = recusaIndicacao;
+        ctrl.cancelaUsuario = cancelaUsuario;
+        ctrl.reativaUsuario = reativaUsuario;
 
         var id = $routeParams.id ? $routeParams.id : "";
         init(id);
@@ -30,8 +37,8 @@
                 ctrl.dominio.statusUsuario = ENUMS.statusUsuario;
                 ctrl.dominio.listaStatusUsuario = ENUMS.toArrayOfEnums(ENUMS.statusUsuario);
 
-                if (id === 0) {
-                    colocaUsuarioEmEdicao({});
+                if (!id) {
+                    colocaUsuarioEmEdicao({ status: ctrl.dominio.statusUsuario.novo });
                     ctrl.status.carregando = false;
                     return;
                 }
@@ -53,16 +60,73 @@
                 return;
 
             ctrl.status.salvando = true;
-            
             Usuario.salvaUsuario(ctrl.modelo)
                 .then(function () {  })
-                .finally(function () { ctrl.status.salvando = false; });
+                .finally(function() {
+                    $location.path("/");
+                });
         }
 
         function recuperaUsuariosIndicacao(termo) {
             return Usuario.buscaUsuariosAtivosComTermo(termo).then(function (usuarios) {
                 return usuarios;
             });
+        }
+
+        function confirmaEmail(usuario) {
+            Usuario.confirmaEmail(usuario)
+                .then(function () { })
+                .finally(function() {
+                    $location.path("/");
+                });
+        }
+
+        function confirmaPagamento(usuario) {
+            Usuario.confirmaPagamento(usuario)
+                .then(function () { })
+                .finally(function() {
+                    $location.path("/");
+                });
+        }
+
+        function cobrancaGerada(usuario) {
+            Usuario.cobrancaGerada(usuario)
+                .then(function () { })
+                .finally(function() {
+                    $location.path("/");
+                });
+        }
+
+        function confirmaIndicacao(usuario) {
+            Usuario.confirmaIndicacao(usuario)
+                .then(function () { })
+                .finally(function() {
+                    $location.path("/");
+                });
+        }
+
+        function recusaIndicacao(usuario) {
+            Usuario.recusaIndicacao(usuario)
+                .then(function () { })
+                .finally(function() {
+                    $location.path("/");
+                });
+        }
+
+        function cancelaUsuario(usuario) {
+            Usuario.cancelaUsuario(usuario)
+                .then(function () { })
+                .finally(function() {
+                    $location.path("/");
+                });
+        }
+
+        function reativaUsuario(usuario) {
+            Usuario.reativaUsuario(usuario)
+                .then(function () { })
+                .finally(function() {
+                    $location.path("/");
+                });
         }
     }
 

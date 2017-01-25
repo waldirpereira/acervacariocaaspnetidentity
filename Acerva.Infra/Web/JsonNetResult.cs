@@ -8,6 +8,7 @@ namespace Acerva.Infra.Web
     //http://stackoverflow.com/questions/7109967/using-json-net-as-the-default-json-serializer-in-asp-net-mvc-3-is-it-possible
     public class JsonNetResult : JsonResult
     {
+        public const int HttpOk = 200;
         public const int HttpBadRequest = 400;
 
         public string Content = "";

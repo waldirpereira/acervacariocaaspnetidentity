@@ -2,18 +2,22 @@
     "use strict";
 
     angular.module("acerva.usuario")
-        .controller("UsuarioController", ["Usuario", "ENUMS", UsuarioController]);
+        .controller("UsuarioController", ["Usuario", "ENUMS", "localStorageService", UsuarioController]);
 
-    function UsuarioController(Usuario, ENUMS) {
+    function UsuarioController(Usuario, ENUMS, localStorageService) {
         var ctrl = this;
 
         ctrl.listaUsuarios = [];
-        ctrl.filtroStatus = [];
-
+        
         ctrl.dominio = {
             statusUsuario: ENUMS.statusUsuario
         };
 
+        var filtroStatusKey = "usuario.filtroStatus";
+        ctrl.filtroStatus = [];
+
+        atualizaFiltrosDaLocalStorage();
+        
         ctrl.mudaFiltroStatus = mudaFiltroStatus;
         ctrl.estaFiltradoPorStatus = estaFiltradoPorStatus;
         ctrl.pegaUsuariosFiltrados = pegaUsuariosFiltrados;
@@ -31,15 +35,19 @@
         }
 
         function mudaFiltroStatus(status) {
+            atualizaFiltrosDaLocalStorage();
             var indexOf = ctrl.filtroStatus.map(function(st) { return st.codigoBd }).indexOf(status.codigoBd);
             if (indexOf >= 0) {
                 ctrl.filtroStatus.splice(indexOf, 1);
+                atualizaFiltrosNaLocalStorage();
                 return;
             }
             ctrl.filtroStatus.push(status);
+            atualizaFiltrosNaLocalStorage();
         }
 
         function estaFiltradoPorStatus(status) {
+            atualizaFiltrosDaLocalStorage();
             return ctrl.filtroStatus.map(function(st) { return st.codigoBd }).indexOf(status.codigoBd) >= 0;
         }
 
@@ -49,6 +57,18 @@
                 return todosUsuarios;
 
             return todosUsuarios.filter(function(usuario) { return estaFiltradoPorStatus(usuario.status); });
+        }
+
+        function atualizaFiltrosDaLocalStorage() {
+            if (localStorageService.isSupported) {
+                ctrl.filtroStatus = localStorageService.get(filtroStatusKey) || [ctrl.dominio.statusUsuario.ativo];
+            }
+        }
+
+        function atualizaFiltrosNaLocalStorage() {
+            if (localStorageService.isSupported) {
+                localStorageService.set(filtroStatusKey, ctrl.filtroStatus);
+            }
         }
     }
 })();

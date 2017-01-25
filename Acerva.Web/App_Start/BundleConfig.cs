@@ -47,6 +47,7 @@ namespace Acerva.Web
         private const string AngularAnimate = ScriptsVendorFolder + "angular-animate.js";
         private const string AngularRoute = ScriptsVendorFolder + "angular-route.js";
         private const string AngularSanitize = ScriptsVendorFolder + "angular-sanitize.js";
+        private const string AngularLocalStorage = ScriptsVendorFolder + "angular-local-storage/angular-local-storage.js";
         private const string AngularChart = ScriptsVendorFolder + "angular-chart/angular-chart.js";
 
 
@@ -138,6 +139,7 @@ namespace Acerva.Web
                 .Include(DateHelper)
                 .Include(Angular)
                 .Include(AngularSanitize)
+                .Include(AngularLocalStorage)
                 .Include(AngularLocalePtBr)
                 .Include(AngularAnimate)
                 .Include(AngularRoute)
@@ -151,6 +153,7 @@ namespace Acerva.Web
                 .Include(AngularHotKeys)
                 .Include(ScriptsAplicacaoFolder + "acerva.module.js")
                 .Include(ScriptsAplicacaoFolder + "acerva.service.js")
+                .Include(ScriptsAplicacaoFolder + "acerva.filter.js")
                 .Include(ScriptsAplicacaoFolder + "acerva.directive.js")
                 .Include(ScriptsAplicacaoFolder + "acerva.layout.controller.js")
                 .Include(ScriptsAplicacaoFolder + "FlashMessage.Cookie.js")

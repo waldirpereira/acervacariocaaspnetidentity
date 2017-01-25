@@ -189,7 +189,7 @@ namespace Acerva.Web.Controllers
 
             if (_cadastroUsuarios.BuscaPeloEmail(usuarioViewModel.Email) != null)
             {
-                return RetornaJsonDeAlerta(
+                return RetornaJsonDeRetorno("Erro ao registrar associado",
                         "Este e-mail já está cadastrado em nossa base. Utilize o \"Esqueci minha senha\" para recuperar seu acesso.");
             }
 
@@ -203,17 +203,18 @@ namespace Acerva.Web.Controllers
                 usuario.CreationDate = DateTime.Now;
                 usuario.PasswordHash = UserManager.PasswordHasher.HashPassword(usuarioViewModel.Password);
                 usuario.SecurityStamp = Guid.NewGuid().ToString();
+                usuario.Status = StatusUsuario.AguardandoConfirmacaoEmail;
             }
 
             var validacao = _validator.Validate(usuario);
             if (!validacao.IsValid)
             {
-                return RetornaJsonDeAlerta(validacao.GeraListaHtmlDeValidacoes());
+                return RetornaJsonDeRetorno("Erro ao registrar associado", validacao.GeraListaHtmlDeValidacoes());
             }
 
             if (_cadastroUsuarios.ExisteComMesmoNome(usuario))
             {
-                return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Já existe um usuário com o nome {0:unsafe}", usuario.Name));
+                return RetornaJsonDeRetorno("Erro ao registrar associado",string.Format(HtmlEncodeFormatProvider.Instance, "Já existe um usuário com o nome {0:unsafe}", usuario.Name));
             }
 
             try
@@ -236,11 +237,12 @@ namespace Acerva.Web.Controllers
             return new JsonNetResult("OK");
         }
 
-        private static ActionResult RetornaJsonDeAlerta(string mensagem)
+        private static ActionResult RetornaJsonDeRetorno(string titulo, string mensagem, 
+            GrowlMessageSeverity growlSeverity = GrowlMessageSeverity.Warning, int statusCode = JsonNetResult.HttpBadRequest)
         {
-            var growlMessage = new GrowlMessage(GrowlMessageSeverity.Warning, mensagem, "Associado não salvo");
+            var growlMessage = new GrowlMessage(growlSeverity, mensagem, titulo);
 
-            return new JsonNetResult(new { growlMessage }, statusCode: JsonNetResult.HttpBadRequest);
+            return new JsonNetResult(new { growlMessage }, statusCode: statusCode);
         }
 
 
@@ -261,7 +263,7 @@ namespace Acerva.Web.Controllers
                 return View("Error");
 
             usuario.IndicacaoHash = null;
-            usuario.Status = StatusUsuario.AguardandoPagamentoAnuidade;
+            usuario.Status = StatusUsuario.Novo;
 
             var mensagem = string.Format("Olá Financeiro,<br/><br/>" +
                                              "A pessoa {0} acabou de ter sua indicação confirmada.<br/><br/>" +
@@ -306,7 +308,7 @@ namespace Acerva.Web.Controllers
             {
                 var usuarioLogado = HttpContext.User;
                 var usuarioLogadoBd = _cadastroUsuarios.Busca(usuarioLogado.Identity.GetUserId());
-                var ehUsuarioQueIndicou = usuarioLogadoBd.Id == usuario.UsuarioIndicacao.Id;
+                var ehUsuarioQueIndicou = usuario.UsuarioIndicacao != null && usuarioLogadoBd.Id == usuario.UsuarioIndicacao.Id;
                 var ehAdminOuDiretor = usuarioLogado.IsInRole("ADMIN") || usuarioLogado.IsInRole("DIRETOR");
                 var ehDelegadoDaRegionalDoAssociadoATerIndicacaoConfirmada = usuarioLogado.IsInRole("DELEGADO") &&
                                                                              usuarioLogadoBd.Regional.Codigo == usuario.Regional.Codigo;
@@ -367,11 +369,11 @@ namespace Acerva.Web.Controllers
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
-        public async Task<ActionResult> ConfirmEmail(string userId, string code)
+        public async Task<ActionResult> ConfirmEmail(string userId, string code, bool isJsonReturn = false)
         {
-            if (userId == null || code == null)
+            if (userId == null || (code == null && !isJsonReturn))
             {
-                return View("Error");
+                return isJsonReturn ? RetornaJsonDeRetorno("Erro ao confirmar e-mail", "Identificador do associado não foi informado") : View("Error");
             }
 
             var usuarioHibernate = _cadastroUsuarios.Busca(userId);
@@ -380,47 +382,58 @@ namespace Acerva.Web.Controllers
             var result = new IdentityResult();
             try
             {
-                result = await UserManager.ConfirmEmailAsync(usuarioHibernate.Id, code);
+                if (!isJsonReturn)
+                {
+                    result = await UserManager.ConfirmEmailAsync(usuarioHibernate.Id, code);
+                }
 
                 _cadastroUsuarios.BeginTransaction();
+
                 usuarioHibernate.Status = StatusUsuario.AguardandoIndicacao;
                 usuarioHibernate.IndicacaoHash = codigoConfirmacaoIndicacao;
                 usuarioHibernate.EmailConfirmed = true;
+                
                 _cadastroUsuarios.Atualiza(usuarioHibernate);
+
                 _cadastroUsuarios.Commit();
             }
             catch (InvalidOperationException ioe)
             {
                 // ConfirmEmailAsync throws when the userId is not found.
                 ViewBag.errorMessage = ioe.Message;
-                return View("Error");
+                return isJsonReturn ? RetornaJsonDeRetorno("Erro ao confirmar e-mail", ViewBag.errorMessage) : View("Error");
             }
             catch (Exception)
             {
                 _cadastroUsuarios.Rollback();
             }
 
-            if (result.Succeeded)
+            if (result.Succeeded || isJsonReturn)
             {
-
                 if (usuarioHibernate.UsuarioIndicacao == null)
                 {
                     ViewBag.errorMessage = "Sem associado que indicou!";
-                    return View("Error");
+                    return isJsonReturn ? RetornaJsonDeRetorno("Erro ao confirmar e-mail", ViewBag.errorMessage) : View("Error");
                 }
 
-                var callbackUrl = Url.Action("ConfirmDesignation", "Account",
+                var callbackUrlConfirmacao = Url.Action("ConfirmDesignation", "Account",
+                   new { userId = usuarioHibernate.Id, code = codigoConfirmacaoIndicacao }, protocol: Request.Url.Scheme);
+
+                var callbackUrlRecusa = Url.Action("DenyDesignation", "Account",
                    new { userId = usuarioHibernate.Id, code = codigoConfirmacaoIndicacao }, protocol: Request.Url.Scheme);
 
                 var mensagem = string.Format("Olá {0},<br/><br/>" +
                                              "Recebemos um novo pedido de associação à ACervA Carioca, de {1}, da regional {2}. Esta pessoa mencionou ter sido indicada por você.<br/><br/>" +
                                              "Por favor confirme esta indicação clicando <a href=\"{3}\">aqui</a>.<br/><br/>" +
-                                                 "Se o link não funcionar, copie o endereço abaixo e cole em seu navegador.<br/><br/>{3}<br/><br/>" +
+                                                 "Se o link para confirmar não funcionar, copie o endereço abaixo e cole em seu navegador.<br/><br/>{3}<br/><br/>" +
+                                                 "Caso não tenha sido você que indicou esta pessoa, por favor recuse a indicação clicando <a href=\"{4}\">aqui</a>.<br/><br/>" +
+                                                 "Se o link para recusar não funcionar, copie o endereço abaixo e cole em seu navegador.<br/><br/>{4}<br/><br/>" +
                                                  "Obrigado,<br/>ACervA Carioca",
-                        usuarioHibernate.UsuarioIndicacao.Name, usuarioHibernate.Name, usuarioHibernate.Regional.Nome, callbackUrl);
+                        usuarioHibernate.UsuarioIndicacao.Name, usuarioHibernate.Name, usuarioHibernate.Regional.Nome, callbackUrlConfirmacao, callbackUrlRecusa);
                 await UserManager.SendEmailAsync(usuarioHibernate.UsuarioIndicacao.Id, "Confirme a indicação para ACervA Carioca", mensagem);
 
-                return View();
+                return isJsonReturn ? RetornaJsonDeRetorno("E-mail confirmado com sucesso", "Associado teve seu e-mail confirmado com sucesso", 
+                    GrowlMessageSeverity.Success, JsonNetResult.HttpOk) : View();
             }
 
             // If we got this far, something failed.

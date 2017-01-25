@@ -11,6 +11,7 @@ using Acerva.Web.Models;
 using Acerva.Web.Models.CadastroUsuarios;
 using FluentValidation;
 using log4net;
+using Microsoft.AspNet.Identity;
 
 namespace Acerva.Web.Controllers
 {
@@ -23,7 +24,7 @@ namespace Acerva.Web.Controllers
         private readonly ICadastroUsuarios _cadastroUsuarios;
         private readonly ICadastroRegionais _cadastroRegionais;
 
-        public UsuarioController(IValidator<Usuario> validator, 
+        public UsuarioController(IValidator<Usuario> validator,
             ICadastroUsuarios cadastroUsuarios, ICadastroRegionais cadastroRegionais) : base(cadastroUsuarios)
         {
             _validator = validator;
@@ -48,9 +49,20 @@ namespace Acerva.Web.Controllers
             var regionaisJson = _cadastroRegionais.BuscaTodos()
                 .Select(Mapper.Map<RegionalViewModel>);
 
+            var usuarioLogado = HttpContext.User;
+            var usuarioLogadoBd = usuarioLogado.Identity.IsAuthenticated ? _cadastroUsuarios.Busca(usuarioLogado.Identity.GetUserId()) : null;
+            var usuarioLogadoEhAdmin = usuarioLogado.IsInRole("ADMIN");
+            var usuarioLogadoEhDiretor = usuarioLogado.IsInRole("DIRETOR");
+            var usuarioLogadoEhDelegado = usuarioLogado.IsInRole("DELEGADO");
+            var regionalDoUsuarioLogadoJson = Mapper.Map<RegionalViewModel>(usuarioLogadoBd != null ? usuarioLogadoBd.Regional : null);
+
             return new JsonNetResult(new
             {
-                Regionais = regionaisJson
+                Regionais = regionaisJson,
+                RegionalDoUsuarioLogado = regionalDoUsuarioLogadoJson,
+                UsuarioLogadoEhAdmin = usuarioLogadoEhAdmin,
+                UsuarioLogadoEhDiretor = usuarioLogadoEhDiretor,
+                UsuarioLogadoEhDelegado = usuarioLogadoEhDelegado
             });
         }
 
@@ -67,23 +79,29 @@ namespace Acerva.Web.Controllers
         [AcervaAuthorize(Roles = "ADMIN, DIRETOR, DELEGADO")]
         public ActionResult Salva([JsonBinder]UsuarioViewModel usuarioViewModel)
         {
-            Log.InfoFormat("Usuário está salvando o usuário {0} de código {1} e email {2}", 
+            Log.InfoFormat("Usuário está salvando o associado {0} de código {1} e email {2}",
                 usuarioViewModel.Name, usuarioViewModel.Id, usuarioViewModel.Email);
 
             var ehNovo = string.IsNullOrEmpty(usuarioViewModel.Id);
-            var usuario = ehNovo ? new Usuario{ Id = Guid.NewGuid().ToString() } : _cadastroUsuarios.Busca(usuarioViewModel.Id);
+            var usuario = ehNovo ? new Usuario() : _cadastroUsuarios.Busca(usuarioViewModel.Id);
 
             usuarioViewModel.Name = usuarioViewModel.Name.Trim();
 
             Mapper.Map(usuarioViewModel, usuario);
+
+            if (ehNovo)
+            {
+                usuario.Id = Guid.NewGuid().ToString();
+                usuario.CreationDate = DateTime.Now;
+            }
 
             var validacao = _validator.Validate(usuario);
             if (!validacao.IsValid)
                 return RetornaJsonDeAlerta(validacao.GeraListaHtmlDeValidacoes());
 
             if (_cadastroUsuarios.ExisteComMesmoNome(usuario))
-                return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Já existe um usuário com o nome {0:unsafe}", usuario.Name));
-            
+                return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Já existe um associado com o nome {0:unsafe}", usuario.Name));
+
             if (ehNovo)
                 _cadastroUsuarios.SalvaNovo(usuario);
 
@@ -97,21 +115,82 @@ namespace Acerva.Web.Controllers
         [Transacao]
         [HttpPost]
         [ValidateAjaxAntiForgeryToken]
-        public ActionResult AlteraStatus(int id, StatusUsuario status)
+        [AcervaAuthorize(Roles = "ADMIN, DIRETOR, DELEGADO")]
+        public ActionResult ConfirmaEmail([JsonBinder] UsuarioViewModel usuarioViewModel)
         {
-            //var prefixoOperacao = ativo ? string.Empty : "des";
-            //Log.InfoFormat("Usuário {0} está {1}atividando a User de id {2}", _user.Name, prefixoOperacao, id);
+            Log.InfoFormat("Usuário está confirmando o e-mail do associado {0} de código {1} e email {2}",
+                usuarioViewModel.Name, usuarioViewModel.Id, usuarioViewModel.Email);
 
-            //var User = _cadastroRegionais.Busca(id);
-            //User.Ativo = ativo;
+            return RedirectToAction("ConfirmEmail", "Account", new
+            {
+                userId = usuarioViewModel.Id,
+                isJsonReturn = true
+            });
+        }
 
-            //var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success,
-            //    string.Format("User <a href='{0}#/Edit/{1}'>{2}</a> foi {3}ativado com sucesso", Url.Action("Index"), User.Codigo, User.Codigo, prefixoOperacao),
-            //    string.Format("User {0}ativado", prefixoOperacao));
+        [Transacao]
+        [HttpPost]
+        [ValidateAjaxAntiForgeryToken]
+        [AcervaAuthorize(Roles = "ADMIN, DIRETOR")]
+        public ActionResult ConfirmaPagamento([JsonBinder] UsuarioViewModel usuarioViewModel)
+        {
+            Log.InfoFormat("Usuário está confirmando pagamento de anuidade do associado {0} de código {1} e email {2}",
+                usuarioViewModel.Name, usuarioViewModel.Id, usuarioViewModel.Email);
 
-            //return new JsonNetResult(new { growlMessage });
+            var usuario = _cadastroUsuarios.Busca(usuarioViewModel.Id);
+            usuario.Status = StatusUsuario.Ativo;
 
-            return null;
+            var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associado teve seu pagamento confirmado com sucesso", "Pagamento confirmado");
+            return new JsonNetResult(new { growlMessage });
+        }
+
+
+        [Transacao]
+        [HttpPost]
+        [ValidateAjaxAntiForgeryToken]
+        [AcervaAuthorize(Roles = "ADMIN, DIRETOR")]
+        public ActionResult CobrancaGerada([JsonBinder] UsuarioViewModel usuarioViewModel)
+        {
+            Log.InfoFormat("Usuário está confirmando que a cobrança foi gerada para o associado {0} de código {1} e email {2}",
+                usuarioViewModel.Name, usuarioViewModel.Id, usuarioViewModel.Email);
+
+            var usuario = _cadastroUsuarios.Busca(usuarioViewModel.Id);
+            usuario.Status = StatusUsuario.AguardandoPagamentoAnuidade;
+
+            var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Pretendente teve sua cobrança confirmada como gerada com sucesso", "Cobrança gerada confirmada");
+            return new JsonNetResult(new { growlMessage });
+        }
+
+        [Transacao]
+        [HttpPost]
+        [ValidateAjaxAntiForgeryToken]
+        [AcervaAuthorize(Roles = "ADMIN, DIRETOR")]
+        public ActionResult CancelaUsuario([JsonBinder] UsuarioViewModel usuarioViewModel)
+        {
+            Log.InfoFormat("Usuário está cancelando o registro do associado {0} de código {1} e email {2}",
+                usuarioViewModel.Name, usuarioViewModel.Id, usuarioViewModel.Email);
+
+            var usuario = _cadastroUsuarios.Busca(usuarioViewModel.Id);
+            usuario.Status = StatusUsuario.Cancelado;
+
+            var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associado cancelado com sucesso", "Cancelamento confirmado");
+            return new JsonNetResult(new { growlMessage });
+        }
+
+        [Transacao]
+        [HttpPost]
+        [ValidateAjaxAntiForgeryToken]
+        [AcervaAuthorize(Roles = "ADMIN, DIRETOR")]
+        public ActionResult ReativaUsuario([JsonBinder] UsuarioViewModel usuarioViewModel)
+        {
+            Log.InfoFormat("Usuário está reativando o registro do associado {0} de código {1} e email {2}",
+                usuarioViewModel.Name, usuarioViewModel.Id, usuarioViewModel.Email);
+
+            var usuario = _cadastroUsuarios.Busca(usuarioViewModel.Id);
+            usuario.Status = StatusUsuario.Novo;
+
+            var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associado reativado com sucesso", "Reativação confirmada");
+            return new JsonNetResult(new { growlMessage });
         }
 
         private static ActionResult RetornaJsonDeAlerta(string mensagem)
@@ -120,16 +199,18 @@ namespace Acerva.Web.Controllers
 
             return new JsonNetResult(new { growlMessage }, statusCode: JsonNetResult.HttpBadRequest);
         }
-        
+
         public ActionResult BuscaUsuariosAtivosComTermo(string termo)
         {
             var usuariosDisponiveis = _cadastroUsuarios.BuscaComTermo(termo)
+                .Where(u => u.Status == StatusUsuario.Ativo)
                 .OrderBy(p => p.Name)
                 .Take(20)
-                .Select(p => new
+                .Select(u => new
                 {
-                    p.Id,
-                    p.Name
+                    u.Id,
+                    u.Name,
+                    NomeRegional = u.Regional.Nome
                 });
 
             return new JsonNetResult(usuariosDisponiveis);

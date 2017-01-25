@@ -22,6 +22,41 @@
                     { usuarioViewModel: usuario }
                 ).then(retornaDadoDoXhr);
             },
+            cancelaUsuario: function (usuario) {
+                return $http.post(ROTAS.cancelaUsuario,
+                    { usuarioViewModel: usuario }
+                ).then(retornaDadoDoXhr);
+            },
+            reativaUsuario: function (usuario) {
+                return $http.post(ROTAS.reativaUsuario,
+                    { usuarioViewModel: usuario }
+                ).then(retornaDadoDoXhr);
+            },
+            confirmaEmail: function (usuario) {
+                return $http.post(ROTAS.confirmaEmail,
+                    { usuarioViewModel: usuario }
+                ).then(retornaDadoDoXhr);
+            },
+            confirmaIndicacao: function (usuario) {
+                return $http.post(ROTAS.confirmaIndicacao,
+                    { userId: usuario.id }
+                ).then(retornaDadoDoXhr);
+            },
+            recusaIndicacao: function (usuario) {
+                return $http.post(ROTAS.recusaIndicacao,
+                    { userId: usuario.id }
+                ).then(retornaDadoDoXhr);
+            },
+            confirmaPagamento: function (usuario) {
+                return $http.post(ROTAS.confirmaPagamento,
+                    { usuarioViewModel: usuario }
+                ).then(retornaDadoDoXhr);
+            },
+            cobrancaGerada: function (usuario) {
+                return $http.post(ROTAS.cobrancaGerada,
+                    { usuarioViewModel: usuario }
+                ).then(retornaDadoDoXhr);
+            },
             buscaTiposDominio: function () {
                 if (cacheTiposDominio) {
                     return $timeout(function () { return cacheTiposDominio; });

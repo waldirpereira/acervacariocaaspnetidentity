@@ -43,7 +43,8 @@ namespace Acerva.Modelo
         public virtual StatusUsuario Status { get; set; }
         public virtual Usuario UsuarioIndicacao { get; set; }
         public virtual string IndicacaoHash { get; set; }
-        
+        public virtual string Matricula { get; set; }
+
         public virtual async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<Usuario> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

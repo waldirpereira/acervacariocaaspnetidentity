@@ -73,60 +73,40 @@
             });
         }
 
-        function confirmaEmail(usuario) {
-            Usuario.confirmaEmail(usuario)
+        function executaAcaoComUsuario(usuario, metodoNoService) {
+            metodoNoService(usuario)
                 .then(function () { })
                 .finally(function() {
-                    $location.path("/");
+                    init(usuario.id);
                 });
+        }
+
+        function confirmaEmail(usuario) {
+            executaAcaoComUsuario(usuario, Usuario.confirmaEmail);
         }
 
         function confirmaPagamento(usuario) {
-            Usuario.confirmaPagamento(usuario)
-                .then(function () { })
-                .finally(function() {
-                    $location.path("/");
-                });
+            executaAcaoComUsuario(usuario, Usuario.confirmaPagamento);
         }
 
         function cobrancaGerada(usuario) {
-            Usuario.cobrancaGerada(usuario)
-                .then(function () { })
-                .finally(function() {
-                    $location.path("/");
-                });
+            executaAcaoComUsuario(usuario, Usuario.cobrancaGerada);
         }
 
         function confirmaIndicacao(usuario) {
-            Usuario.confirmaIndicacao(usuario)
-                .then(function () { })
-                .finally(function() {
-                    $location.path("/");
-                });
+            executaAcaoComUsuario(usuario, Usuario.confirmaIndicacao);
         }
 
         function recusaIndicacao(usuario) {
-            Usuario.recusaIndicacao(usuario)
-                .then(function () { })
-                .finally(function() {
-                    $location.path("/");
-                });
+            executaAcaoComUsuario(usuario, Usuario.recusaIndicacao);
         }
 
         function cancelaUsuario(usuario) {
-            Usuario.cancelaUsuario(usuario)
-                .then(function () { })
-                .finally(function() {
-                    $location.path("/");
-                });
+            executaAcaoComUsuario(usuario, Usuario.cancelaUsuario);
         }
 
         function reativaUsuario(usuario) {
-            Usuario.reativaUsuario(usuario)
-                .then(function () { })
-                .finally(function() {
-                    $location.path("/");
-                });
+            executaAcaoComUsuario(usuario, Usuario.reativaUsuario);
         }
     }
 

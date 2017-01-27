@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
@@ -139,12 +140,33 @@ namespace Acerva.Web.Controllers
 
             var usuario = _cadastroUsuarios.Busca(usuarioViewModel.Id);
             usuario.Status = StatusUsuario.Ativo;
+            usuario.Matricula = _cadastroUsuarios.PegaProximaMatricula();
 
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associado teve seu pagamento confirmado com sucesso", "Pagamento confirmado");
             return new JsonNetResult(new { growlMessage });
         }
 
+        [Transacao]
+        [HttpPost]
+        [ValidateAjaxAntiForgeryToken]
+        [AcervaAuthorize(Roles = "ADMIN, DIRETOR")]
+        public ActionResult ConfirmaPagamentoSelecionados([JsonBinder] IEnumerable<string> idsUsuarios)
+        {
+            var listaIdsUsuarios = idsUsuarios.ToList();
+            Log.InfoFormat("Usuário está confirmando pagamento de anuidade dos associados de códigos {0}",
+                listaIdsUsuarios.Aggregate((x, y)=> x + ", " + y));
 
+            foreach (var userId in listaIdsUsuarios)
+            {
+                var usuario = _cadastroUsuarios.Busca(userId);
+                usuario.Status = StatusUsuario.Ativo;
+                usuario.Matricula = _cadastroUsuarios.PegaProximaMatricula();
+            }
+            
+            var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associados tiveram seus pagamentos confirmados com sucesso", "Pagamentos confirmados");
+            return new JsonNetResult(new { growlMessage });
+        }
+        
         [Transacao]
         [HttpPost]
         [ValidateAjaxAntiForgeryToken]
@@ -158,6 +180,26 @@ namespace Acerva.Web.Controllers
             usuario.Status = StatusUsuario.AguardandoPagamentoAnuidade;
 
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Pretendente teve sua cobrança confirmada como gerada com sucesso", "Cobrança gerada confirmada");
+            return new JsonNetResult(new { growlMessage });
+        }
+
+        [Transacao]
+        [HttpPost]
+        [ValidateAjaxAntiForgeryToken]
+        [AcervaAuthorize(Roles = "ADMIN, DIRETOR")]
+        public ActionResult CobrancaGeradaSelecionados([JsonBinder] IEnumerable<string> idsUsuarios)
+        {
+            var listaIdsUsuarios = idsUsuarios.ToList();
+            Log.InfoFormat("Usuário está confirmando que as cobranças foram geradas para os associados de códigos {0}",
+                listaIdsUsuarios.Aggregate((x, y) => x + ", " + y));
+
+            foreach (var userId in listaIdsUsuarios)
+            {
+                var usuario = _cadastroUsuarios.Busca(userId);
+                usuario.Status = StatusUsuario.AguardandoPagamentoAnuidade;
+            }
+
+            var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Pretendentes tiveram suas cobranças confirmadas como geradas com sucesso", "Cobranças geradas confirmadas");
             return new JsonNetResult(new { growlMessage });
         }
 

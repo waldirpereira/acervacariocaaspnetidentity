@@ -8435,3 +8435,9 @@ ALTER TABLE `users` ADD CONSTRAINT `fk_users_users_indicacao` FOREIGN KEY (`id_i
 ALTER TABLE `users` ADD `codigo_indicacao` VARCHAR(128) NULL AFTER `id_indicacao`;
 
 ALTER TABLE `users` CHANGE `codigo_indicacao` `codigo_indicacao` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+
+ALTER TABLE `users` ADD `matricula` VARCHAR(16) NULL DEFAULT NULL AFTER `codigo_indicacao`, ADD INDEX `IN_MATRICULA` (`matricula`);
+
+update users set matricula = 'FUNDADOR';
+update users set matricula = '00028' where email = 'waldirpereira@gmail.com';
+

@@ -18,5 +18,6 @@ namespace Acerva.Infra.Repositorios
         void Rollback();
         void Atualiza(Usuario usuario);
         IEnumerable<Usuario> BuscaUsuariosIndicados(string id);
+        string PegaProximaMatricula();
     }
 }

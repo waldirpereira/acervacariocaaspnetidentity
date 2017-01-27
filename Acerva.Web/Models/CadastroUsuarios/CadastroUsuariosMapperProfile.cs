@@ -14,6 +14,7 @@ namespace Acerva.Web.Models.CadastroUsuarios
                 .ForMember(d => d.UsuarioIndicacao, o => o.DoNotUseDestinationValue());
 
             CreateMap<Usuario, UsuarioIndicacaoViewModel>()
+                .ForMember(d => d.NomeRegional, o => o.ResolveUsing(s => s.UsuarioIndicacao != null ? s.UsuarioIndicacao.Regional.Nome : null))
                 .ReverseMap();
 
             CreateMap<Regional, RegionalViewModel>()

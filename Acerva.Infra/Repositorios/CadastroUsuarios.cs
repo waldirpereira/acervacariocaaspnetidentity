@@ -44,7 +44,7 @@ namespace Acerva.Infra.Repositorios
         public IEnumerable<Usuario> BuscaComTermo(string termo)
         {
             return _session.Query<Usuario>()
-                .Where(p => (p.Name + "|&|" + p.Email).ToLower().Contains(termo.ToLower()))
+                .Where(p => (p.Matricula + "|&|" + p.Name + "|&|" + p.Email).ToLower().Contains(termo.ToLower()))
                 .ToList();
         }
 
@@ -82,6 +82,23 @@ namespace Acerva.Infra.Repositorios
         {
             return _session.Query<Usuario>()
                 .Where(u => u.UsuarioIndicacao.Id == id);
+        }
+
+        private static int? NullableTryParseInt32(string text)
+        {
+            int value;
+            return int.TryParse(text, out value) ? (int?)value : null;
+        }
+
+        public string PegaProximaMatricula()
+        {
+            var matriculasNumericas = _session.Query<Usuario>()
+                .Select(u => u.Matricula)
+                .Select(NullableTryParseInt32);
+
+            var proximaMatricula = matriculasNumericas.Max(m => m ?? 0) + 1;
+
+            return proximaMatricula.ToString("D5");
         }
     }
 }

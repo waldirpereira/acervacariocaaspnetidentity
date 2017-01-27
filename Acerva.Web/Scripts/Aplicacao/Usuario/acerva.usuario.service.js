@@ -52,9 +52,19 @@
                     { usuarioViewModel: usuario }
                 ).then(retornaDadoDoXhr);
             },
+            confirmaPagamentoSelecionados: function (idsUsuarios) {
+                return $http.post(ROTAS.confirmaPagamentoSelecionados,
+                    { idsUsuarios: idsUsuarios }
+                ).then(retornaDadoDoXhr);
+            },
             cobrancaGerada: function (usuario) {
                 return $http.post(ROTAS.cobrancaGerada,
                     { usuarioViewModel: usuario }
+                ).then(retornaDadoDoXhr);
+            },
+            cobrancaGeradaSelecionados: function (idsUsuarios) {
+                return $http.post(ROTAS.cobrancaGeradaSelecionados,
+                    { idsUsuarios: idsUsuarios }
                 ).then(retornaDadoDoXhr);
             },
             buscaTiposDominio: function () {

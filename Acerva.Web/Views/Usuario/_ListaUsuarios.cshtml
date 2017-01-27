@@ -20,6 +20,10 @@
                    dt-multifiltering="multifiltering" class="table table-bordered table-striped table-responsive table-hover table-condensed">
                 <thead>
                 <tr>
+                    <th class="sorting_disabled text-center" style="width: 30px; padding-right: 0;">
+                        <input type="checkbox" ng-click=""/>
+                    </th>
+                    <th style="width: 40px;">Matrícula</th>
                     <th>Nome</th>
                     <th style="width: 120px;">E-mail</th>
                     <th style="width: 40px;">Status</th>
@@ -29,6 +33,13 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="m in listaCtrl.pegaUsuariosFiltrados() track by m.id">
+                    
+                    <td class="text-center">
+                        <input type="checkbox" 
+                               ng-model="listaCtrl.usuariosSelecionados[m.id]"
+                               ng-change="listaCtrl.alteraSelecao(m.id);"/>
+                    </td>
+                    <td>{{m.matricula}}</td>
                     <td>
                         <a title="Editar associado"
                            ng-href="#/Edit/{{m.id}}">{{m.name}}</a>
@@ -65,7 +76,7 @@
                     <td>
                         <strong>
                             <a title="Editar associado"
-                               ng-href="#/Edit/{{m.id}}">{{m.name}}</a>
+                               ng-href="#/Edit/{{m.id}}">{{m.matricula}} - {{m.name}}</a>
                         </strong>
                         <span class="label" ng-class="{
                                   'label-success': (m.status.codigoBd === listaCtrl.dominio.statusUsuario.ativo.codigoBd || m.status.codigoBd === listaCtrl.dominio.statusUsuario.novo.codigoBd),
@@ -92,6 +103,23 @@
     <div class="panel-footer">
         <div class="row">
             <div class="col-sm-12">
+                <div class="pull-left hidden-xs">
+                    <!-- FUNCOES QUE APENAS DIRETORES PODEM EXECUTAR -->
+                    <span ng-if="(listaCtrl.dominio.usuarioLogadoEhAdmin || listaCtrl.dominio.usuarioLogadoEhDiretor)">
+                        <a class="btn btn-success"
+                           ng-if="listaCtrl.filtroStatus.length === 1 && listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade)"
+                           acerva-confirm
+                           confirm-action="listaCtrl.confirmaPagamentoSelecionados()"
+                           confirm-window-type="success"
+                           confirm-text="Confirma que os associados selecionados realizaram pagamento?">Confirmar pagamento para selecionados</a>
+                        <a class="btn btn-primary"
+                           ng-if="listaCtrl.filtroStatus.length === 1 && listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.novo)"
+                           acerva-confirm
+                           confirm-action="listaCtrl.cobrancaGeradaSelecionados()"
+                           confirm-window-type="success"
+                           confirm-text="Confirma que as cobranças foram geradas para os associados selecionados?">Cobrança gerada para selecionados</a>
+                    </span>
+                </div>
                 <div class="pull-right">
                     <a class="btn btn-primary" href="#/Create">Novo associado</a>
                 </div>

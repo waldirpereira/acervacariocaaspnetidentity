@@ -1,4 +1,4 @@
-﻿using Acerva.Modelo.Mapeamento.Types;
+﻿using Acerva.Utils;
 using FluentNHibernate.Mapping;
 
 namespace Acerva.Modelo.Mapeamento

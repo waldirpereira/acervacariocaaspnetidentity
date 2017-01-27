@@ -1,5 +1,5 @@
 using FluentNHibernate.Mapping;
-using SiplexCommon.NHibernate;
+using Acerva.Utils;
 
 namespace Acerva.Modelo.Mapeamento
 {

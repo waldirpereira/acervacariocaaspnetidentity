@@ -20,12 +20,12 @@ namespace Acerva.Utils
 
         public static string GetNome<T>(T tipo)
         {
-            return AbstractEnumStringAttribute.GetValor<T, NomeExibicaoAttribute>(tipo);
+            return GetValor<T, NomeExibicaoAttribute>(tipo);
         }
 
         public static T GetEnumPeloNome<T>(string nome)
         {
-            return AbstractEnumStringAttribute.GetEnum<T, NomeExibicaoAttribute>(nome);
+            return GetEnum<T, NomeExibicaoAttribute>(nome);
         }
     }
 }

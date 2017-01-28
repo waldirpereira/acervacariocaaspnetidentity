@@ -48,6 +48,7 @@ namespace Acerva.Web
         private const string AngularRoute = ScriptsVendorFolder + "angular-route.js";
         private const string AngularSanitize = ScriptsVendorFolder + "angular-sanitize.js";
         private const string AngularLocalStorage = ScriptsVendorFolder + "angular-local-storage/angular-local-storage.js";
+        private const string AngularBase64Upload = ScriptsVendorFolder + "angular-base64-upload/angular-base64-upload.js";
         private const string AngularChart = ScriptsVendorFolder + "angular-chart/angular-chart.js";
 
 
@@ -185,6 +186,7 @@ namespace Acerva.Web
         {
             const string path = ScriptsAplicacaoFolder + "usuario/";
             bundles.Add(new ScriptBundle("~/bundles/usuario")
+                .Include(AngularBase64Upload)
                 .Include(path + "acerva.usuario.module.js")
                 .Include(path + "acerva.usuario.service.js")
                 .Include(path + "acerva.usuario.controller.js")
@@ -196,6 +198,7 @@ namespace Acerva.Web
         {
             const string path = ScriptsAplicacaoFolder + "registro/";
             bundles.Add(new ScriptBundle("~/bundles/registro")
+                .Include(AngularBase64Upload)
                 .Include(path + "acerva.registro.module.js")
                 .Include(path + "acerva.registro.service.js")
                 .Include(path + "acerva.registro.controller.js")

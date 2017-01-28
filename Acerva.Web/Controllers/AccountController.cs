@@ -217,6 +217,8 @@ namespace Acerva.Web.Controllers
                 return RetornaJsonDeRetorno("Erro ao registrar associado",string.Format(HtmlEncodeFormatProvider.Instance, "Já existe um usuário com o nome {0:unsafe}", usuario.Name));
             }
 
+            var caminhoFotos = HttpContext.Server.MapPath("~/Content/Aplicacao/images/fotos");
+            
             try
             {
                 _cadastroUsuarios.BeginTransaction();

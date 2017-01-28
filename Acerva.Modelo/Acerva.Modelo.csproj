@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base64UploadFile.cs" />
     <Compile Include="Noticia.cs" />
     <Compile Include="Regional.cs" />
     <Compile Include="IdentityRole.cs" />

@@ -317,6 +317,7 @@
     <Compile Include="Models\CadastroUsuarios\RegionalViewModel.cs" />
     <Compile Include="Models\CadastroUsuarios\UsuarioIndicacaoViewModel.cs" />
     <Compile Include="Models\CadastroUsuarios\UsuarioViewModel.cs" />
+    <Compile Include="Models\Home\Base64UploadFileViewModel.cs" />
     <Compile Include="Models\Home\HomeMapperProfile.cs" />
     <Compile Include="Models\Home\NoticiaViewModel.cs" />
     <Compile Include="Models\CadastroRegionais\RegionalViewModel.cs" />
@@ -362,6 +363,8 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\vendor\angular-base64-upload\angular-base64-upload.js" />
+    <Content Include="Scripts\vendor\angular-base64-upload\angular-base64-upload.min.js" />
     <Content Include="Scripts\vendor\angular-chart\angular-chart.js" />
     <Content Include="Scripts\vendor\angular-chart\angular-chart.min.js" />
     <Content Include="Scripts\vendor\angular-hotkeys\hotkeys.js" />
@@ -542,6 +545,7 @@
     <Content Include="Content\Aplicacao\fonts\acerva-iconfont.woff" />
     <Content Include="Scripts\vendor\angular-chart\angular-chart.min.js.map" />
     <Content Include="Scripts\vendor\angular-local-storage\angular-local-storage.min.js.map" />
+    <Content Include="Scripts\vendor\angular-base64-upload\angular-base64-upload.min.js.map" />
     <None Include="Scripts\vendor\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\vendor\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\vendor\i18n\angular-locale_aa-er.js" />
@@ -1350,7 +1354,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Aplicacao\images\" />
+    <Folder Include="Content\Aplicacao\images\fotos\" />
     <Folder Include="Content\vendor\bootswatch\darkly\css\fonts\" />
     <Folder Include="Content\vendor\datatables-tabletools\images\psd\" />
     <Folder Include="Log\" />

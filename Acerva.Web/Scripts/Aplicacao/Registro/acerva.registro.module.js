@@ -1,7 +1,7 @@
 ﻿(function () {
     "use strict";
 
-    angular.module("acerva.registro", ["acerva", "datatables"]);
+    angular.module("acerva.registro", ["acerva", "datatables", "naif.base64"]);
 
     angular.module("acerva")
         .config(["$routeProvider", routes]);

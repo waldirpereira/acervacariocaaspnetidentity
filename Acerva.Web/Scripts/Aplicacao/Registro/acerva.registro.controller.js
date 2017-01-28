@@ -54,9 +54,9 @@
                 return;
 
             ctrl.status.salvando = true;
-            
+
             Registro.salvaUsuario(ctrl.modelo)
-                .then(function(retorno) {
+                .then(function (retorno) {
                     if (retorno === "OK") {
                         $location.path("/ConfirmSent");
                         return;

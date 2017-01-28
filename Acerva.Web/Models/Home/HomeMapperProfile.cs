@@ -20,6 +20,9 @@ namespace Acerva.Web.Models.Home
                 .ForMember(d => d.NomeRegional, o => o.ResolveUsing(s => s.Regional.Nome))
                 .ReverseMap();
 
+            CreateMap<Base64UploadFile, Base64UploadFileViewModel>()
+                .ReverseMap();
+
             CreateMap<Regional, RegionalViewModel>()
                 .ReverseMap();
         }

@@ -45,6 +45,14 @@
                             <p ng-show="formUsuario.email.$invalid && !formUsuario.email.$pristine" class="help-block">O e-mail é obrigatório</p>
                         </div>
                     </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label" for="foto">Foto</label>
+                            <input type="file" ng-model="ctrl.modelo.foto"
+                                   base-sixty-four-input
+                                   accept="image/jpeg, image/png, image/gif"/>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row" ng-if="ctrl.tipoCadastro === 'registro'">

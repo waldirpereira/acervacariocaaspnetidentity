@@ -179,6 +179,10 @@
       <Project>{35cbb8b6-0456-4345-adaf-a95905022b7c}</Project>
       <Name>Acerva.Modelo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Acerva.Utils\Acerva.Utils.csproj">
+      <Project>{D1804C35-558E-4DA9-ABE4-B868680B9E91}</Project>
+      <Name>Acerva.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,5 +1,5 @@
 ﻿using System;
-using SiplexCommon.EnumUtil;
+using Acerva.Utils;
 
 namespace Acerva.Modelo
 {

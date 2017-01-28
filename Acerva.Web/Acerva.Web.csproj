@@ -1377,6 +1377,10 @@
       <Project>{35CBB8B6-0456-4345-ADAF-A95905022B7C}</Project>
       <Name>Acerva.Modelo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Acerva.Utils\Acerva.Utils.csproj">
+      <Project>{D1804C35-558E-4DA9-ABE4-B868680B9E91}</Project>
+      <Name>Acerva.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\Messages.resx">

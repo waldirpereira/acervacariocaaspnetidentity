@@ -25,10 +25,12 @@
                                   }">{{ctrl.modelo.status.nomeExibicao}}</a>
                         </div>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-2"
+                         ng-if="ctrl.modelo.matricula">
                         <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.matricula")>
                             <label class="control-label" for="matricula">Matrícula</label>
                             <input type="text" class="form-control" name="matricula" autocomplete="off" required
+                                   ng-disabled="!ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
                                    ng-model="ctrl.modelo.matricula" />
                             <p ng-show="formUsuario.matricula.$invalid && !formUsuario.matricula.$pristine" class="help-block">Matrícula é obrigatória</p>
                         </div>

@@ -25,7 +25,7 @@
         ctrl.pegaUsuariosFiltrados = pegaUsuariosFiltrados;
         ctrl.confirmaPagamentoSelecionados = confirmaPagamentoSelecionados;
         ctrl.cobrancaGeradaSelecionados = cobrancaGeradaSelecionados;
-        
+
         init();
 
         function init() {

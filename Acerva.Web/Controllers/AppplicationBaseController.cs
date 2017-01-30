@@ -22,6 +22,7 @@ namespace Acerva.Web.Controllers
                 {
                     var user = CadastroUsuarios.BuscaPeloEmail(username);
                     ViewData.Add("Name", user.Name);
+                    ViewData.Add("UserId", user.Id);
                 }
             }
             base.OnActionExecuted(filterContext);

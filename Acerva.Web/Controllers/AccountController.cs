@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 using Acerva.Infra.Repositorios;
 using Acerva.Infra.Web;
 using Acerva.Modelo;
+using Acerva.Web.Controllers.Helpers;
 using Acerva.Web.Extensions;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -27,16 +29,18 @@ namespace Acerva.Web.Controllers
     {
         private readonly IValidator<Usuario> _validator;
         private readonly ICadastroUsuarios _cadastroUsuarios;
+        private readonly UsuarioControllerHelper _helper;
         private readonly IIdentity _user;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private static readonly ILog Log =
             LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        public AccountController(IValidator<Usuario> validator, ICadastroUsuarios cadastroUsuarios, IPrincipal user) : base(cadastroUsuarios)
+        public AccountController(IValidator<Usuario> validator, ICadastroUsuarios cadastroUsuarios, IPrincipal user, UsuarioControllerHelper helper) : base(cadastroUsuarios)
         {
             _validator = validator;
             _cadastroUsuarios = cadastroUsuarios;
+            _helper = helper;
             _user = user.Identity;
         }
 
@@ -217,8 +221,6 @@ namespace Acerva.Web.Controllers
                 return RetornaJsonDeRetorno("Erro ao registrar associado",string.Format(HtmlEncodeFormatProvider.Instance, "Já existe um usuário com o nome {0:unsafe}", usuario.Name));
             }
 
-            var caminhoFotos = HttpContext.Server.MapPath("~/Content/Aplicacao/images/fotos");
-            
             try
             {
                 _cadastroUsuarios.BeginTransaction();
@@ -226,11 +228,14 @@ namespace Acerva.Web.Controllers
                 if (ehNovo)
                     _cadastroUsuarios.SalvaNovo(usuario);
 
+                _helper.SalvaFoto(usuario.Id, usuarioViewModel.FotoBase64, HttpContext);
+
                 _cadastroUsuarios.Commit();
             }
-            catch
+            catch (Exception e)
             {
                 _cadastroUsuarios.Rollback();
+                return RetornaJsonDeRetorno("Erro ao registrar associado", e.Message);
             }
 
             Log.InfoFormat("E-mail de confirmação de conta sendo enviado para '{0}'", usuario.Email);

@@ -10,7 +10,7 @@ namespace Acerva.Web.Models.Home
 
         public string Name { get; set; }
         public string Email { get; set; }
-        public Base64UploadFileViewModel Foto { get; set; }
+        public string FotoBase64 { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
         public virtual string PhoneNumber { get; set; }

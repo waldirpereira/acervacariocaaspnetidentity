@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
@@ -7,6 +9,7 @@ using AutoMapper;
 using Acerva.Infra.Repositorios;
 using Acerva.Infra.Web;
 using Acerva.Modelo;
+using Acerva.Web.Controllers.Helpers;
 using Acerva.Web.Extensions;
 using Acerva.Web.Models;
 using Acerva.Web.Models.CadastroUsuarios;
@@ -24,13 +27,15 @@ namespace Acerva.Web.Controllers
         private readonly IValidator<Usuario> _validator;
         private readonly ICadastroUsuarios _cadastroUsuarios;
         private readonly ICadastroRegionais _cadastroRegionais;
+        private readonly UsuarioControllerHelper _helper;
 
         public UsuarioController(IValidator<Usuario> validator,
-            ICadastroUsuarios cadastroUsuarios, ICadastroRegionais cadastroRegionais) : base(cadastroUsuarios)
+            ICadastroUsuarios cadastroUsuarios, ICadastroRegionais cadastroRegionais, UsuarioControllerHelper helper) : base(cadastroUsuarios)
         {
             _validator = validator;
             _cadastroUsuarios = cadastroUsuarios;
             _cadastroRegionais = cadastroRegionais;
+            _helper = helper;
         }
 
         public ActionResult Index()
@@ -71,6 +76,9 @@ namespace Acerva.Web.Controllers
         {
             var user = _cadastroUsuarios.Busca(id);
             var userJson = Mapper.Map<UsuarioViewModel>(user);
+
+            userJson.FotoBase64 = _helper.BuscaFotoBase64(id, HttpContext);
+
             return new JsonNetResult(userJson);
         }
 
@@ -105,6 +113,8 @@ namespace Acerva.Web.Controllers
 
             if (ehNovo)
                 _cadastroUsuarios.SalvaNovo(usuario);
+
+            _helper.SalvaFoto(usuario.Id, usuarioViewModel.FotoBase64, HttpContext);
 
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success,
                 string.Format("Usuário <a href='{0}#/Edit/{1}'>{2}</a> foi salvo com sucesso", Url.Action("Index"), usuario.Id, usuario.Name),

@@ -19,8 +19,10 @@
 
         ctrl.salvaUsuario = salvaUsuario;
         ctrl.recuperaUsuariosIndicacao = recuperaUsuariosIndicacao;
+        ctrl.pegaSrcFoto = pegaSrcFoto;
 
         var id = $routeParams.id ? $routeParams.id : "";
+
         init(id);
 
         function init(id) {
@@ -69,6 +71,10 @@
             return Registro.buscaUsuariosAtivosComTermo(termo).then(function (usuarios) {
                 return usuarios;
             });
+        }
+
+        function pegaSrcFoto() {
+            return ctrl.modelo.fotoSelecionada && ctrl.modelo.fotoSelecionada.base64 ? "data:image/png;base64," + ctrl.modelo.fotoSelecionada.base64 : "";
         }
     }
 

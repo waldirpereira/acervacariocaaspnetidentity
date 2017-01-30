@@ -15,6 +15,7 @@
         ctrl.modeloOriginal = {};
         ctrl.dominio = {};
 
+        ctrl.pegaSrcFoto = pegaSrcFoto;
         ctrl.salvaUsuario = salvaUsuario;
         ctrl.recuperaUsuariosIndicacao = recuperaUsuariosIndicacao;
         ctrl.confirmaPagamento = confirmaPagamento;
@@ -53,6 +54,10 @@
         function colocaUsuarioEmEdicao(usuario) {
             ctrl.modeloOriginal = usuario;
             ctrl.modelo = angular.copy(usuario);
+        }
+
+        function pegaSrcFoto() {
+            return ctrl.modelo.fotoSelecionada && ctrl.modelo.fotoSelecionada.base64 ? "data:image/png;base64," + ctrl.modelo.fotoSelecionada.base64 : "";
         }
 
         function salvaUsuario() {

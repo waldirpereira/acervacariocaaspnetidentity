@@ -49,6 +49,7 @@ namespace Acerva.Web
         private const string AngularSanitize = ScriptsVendorFolder + "angular-sanitize.js";
         private const string AngularLocalStorage = ScriptsVendorFolder + "angular-local-storage/angular-local-storage.js";
         private const string AngularBase64Upload = ScriptsVendorFolder + "angular-base64-upload/angular-base64-upload.js";
+        private const string AngularCroppie = ScriptsVendorFolder + "ng-croppie/ng-croppie.js";
         private const string AngularChart = ScriptsVendorFolder + "angular-chart/angular-chart.js";
 
 
@@ -89,6 +90,7 @@ namespace Acerva.Web
         private const string AngularSelectCss = StylesVendorFolder + "angular-ui-select/select.css";
         private const string AngularTimeInputCss = StylesVendorFolder + "png-time-input/png-time-input.css";
         private const string AngularHotkeysCss = StylesVendorFolder + "angular-hotkeys/hotkeys.css";
+        private const string AngularCroppieCss = StylesVendorFolder + "ng-croppie/ng-croppie.css";
         #endregion
 
         public static void RegisterBundles(BundleCollection bundles)
@@ -187,10 +189,15 @@ namespace Acerva.Web
             const string path = ScriptsAplicacaoFolder + "usuario/";
             bundles.Add(new ScriptBundle("~/bundles/usuario")
                 .Include(AngularBase64Upload)
+                .Include(AngularCroppie)
                 .Include(path + "acerva.usuario.module.js")
                 .Include(path + "acerva.usuario.service.js")
                 .Include(path + "acerva.usuario.controller.js")
                 .Include(path + "acerva.usuario.cadastro.controller.js")
+            );
+
+            bundles.Add(new LessBundle("~/cssBundles/usuario")
+                .Include(AngularCroppieCss)
             );
         }
 
@@ -199,9 +206,14 @@ namespace Acerva.Web
             const string path = ScriptsAplicacaoFolder + "registro/";
             bundles.Add(new ScriptBundle("~/bundles/registro")
                 .Include(AngularBase64Upload)
+                .Include(AngularCroppie)
                 .Include(path + "acerva.registro.module.js")
                 .Include(path + "acerva.registro.service.js")
                 .Include(path + "acerva.registro.controller.js")
+            );
+
+            bundles.Add(new LessBundle("~/cssBundles/registro")
+                .Include(AngularCroppieCss)
             );
         }
 

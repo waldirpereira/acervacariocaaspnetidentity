@@ -80,6 +80,9 @@ namespace Acerva.Web.App_Start
 
             kernel.Bind<RegionalControllerHelper>()
                 .ToSelf();
+
+            kernel.Bind<UsuarioControllerHelper>()
+                .ToSelf();
         }        
     }
 }

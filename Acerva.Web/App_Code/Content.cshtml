@@ -68,4 +68,9 @@
     {
         return url.Content("~/Content/" + styleName);
     }
+
+    public static string CaminhoFotos(string userId, UrlHelper url)
+    {
+        return url.Content("~/Content/Aplicacao/images/fotos/" + userId + ".png");
+    }
 }

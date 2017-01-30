@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Situação";
+    ViewBag.AngularApp = "acerva.situacao";
+}
+
+<div ng-view ng-cloak></div>
+@Html.AntiForgeryToken()
+
+<script type="text/ng-template" id="index.html">
+    <div class="animate-show-only">
+        <form name="formSituacao">
+            <div class="row">
+                <div class="input-group">
+                    <input type="text" class="form-control input-sm" ng-model="ctrl.termo" />
+                    <a class="btn btn-default" ng-click="ctrl.buscaSituacao(ctrl.termo);">Buscar</a>
+                </div>
+            </div>
+            <div class="row">
+                {{ctrl.modelo}}
+            </div>
+        </form>
+    </div>
+</script>
+
+
+@section styles {
+    @Styles.Render("~/cssBundles/angularForm")
+    @Styles.Render(BundleConfig.BundleStylesDataTables)
+}
+
+@section dependencies {
+    @Scripts.Render("~/bundles/situacao")
+}
+
+@section scripts {
+        <script type="text/javascript">
+    (function () {
+        angular.module("acerva")
+            .constant("ROTAS", {
+                buscaSituacao: "@Url.Action("BuscaSituacao")"
+            });
+        })();
+        </script>
+}

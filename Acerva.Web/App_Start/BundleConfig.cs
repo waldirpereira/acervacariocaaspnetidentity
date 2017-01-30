@@ -100,6 +100,7 @@ namespace Acerva.Web
 
             CadastroRegionais(bundles);
             CadastroUsuarios(bundles);
+            VisualizacaoSituacao(bundles);
             Inicio(bundles);
             Indicacoes(bundles);
             Registro(bundles);
@@ -183,6 +184,16 @@ namespace Acerva.Web
                 .Include(path + "acerva.regional.service.js")
                 .Include(path + "acerva.regional.controller.js")
                 .Include(path + "acerva.regional.cadastro.controller.js")
+            );
+        }
+
+        private static void VisualizacaoSituacao(BundleCollection bundles)
+        {
+            const string path = ScriptsAplicacaoFolder + "Situacao/";
+            bundles.Add(new ScriptBundle("~/bundles/situacao")
+                .Include(path + "acerva.situacao.module.js")
+                .Include(path + "acerva.situacao.service.js")
+                .Include(path + "acerva.situacao.controller.js")
             );
         }
 

@@ -1,4 +1,5 @@
-﻿using Acerva.Modelo;
+﻿using System.Collections.Generic;
+using Acerva.Modelo;
 
 namespace Acerva.Web.Models.CadastroUsuarios
 {
@@ -14,5 +15,7 @@ namespace Acerva.Web.Models.CadastroUsuarios
         public virtual RegionalViewModel Regional { get; set; }
         public virtual StatusUsuario Status { get; set; }
         public virtual UsuarioIndicacaoViewModel UsuarioIndicacao { get; set; }
+        public virtual IEnumerable<PapelViewModel> Papeis { get; set; }
+        public virtual string NomesPapeis { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -44,6 +45,12 @@ namespace Acerva.Modelo
         public virtual Usuario UsuarioIndicacao { get; set; }
         public virtual string IndicacaoHash { get; set; }
         public virtual string Matricula { get; set; }
+
+        private ICollection<Papel> _papeis = new List<Papel>();
+        public virtual ICollection<Papel> Papeis {
+            get { return _papeis; }
+            set { _papeis = value; } }
+
 
         public virtual async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<Usuario> manager)
         {

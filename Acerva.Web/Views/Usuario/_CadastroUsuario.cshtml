@@ -23,10 +23,10 @@
                                 <label class="control-label">Status</label>
                                 <div>
                                     <a class="btn disabled" ng-class="{
-                                  'btn-success': (ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.ativo.codigoBd || ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.novo.codigoBd),
+                                  'btn-success': (ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.ativo.codigoBd),
                                   'btn-danger':  ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.cancelado.codigoBd,
                                   'btn-warning': ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoIndicacao.codigoBd,
-                                  'btn-default': ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoConfirmacaoEmail.codigoBd,
+                                  'btn-default': ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoConfirmacaoEmail.codigoBd || ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.novo.codigoBd,
                                   'btn-primary': ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd
                                   }">{{ctrl.modelo.status.nomeExibicao}}</a>
                                 </div>
@@ -111,13 +111,31 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-12">
                             @NgHelpers.NgSelectComBuscaRespeitandoStatusBloqueado("ctrl", new NgHelpers.NgSelectOptions("regional", "ctrl.modelo", "nome",
-                            "regional in ctrl.dominio.regionais | filter: {nome: $select.search} | orderBy : 'nome' track by regional.codigo",
-                            "regional.nome | highlight: $select.search")
-                       {
-                           Obrigatorio = true,
-                           Titulo = "Regional",
-                           NgDisabled = ""
-                       })
+                                "regional in ctrl.dominio.regionais | filter: {nome: $select.search} | orderBy : 'nome' track by regional.codigo",
+                                "regional.nome | highlight: $select.search")
+                            {
+                                Obrigatorio = true,
+                                Titulo = "Regional",
+                                NgDisabled = ""
+                            })
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12" ng-if="ctrl.tipoCadastro !== 'registro'">
+                            <div class="form-group">
+                                <label class="control-label">Papéis</label>
+                                <div>
+                                    <ul style="list-style: none; padding-left: 0;">
+                                        <li ng-repeat="papel in ctrl.dominio.papeis">
+                                            <input type="checkbox" 
+                                                   ng-disabled="!ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
+                                                   checklist-model="ctrl.modelo.papeis" 
+                                                   checklist-value="papel"> {{papel.name}}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

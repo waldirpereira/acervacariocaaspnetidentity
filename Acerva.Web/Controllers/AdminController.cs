@@ -2,14 +2,10 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Optimization;
-using Acerva.Infra;
 using Acerva.Infra.Repositorios;
 using Acerva.Infra.Web;
-using Acerva.Modelo;
-using Acerva.Modelo.Mapeamento;
 using Microsoft.Win32;
 
 namespace Acerva.Web.Controllers
@@ -37,40 +33,7 @@ namespace Acerva.Web.Controllers
             BundleTable.EnableOptimizations = habilita;
             return Json(BundleTable.EnableOptimizations, JsonRequestBehavior.AllowGet);
         }
-
-        public ActionResult CriaPapelAdmin()
-        {
-            var rs = new RoleStore<IdentityRole>(new MySQLDatabase());
-            var role = new IdentityRole("ADMIN");
-
-            var roleDb = rs.FindByNameAsync(role.Name);
-            if (roleDb == null)
-            {
-                rs.CreateAsync(role);
-            }
-
-            return Json("CriaPapelAdmin", JsonRequestBehavior.AllowGet);
-        }
-
-        public async Task<ActionResult> AdicionarPapelAdminAoUsuario(string userName)
-        {
-            var db = new MySQLDatabase();
-            var us = new UserStore<Usuario>(db);
-            var rs = new RoleStore<IdentityRole>(db);
-            var role = new IdentityRole("ADMIN");
-
-            var roleDb = await rs.FindByNameAsync(role.Name);
-            var userDb = await us.FindByNameAsync(userName);
-
-            if (userDb != null && roleDb != null)
-            {
-                await us.AddToRoleAsync(userDb, role.Name);
-                return Json("AdicionarPapelAdminAoUsuario COM SUCESSO", JsonRequestBehavior.AllowGet);
-            }
-
-            return Json("AdicionarPapelAdminAoUsuario - nada feito", JsonRequestBehavior.AllowGet);
-        }
-
+        
         private IEnumerable<FileInfo> PegaListaArquivos(string pasta)
         {
             IEnumerable<FileInfo> files;

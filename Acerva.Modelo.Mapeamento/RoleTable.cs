@@ -39,7 +39,7 @@ namespace Acerva.Modelo.Mapeamento
         /// </summary>
         /// <param name="roleName">The role's name</param>
         /// <returns></returns>
-        public int Insert(IdentityRole role)
+        public int Insert(Papel role)
         {
             string commandText = "Insert into Roles (Id, Name) values (@id, @name)";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
@@ -84,18 +84,18 @@ namespace Acerva.Modelo.Mapeamento
         }
 
         /// <summary>
-        /// Gets the IdentityRole given the role Id
+        /// Gets the Papel given the role Id
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        public IdentityRole GetRoleById(string roleId)
+        public Papel GetRoleById(string roleId)
         {
             var roleName = GetRoleName(roleId);
-            IdentityRole role = null;
+            Papel role = null;
 
             if(roleName != null)
             {
-                role = new IdentityRole(roleName, roleId);
+                role = new Papel(roleName, roleId);
             }
 
             return role;
@@ -103,24 +103,24 @@ namespace Acerva.Modelo.Mapeamento
         }
 
         /// <summary>
-        /// Gets the IdentityRole given the role name
+        /// Gets the Papel given the role name
         /// </summary>
         /// <param name="roleName"></param>
         /// <returns></returns>
-        public IdentityRole GetRoleByName(string roleName)
+        public Papel GetRoleByName(string roleName)
         {
             var roleId = GetRoleId(roleName);
-            IdentityRole role = null;
+            Papel role = null;
 
             if (roleId != null)
             {
-                role = new IdentityRole(roleName, roleId);
+                role = new Papel(roleName, roleId);
             }
 
             return role;
         }
 
-        public int Update(IdentityRole role)
+        public int Update(Papel role)
         {
             string commandText = "Update Roles set Name = @name where Id = @id";
             Dictionary<string, object> parameters = new Dictionary<string, object>();

@@ -30,6 +30,11 @@ namespace Acerva.Modelo.Mapeamento
 
             References(u => u.Regional, "codigo_regional");
             References(u => u.UsuarioIndicacao, "id_indicacao");
+
+            HasManyToMany(u => u.Papeis)
+                .Table("userroles")
+                .ParentKeyColumn("UserId")
+                .ChildKeyColumn("RoleId");
         }
     }
 }

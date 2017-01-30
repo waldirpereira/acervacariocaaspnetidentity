@@ -2,13 +2,14 @@
     "use strict";
 
     angular.module("acerva.usuario")
-        .controller("UsuarioController", ["Usuario", "ENUMS", "localStorageService", UsuarioController]);
+        .controller("UsuarioController", ["$scope", "Usuario", "ENUMS", "DTOptionsBuilder", "localStorageService", UsuarioController]);
 
-    function UsuarioController(Usuario, ENUMS, localStorageService) {
+    function UsuarioController($scope, Usuario, ENUMS, DTOptionsBuilder, localStorageService) {
         var ctrl = this;
 
         ctrl.listaUsuarios = [];
         ctrl.usuariosSelecionados = [];
+        ctrl.todosFiltrados = false;
 
         ctrl.dominio = {
             statusUsuario: ENUMS.statusUsuario
@@ -19,12 +20,16 @@
 
         atualizaFiltrosDaLocalStorage();
         
+        ctrl.selecionaTodosFiltrados = selecionaTodosFiltrados;
         ctrl.mudaFiltroStatus = mudaFiltroStatus;
         ctrl.alteraSelecao = alteraSelecao;
         ctrl.estaFiltradoPorStatus = estaFiltradoPorStatus;
         ctrl.pegaUsuariosFiltrados = pegaUsuariosFiltrados;
         ctrl.confirmaPagamentoSelecionados = confirmaPagamentoSelecionados;
         ctrl.cobrancaGeradaSelecionados = cobrancaGeradaSelecionados;
+
+        ctrl.dtOptions = DTOptionsBuilder.newOptions()
+            .withOption('order', [2, 'asc']);
 
         init();
 
@@ -42,6 +47,14 @@
             return Usuario.buscaListaUsuarios().then(function (listaUsuarios) {
                 ctrl.listaUsuarios = listaUsuarios;
             });
+        }
+
+        function selecionaTodosFiltrados() {
+            ctrl.usuariosSelecionados = [];
+            if (!ctrl.todosFiltrados)
+                return;
+
+            ctrl.pegaUsuariosFiltrados().forEach(function (usuario) { alteraSelecao(usuario.id) });
         }
 
         function mudaFiltroStatus(status) {
@@ -85,6 +98,7 @@
             var indexOfUserId = ctrl.usuariosSelecionados.indexOf(userId);
             if (indexOfUserId < 0) {
                 ctrl.usuariosSelecionados.push(userId);
+                ctrl.usuariosSelecionados[userId] = true;
                 return;
             }
             ctrl.usuariosSelecionados.splice(indexOfUserId, 1);

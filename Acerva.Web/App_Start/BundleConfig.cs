@@ -50,6 +50,7 @@ namespace Acerva.Web
         private const string AngularLocalStorage = ScriptsVendorFolder + "angular-local-storage/angular-local-storage.js";
         private const string AngularBase64Upload = ScriptsVendorFolder + "angular-base64-upload/angular-base64-upload.js";
         private const string AngularCroppie = ScriptsVendorFolder + "ng-croppie/ng-croppie.js";
+        private const string AngularChecklistModel = ScriptsVendorFolder + "checklist-model/checklist-model.js";
         private const string AngularChart = ScriptsVendorFolder + "angular-chart/angular-chart.js";
 
 
@@ -190,6 +191,7 @@ namespace Acerva.Web
             bundles.Add(new ScriptBundle("~/bundles/usuario")
                 .Include(AngularBase64Upload)
                 .Include(AngularCroppie)
+                .Include(AngularChecklistModel)
                 .Include(path + "acerva.usuario.module.js")
                 .Include(path + "acerva.usuario.service.js")
                 .Include(path + "acerva.usuario.controller.js")

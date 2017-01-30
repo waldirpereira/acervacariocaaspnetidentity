@@ -315,6 +315,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CadastroRegionais\CadastroRegionalMapperProfile.cs" />
     <Compile Include="Models\CadastroUsuarios\CadastroUsuariosMapperProfile.cs" />
+    <Compile Include="Models\CadastroUsuarios\PapelViewModel.cs" />
     <Compile Include="Models\CadastroUsuarios\RegionalViewModel.cs" />
     <Compile Include="Models\CadastroUsuarios\UsuarioIndicacaoViewModel.cs" />
     <Compile Include="Models\CadastroUsuarios\UsuarioViewModel.cs" />
@@ -1361,6 +1362,7 @@
     <Folder Include="Content\vendor\bootswatch\darkly\css\fonts\" />
     <Folder Include="Content\vendor\datatables-tabletools\images\psd\" />
     <Folder Include="Log\" />
+    <Folder Include="Scripts\vendor\checklist-model\" />
     <Folder Include="Views\AppplicationBase\" />
   </ItemGroup>
   <ItemGroup>

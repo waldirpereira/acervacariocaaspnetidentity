@@ -58,7 +58,7 @@
     <Compile Include="Base64UploadFile.cs" />
     <Compile Include="Noticia.cs" />
     <Compile Include="Regional.cs" />
-    <Compile Include="IdentityRole.cs" />
+    <Compile Include="Papel.cs" />
     <Compile Include="StatusUsuario.cs" />
     <Compile Include="Usuario.cs" />
     <Compile Include="Sistema.cs" />

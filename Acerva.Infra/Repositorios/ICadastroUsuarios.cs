@@ -19,5 +19,6 @@ namespace Acerva.Infra.Repositorios
         void Atualiza(Usuario usuario);
         IEnumerable<Usuario> BuscaUsuariosIndicados(string id);
         string PegaProximaMatricula();
+        IEnumerable<Papel> BuscaTodosPapeis();
     }
 }

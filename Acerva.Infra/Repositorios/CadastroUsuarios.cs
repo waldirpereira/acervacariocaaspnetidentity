@@ -100,5 +100,10 @@ namespace Acerva.Infra.Repositorios
 
             return proximaMatricula.ToString("D5");
         }
+
+        public IEnumerable<Papel> BuscaTodosPapeis()
+        {
+            return _session.Query<Papel>();
+        }
     }
 }

@@ -69,6 +69,7 @@
     <Compile Include="UserRoleTable.cs" />
     <Compile Include="UserStore.cs" />
     <Compile Include="UserTable.cs" />
+    <Compile Include="PapelClassMap.cs" />
     <Compile Include="UsuarioClassMap.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -10,7 +10,7 @@ namespace Acerva.Modelo.Mapeamento
     /// Class that implements the key ASP.NET Identity role store iterfaces
     /// </summary>
     public class RoleStore<TRole> : IQueryableRoleStore<TRole>
-        where TRole : IdentityRole
+        where TRole : Papel
     {
         private RoleTable roleTable;
         public MySQLDatabase Database { get; private set; }

@@ -43,11 +43,26 @@ namespace Acerva.Web.Controllers
             return View();
         }
 
+        [AcervaAuthorize(Roles = "ADMIN, DIRETOR, DELEGADO")]
         public ActionResult BuscaParaListagem()
         {
-            var listaUsuariosJson = _cadastroUsuarios.BuscaParaListagem()
-                .Select(Mapper.Map<UsuarioViewModel>);
-            return new JsonNetResult(listaUsuariosJson);
+            var listaUsuariosJson = _cadastroUsuarios.BuscaParaListagem().ToList();
+
+            var usuarioLogado = HttpContext.User;
+            var usuarioLogadoBd = usuarioLogado.Identity.IsAuthenticated ? _cadastroUsuarios.Busca(usuarioLogado.Identity.GetUserId()) : null;
+            var usuarioLogadoEhAdmin = usuarioLogado.IsInRole("ADMIN");
+            var usuarioLogadoEhDiretor = usuarioLogado.IsInRole("DIRETOR");
+            
+            // é delegado (só visualiza associados de sua regional)
+            if (!usuarioLogadoEhAdmin && !usuarioLogadoEhDiretor)
+            {
+                if (usuarioLogadoBd == null)
+                    usuarioLogadoBd = new Usuario();
+                listaUsuariosJson = listaUsuariosJson.Where(u => u.Regional.Equals(usuarioLogadoBd.Regional)).ToList();
+            }
+
+            var listaUsuariosViewModel = listaUsuariosJson.Select(Mapper.Map<UsuarioViewModel>);
+            return new JsonNetResult(listaUsuariosViewModel);
         }
 
         public ActionResult BuscaTiposDominio()
@@ -62,13 +77,17 @@ namespace Acerva.Web.Controllers
             var usuarioLogadoEhDelegado = usuarioLogado.IsInRole("DELEGADO");
             var regionalDoUsuarioLogadoJson = Mapper.Map<RegionalViewModel>(usuarioLogadoBd != null ? usuarioLogadoBd.Regional : null);
 
+            var papeisJson = _cadastroUsuarios.BuscaTodosPapeis()
+                .Select(Mapper.Map<PapelViewModel>);
+
             return new JsonNetResult(new
             {
                 Regionais = regionaisJson,
                 RegionalDoUsuarioLogado = regionalDoUsuarioLogadoJson,
                 UsuarioLogadoEhAdmin = usuarioLogadoEhAdmin,
                 UsuarioLogadoEhDiretor = usuarioLogadoEhDiretor,
-                UsuarioLogadoEhDelegado = usuarioLogadoEhDelegado
+                UsuarioLogadoEhDelegado = usuarioLogadoEhDelegado,
+                Papeis = papeisJson
             });
         }
 

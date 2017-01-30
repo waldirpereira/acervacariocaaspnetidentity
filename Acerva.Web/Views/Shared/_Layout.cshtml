@@ -33,11 +33,20 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Sobre", "About", "Home")</li>
-                    @if (Request.IsAuthenticated && User.IsInRole("ADMIN"))
+                    @if (Request.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Regionais", "Index", "Regional")</li>
-                        <li>@Html.ActionLink("Associados", "Index", "Usuario")</li>
-                        <li>@Html.ActionLink("Admin", "Index", "Admin")</li>
+                        if (User.IsInRole("ADMIN") || User.IsInRole("DIRETOR"))
+                        {
+                            <li>@Html.ActionLink("Regionais", "Index", "Regional")</li>
+                        }
+                        if (User.IsInRole("ADMIN") || User.IsInRole("DIRETOR") || User.IsInRole("DELEGADO"))
+                        {
+                            <li>@Html.ActionLink("Associados", "Index", "Usuario")</li>
+                        }
+                        if (User.IsInRole("ADMIN"))
+                        {
+                            <li>@Html.ActionLink("Admin", "Index", "Admin")</li>
+                        }
                     }
                     <li>@Html.ActionLink("Contatos", "Contact", "Home")</li>
                 </ul>

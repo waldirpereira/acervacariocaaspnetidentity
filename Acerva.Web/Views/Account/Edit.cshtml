@@ -1,8 +1,8 @@
 ﻿@using Acerva.Modelo
 @using Acerva.Web.Extensions
 @{
-    ViewBag.Title = "Associe-se!";
-    ViewBag.AngularApp = "acerva.registro";
+    ViewBag.Title = "Alteração de dados";
+    ViewBag.AngularApp = "acerva.meusdados";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -10,33 +10,29 @@
 <div ng-view ng-cloak></div>
 @Html.AntiForgeryToken()
 
-<script type="text/ng-template" id="create.html">
+<script type="text/ng-template" id="edit.html">
     <div class="animate-show-only">
-        <h4>Crie uma nova conta para se associar à ACervA Carioca.</h4>
+        <h4>Altere seus dados.</h4>
         @Html.Partial("~/Views/Usuario/_CadastroUsuario.cshtml")
     </div>
 </script>
 
-<script type="text/ng-template" id="confirmSent.html">
+<script type="text/ng-template" id="edited.html">
     <div class="animate-show-only">
         <p>
-            Um e-mail com um link de confirmação foi enviado para o e-mail cadastrado.<br />
-            Por favor verifique sua caixa de entrada.
-        </p>
-        <p>
-            Por favor @Html.ActionLink("clique aqui para efetuar seu login", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" }) caso já tenha confirmado sua conta.
+            Seus dados foram alterados com sucesso!
         </p>
     </div>
 </script>
 
 @section styles {
     @Styles.Render("~/cssBundles/angularForm")
-    @Styles.Render("~/cssBundles/registro")
+    @Styles.Render("~/cssBundles/meusdados")
     @Styles.Render(BundleConfig.BundleStylesDataTables)
 }
 
 @section dependencies {
-    @Scripts.Render("~/bundles/registro")
+    @Scripts.Render("~/bundles/meusdados")
 }
 
 @section scripts {
@@ -45,7 +41,7 @@
             angular.module("acerva")
                 .constant("ROTAS", {
                     buscaTiposDominio: "@Url.Action("BuscaTiposDominio", "Usuario")",
-                    busca: "@Url.Action("Busca", "Usuario")",
+                    buscaUsuarioLogadoParaEdicao: "@Url.Action("BuscaUsuarioLogadoParaEdicao", "Usuario")",
                     salva: "@Url.Action("Register")",
                     buscaUsuariosAtivosComTermo: "@Url.Action("BuscaUsuariosAtivosComTermo", "Usuario")"
                 })

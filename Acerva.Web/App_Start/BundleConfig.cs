@@ -103,6 +103,7 @@ namespace Acerva.Web
             Inicio(bundles);
             Indicacoes(bundles);
             Registro(bundles);
+            MeusDados(bundles);
             Admin(bundles);
 
             bundles.Add(new ScriptBundle("~/bundles/admin")
@@ -215,6 +216,22 @@ namespace Acerva.Web
             );
 
             bundles.Add(new LessBundle("~/cssBundles/registro")
+                .Include(AngularCroppieCss)
+            );
+        }
+
+        private static void MeusDados(BundleCollection bundles)
+        {
+            const string path = ScriptsAplicacaoFolder + "meusdados/";
+            bundles.Add(new ScriptBundle("~/bundles/meusdados")
+                .Include(AngularBase64Upload)
+                .Include(AngularCroppie)
+                .Include(path + "acerva.meusdados.module.js")
+                .Include(path + "acerva.meusdados.service.js")
+                .Include(path + "acerva.meusdados.controller.js")
+            );
+
+            bundles.Add(new LessBundle("~/cssBundles/meusdados")
                 .Include(AngularCroppieCss)
             );
         }

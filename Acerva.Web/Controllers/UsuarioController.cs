@@ -83,6 +83,7 @@ namespace Acerva.Web.Controllers
             return new JsonNetResult(new
             {
                 Regionais = regionaisJson,
+                IdUsuarioLogado = usuarioLogado.Identity != null ? usuarioLogado.Identity.GetUserId() : null,
                 RegionalDoUsuarioLogado = regionalDoUsuarioLogadoJson,
                 UsuarioLogadoEhAdmin = usuarioLogadoEhAdmin,
                 UsuarioLogadoEhDiretor = usuarioLogadoEhDiretor,
@@ -99,6 +100,15 @@ namespace Acerva.Web.Controllers
             userJson.FotoBase64 = _helper.BuscaFotoBase64(id, HttpContext);
 
             return new JsonNetResult(userJson);
+        }
+
+        public ActionResult BuscaUsuarioLogadoParaEdicao()
+        {
+            var usuarioLogado = HttpContext.User;
+            if (!usuarioLogado.Identity.IsAuthenticated)
+                return null;
+
+            return Busca(usuarioLogado.Identity.GetUserId());
         }
 
         [Transacao]

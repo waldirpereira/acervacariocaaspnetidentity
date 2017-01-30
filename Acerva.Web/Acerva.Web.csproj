@@ -327,7 +327,7 @@
     <Compile Include="Models\Home\RegionalViewModel.cs" />
     <Compile Include="Models\Home\UsuarioIndicacaoViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Home\UsuarioNovoViewModel.cs" />
+    <Compile Include="Models\Home\UsuarioRegistroViewModel.cs" />
     <Compile Include="Ninject\HttpFiltersNinjectModule.cs" />
     <Compile Include="Ninject\RepositoriosNoBancoDeDadosNinjectModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -354,6 +354,9 @@
     <Content Include="Scripts\Aplicacao\Inicio\acerva.inicio.controller.js" />
     <Content Include="Scripts\Aplicacao\Inicio\acerva.inicio.module.js" />
     <Content Include="Scripts\Aplicacao\Inicio\acerva.inicio.service.js" />
+    <Content Include="Scripts\Aplicacao\MeusDados\acerva.meusdados.controller.js" />
+    <Content Include="Scripts\Aplicacao\MeusDados\acerva.meusdados.module.js" />
+    <Content Include="Scripts\Aplicacao\MeusDados\acerva.meusdados.service.js" />
     <Content Include="Scripts\Aplicacao\Registro\acerva.registro.controller.js" />
     <Content Include="Scripts\Aplicacao\Registro\acerva.registro.module.js" />
     <Content Include="Scripts\Aplicacao\Registro\acerva.registro.service.js" />
@@ -402,6 +405,7 @@
     <Content Include="Views\Account\ConfirmDesignation.cshtml" />
     <Content Include="Views\Home\IndicacoesAConfirmar.cshtml" />
     <Content Include="Views\Account\DenyDesignation.cshtml" />
+    <Content Include="Views\Account\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Aplicacao\fonts\acerva-iconfont.svg" />

@@ -1,6 +1,6 @@
 ﻿@using Acerva.Modelo
 @using Acerva.Web.Models
-@model global::Acerva.Web.Models.Home.UsuarioNovoViewModel
+@model global::Acerva.Web.Models.Home.UsuarioRegistroViewModel
 @{
     ViewBag.Title = "Início";
     ViewBag.AngularApp = "acerva.inicio";
@@ -94,6 +94,7 @@
                                     {
                                         <li>@Html.ActionLink("Admin", "Index", "Admin")</li>
                                     }
+                                    <li>@Html.ActionLink("Meus dados", "Edit", "Account")</li>
                                 }                                
                             </ul>
                         </div>

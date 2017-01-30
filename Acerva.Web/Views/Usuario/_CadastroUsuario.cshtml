@@ -3,7 +3,7 @@
         <div class="panel-heading" ng-show="ctrl.status.carregando">Carregando<i class="icon icon-spin2 glyphicon-spin"></i></div>
         <div class="panel-heading" ng-hide="ctrl.status.carregando">{{ ctrl.modeloOriginal.id ? "Edição do associado '" + ctrl.modelo.name + "'" : "Novo associado" }}</div>
         <div class="panel-body" ng-hide="ctrl.status.carregando">
-            <fieldset ng-disabled="ctrl.modeloOriginal.id && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor">
+            <fieldset ng-disabled="ctrl.modeloOriginal.id && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor && ctrl.dominio.idUsuarioLogado !== ctrl.modeloOriginal.id">
 
                 <div class="col-sm-6">
                     <div class="row">
@@ -121,7 +121,8 @@
                         </div>
                     </div>
                     
-                    <div class="row">
+                    <div class="row"
+                         ng-if="ctrl.dominio.usuarioLogadoEhAdmin || ctrl.dominio.usuarioLogadoEhDiretor">
                         <div class="col-xs-12 col-sm-12" ng-if="ctrl.tipoCadastro !== 'registro'">
                             <div class="form-group">
                                 <label class="control-label">Papéis</label>
@@ -129,7 +130,6 @@
                                     <ul style="list-style: none; padding-left: 0;">
                                         <li ng-repeat="papel in ctrl.dominio.papeis">
                                             <input type="checkbox" 
-                                                   ng-disabled="!ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
                                                    checklist-model="ctrl.modelo.papeis" 
                                                    checklist-value="papel"> {{papel.name}}
                                         </li>

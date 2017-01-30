@@ -175,6 +175,15 @@ namespace Acerva.Web.Controllers
 
         //
         // GET: /Account/Register
+        public ActionResult Edit(string id)
+        {
+            var usuarioLogado = HttpContext.User;
+            ViewBag.Id = usuarioLogado.Identity.GetUserId();
+            return View("Edit");
+        }
+
+        //
+        // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
         {
@@ -186,18 +195,19 @@ namespace Acerva.Web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAjaxAntiForgeryToken]
-        public async Task<ActionResult> Register([JsonBinder]UsuarioNovoViewModel usuarioViewModel)
+        public async Task<ActionResult> Register([JsonBinder]UsuarioRegistroViewModel usuarioViewModel)
         {
             if (!ModelState.IsValid)
                 return View(usuarioViewModel);
 
-            if (_cadastroUsuarios.BuscaPeloEmail(usuarioViewModel.Email) != null)
+            var ehNovo = string.IsNullOrEmpty(usuarioViewModel.Id);
+            var usuarioBd = _cadastroUsuarios.BuscaPeloEmail(usuarioViewModel.Email);
+            if (usuarioBd != null && (ehNovo || usuarioBd.Id != usuarioViewModel.Id))
             {
                 return RetornaJsonDeRetorno("Erro ao registrar associado",
                         "Este e-mail já está cadastrado em nossa base. Utilize o \"Esqueci minha senha\" para recuperar seu acesso.");
             }
 
-            var ehNovo = string.IsNullOrEmpty(usuarioViewModel.Id);
             var usuario = ehNovo ? new Usuario() : _cadastroUsuarios.Busca(usuarioViewModel.Id);
 
             Mapper.Map(usuarioViewModel, usuario);

@@ -8,13 +8,8 @@
 
     function routes($routeProvider) {
         $routeProvider
-            .when("/Edit/:id", {
-                templateUrl: "edit.html",
-                controller: "RegistroController",
-                controllerAs: "ctrl"
-            })
             .when("/Create", {
-                templateUrl: "edit.html",
+                templateUrl: "create.html",
                 controller: "RegistroController",
                 controllerAs: "ctrl"
             })

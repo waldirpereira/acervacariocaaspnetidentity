@@ -10,7 +10,7 @@ namespace Acerva.Web.Models.Home
             CreateMap<Noticia, NoticiaViewModel>()
                 .ReverseMap();
 
-            CreateMap<Usuario, UsuarioNovoViewModel>()
+            CreateMap<Usuario, UsuarioRegistroViewModel>()
                 .ReverseMap()
                 .ForMember(d => d.UserName, o => o.ResolveUsing(s => s.Email))
                 .ForMember(d => d.Regional, o => o.DoNotUseDestinationValue())

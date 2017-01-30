@@ -1,10 +1,10 @@
 ﻿(function () {
     "use strict";
 
-    angular.module("acerva.registro")
-        .controller("RegistroController", ["$scope", "$timeout", "$routeParams", "$location", "ENUMS", "Registro", RegistroController]);
+    angular.module("acerva.meusdados")
+        .controller("MeusDadosController", ["$scope", "$timeout", "$routeParams", "$location", "ENUMS", "MeusDados", MeusDadosController]);
 
-    function RegistroController($scope, $timeout, $routeParams, $location, ENUMS, Registro) {
+    function MeusDadosController($scope, $timeout, $routeParams, $location, ENUMS, MeusDados) {
         var ctrl = this;
         ctrl.status = {
             carregando: false,
@@ -15,29 +15,26 @@
         ctrl.modeloOriginal = {};
         ctrl.dominio = {};
 
-        ctrl.tipoCadastro = "registro";
+        ctrl.tipoCadastro = "meusdados";
 
         ctrl.salvaUsuario = salvaUsuario;
         ctrl.recuperaUsuariosIndicacao = recuperaUsuariosIndicacao;
         ctrl.pegaSrcFoto = pegaSrcFoto;
 
-        var id = $routeParams.id ? $routeParams.id : "";
+        init();
 
-        init(id);
-
-        function init(id) {
+        function init() {
             ctrl.status.carregando = true;
 
-            Registro.buscaTiposDominio().then(function (tipos) {
+            MeusDados.buscaTiposDominio().then(function (tipos) {
                 angular.extend(ctrl.dominio, tipos);
 
                 ctrl.dominio.statusUsuario = ENUMS.statusUsuario;
 
-                if (id)
-                    return;
-
-                colocaUsuarioEmEdicao({ });
-                ctrl.status.carregando = false;
+                return MeusDados.buscaUsuarioLogadoParaEdicao().then(function (usuario) {
+                    colocaUsuarioEmEdicao(usuario);
+                    ctrl.status.carregando = false;
+                });
             });
         }
 
@@ -52,10 +49,10 @@
 
             ctrl.status.salvando = true;
 
-            Registro.salvaUsuario(ctrl.modelo)
+            MeusDados.salvaUsuario(ctrl.modelo)
                 .then(function (retorno) {
                     if (retorno === "OK") {
-                        $location.path("/ConfirmSent");
+                        $location.path("/Edited");
                         return;
                     }
                 })
@@ -63,7 +60,7 @@
         }
 
         function recuperaUsuariosIndicacao(termo) {
-            return Registro.buscaUsuariosAtivosComTermo(termo).then(function (usuarios) {
+            return MeusDados.buscaUsuariosAtivosComTermo(termo).then(function (usuarios) {
                 return usuarios;
             });
         }

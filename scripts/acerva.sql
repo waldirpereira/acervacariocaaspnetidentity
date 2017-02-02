@@ -8441,3 +8441,32 @@ ALTER TABLE `users` ADD `matricula` VARCHAR(16) NULL DEFAULT NULL AFTER `codigo_
 update users set matricula = 'FUNDADOR';
 update users set matricula = '00028' where email = 'waldirpereira@gmail.com';
 
+ALTER TABLE `users` ADD `cpf` VARCHAR(11) NULL AFTER `matricula`;
+
+
+CREATE TABLE `categoria_artigo` (
+ `codigo_categoria_artigo` int(11) NOT NULL,
+ `nome` varchar(60) NOT NULL,
+ `ativo` char(1) NOT NULL DEFAULT 'S',
+ PRIMARY KEY (`codigo_categoria_artigo`),
+ UNIQUE KEY `un_codigo_categoria_artigo` (`codigo_categoria_artigo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `acerva`.`artigo` ( `codigo_artigo` INT NOT NULL AUTO_INCREMENT , `titulo` VARCHAR(300) NOT NULL , `texto_html` VARCHAR(8000) NOT NULL , `data_hora` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`codigo_artigo`)) ENGINE = InnoDB;
+
+ALTER TABLE `artigo` ADD `codigo_categoria_artigo` INT NOT NULL AFTER `data_hora`, ADD `codigo_usuario` VARCHAR(128) NOT NULL AFTER `codigo_categoria_artigo`, ADD `ativo` CHAR(1) NOT NULL DEFAULT 'S' AFTER `codigo_usuario`;
+
+ALTER TABLE `artigo` ADD INDEX(`codigo_categoria_artigo`);
+
+ALTER TABLE `artigo` ADD INDEX(`codigo_usuario`);
+
+ALTER TABLE `artigo` ADD CONSTRAINT `fk_artigo_usuario` FOREIGN KEY (`codigo_usuario`) REFERENCES `acerva`.`users`(`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT; ALTER TABLE `artigo` ADD CONSTRAINT `fk_artigo_categoria_artigo` FOREIGN KEY (`codigo_categoria_artigo`) REFERENCES `acerva`.`categoria_artigo`(`codigo_categoria_artigo`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+INSERT INTO `categoria_artigo` (`codigo_categoria_artigo`, `nome`, `ativo`) VALUES ('1', 'Sobre a ACervA', 'S'), ('2', 'Técnicas', 'S');
+
+CREATE TABLE `acerva`.`anexo_artigo` ( `codigo_anexo_artigo` INT NOT NULL AUTO_INCREMENT , `codigo_artigo` INT NOT NULL , `titulo` VARCHAR(300) NOT NULL , `nome_arquivo` VARCHAR(256) NOT NULL , PRIMARY KEY (`codigo_anexo_artigo`)) ENGINE = InnoDB;
+
+ALTER TABLE `anexo_artigo` ADD INDEX(`codigo_artigo`);
+
+ALTER TABLE `anexo_artigo` ADD CONSTRAINT `fk_anexo_artigo_artigo` FOREIGN KEY (`codigo_artigo`) REFERENCES `acerva`.`artigo`(`codigo_artigo`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+

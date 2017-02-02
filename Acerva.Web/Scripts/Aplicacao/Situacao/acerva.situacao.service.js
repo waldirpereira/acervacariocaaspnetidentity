@@ -6,9 +6,9 @@
 
     function SituacaoFactory($http, $timeout, ROTAS) {
         return {
-            buscaSituacao: function (termo) {
+            buscaSituacao: function (cpf) {
                 return $http.get(ROTAS.buscaSituacao, {
-                    params: { termo: termo }
+                    params: { cpf: cpf }
                 }).then(retornaDadoDoXhr);
             }
         }

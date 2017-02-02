@@ -16,6 +16,16 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.cpf")>
+                                <label class="control-label" for="cpf">CPF</label>
+                                <input type="text" class="form-control" name="cpf" autocomplete="off" required
+                                       ng-model="ctrl.modelo.cpf" />
+                                <p ng-show="formUsuario.cpf.$invalid && !formUsuario.cpf.$pristine" class="help-block">O CPF é obrigatório</p>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="row">
                         <div class="col-xs-12 col-sm-6" ng-if="ctrl.tipoCadastro !== 'registro'">
@@ -188,7 +198,7 @@
                             <a class="btn btn-default" href="#/"
                                ng-disabled="ctrl.status.salvando">Voltar</a>
                         </span>
-                        <span ng-if="ctrl.modelo.id && (ctrl.dominio.usuarioLogadoEhAdmin || ctrl.dominio.usuarioLogadoEhDiretor)">
+                        <span ng-if="ctrl.tipoCadastro === 'usuario' && ctrl.modelo.id && (ctrl.dominio.usuarioLogadoEhAdmin || ctrl.dominio.usuarioLogadoEhDiretor)">
                             <a class="btn btn-danger"
                                ng-if="ctrl.modelo.status.codigoBd !== ctrl.dominio.statusUsuario.cancelado.codigoBd"
                                acerva-confirm
@@ -205,7 +215,7 @@
                     </div>
                     <div class="pull-right">
                         <!-- FUNCOES QUE APENAS DIRETORES PODEM EXECUTAR -->
-                        <span ng-if="ctrl.modelo.id && (ctrl.dominio.usuarioLogadoEhAdmin || ctrl.dominio.usuarioLogadoEhDiretor)">
+                        <span ng-if="ctrl.tipoCadastro === 'usuario' && ctrl.modelo.id && (ctrl.dominio.usuarioLogadoEhAdmin || ctrl.dominio.usuarioLogadoEhDiretor)">
                             <a class="btn btn-success"
                                ng-if="ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd"
                                ng-click="ctrl.confirmaPagamento(ctrl.modelo)">Confirmar pagamento</a>
@@ -215,7 +225,7 @@
                         </span>
 
                         <!-- FUNCOES QUE DELEGADO PODE EXECUTAR -->
-                        <span ng-if="ctrl.modelo.id && (ctrl.dominio.usuarioLogadoEhAdmin || ctrl.dominio.usuarioLogadoEhDiretor || (ctrl.dominio.usuarioLogadoEhDelegado && ctrl.dominio.regionalDoUsuarioLogado.codigo === ctrl.modelo.regional.codigo))">
+                        <span ng-if="ctrl.tipoCadastro === 'usuario' && ctrl.modelo.id && (ctrl.dominio.usuarioLogadoEhAdmin || ctrl.dominio.usuarioLogadoEhDiretor || (ctrl.dominio.usuarioLogadoEhDelegado && ctrl.dominio.regionalDoUsuarioLogado.codigo === ctrl.modelo.regional.codigo))">
                             <a class="btn btn-primary"
                                ng-if="ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoConfirmacaoEmail.codigoBd"
                                ng-click="ctrl.confirmaEmail(ctrl.modelo)">Confirmar e-mail</a>

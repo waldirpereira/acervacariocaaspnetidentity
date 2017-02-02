@@ -1,5 +1,4 @@
-﻿@using Acerva.Modelo
-<form name="formRegional" novalidate>
+﻿<form name="formRegional" novalidate>
     <div class="panel panel-primary">
         <div class="panel-heading" ng-show="ctrl.status.carregando">Carregando<i class="icon icon-spin2 glyphicon-spin"></i></div>
         <div class="panel-heading" ng-hide="ctrl.status.carregando">{{ ctrl.modeloOriginal.codigo ? "Edição da regional '" + ctrl.modelo.nome + "'": "Nova regional" }}</div>
@@ -30,7 +29,7 @@
                     <div class="pull-right">
                         <a class="btn btn-default" href="#/"
                            ng-disabled="!ctrl.modelo || ctrl.status.salvando">Cancelar</a>
-                        <button type="submit" class="btn btn-primary" ng-hide="ctrl.status.bloqueado" ng-disabled="formRegional.$invalid || ctrl.status.salvando || ctrl.partidaEmEdicao"
+                        <button type="submit" class="btn btn-primary" ng-hide="ctrl.status.bloqueado" ng-disabled="formRegional.$invalid || ctrl.status.salvando"
                                 ng-click="ctrl.salvaRegional()">Salvar<i class="icon icon-spin2 glyphicon-spin" ng-show="ctrl.status.salvando"></i></button>
                     </div>
                 </div>

@@ -19,6 +19,10 @@ namespace Acerva.Web.Ninject
             Bind(typeof(ICadastroUsuarios))
                 .To(typeof(CadastroUsuarios))
                 .InRequestScope();
+
+            Bind(typeof(ICadastroArtigos))
+                .To(typeof(CadastroArtigos))
+                .InRequestScope();
         }
 
     }

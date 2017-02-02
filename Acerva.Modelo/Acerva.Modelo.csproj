@@ -55,7 +55,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base64UploadFile.cs" />
+    <Compile Include="Artigo.cs" />
+    <Compile Include="AnexoArtigo.cs" />
+    <Compile Include="CategoriaArtigo.cs" />
     <Compile Include="Noticia.cs" />
     <Compile Include="Regional.cs" />
     <Compile Include="Papel.cs" />
@@ -63,6 +65,7 @@
     <Compile Include="Usuario.cs" />
     <Compile Include="Sistema.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validadores\ArtigoValidator.cs" />
     <Compile Include="Validadores\UserValidator.cs" />
     <Compile Include="Validadores\RegionalValidator.cs" />
   </ItemGroup>

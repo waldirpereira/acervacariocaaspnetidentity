@@ -41,6 +41,15 @@ a {
 .navbar-inverse {
     background-color: #f39c12;
     border-color: transparent;
+    .navbar-collapse, .navbar-inverse .navbar-form {
+        border-color: #d08106;
+    }
+    .navbar-toggle {
+        border-color: #b97305;
+        &:hover, .navbar-toggle:focus {
+            background-color: #d08106;
+        }
+    }
 }
 
 .principal {

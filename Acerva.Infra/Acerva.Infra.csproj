@@ -149,9 +149,11 @@
     <Compile Include="MySQLDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorios\CadastroNoticias.cs" />
+    <Compile Include="Repositorios\CadastroArtigos.cs" />
     <Compile Include="Repositorios\CadastroRegionais.cs" />
     <Compile Include="Repositorios\CadastroUsuarios.cs" />
     <Compile Include="Repositorios\ICadastroNoticias.cs" />
+    <Compile Include="Repositorios\ICadastroArtigos.cs" />
     <Compile Include="Repositorios\ICadastroRegionais.cs" />
     <Compile Include="Repositorios\ICadastroUsuarios.cs" />
     <Compile Include="Web\AcervaAuthorizeAttribute.cs" />

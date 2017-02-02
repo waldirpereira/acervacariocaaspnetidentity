@@ -222,14 +222,13 @@ namespace Acerva.Web.Controllers
 
             var validacao = _validator.Validate(usuario);
             if (!validacao.IsValid)
-            {
                 return RetornaJsonDeRetorno("Erro ao registrar associado", validacao.GeraListaHtmlDeValidacoes());
-            }
 
             if (_cadastroUsuarios.ExisteComMesmoNome(usuario))
-            {
                 return RetornaJsonDeRetorno("Erro ao registrar associado",string.Format(HtmlEncodeFormatProvider.Instance, "Já existe um usuário com o nome {0:unsafe}", usuario.Name));
-            }
+
+            if (_cadastroUsuarios.ExisteComMesmoCpf(usuario))
+                return RetornaJsonDeRetorno("Erro ao registrar associado", string.Format(HtmlEncodeFormatProvider.Instance, "Já existe um associado com o CPF {0:unsafe}", usuario.Cpf));
 
             try
             {

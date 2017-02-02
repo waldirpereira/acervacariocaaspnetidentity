@@ -105,5 +105,19 @@ namespace Acerva.Infra.Repositorios
         {
             return _session.Query<Papel>();
         }
+
+        public Usuario BuscaPeloCpf(string cpf)
+        {
+            return _session.Query<Usuario>()
+                .FirstOrDefault(u => u.Cpf.Trim() == cpf.Trim());
+        }
+
+        public bool ExisteComMesmoCpf(Usuario usuario)
+        {
+            var temComMesmoCpf = BuscaTodos()
+                .Any(e => e.Cpf.ToUpperInvariant() == usuario.Cpf.ToUpperInvariant() && e.Id != usuario.Id);
+
+            return temComMesmoCpf;
+        }
     }
 }

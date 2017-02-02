@@ -7,7 +7,7 @@
     function RegionalController(Regional) {
         var ctrl = this;
 
-        ctrl.listaTimes = [];
+        ctrl.listaRegionais = [];
         
         ctrl.ativa = ativa;
         ctrl.inativa = inativa;

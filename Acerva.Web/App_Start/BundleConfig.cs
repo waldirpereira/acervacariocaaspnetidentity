@@ -98,6 +98,7 @@ namespace Acerva.Web
         {
             Layout(bundles);
 
+            CadastroArtigos(bundles);
             CadastroRegionais(bundles);
             CadastroUsuarios(bundles);
             VisualizacaoSituacao(bundles);
@@ -173,6 +174,17 @@ namespace Acerva.Web
                 .Include(BootstrapDatepickerCss)
                 .Include(AngularTimeInputCss)
                 .Include(AngularHotkeysCss)
+            );
+        }
+
+        private static void CadastroArtigos(BundleCollection bundles)
+        {
+            const string path = ScriptsAplicacaoFolder + "Artigo/";
+            bundles.Add(new ScriptBundle("~/bundles/artigo")
+                .Include(path + "acerva.artigo.module.js")
+                .Include(path + "acerva.artigo.service.js")
+                .Include(path + "acerva.artigo.controller.js")
+                .Include(path + "acerva.artigo.cadastro.controller.js")
             );
         }
 

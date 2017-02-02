@@ -15,6 +15,8 @@
         ctrl.modeloOriginal = {};
         ctrl.dominio = {};
 
+        ctrl.tipoCadastro = "usuario";
+
         ctrl.pegaSrcFoto = pegaSrcFoto;
         ctrl.salvaUsuario = salvaUsuario;
         ctrl.recuperaUsuariosIndicacao = recuperaUsuariosIndicacao;

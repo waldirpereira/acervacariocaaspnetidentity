@@ -20,5 +20,7 @@ namespace Acerva.Infra.Repositorios
         IEnumerable<Usuario> BuscaUsuariosIndicados(string id);
         string PegaProximaMatricula();
         IEnumerable<Papel> BuscaTodosPapeis();
+        Usuario BuscaPeloCpf(string cpf);
+        bool ExisteComMesmoCpf(Usuario usuario);
     }
 }

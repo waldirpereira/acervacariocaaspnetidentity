@@ -1,44 +1,144 @@
-﻿@{
+﻿@using Acerva.Modelo
+@using Acerva.Web.Extensions
+@{
     ViewBag.Title = "Situação";
     ViewBag.AngularApp = "acerva.situacao";
 }
+
+<h4>Situação cadastral</h4>
 
 <div ng-view ng-cloak></div>
 @Html.AntiForgeryToken()
 
 <script type="text/ng-template" id="index.html">
     <div class="animate-show-only">
-        <form name="formSituacao">
+        <form name="formSituacao"
+              ng-keyup="$event.keyCode == 13 && ctrl.buscaSituacao(ctrl.cpf)">
             <div class="row">
-                <div class="input-group">
-                    <input type="text" class="form-control input-sm" ng-model="ctrl.termo" />
-                    <a class="btn btn-default" ng-click="ctrl.buscaSituacao(ctrl.termo);">Buscar</a>
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Digite o CPF" ng-model="ctrl.cpf">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" ng-click="ctrl.buscaSituacao(ctrl.cpf);">Buscar</button>
+                        </span>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                {{ctrl.modelo}}
+            <div class="row" ng-if="ctrl.modelo">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <fieldset ng-disabled="true">
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="control-label" for="name">Nome</label>
+                                            <input type="text" class="form-control" name="name"
+                                                   ng-model="ctrl.modelo.name" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="control-label" for="cpf">CPF</label>
+                                            <input type="text" class="form-control" name="cpf"
+                                                   ng-model="ctrl.modelo.cpf" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Status</label>
+                                            <div>
+                                                <a class="btn disabled" ng-class="{
+                                                                      'btn-success': ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.ativo.codigoBd,
+                                                                      'btn-danger':  ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.cancelado.codigoBd,
+                                                                      'btn-warning': ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoIndicacao.codigoBd,
+                                                                      'btn-default': ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoConfirmacaoEmail.codigoBd || ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.novo.codigoBd,
+                                                                      'btn-primary': ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd
+                                                                      }">{{ctrl.modelo.status.nomeExibicao}}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label" for="matricula">Matrícula</label>
+                                            <input type="text" class="form-control" name="matricula"
+                                                   ng-model="ctrl.modelo.matricula" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label" for="indicacao">Indicação</label>
+                                            <input type="text" class="form-control" name="indicacao"
+                                                   ng-model="ctrl.modelo.usuarioIndicacao.name" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label" for="regional">Regional</label>
+                                            <input type="text" class="form-control" name="regional"
+                                                   ng-model="ctrl.modelo.regional.nome" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="control-label" for="foto">Foto</label>
+
+                                            <div ng-if="ctrl.modelo.fotoBase64">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-body">
+                                                        <img ng-src="{{ctrl.modelo.fotoBase64}}" style="width: 160px;" alt="Foto do associado" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="pull-right">
+                                    <a class="btn btn-default"
+                                       ng-click="ctrl.modelo = ctrl.cpf = null;">Limpar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
 </script>
 
 
+
 @section styles {
     @Styles.Render("~/cssBundles/angularForm")
     @Styles.Render(BundleConfig.BundleStylesDataTables)
 }
-
 @section dependencies {
     @Scripts.Render("~/bundles/situacao")
 }
-
 @section scripts {
-        <script type="text/javascript">
-    (function () {
-        angular.module("acerva")
-            .constant("ROTAS", {
-                buscaSituacao: "@Url.Action("BuscaSituacao")"
-            });
+    <script type="text/javascript">
+        (function () {
+            angular.module("acerva")
+                .constant("ROTAS", {
+                    buscaSituacao: "@Url.Action("BuscaSituacao")"
+                })
+            .constant("ENUMS", @Html.GeraJsonDeEnums(typeof (StatusUsuario)));
         })();
-        </script>
+    </script>
 }

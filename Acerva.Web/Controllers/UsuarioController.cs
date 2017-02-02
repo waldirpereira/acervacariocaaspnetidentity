@@ -140,6 +140,9 @@ namespace Acerva.Web.Controllers
             if (_cadastroUsuarios.ExisteComMesmoNome(usuario))
                 return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Já existe um associado com o nome {0:unsafe}", usuario.Name));
 
+            if (_cadastroUsuarios.ExisteComMesmoCpf(usuario))
+                return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Já existe um associado com o CPF {0:unsafe}", usuario.Cpf));
+
             if (ehNovo)
                 _cadastroUsuarios.SalvaNovo(usuario);
 
@@ -179,7 +182,7 @@ namespace Acerva.Web.Controllers
 
             var usuario = _cadastroUsuarios.Busca(usuarioViewModel.Id);
             usuario.Status = StatusUsuario.Ativo;
-            usuario.Matricula = _cadastroUsuarios.PegaProximaMatricula();
+            usuario.Matricula = string.IsNullOrEmpty(usuario.Matricula) ? _cadastroUsuarios.PegaProximaMatricula() : usuario.Matricula;
 
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associado teve seu pagamento confirmado com sucesso", "Pagamento confirmado");
             return new JsonNetResult(new { growlMessage });
@@ -199,7 +202,7 @@ namespace Acerva.Web.Controllers
             {
                 var usuario = _cadastroUsuarios.Busca(userId);
                 usuario.Status = StatusUsuario.Ativo;
-                usuario.Matricula = _cadastroUsuarios.PegaProximaMatricula();
+                usuario.Matricula = string.IsNullOrEmpty(usuario.Matricula) ? _cadastroUsuarios.PegaProximaMatricula() : usuario.Matricula;
             }
             
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associados tiveram seus pagamentos confirmados com sucesso", "Pagamentos confirmados");

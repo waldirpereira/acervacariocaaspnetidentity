@@ -20,7 +20,7 @@
     @RenderSection("styles", required: false)
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top" style="max-height: 50px;">
+    <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -43,9 +43,9 @@
                         {
                             <li>@Html.ActionLink("Associados", "Index", "Usuario")</li>
                         }
-                        if (User.IsInRole("ADMIN"))
+                        if (User.IsInRole("ADMIN") || User.IsInRole("DIRETOR") || User.IsInRole("DELEGADO"))
                         {
-                            <li>@Html.ActionLink("Admin", "Index", "Admin")</li>
+                            <li>@Html.ActionLink("Artigos", "Index", "Artigo")</li>
                         }
                     }
                     <li>@Html.ActionLink("Contatos", "Contact", "Home")</li>

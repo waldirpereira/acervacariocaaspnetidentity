@@ -1,24 +1,22 @@
-﻿using System.Linq;
-using System.Reflection;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using AutoMapper;
 using Acerva.Infra.Repositorios;
 using Acerva.Infra.Web;
+using Acerva.Web.Controllers.Helpers;
 using Acerva.Web.Models.CadastroUsuarios;
-using log4net;
 
 namespace Acerva.Web.Controllers
 {
     [AllowAnonymous]
     public class SituacaoController : ApplicationBaseController
     {
-        private static readonly ILog Log =
-            LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly ICadastroUsuarios _cadastroUsuarios;
-        
-        public SituacaoController(ICadastroUsuarios cadastroUsuarios) : base(cadastroUsuarios)
+        private readonly UsuarioControllerHelper _usuarioControllerHelper;
+
+        public SituacaoController(ICadastroUsuarios cadastroUsuarios, UsuarioControllerHelper usuarioControllerHelper) : base(cadastroUsuarios)
         {
             _cadastroUsuarios = cadastroUsuarios;
+            _usuarioControllerHelper = usuarioControllerHelper;
         }
 
         public ActionResult Index()
@@ -26,12 +24,14 @@ namespace Acerva.Web.Controllers
             return View();
         }
 
-        public ActionResult BuscaSituacao(string termo)
+        public ActionResult BuscaSituacao(string cpf)
         {
-            var listaUsuariosJson = _cadastroUsuarios.BuscaComTermo(termo)
-                .Select(Mapper.Map<UsuarioViewModel>);
+            var user = _cadastroUsuarios.BuscaPeloCpf(cpf);
+            var userJson = Mapper.Map<UsuarioViewModel>(user);
 
-            return new JsonNetResult(listaUsuariosJson);
+            userJson.FotoBase64 = _usuarioControllerHelper.BuscaFotoBase64(user.Id, HttpContext);
+
+            return new JsonNetResult(userJson);
         }
     }
 }

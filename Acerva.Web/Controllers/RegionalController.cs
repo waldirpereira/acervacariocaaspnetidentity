@@ -16,7 +16,7 @@ using log4net;
 namespace Acerva.Web.Controllers
 {
     [Authorize]
-    [AcervaAuthorize(Roles = "ADMIN")]
+    [AcervaAuthorize(Roles = "ADMIN, DIRETOR")]
     public class RegionalController : ApplicationBaseController
     {
         private static readonly ILog Log =

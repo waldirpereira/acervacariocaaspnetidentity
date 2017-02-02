@@ -27,6 +27,7 @@ namespace Acerva.Modelo.Mapeamento
             Map(u => u.CreationDate, "CreationDate");
             Map(u => u.IndicacaoHash, "codigo_indicacao");
             Map(u => u.Status, "status").CustomType(typeof(EnumComCodigoBdMapper<StatusUsuario>));
+            Map(u => u.Cpf, "Cpf");
 
             References(u => u.Regional, "codigo_regional");
             References(u => u.UsuarioIndicacao, "id_indicacao");

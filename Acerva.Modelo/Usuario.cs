@@ -45,6 +45,7 @@ namespace Acerva.Modelo
         public virtual Usuario UsuarioIndicacao { get; set; }
         public virtual string IndicacaoHash { get; set; }
         public virtual string Matricula { get; set; }
+        public virtual string Cpf { get; set; }
 
         private ICollection<Papel> _papeis = new List<Papel>();
         public virtual ICollection<Papel> Papeis {

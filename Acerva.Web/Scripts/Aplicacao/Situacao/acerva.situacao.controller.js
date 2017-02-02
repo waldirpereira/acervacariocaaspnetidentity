@@ -15,7 +15,7 @@
             statusUsuario: ENUMS.statusUsuario
         };
 
-        ctrl.termo = null;
+        ctrl.cpf = null;
         ctrl.modelo = null;
 
         ctrl.buscaSituacao = buscaSituacao;
@@ -30,7 +30,7 @@
 
             ctrl.status.carregando = true;
             return Situacao.buscaSituacao(cpf).then(function (usuario) {
-                ctrl.modelo = usuario;
+                ctrl.modelo = usuario || { };
                 ctrl.status.carregando = false;
             });
         }

@@ -24,7 +24,24 @@
                     </div>
                 </div>
             </div>
-            <div class="row" ng-if="ctrl.modelo">
+            <div class="row" ng-if="ctrl.modelo && !ctrl.modelo.id">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3>Associado não encontrado!</h3>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="pull-right">
+                                    <a class="btn btn-default"
+                                       ng-click="ctrl.modelo = ctrl.cpf = null;">Limpar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-if="ctrl.modelo.id">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <fieldset ng-disabled="true">

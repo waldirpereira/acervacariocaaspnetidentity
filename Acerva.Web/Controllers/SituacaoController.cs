@@ -29,7 +29,8 @@ namespace Acerva.Web.Controllers
             var user = _cadastroUsuarios.BuscaPeloCpf(cpf);
             var userJson = Mapper.Map<UsuarioViewModel>(user);
 
-            userJson.FotoBase64 = _usuarioControllerHelper.BuscaFotoBase64(user.Id, HttpContext);
+            if (user != null)
+                userJson.FotoBase64 = _usuarioControllerHelper.BuscaFotoBase64(user.Id, HttpContext);
 
             return new JsonNetResult(userJson);
         }

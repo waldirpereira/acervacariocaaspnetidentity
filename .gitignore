@@ -98,5 +98,6 @@ ClientBin/
 node_modules/
 orleans.codegen.cs
 
-fotos/
+images/fotos/
 anexos/
+images/regionais/

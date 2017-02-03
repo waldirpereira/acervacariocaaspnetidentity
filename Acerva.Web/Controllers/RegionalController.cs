@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
 using System.Web.Mvc;
@@ -88,6 +90,58 @@ namespace Acerva.Web.Controllers
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success,
                 string.Format("Regional <a href='{0}#/Edit/{1}'>{2}</a> foi salvo com sucesso", Url.Action("Index"), regional.Codigo, regional.Nome),
                 "Regional salvo");
+
+            return new JsonNetResult(new { growlMessage });
+        }
+
+        [Transacao]
+        [HttpPost]
+        [ValidateAjaxAntiForgeryToken]
+        public ActionResult AnexaLogotipo(int codigoRegional)
+        {
+            if (Request.Files == null)
+                return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Nenhum arquivo anexado"));
+
+            var regional = _cadastroRegionais.Busca(codigoRegional);
+            if (regional == null)
+                return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Regional não encontrada"));
+
+            if (Request.Files.Count == 0)
+                return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Nenhum arquivo anexado"));
+
+            var file = Request.Files[0];
+            if (file == null)
+                return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Nenhum arquivo anexado"));
+
+            var actualFileName = file.FileName;
+
+            try
+            {
+                var path = Server.MapPath("~/Content/Aplicacao/images/regionais/" + codigoRegional);
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+
+                if (!string.IsNullOrEmpty(regional.NomeArquivoLogo))
+                {
+                    // remover logotipo atual!!
+                    var pathImagemAnterior = Path.Combine(path, regional.NomeArquivoLogo);
+                    System.IO.File.Delete(pathImagemAnterior);
+                }
+
+                var pathCompleto = Path.Combine(path, actualFileName);
+                file.SaveAs(pathCompleto);
+
+                regional.NomeArquivoLogo = actualFileName;
+            }
+            catch (Exception)
+            {
+                return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Erro ao anexar arquivo"));
+            }
+
+            var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success,
+                string.Format("Logotipo {0} salvo com sucesso", actualFileName), "Logotipo salvo");
 
             return new JsonNetResult(new { growlMessage });
         }

@@ -16,11 +16,63 @@
                         <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formRegional.nome")>
                             <label class="control-label" for="nome">Nome</label>
                             <input type="text" class="form-control" name="nome" autocomplete="off" required
-                                   ng-model="ctrl.modelo.nome"/>
+                                   ng-model="ctrl.modelo.nome" />
                             <p ng-show="formRegional.nome.$invalid && !formRegional.nome.$pristine" class="help-block">O nome é obrigatório</p>
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formRegional.textoHtml")>
+                            <label class="control-label" for="textoHtml">Texto HTML</label>
+                            <textarea type="text" class="form-control" name="textoHtml" required
+                                      ng-model="ctrl.modelo.textoHtml"></textarea>
+                            <p ng-show="formRegional.textoHtml.$invalid && !formRegional.textoHtml.$pristine" class="help-block">O texto Html é obrigatório</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row"
+                     ng-if="ctrl.modelo.codigo">
+                    <div class="col-sm-12">
+                        <div class="panel panel-info">
+                            <div class="panel-heading" data-toggle="collapse" data-target="#formRegionalBody" style="cursor: pointer;">
+                                <h3 class="panel-title">Anexar um logotipo</h3>
+                            </div>
+                            <div class="panel-collapse" role="tabpanel" id="formRegionalBody">
+                                <div class="panel-body">
+                                    <div class="row"
+                                         ng-if="ctrl.modelo.nomeArquivoLogo">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <img ng-src="@Url.Content("~/Content/Aplicacao/images/regionais/"){{ctrl.modelo.codigo}}/{{ctrl.modelo.nomeArquivoLogo}}" style="max-height: 80px;" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label class="control-label" for="arquivo">Arquivo</label>
+                                            <input type="file" name="arquivo" accept="image/*" onchange="angular.element(this).scope().selecionaArquivoParaUpload(this.files)" required />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-footer">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="pull-right">
+                                                <button class="btn btn-primary"
+                                                        ng-click="ctrl.anexaLogotipo()">
+                                                    Anexar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </fieldset>
         </div>
         <div class="panel-footer">
@@ -30,7 +82,9 @@
                         <a class="btn btn-default" href="#/"
                            ng-disabled="!ctrl.modelo || ctrl.status.salvando">Cancelar</a>
                         <button type="submit" class="btn btn-primary" ng-hide="ctrl.status.bloqueado" ng-disabled="formRegional.$invalid || ctrl.status.salvando"
-                                ng-click="ctrl.salvaRegional()">Salvar<i class="icon icon-spin2 glyphicon-spin" ng-show="ctrl.status.salvando"></i></button>
+                                ng-click="ctrl.salvaRegional()">
+                            Salvar<i class="icon icon-spin2 glyphicon-spin" ng-show="ctrl.status.salvando"></i>
+                        </button>
                     </div>
                 </div>
             </div>

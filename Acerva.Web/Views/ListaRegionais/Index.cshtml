@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Regionais";
+    ViewBag.AngularApp = "acerva.listaRegionais";
+}
+<h4>Regionais</h4>
+
+<div ng-view ng-cloak></div>
+@Html.AntiForgeryToken()
+
+<script type="text/ng-template" id="index.html">
+    <div class="animate-show-only">
+        <div class="row">
+            <div class="col-sm-12" style="padding-left: 0;">
+                <ul class=" list-group" style="list-style: none;">
+                    <li class="list-group-item"
+                        ng-repeat="regional in ctrl.listaRegionais">
+                        <h4 class="titulo text-primary" style="margin-top: 0;">{{regional.nome}}</h4>
+                        <img style="display: block; max-height: 100px; margin-bottom: 10px;"
+                             ng-if="regional.nomeArquivoLogo"
+                             ng-src="@Url.Content("~/Content/Aplicacao/images/regionais/"){{regional.codigo}}/{{regional.nomeArquivoLogo}}"  />
+                        <span ng-bind-html="regional.textoHtml"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</script>
+
+@section styles {
+    @Styles.Render("~/cssBundles/angularForm")
+    @Styles.Render(BundleConfig.BundleStylesDataTables)
+}
+
+@section dependencies {
+    @Scripts.Render("~/bundles/listaRegionais")
+}
+
+@section scripts {
+    <script type="text/javascript">
+        (function () {
+            angular.module("acerva")
+                .constant("ROTAS", {
+                    buscaRegionais: "@Url.Action("BuscaParaListagem")"
+                });
+        })();
+    </script>
+}

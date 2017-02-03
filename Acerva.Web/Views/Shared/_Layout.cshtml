@@ -40,6 +40,7 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Sobre", "About", "Home")</li>
                     <li>@Html.ActionLink("Agenda", "Index", "Agenda")</li>
+                    <li>@Html.ActionLink("Regionais", "Index", "ListaRegionais")</li>
                     <li>@Html.ActionLink("Referência", "Index", "Referencia")</li>
                     @if (Request.IsAuthenticated)
                     {
@@ -50,16 +51,20 @@
                                 <ul class="dropdown-menu" role="menu">
                                     @if (User.IsInRole("ADMIN") || User.IsInRole("DIRETOR"))
                                     {
-                                        <li>@Html.ActionLink("Regionais", "Index", "Regional")</li>
+                                        <li>@Html.ActionLink("Cad. Regionais", "Index", "Regional")</li>
                                     }
                                     @if (User.IsInRole("ADMIN") || User.IsInRole("DIRETOR") || User.IsInRole("DELEGADO"))
                                     {
-                                        <li>@Html.ActionLink("Associados", "Index", "Usuario")</li>
+                                        <li>@Html.ActionLink("Cad. Associados", "Index", "Usuario")</li>
                                     }
                                     <li class="divider"></li>
                                     @if (User.IsInRole("ADMIN") || User.IsInRole("DIRETOR") || User.IsInRole("DELEGADO"))
                                     {
-                                        <li>@Html.ActionLink("Artigos", "Index", "Artigo")</li>
+                                        <li>@Html.ActionLink("Cad. Artigos", "Index", "Artigo")</li>
+                                    }
+                                    @if (User.IsInRole("ADMIN"))
+                                    {
+                                    <li>@Html.ActionLink("Admin", "Index", "Admin")</li>
                                     }
                                 </ul>
                             </li>

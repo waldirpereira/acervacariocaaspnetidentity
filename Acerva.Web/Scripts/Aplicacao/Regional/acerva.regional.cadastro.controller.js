@@ -16,7 +16,12 @@
         ctrl.modeloOriginal = {};
         ctrl.dominio = {};
 
+        $scope.selecionaArquivoParaUpload = function (file) {
+            ctrl.modelo.arquivo = file[0];
+        }
+
         ctrl.salvaRegional = salvaRegional;
+        ctrl.anexaLogotipo = anexaLogotipo;
 
         var idRegional = $routeParams.id ? parseInt($routeParams.id) : 0;
         init(idRegional);
@@ -54,7 +59,17 @@
             
             Regional.salvaRegional(ctrl.modelo)
                 .then(function () {  })
-                .finally(function () { ctrl.status.salvando = false; });
+                .finally(function() {
+                    ctrl.status.salvando = false;
+                    $location("/");
+                });
+        }
+
+        function anexaLogotipo() {
+            Regional.anexaLogotipo(ctrl.modelo.codigo, ctrl.modelo.arquivo)
+                .then(function() {
+                    ctrl.modelo.nomeArquivoLogo = ctrl.modelo.arquivo.name;
+                });
         }
     }
 

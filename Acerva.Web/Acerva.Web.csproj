@@ -302,6 +302,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AppplicationBaseController.cs" />
     <Compile Include="Controllers\AgendaController.cs" />
+    <Compile Include="Controllers\ListaRegionaisController.cs" />
     <Compile Include="Models\CadastroArtigos\AnexoArtigoViewModel.cs" />
     <Compile Include="Models\Referencia\AnexoArtigoViewModel.cs" />
     <Compile Include="Models\Referencia\ArtigoListaViewModel.cs" />
@@ -362,6 +363,9 @@
     <Content Include="Scripts\Aplicacao\acerva.filter.js" />
     <Content Include="Scripts\Aplicacao\Admin\admin.js" />
     <Content Include="Scripts\Aplicacao\Artigo\acerva.artigo.anexos.controller.js" />
+    <Content Include="Scripts\Aplicacao\ListaRegionais\acerva.listaRegionais.controller.js" />
+    <Content Include="Scripts\Aplicacao\ListaRegionais\acerva.listaRegionais.module.js" />
+    <Content Include="Scripts\Aplicacao\ListaRegionais\acerva.listaRegionais.service.js" />
     <Content Include="Scripts\Aplicacao\Referencia\acerva.referencia.controller.js" />
     <Content Include="Scripts\Aplicacao\Referencia\acerva.referencia.module.js" />
     <Content Include="Scripts\Aplicacao\Referencia\acerva.referencia.service.js" />
@@ -437,6 +441,7 @@
     <Content Include="Views\Referencia\Index.cshtml" />
     <Content Include="Views\Artigo\_ModalAnexosArtigo.cshtml" />
     <Content Include="Views\Agenda\Index.cshtml" />
+    <Content Include="Views\ListaRegionais\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Aplicacao\fonts\acerva-iconfont.svg" />
@@ -1395,6 +1400,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\Aplicacao\anexos\" />
     <Folder Include="Content\Aplicacao\images\fotos\" />
+    <Folder Include="Content\Aplicacao\images\regionais\" />
     <Folder Include="Content\vendor\bootswatch\darkly\css\fonts\" />
     <Folder Include="Content\vendor\datatables-tabletools\images\psd\" />
     <Folder Include="Log\" />

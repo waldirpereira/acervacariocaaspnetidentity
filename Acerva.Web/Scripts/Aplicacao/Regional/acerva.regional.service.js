@@ -2,9 +2,9 @@
     "use strict";
 
     angular.module("acerva.regional")
-        .factory("Regional", ["$http", "$timeout", "ROTAS", RegionalFactory]);
+        .factory("Regional", ["$http", "$q", "$timeout", "ROTAS", RegionalFactory]);
 
-    function RegionalFactory($http, $timeout, ROTAS) {
+    function RegionalFactory($http, $q, $timeout, ROTAS) {
         var cacheTiposDominio;
 
         return {
@@ -21,6 +21,27 @@
                 return $http.post(ROTAS.salva,
                     { regionalViewModel: regional }
                 ).then(retornaDadoDoXhr);
+            },
+            anexaLogotipo: function (codigoRegional, arquivoAnexo) {
+                var formData = new FormData();
+                formData.append("codigoRegional", codigoRegional);
+                formData.append("file", arquivoAnexo);
+
+                var defer = $q.defer();
+                $http.post(ROTAS.anexaLogotipo, formData,
+                    {
+                        withCredentials: true,
+                        headers: { 'Content-Type': undefined },
+                        transformRequest: angular.identity
+                    })
+                .success(function (d) {
+                    defer.resolve(d);
+                })
+                .error(function () {
+                    defer.reject("Falha ao anexar arquivo!");
+                });
+
+                return defer.promise;
             },
             buscaTiposDominio: function () {
                 if (cacheTiposDominio) {

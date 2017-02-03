@@ -99,6 +99,7 @@ namespace Acerva.Web
             Layout(bundles);
 
             Referencia(bundles);
+            ListaRegionais(bundles);
             CadastroArtigos(bundles);
             CadastroRegionais(bundles);
             CadastroUsuarios(bundles);
@@ -185,6 +186,16 @@ namespace Acerva.Web
                 .Include(path + "acerva.referencia.module.js")
                 .Include(path + "acerva.referencia.service.js")
                 .Include(path + "acerva.referencia.controller.js")
+            );
+        }
+
+        private static void ListaRegionais(BundleCollection bundles)
+        {
+            const string path = ScriptsAplicacaoFolder + "ListaRegionais/";
+            bundles.Add(new ScriptBundle("~/bundles/listaRegionais")
+                .Include(path + "acerva.listaRegionais.module.js")
+                .Include(path + "acerva.listaRegionais.service.js")
+                .Include(path + "acerva.listaRegionais.controller.js")
             );
         }
 

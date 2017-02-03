@@ -12,6 +12,8 @@ namespace Acerva.Modelo.Mapeamento
 
             Id(c => c.Codigo, "codigo_regional").GeneratedBy.Assigned();
             Map(c => c.Nome, "nome");
+            Map(c => c.NomeArquivoLogo, "nome_arquivo_logo");
+            Map(c => c.TextoHtml, "texto_html");
             Map(c => c.Ativo, "ativo").CustomType(typeof(SimNaoType));
         }
     }

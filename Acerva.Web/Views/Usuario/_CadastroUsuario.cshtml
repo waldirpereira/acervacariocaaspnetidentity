@@ -132,7 +132,7 @@
                     </div>
                     
                     <div class="row"
-                         ng-if="ctrl.dominio.usuarioLogadoEhAdmin || ctrl.dominio.usuarioLogadoEhDiretor">
+                         ng-if="ctrl.tipoCadastro === 'usuario' && (ctrl.dominio.usuarioLogadoEhAdmin || ctrl.dominio.usuarioLogadoEhDiretor)">
                         <div class="col-xs-12 col-sm-12" ng-if="ctrl.tipoCadastro !== 'registro'">
                             <div class="form-group">
                                 <label class="control-label">Papéis</label>

@@ -7,31 +7,25 @@
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
-    <h4>Trocar sua senha</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>Seus dados:</dt>
-        <dd>
-            [ @Html.ActionLink("Altere seus dados", "Edit", "Account") ]
-        </dd>
-        <dt>Senha:</dt>
-        <dd>
-            [
+    <ul class="list-group">
+        <li class="list-group-item">@Html.ActionLink("Altere seus dados", "Edit", "Account")</li>
+        <li class="list-group-item">
             @if (Model.HasPassword)
             {
                 @Html.ActionLink("Troque sua senha", "ChangePassword")
             }
             else
             {
-                @Html.ActionLink("Criar", "SetPassword")
+                @Html.ActionLink("Criar senha", "SetPassword")
             }
-            ]
-        </dd>
-        <dt>Logins externos:</dt>
-        <dd>
+        </li>
+    </ul>
+    <dl class="dl-horizontal">
+
+        @*<dd>
             @Model.Logins.Count [
             @Html.ActionLink("Gerenciar", "ManageLogins") ]
-        </dd>
+        </dd>*@
         @*
             Phone Numbers can used as a second factor of verification in a two-factor authentication system.
              

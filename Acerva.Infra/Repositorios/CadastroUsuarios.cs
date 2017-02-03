@@ -115,7 +115,7 @@ namespace Acerva.Infra.Repositorios
         public bool ExisteComMesmoCpf(Usuario usuario)
         {
             var temComMesmoCpf = BuscaTodos()
-                .Any(e => e.Cpf.ToUpperInvariant() == usuario.Cpf.ToUpperInvariant() && e.Id != usuario.Id);
+                .Any(e => !string.IsNullOrEmpty(e.Cpf) && !string.IsNullOrEmpty(usuario.Cpf) && e.Id != usuario.Id && e.Cpf.ToUpperInvariant() == usuario.Cpf.ToUpperInvariant());
 
             return temComMesmoCpf;
         }

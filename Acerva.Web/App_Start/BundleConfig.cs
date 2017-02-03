@@ -196,6 +196,7 @@ namespace Acerva.Web
                 .Include(path + "acerva.artigo.service.js")
                 .Include(path + "acerva.artigo.controller.js")
                 .Include(path + "acerva.artigo.cadastro.controller.js")
+                .Include(path + "acerva.artigo.anexos.controller.js")
             );
         }
 

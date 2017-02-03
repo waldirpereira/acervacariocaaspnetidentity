@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Acerva.Web.Models.Referencia
 {
@@ -11,5 +12,6 @@ namespace Acerva.Web.Models.Referencia
         public virtual CategoriaArtigoViewModel Categoria { get; set; }
         public virtual string NomeUsuario { get; set; }
         public virtual bool Ativo { get; set; }
+        public virtual IEnumerable<AnexoArtigoViewModel> Anexos { get; set; }
     }
 }

@@ -16,7 +16,7 @@
                         ng-class="{'active': ctrl.categoriaSelecionada.codigo === categoria.codigo}"
                         ng-repeat="categoria in ctrl.listaCategorias">
                         <span class="badge">{{categoria.qtdArtigos}}</span>
-                        <a ng-click="ctrl.selecionaCategoria(categoria);" style="cursor: pointer;">
+                        <a ng-href="#/{{categoria.codigo}}" ng-click="ctrl.selecionaCategoria(categoria);" style="cursor: pointer;">
                             {{categoria.nome}}
                         </a>
                     </li>
@@ -27,21 +27,31 @@
                     <h4 ng-if="ctrl.status.carregandoArtigos || ctrl.status.carregandoArtigo">Carregando...</h4>
                     <ul ng-if="ctrl.listaArtigosPorCategoria[ctrl.categoriaSelecionada.codigo].length > 0 && !ctrl.artigo && !ctrl.status.carregandoArtigo">
                         <li ng-repeat="artigo in ctrl.listaArtigosPorCategoria[ctrl.categoriaSelecionada.codigo]" style="margin-bottom: 10px;">
-                            <a ng-click="ctrl.mostraArtigo(artigo)" style="cursor: pointer;">{{artigo.titulo}}</a><br />
+                            <a ng-href="#/{{ctrl.categoriaSelecionada.codigo}}/{{artigo.codigo}}" ng-click="ctrl.mostraArtigo(artigo)" style="cursor: pointer;">{{artigo.titulo}}</a><br />
                             <em>{{artigo.nomeUsuario}} em {{artigo.dataHora | date:'dd/MM/yyyy hh:mm:ss'}}</em>
                         </li>
                     </ul>
                     <div ng-if="ctrl.artigo">
                         <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="titulo text-primary" style="margin-top: 0;">{{ctrl.artigo.titulo}}</h3>
+                                por <em>{{ctrl.artigo.nomeUsuario}} em {{ctrl.artigo.dataHora | date:'dd/MM/yyyy hh:mm:ss'}}</em>
+                            </div>
                             <div class="panel-body">
-                                <h4 class="titulo text-primary">{{ctrl.artigo.titulo}}</h4>
-                                <em>{{ctrl.artigo.nomeUsuario}} em {{ctrl.artigo.dataHora | date:'dd/MM/yyyy hh:mm:ss'}}</em>
-                                <br /><br />
-
                                 <span ng-bind-html="ctrl.artigo.textoHtml"></span>
+                                <div ng-if="ctrl.artigo.anexos.length > 0">
+                                    <hr />
+                                    <h5>Anexos</h5>
+                                    <ul>
+                                        <li ng-repeat="anexo in ctrl.artigo.anexos" style="margin-bottom: 10px;">
+                                            <a ng-href="@Url.Content("~/Content/Aplicacao/anexos/")/{{ctrl.artigo.codigo}}/{{anexo.nomeArquivo}}" target="_new">{{anexo.titulo}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                             <div class="panel-footer">
                                 <a class="btn btn-default"
+                                   ng-href="#/{{ctrl.categoriaSelecionada.codigo}}"
                                    ng-click="ctrl.artigo = null;">Voltar</a>
                             </div>
                         </div>

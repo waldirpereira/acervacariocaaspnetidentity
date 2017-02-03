@@ -13,6 +13,16 @@
                 controller: "ReferenciaController",
                 controllerAs: "ctrl"
             })
+            .when("/:codigoCategoria", {
+                templateUrl: "index.html",
+                controller: "ReferenciaController",
+                controllerAs: "ctrl"
+            })
+            .when("/:codigoCategoria/:codigoArtigo", {
+                templateUrl: "index.html",
+                controller: "ReferenciaController",
+                controllerAs: "ctrl"
+            })
             .otherwise({
                 redirectTo: "/"
             });

@@ -22,8 +22,8 @@ namespace Acerva.Infra.Repositorios
 
         public void Salva(Artigo artigo)
         {
-            _session.Flush();
             _session.SaveOrUpdate(artigo);
+            _session.Flush();
         }
 
         public Artigo Busca(int codigo)
@@ -39,6 +39,22 @@ namespace Acerva.Infra.Repositorios
         public IEnumerable<CategoriaArtigo> BuscaCategorias()
         {
             return _session.Query<CategoriaArtigo>();
+        }
+
+        public void SalvaAnexo(AnexoArtigo anexo)
+        {
+            _session.SaveOrUpdate(anexo);
+            _session.Flush();
+        }
+
+        public AnexoArtigo BuscaAnexo(int codigoAnexo)
+        {
+            return _session.Get<AnexoArtigo>(codigoAnexo);
+        }
+
+        public void ExcluiAnexo(AnexoArtigo anexo)
+        {
+            _session.Delete(anexo);
         }
     }
 }

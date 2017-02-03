@@ -9,6 +9,8 @@ namespace Acerva.Web.Models.CadastroArtigos
         {
             CreateMap<Artigo, ArtigoViewModel>()
                 .ReverseMap();
+            CreateMap<AnexoArtigo, AnexoArtigoViewModel>()
+                .ReverseMap();
             CreateMap<CategoriaArtigo, CategoriaArtigoViewModel>()
                 .ReverseMap();
             CreateMap<Usuario, UsuarioViewModel>()

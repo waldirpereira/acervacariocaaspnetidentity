@@ -21,6 +21,10 @@
     </div>
 </script>
 
+<script type="text/ng-template" id="modal-anexos-artigo.html">
+    @Html.Partial("_ModalAnexosArtigo")
+</script>
+
 @section styles {
     @Styles.Render("~/cssBundles/angularForm")
     @Styles.Render(BundleConfig.BundleStylesDataTables)
@@ -40,7 +44,10 @@
                 buscaTodos: "@Url.Action("BuscaParaListagem")",
                 buscaTiposDominio: "@Url.Action("BuscaTiposDominio")",
                 busca: "@Url.Action("Busca")",
+                buscaAnexos: "@Url.Action("BuscaAnexos")",
                 salva: "@Url.Action("Salva")",
+                salvaAnexo: "@Url.Action("SalvaAnexo")",
+                excluiAnexo: "@Url.Action("ExcluiAnexo")",
                 alteraAtivacao: "@Url.Action("AlteraAtivacao")"
             });
         })();

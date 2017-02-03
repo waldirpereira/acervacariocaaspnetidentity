@@ -43,15 +43,19 @@
                        })
                     </div>
                 </div>
-
             </fieldset>
         </div>
         <div class="panel-footer">
             <div class="row">
                 <div class="col-sm-12">
+                    <div class="pull-left">
+                        <button class="btn btn-primary" href="#"
+                           ng-click="ctrl.abrePopupAnexos(ctrl.modelo)"
+                           ng-disabled="!ctrl.modelo.codigo">Gerenciar anexos</button>
+                    </div>
                     <div class="pull-right">
-                        <a class="btn btn-default" href="#/"
-                           ng-disabled="!ctrl.modelo || ctrl.status.salvando">Cancelar</a>
+                        <a class="btn btn-default" href="/#"
+                           ng-disabled="!ctrl.modelo || ctrl.status.salvando">Voltar</a>
                         <button type="submit" class="btn btn-primary" ng-hide="ctrl.status.bloqueado" ng-disabled="formArtigo.$invalid || ctrl.status.salvando"
                                 ng-click="ctrl.salvaArtigo()">Salvar<i class="icon icon-spin2 glyphicon-spin" ng-show="ctrl.status.salvando"></i></button>
                     </div>

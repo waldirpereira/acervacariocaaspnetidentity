@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
@@ -46,6 +47,15 @@ namespace Acerva.Web.Controllers
             var listaArtigosJson = _cadastroArtigos.BuscaParaListagem()
                 .Select(Mapper.Map<ArtigoViewModel>);
             return new JsonNetResult(listaArtigosJson);
+        }
+
+        public ActionResult BuscaAnexos(int codigoArtigo)
+        {
+            var artigo = _cadastroArtigos.Busca(codigoArtigo);
+
+            var listaAnexosJson = artigo.Anexos
+                .Select(Mapper.Map<AnexoArtigoViewModel>);
+            return new JsonNetResult(listaAnexosJson);
         }
 
         public ActionResult BuscaTiposDominio()
@@ -98,6 +108,92 @@ namespace Acerva.Web.Controllers
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success,
                 string.Format("Artigo <a href='{0}#/Edit/{1}'>{2}</a> foi salvo com sucesso", Url.Action("Index"), artigo.Codigo, artigo.Titulo),
                 "Artigo salvo");
+
+            return new JsonNetResult(new { growlMessage });
+        }
+
+
+        [Transacao]
+        [HttpPost]
+        [ValidateAjaxAntiForgeryToken]
+        public ActionResult ExcluiAnexo(int codigoAnexo)
+        {
+            var anexo = _cadastroArtigos.BuscaAnexo(codigoAnexo);
+
+            if (anexo == null)
+                return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Arquivo não encontrado"));
+
+            var caminhoCompleto= Path.Combine(Server.MapPath("~/Content/Aplicacao/anexos/" + anexo.Artigo.Codigo), anexo.NomeArquivo);
+            try
+            {
+                if (System.IO.File.Exists(caminhoCompleto))
+                {
+                    System.IO.File.Delete(caminhoCompleto);
+                }
+                _cadastroArtigos.ExcluiAnexo(anexo);
+            }
+            catch
+            {
+                RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Erro ao excluir anexo!"));
+            }
+
+            var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success,
+                string.Format("Anexo {0} excluído com sucesso", anexo.NomeArquivo), "Anexo excluído");
+
+            return new JsonNetResult(new { growlMessage });
+        }
+
+        [Transacao]
+        [HttpPost]
+        [ValidateAjaxAntiForgeryToken]
+        public ActionResult SalvaAnexo(int codigoArtigo, string titulo)
+        {
+            if (Request.Files == null)
+                return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Nenhum arquivo anexado"));
+
+            var artigo = _cadastroArtigos.Busca(codigoArtigo);
+            if (artigo == null)
+                return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Artigo não encontrado"));
+
+            if (Request.Files.Count == 0)
+                return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Nenhum arquivo anexado"));
+
+            var file = Request.Files[0];
+            if (file == null)
+                return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Nenhum arquivo anexado"));
+
+            var actualFileName = file.FileName;
+
+            if (artigo.Anexos.Any(a => a.NomeArquivo == actualFileName))
+                return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Já existe um anexo com este nome para este artigo!"));
+
+            try
+            {
+                var path = Server.MapPath("~/Content/Aplicacao/anexos/" + codigoArtigo);
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+
+                var pathCompleto = Path.Combine(path, actualFileName);
+                file.SaveAs(pathCompleto);
+
+                var anexo = new AnexoArtigo
+                {
+                    Artigo = artigo,
+                    NomeArquivo = actualFileName,
+                    Titulo = titulo
+                };
+
+                _cadastroArtigos.SalvaAnexo(anexo);
+            }
+            catch (Exception)
+            {
+                return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Erro ao anexar arquivo"));
+            }
+
+            var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success,
+                string.Format("Anexo {0} salvo com sucesso", actualFileName), "Anexo salvo");
 
             return new JsonNetResult(new { growlMessage });
         }

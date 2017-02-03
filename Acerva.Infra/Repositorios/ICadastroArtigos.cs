@@ -10,5 +10,8 @@ namespace Acerva.Infra.Repositorios
         Artigo Busca(int codigo);
         IEnumerable<Artigo> BuscaTodos();
         IEnumerable<CategoriaArtigo> BuscaCategorias();
+        void SalvaAnexo(AnexoArtigo anexo);
+        AnexoArtigo BuscaAnexo(int codigoAnexo);
+        void ExcluiAnexo(AnexoArtigo anexo);
     }
 }

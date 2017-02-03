@@ -1,0 +1,90 @@
+﻿<div class="modal-header alert-primary">
+    <h3 class="modal-title" id="modal-title">Anexos do artigo</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    <div class="row" style="margin-bottom: 10px;">
+        <div class="col-sm-12">
+            <label class="control-label">Artigo</label>
+            <input type="text" class="form-control" disabled
+                   ng-value="ctrl.artigo.titulo" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="formAnexo" novalidate>
+                <div class="panel panel-info">
+                    <div class="panel-heading" data-toggle="collapse" data-target="#formAnexoBody" style="cursor: pointer;">
+                        <h3 class="panel-title">Anexar um arquivo</h3>
+                    </div>
+                    <div class="panel-collapse collapse" role="tabpanel" id="formAnexoBody">
+                        <div class="panel-body">
+                            <div class="row" style="margin-bottom: 10px;">
+                                <div class="col-sm-12">
+                                    <label class="control-label" for="titulo">Título</label>
+                                    <input type="text" class="form-control" name="titulo" autocomplete="off" required
+                                           ng-model="ctrl.modelo.titulo" />
+                                    <p ng-show="formAnexo.titulo.$invalid && !formAnexo.titulo.$pristine" class="help-block">O título é obrigatório</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label class="control-label" for="arquivo">Arquivo</label>
+                                    <input type="file" name="arquivo" onchange="angular.element(this).scope().selecionaArquivoParaUpload(this.files)" required />
+                                    <span class="error" ng-show="(formAnexo.file.$dirty || ctrl.isFormSubmitted) && formAnexo.file.$error.required">O anexo é obrigatório!</span>
+                                    <span class="error">{{FileInvalidMessage}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="pull-right">
+                                        <button class="btn btn-primary"
+                                                ng-disabled="!ctrl.modelo.titulo"
+                                                ng-click="ctrl.anexaArquivo()">
+                                            Anexar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-bordered table-striped table-responsive table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th style="width: 160px;">Titulo</th>
+                        <th>Arquivo</th>
+                        <th style="width: 40px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="anexo in ctrl.anexos">
+                        <td>
+                            {{anexo.titulo}}
+                            <a ng-href="@Url.Content("~/Content/Aplicacao/anexos/")/{{ctrl.artigo.codigo}}/{{anexo.nomeArquivo}}" target="_new"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a>
+                        </td>
+                        <td>{{anexo.nomeArquivo}}</td>
+                        <td>
+                            <button type="button" class="btn btn-danger btn-xs" title="Excluir {{ anexo.titulo }}"
+                                    acerva-confirm
+                                    confirm-action="ctrl.excluiAnexo(anexo)"
+                                    confirm-window-type="danger"
+                                    confirm-text="Confirma a exclusão do anexo {{ anexo.titulo }}?">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ctrl.ok()">OK</button>
+</div>

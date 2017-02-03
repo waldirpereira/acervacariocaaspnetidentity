@@ -2,12 +2,12 @@
     "use strict";
 
     angular.module("acerva.referencia")
-        .controller("ReferenciaController", ["Referencia", ReferenciaController]);
+        .controller("ReferenciaController", ["$routeParams", "$location", "Referencia", ReferenciaController]);
 
-    function ReferenciaController(Referencia) {
+    function ReferenciaController($routeParams, $location, Referencia) {
         var ctrl = this;
 
-        ctrl.status = 
+        ctrl.status =
         {
             carregandoArtigos: false,
             carregandoArtigo: false
@@ -17,7 +17,9 @@
         ctrl.listaArtigosPorCategoria = [];
         ctrl.categoriaSelecionada = null;
 
-        init();
+        var codigoCategoria = $routeParams.codigoCategoria ? +$routeParams.codigoCategoria : null;
+        var codigoArtigo = $routeParams.codigoArtigo ? +$routeParams.codigoArtigo : null;
+        init(codigoCategoria, codigoArtigo);
 
         ctrl.selecionaCategoria = selecionaCategoria;
         ctrl.mostraArtigo = mostraArtigo;
@@ -29,6 +31,26 @@
         function atualizaListaCategorias() {
             Referencia.buscaCategorias().then(function (listaCategorias) {
                 ctrl.listaCategorias = listaCategorias;
+                if (!ctrl.categoriaSelecionada && listaCategorias.length) {
+                    if (!codigoCategoria) {
+                        codigoCategoria = listaCategorias[0].codigo;
+                        $location.path("/" + codigoCategoria);
+                    }
+
+                    var indexOfCategoria = listaCategorias.map(function (categoria) { return categoria.codigo; })
+                        .indexOf(codigoCategoria);
+
+                    var categoriaSelecionada = listaCategorias[indexOfCategoria];
+                    
+                    return selecionaCategoria(categoriaSelecionada).then(function () {
+                        if (codigoArtigo) {
+                            var indexOfArtigo = ctrl.listaArtigosPorCategoria[codigoCategoria]
+                                .map(function (artigo) { return artigo.codigo; }).indexOf(codigoArtigo);
+                            var artigo = ctrl.listaArtigosPorCategoria[codigoCategoria][indexOfArtigo];
+                            return mostraArtigo(artigo);
+                        }
+                    });
+                }
             });
         }
 
@@ -36,7 +58,7 @@
             ctrl.categoriaSelecionada = categoria;
             ctrl.status.carregandoArtigos = true;
             ctrl.artigo = null;
-            Referencia.buscaArtigosDaCategoria(categoria.codigo)
+            return Referencia.buscaArtigosDaCategoria(categoria.codigo)
                 .then(function (artigos) {
                     ctrl.listaArtigosPorCategoria[categoria.codigo] = artigos;
                 })

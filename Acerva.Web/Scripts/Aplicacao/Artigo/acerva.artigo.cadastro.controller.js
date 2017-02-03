@@ -2,9 +2,9 @@
     "use strict";
 
     angular.module("acerva.artigo")
-        .controller("CadastroArtigoController", ["$scope", "$timeout", "$routeParams", "$location", "CanalMensagemGrowl", "Artigo", CadastroArtigoController]);
+        .controller("CadastroArtigoController", ["$scope", "$timeout", "$routeParams", "$location", "CanalMensagemGrowl", "Artigo", "$uibModal", CadastroArtigoController]);
 
-    function CadastroArtigoController($scope, $timeout, $routeParams, $location, CanalMensagemGrowl, Artigo) {
+    function CadastroArtigoController($scope, $timeout, $routeParams, $location, CanalMensagemGrowl, Artigo, $uibModal) {
         var ctrl = this;
         ctrl.status = {
             carregando: false,
@@ -17,6 +17,7 @@
         ctrl.dominio = {};
 
         ctrl.salvaArtigo = salvaArtigo;
+        ctrl.abrePopupAnexos = abrePopupAnexos;
 
         var idArtigo = $routeParams.id ? parseInt($routeParams.id) : 0;
         init(idArtigo);
@@ -54,7 +55,30 @@
             
             Artigo.salvaArtigo(ctrl.modelo)
                 .then(function () {  })
-                .finally(function () { ctrl.status.salvando = false; });
+                .finally(function() {
+                    ctrl.status.salvando = false;
+                    $location.path("/");
+                });
+        }
+
+        function abrePopupAnexos(artigo) {
+            Artigo.buscaAnexos(artigo.codigo)
+                .then(function (anexos) {
+                    $uibModal.open({
+                        animation: true,
+                        ariaLabelledBy: 'modal-title',
+                        ariaDescribedBy: 'modal-body',
+                        templateUrl: 'modal-anexos-artigo.html',
+                        controller: 'ArtigoAnexosModalController',
+                        controllerAs: 'ctrl',
+                        resolve: {
+                            artigo: artigo,
+                            anexos: function () {
+                                return anexos;
+                            }
+                        }
+                    });
+                });
         }
     }
 

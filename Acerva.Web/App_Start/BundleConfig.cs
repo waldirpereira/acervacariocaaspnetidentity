@@ -98,6 +98,7 @@ namespace Acerva.Web
         {
             Layout(bundles);
 
+            Referencia(bundles);
             CadastroArtigos(bundles);
             CadastroRegionais(bundles);
             CadastroUsuarios(bundles);
@@ -174,6 +175,16 @@ namespace Acerva.Web
                 .Include(BootstrapDatepickerCss)
                 .Include(AngularTimeInputCss)
                 .Include(AngularHotkeysCss)
+            );
+        }
+
+        private static void Referencia(BundleCollection bundles)
+        {
+            const string path = ScriptsAplicacaoFolder + "Referencia/";
+            bundles.Add(new ScriptBundle("~/bundles/referencia")
+                .Include(path + "acerva.referencia.module.js")
+                .Include(path + "acerva.referencia.service.js")
+                .Include(path + "acerva.referencia.controller.js")
             );
         }
 

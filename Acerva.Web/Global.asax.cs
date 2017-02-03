@@ -17,6 +17,7 @@ using Acerva.Web.Models.CadastroArtigos;
 using Acerva.Web.Models.CadastroRegionais;
 using Acerva.Web.Models.CadastroUsuarios;
 using Acerva.Web.Models.Home;
+using Acerva.Web.Models.Referencia;
 using FluentNHibernate.Cfg;
 using log4net;
 using log4net.Config;
@@ -159,6 +160,7 @@ namespace Acerva.Web
                 cfg.AddProfile<HomeMapperProfile>();
                 cfg.AddProfile<CadastroRegionalMapperProfile>();
                 cfg.AddProfile<CadastroArtigosMapperProfile>();
+                cfg.AddProfile<ReferenciaMapperProfile>();
                 cfg.AddProfile<CadastroUsuariosMapperProfile>();
             });
             //Mapper.AssertConfigurationIsValid();

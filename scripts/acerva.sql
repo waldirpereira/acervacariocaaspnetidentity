@@ -8470,3 +8470,4 @@ ALTER TABLE `anexo_artigo` ADD INDEX(`codigo_artigo`);
 
 ALTER TABLE `anexo_artigo` ADD CONSTRAINT `fk_anexo_artigo_artigo` FOREIGN KEY (`codigo_artigo`) REFERENCES `acerva`.`artigo`(`codigo_artigo`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
+ALTER TABLE `artigo` CHANGE `data_hora` `data_hora` DATETIME NOT NULL;

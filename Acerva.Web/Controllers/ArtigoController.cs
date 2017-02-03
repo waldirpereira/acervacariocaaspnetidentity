@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
 using System.Web.Mvc;
@@ -89,6 +90,8 @@ namespace Acerva.Web.Controllers
 
             if (ExisteComMesmoTitulo(artigo))
                 return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Já existe uma artigo com o nome {0:unsafe}", artigo.Titulo));
+
+            artigo.DataHora = DateTime.Now;
 
             _cadastroArtigos.Salva(artigo);
 

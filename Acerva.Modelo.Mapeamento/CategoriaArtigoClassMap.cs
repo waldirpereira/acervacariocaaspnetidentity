@@ -13,6 +13,10 @@ namespace Acerva.Modelo.Mapeamento
             Id(c => c.Codigo, "codigo_categoria_artigo").GeneratedBy.Assigned();
             Map(c => c.Nome, "nome");
             Map(c => c.Ativo, "ativo").CustomType(typeof(SimNaoType));
+
+            HasMany(s => s.Artigos)
+                .KeyColumn("codigo_categoria_artigo")
+                .Cascade.AllDeleteOrphan();
         }
     }
 }

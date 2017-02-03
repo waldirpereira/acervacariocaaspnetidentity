@@ -301,6 +301,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AppplicationBaseController.cs" />
+    <Compile Include="Controllers\AgendaController.cs" />
     <Compile Include="Models\CadastroArtigos\AnexoArtigoViewModel.cs" />
     <Compile Include="Models\Referencia\AnexoArtigoViewModel.cs" />
     <Compile Include="Models\Referencia\ArtigoListaViewModel.cs" />
@@ -435,6 +436,7 @@
     <Content Include="Views\Artigo\Index.cshtml" />
     <Content Include="Views\Referencia\Index.cshtml" />
     <Content Include="Views\Artigo\_ModalAnexosArtigo.cshtml" />
+    <Content Include="Views\Agenda\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Aplicacao\fonts\acerva-iconfont.svg" />

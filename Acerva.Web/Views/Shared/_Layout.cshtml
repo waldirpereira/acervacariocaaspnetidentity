@@ -22,11 +22,14 @@
 <body>
     <div class="navbar navbar-fixed-top" style="background-color: white;">
         <div class="container">
-            <div class="navbar-header">
-                <div class="navbar-header">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
                     <a href="@Url.Action("Index", "Home")" class="navbar-brand" style="padding: 5px; margin-left: 15px;">
-                        <img src="@Url.Content("~/Content/Aplicacao/images/Logo_ACerva_Carioca.png")" style="height: 50px;"/>
+                        <img src="@Url.Content("~/Content/Aplicacao/images/Logo_ACerva_Carioca.png")" style="height: 50px;" />
                     </a>
+                </div>
+                <div>
+                    <a href="@Url.Action("Index", "Situacao")" class="btn btn-default btn-sm">Consulte aqui a situação do CPF!</a>
                 </div>
             </div>
         </div>

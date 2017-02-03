@@ -27,8 +27,8 @@
                     <h4 ng-if="ctrl.status.carregandoArtigos || ctrl.status.carregandoArtigo">Carregando...</h4>
                     <ul ng-if="ctrl.listaArtigosPorCategoria[ctrl.categoriaSelecionada.codigo].length > 0 && !ctrl.artigo && !ctrl.status.carregandoArtigo">
                         <li ng-repeat="artigo in ctrl.listaArtigosPorCategoria[ctrl.categoriaSelecionada.codigo]" style="margin-bottom: 10px;">
-                            <a ng-href="#/{{ctrl.categoriaSelecionada.codigo}}/{{artigo.codigo}}" ng-click="ctrl.mostraArtigo(artigo)" style="cursor: pointer;">{{artigo.titulo}}</a><br />
-                            <em>{{artigo.nomeUsuario}} em {{artigo.dataHora | date:'dd/MM/yyyy hh:mm:ss'}}</em>
+                            <a ng-href="#/{{ctrl.categoriaSelecionada.codigo}}/{{artigo.codigo}}" ng-click="ctrl.mostraArtigo(artigo)" style="cursor: pointer;"><h4 style="margin-bottom: -10px;">{{artigo.titulo}}</h4></a><br />
+                            por <em>{{artigo.nomeUsuario}} em {{artigo.dataHora | date:'dd/MM/yyyy hh:mm:ss'}}</em>
                         </li>
                     </ul>
                     <div ng-if="ctrl.artigo">

@@ -88,7 +88,7 @@
                                     {
                                         <li>@Html.ActionLink("Cad. Associados", "Index", "Usuario")</li>
                                     }
-                                    if (User.IsInRole("ADMIN") || User.IsInRole("DIRETOR") || User.IsInRole("DELEGADO"))
+                                    if (User.IsInRole("ADMIN") || User.IsInRole("DIRETOR"))
                                     {
                                         <li>@Html.ActionLink("Cad. Artigos", "Index", "Artigo")</li>
                                     }

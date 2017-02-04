@@ -8475,3 +8475,6 @@ ALTER TABLE `artigo` CHANGE `data_hora` `data_hora` DATETIME NOT NULL;
 ALTER TABLE `regional` ADD `nome_arquivo_logo` VARCHAR(256) NULL AFTER `ativo`;
 
 ALTER TABLE `regional` ADD `texto_html` VARCHAR(2000) NULL AFTER `nome`;
+
+INSERT INTO `roles` (`Id`, `Name`) VALUES ('4f0670c8-ea7a-11e6-af33-847bebe540dd', 'DIRETOR'), ('4f068214-ea7a-11e6-af33-847bebe540dd', 'DELEGADO');
+

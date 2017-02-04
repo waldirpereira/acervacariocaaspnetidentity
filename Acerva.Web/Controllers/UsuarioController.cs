@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using Acerva.Infra.Repositorios;
@@ -16,6 +15,7 @@ using Acerva.Web.Models.CadastroUsuarios;
 using FluentValidation;
 using log4net;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace Acerva.Web.Controllers
 {
@@ -28,6 +28,7 @@ namespace Acerva.Web.Controllers
         private readonly ICadastroUsuarios _cadastroUsuarios;
         private readonly ICadastroRegionais _cadastroRegionais;
         private readonly UsuarioControllerHelper _helper;
+        private ApplicationUserManager _userManager;
 
         public UsuarioController(IValidator<Usuario> validator,
             ICadastroUsuarios cadastroUsuarios, ICadastroRegionais cadastroRegionais, UsuarioControllerHelper helper) : base(cadastroUsuarios)
@@ -36,6 +37,18 @@ namespace Acerva.Web.Controllers
             _cadastroUsuarios = cadastroUsuarios;
             _cadastroRegionais = cadastroRegionais;
             _helper = helper;
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
         }
 
         public ActionResult Index()
@@ -131,6 +144,8 @@ namespace Acerva.Web.Controllers
             {
                 usuario.Id = Guid.NewGuid().ToString();
                 usuario.CreationDate = DateTime.Now;
+                usuario.PasswordHash = UserManager.PasswordHasher.HashPassword(usuarioViewModel.Password);
+                usuario.SecurityStamp = Guid.NewGuid().ToString();
             }
 
             var validacao = _validator.Validate(usuario);
@@ -154,8 +169,7 @@ namespace Acerva.Web.Controllers
 
             return new JsonNetResult(new { growlMessage });
         }
-
-        [Transacao]
+        
         [HttpPost]
         [ValidateAjaxAntiForgeryToken]
         [AcervaAuthorize(Roles = "ADMIN, DIRETOR, DELEGADO")]

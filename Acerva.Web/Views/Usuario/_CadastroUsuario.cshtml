@@ -64,7 +64,7 @@
                         </div>
                     </div>
 
-                    <div class="row" ng-if="ctrl.tipoCadastro === 'registro'">
+                    <div class="row" ng-if="ctrl.tipoCadastro === 'registro' || !ctrl.modelo.id">
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label class="control-label" for="password">Senha</label>
@@ -73,7 +73,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row" ng-if="ctrl.tipoCadastro === 'registro'">
+                    <div class="row" ng-if="ctrl.tipoCadastro === 'registro' || !ctrl.modelo.id">
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label class="control-label" for="confirmPassword">Confirmação da senha</label>

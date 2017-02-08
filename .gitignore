@@ -100,7 +100,7 @@ orleans.codegen.cs
 
 Web.Release.config
 
-images/fotos/
+**/images/fotos/*
 anexos/
-images/regionais/
+
 

@@ -422,6 +422,7 @@
     <Content Include="Content\vendor\bootswatch\darkly\css\bootswatch.less" />
     <Content Include="Content\vendor\bootswatch\darkly\css\variables.less" />
     <Content Include="Content\vendor\bootswatch\darkly\css\mixins.less" />
+    <None Include="Properties\PublishProfiles\acerva.pubxml" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
     <Content Include="Scripts\vendor\ng-croppie\ng-croppie.js" />
     <Content Include="Views\Admin\Index.cshtml" />

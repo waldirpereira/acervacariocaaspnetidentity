@@ -180,9 +180,6 @@
       <HintPath>..\packages\Ninject.MVC3.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SiplexCommon.EnumUtil">
-      <HintPath>..\packages\SiplexCommon.EnumUtil.1.0.1.0\lib\net40\SiplexCommon.EnumUtil.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />

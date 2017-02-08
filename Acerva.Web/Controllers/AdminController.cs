@@ -4,11 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Optimization;
-using Acerva.Infra;
 using Acerva.Infra.Repositorios;
 using Acerva.Infra.Web;
-using Acerva.Modelo;
-using Acerva.Modelo.Mapeamento;
 using Microsoft.Win32;
 
 namespace Acerva.Web.Controllers
@@ -114,28 +111,6 @@ namespace Acerva.Web.Controllers
             // This line should never execute. A non-null release key should mean
             // that 4.5 or later is installed.
             return "No 4.5 or later version detected";
-        }
-
-        public ActionResult CriaPapeis()
-      {		
-           var rs = new RoleStore<Papel>(new MySQLDatabase());		
-           var role = new Papel("DELEGADO");		
-	
-           var roleDb = rs.FindByNameAsync(role.Name);		
-           if (roleDb == null)		
-           {		
-               rs.CreateAsync(role);		
-           }
-
-            role = new Papel("DIRETOR");
-
-            roleDb = rs.FindByNameAsync(role.Name);
-            if (roleDb == null)
-            {
-                rs.CreateAsync(role);
-            }
-
-            return Json("CriaPapeis", JsonRequestBehavior.AllowGet);
         }
     }
 }

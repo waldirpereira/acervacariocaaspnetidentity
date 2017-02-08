@@ -28,6 +28,10 @@ namespace Acerva.Modelo
         [NomeExibicao("Ag. indicação")]
         AguardandoIndicacao,
 
+        [CodigoBd("R")]
+        [NomeExibicao("Ag. renovação")]
+        AguardandoRenovacao,
+
         [CodigoBd("P")]
         [NomeExibicao("Ag. pagto. anuidade")]
         AguardandoPagamentoAnuidade

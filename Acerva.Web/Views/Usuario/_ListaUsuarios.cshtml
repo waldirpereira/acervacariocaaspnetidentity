@@ -9,6 +9,7 @@
                     <a ng-class="{'active': listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.novo) }" ng-click="listaCtrl.mudaFiltroStatus(listaCtrl.dominio.statusUsuario.novo)" class="btn btn-sm btn-default">{{ listaCtrl.dominio.statusUsuario.novo.nomeExibicao }}</a>
                     <a ng-class="{'active': listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.aguardandoConfirmacaoEmail) }" ng-click="listaCtrl.mudaFiltroStatus(listaCtrl.dominio.statusUsuario.aguardandoConfirmacaoEmail)" class="btn btn-sm btn-default">{{ listaCtrl.dominio.statusUsuario.aguardandoConfirmacaoEmail.nomeExibicao }}</a>
                     <a ng-class="{'active': listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade) }" ng-click="listaCtrl.mudaFiltroStatus(listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade)" class="btn btn-sm btn-default">{{ listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.nomeExibicao }}</a>
+                    <a ng-class="{'active': listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.aguardandoRenovacao) }" ng-click="listaCtrl.mudaFiltroStatus(listaCtrl.dominio.statusUsuario.aguardandoRenovacao)" class="btn btn-sm btn-default">{{ listaCtrl.dominio.statusUsuario.aguardandoRenovacao.nomeExibicao }}</a>
                     <a ng-class="{'active': listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.cancelado) }" ng-click="listaCtrl.mudaFiltroStatus(listaCtrl.dominio.statusUsuario.cancelado)" class="btn btn-sm btn-default">{{ listaCtrl.dominio.statusUsuario.cancelado.nomeExibicao }}</a>
                 </div>
             </div>
@@ -53,7 +54,7 @@
                                   'label-danger':  m.status.codigoBd === listaCtrl.dominio.statusUsuario.cancelado.codigoBd,
                                   'label-warning': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoIndicacao.codigoBd,
                                   'label-default': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoConfirmacaoEmail.codigoBd || m.status.codigoBd === listaCtrl.dominio.statusUsuario.novo.codigoBd,
-                                  'label-primary': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd
+                                  'label-primary': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd || m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoRenovacao.codigoBd
                                   }">{{m.status.nomeExibicao}}</span>
                     </td>
                     <td>{{m.regional.nome}}</td>
@@ -88,7 +89,7 @@
                                   'label-danger':  m.status.codigoBd === listaCtrl.dominio.statusUsuario.cancelado.codigoBd,
                                   'label-warning': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoIndicacao.codigoBd,
                                   'label-default': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoConfirmacaoEmail.codigoBd || m.status.codigoBd === listaCtrl.dominio.statusUsuario.novo.codigoBd,
-                                  'label-primary': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd
+                                  'label-primary': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd || m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoRenovacao.codigoBd
                                   }">{{m.status.nomeExibicao}}</span>
                             <span class="label label-primary">
                                 {{m.regional.nome}}
@@ -113,13 +114,15 @@
                     <!-- FUNCOES QUE APENAS DIRETORES PODEM EXECUTAR -->
                     <span ng-if="(listaCtrl.dominio.usuarioLogadoEhAdmin || listaCtrl.dominio.usuarioLogadoEhDiretor)">
                         <a class="btn btn-success"
-                           ng-if="listaCtrl.filtroStatus.length === 1 && listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade)"
+                           ng-if="(listaCtrl.filtroStatus.length === 1 && (listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade) || listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.aguardandoRenovacao))) || 
+                                    (listaCtrl.filtroStatus.length === 2 && (listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade) && listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.aguardandoRenovacao)))"
                            acerva-confirm
                            confirm-action="listaCtrl.confirmaPagamentoSelecionados()"
                            confirm-window-type="success"
                            confirm-text="Confirma que os associados selecionados realizaram pagamento?">Confirmar pagamento para selecionados</a>
                         <a class="btn btn-primary"
-                           ng-if="listaCtrl.filtroStatus.length === 1 && listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.novo)"
+                           ng-if="(listaCtrl.filtroStatus.length === 1 && (listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.ativo) || listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.novo))) || 
+                                    (listaCtrl.filtroStatus.length === 2 && (listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.ativo) && listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.novo)))"
                            acerva-confirm
                            confirm-action="listaCtrl.cobrancaGeradaSelecionados()"
                            confirm-window-type="success"

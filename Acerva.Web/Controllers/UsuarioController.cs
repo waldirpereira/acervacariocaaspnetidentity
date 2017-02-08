@@ -233,7 +233,7 @@ namespace Acerva.Web.Controllers
                 usuarioViewModel.Name, usuarioViewModel.Id, usuarioViewModel.Email);
 
             var usuario = _cadastroUsuarios.Busca(usuarioViewModel.Id);
-            usuario.Status = StatusUsuario.AguardandoPagamentoAnuidade;
+            usuario.Status = usuario.Status == StatusUsuario.Ativo ? StatusUsuario.AguardandoRenovacao :  StatusUsuario.AguardandoPagamentoAnuidade;
 
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Pretendente teve sua cobrança confirmada como gerada com sucesso", "Cobrança gerada confirmada");
             return new JsonNetResult(new { growlMessage });
@@ -252,7 +252,7 @@ namespace Acerva.Web.Controllers
             foreach (var userId in listaIdsUsuarios)
             {
                 var usuario = _cadastroUsuarios.Busca(userId);
-                usuario.Status = StatusUsuario.AguardandoPagamentoAnuidade;
+                usuario.Status = usuario.Status == StatusUsuario.Ativo ? StatusUsuario.AguardandoRenovacao : StatusUsuario.AguardandoPagamentoAnuidade;
             }
 
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Pretendentes tiveram suas cobranças confirmadas como geradas com sucesso", "Cobranças geradas confirmadas");

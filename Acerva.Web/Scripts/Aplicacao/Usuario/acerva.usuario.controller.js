@@ -105,16 +105,23 @@
         }
 
         function confirmaPagamentoSelecionados() {
-            processaOperacoesEmLoteParaStatusEspecifico(ctrl.dominio.statusUsuario.aguardandoPagamentoAnuidade, Usuario.confirmaPagamentoSelecionados);
+            processaOperacoesEmLoteParaStatusEspecifico([
+                ctrl.dominio.statusUsuario.aguardandoPagamentoAnuidade,
+                ctrl.dominio.statusUsuario.aguardandoRenovacao
+            ], Usuario.confirmaPagamentoSelecionados);
         }
 
         function cobrancaGeradaSelecionados() {
-            processaOperacoesEmLoteParaStatusEspecifico(ctrl.dominio.statusUsuario.novo, Usuario.cobrancaGeradaSelecionados);
+            processaOperacoesEmLoteParaStatusEspecifico([
+                ctrl.dominio.statusUsuario.novo,
+                ctrl.dominio.statusUsuario.ativo
+            ], Usuario.cobrancaGeradaSelecionados);
         }
 
-        function processaOperacoesEmLoteParaStatusEspecifico(status, metodoNoService) {
+        function processaOperacoesEmLoteParaStatusEspecifico(arrStatus, metodoNoService) {
+            var codigosBdStatus = arrStatus.map(function(status) { return status.codigoBd; });
             var usuariosSelecionadosComStatus = ctrl.listaUsuarios
-                .filter(function (usuario) { return usuario.status.codigoBd === status.codigoBd && ctrl.usuariosSelecionados.indexOf(usuario.id) >= 0; });
+                .filter(function (usuario) { return codigosBdStatus.indexOf(usuario.status.codigoBd) >= 0 && ctrl.usuariosSelecionados.indexOf(usuario.id) >= 0; });
 
             if (usuariosSelecionadosComStatus.length === 0)
                 return;

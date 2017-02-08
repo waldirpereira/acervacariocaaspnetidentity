@@ -8478,3 +8478,5 @@ ALTER TABLE `regional` ADD `texto_html` VARCHAR(2000) NULL AFTER `nome`;
 
 INSERT INTO `roles` (`Id`, `Name`) VALUES ('4f0670c8-ea7a-11e6-af33-847bebe540dd', 'DIRETOR'), ('4f068214-ea7a-11e6-af33-847bebe540dd', 'DELEGADO');
 
+ALTER TABLE `users` CHANGE `status` `status` CHAR(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'E' COMMENT 'aguardando confirmacao de [E]mail, [A]tivo, [C]ancelado, [N]ovo, aguardando [I]ndicacao, aguardando [P]agamento de anuidade, aguardando [R]enovação';
+

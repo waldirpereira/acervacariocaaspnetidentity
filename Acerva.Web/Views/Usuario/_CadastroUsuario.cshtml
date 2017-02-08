@@ -37,7 +37,7 @@
                                   'btn-danger':  ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.cancelado.codigoBd,
                                   'btn-warning': ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoIndicacao.codigoBd,
                                   'btn-default': ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoConfirmacaoEmail.codigoBd || ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.novo.codigoBd,
-                                  'btn-primary': ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd
+                                  'btn-primary': ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd || ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoRenovacao.codigoBd
                                   }">{{ctrl.modelo.status.nomeExibicao}}</a>
                                 </div>
                             </div>
@@ -217,7 +217,7 @@
                         <!-- FUNCOES QUE APENAS DIRETORES PODEM EXECUTAR -->
                         <span ng-if="ctrl.tipoCadastro === 'usuario' && ctrl.modelo.id && (ctrl.dominio.usuarioLogadoEhAdmin || ctrl.dominio.usuarioLogadoEhDiretor)">
                             <a class="btn btn-success"
-                               ng-if="ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd"
+                               ng-if="ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd || ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoRenovacao.codigoBd"
                                ng-click="ctrl.confirmaPagamento(ctrl.modelo)">Confirmar pagamento</a>
                             <a class="btn btn-primary"
                                ng-if="ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.novo.codigoBd"

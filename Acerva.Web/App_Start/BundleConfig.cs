@@ -46,12 +46,18 @@ namespace Acerva.Web
         private const string AngularLocalePtBr = ScriptsVendorFolder + "i18n/angular-locale_pt-br.js";
         private const string AngularAnimate = ScriptsVendorFolder + "angular-animate.js";
         private const string AngularRoute = ScriptsVendorFolder + "angular-route.js";
-        private const string AngularSanitize = ScriptsVendorFolder + "angular-sanitize.js";
+
+        //SUBSTITUIDO PELO AngularTextAngularSanitize
+        //private const string AngularSanitize = ScriptsVendorFolder + "angular-sanitize.js";
+
         private const string AngularLocalStorage = ScriptsVendorFolder + "angular-local-storage/angular-local-storage.js";
         private const string AngularBase64Upload = ScriptsVendorFolder + "angular-base64-upload/angular-base64-upload.js";
         private const string AngularCroppie = ScriptsVendorFolder + "ng-croppie/ng-croppie.js";
         private const string AngularChecklistModel = ScriptsVendorFolder + "checklist-model/checklist-model.js";
         private const string AngularChart = ScriptsVendorFolder + "angular-chart/angular-chart.js";
+        private const string AngularTextAngularCore = ScriptsVendorFolder + "text-angular/textAngular.min.js";
+        private const string AngularTextAngularSanitize = ScriptsVendorFolder + "text-angular/textAngular-sanitize.js";
+        private const string AngularTextAngularRangy = ScriptsVendorFolder + "text-angular/textAngular-rangy.min.js";
 
 
         private static readonly string[] AngularGrowl =
@@ -92,6 +98,8 @@ namespace Acerva.Web
         private const string AngularTimeInputCss = StylesVendorFolder + "png-time-input/png-time-input.css";
         private const string AngularHotkeysCss = StylesVendorFolder + "angular-hotkeys/hotkeys.css";
         private const string AngularCroppieCss = StylesVendorFolder + "ng-croppie/ng-croppie.css";
+        private const string FontAwesomeCss = StylesVendorFolder + "font-awesome/css/font-awesome.css";
+        private const string AngularTextAngularCss = StylesVendorFolder + "text-angular/textAngular.css";
         #endregion
 
         public static void RegisterBundles(BundleCollection bundles)
@@ -147,7 +155,7 @@ namespace Acerva.Web
                 .Include(LayoutJs)
                 .Include(DateHelper)
                 .Include(Angular)
-                .Include(AngularSanitize)
+                .Include(AngularTextAngularSanitize)
                 .Include(AngularLocalStorage)
                 .Include(AngularLocalePtBr)
                 .Include(AngularAnimate)
@@ -203,11 +211,18 @@ namespace Acerva.Web
         {
             const string path = ScriptsAplicacaoFolder + "Artigo/";
             bundles.Add(new ScriptBundle("~/bundles/artigo")
+                .Include(AngularTextAngularRangy)
+                .Include(AngularTextAngularCore)
                 .Include(path + "acerva.artigo.module.js")
                 .Include(path + "acerva.artigo.service.js")
                 .Include(path + "acerva.artigo.controller.js")
                 .Include(path + "acerva.artigo.cadastro.controller.js")
                 .Include(path + "acerva.artigo.anexos.controller.js")
+            );
+
+            bundles.Add(new LessBundle("~/cssBundles/artigo")
+                .Include(AngularTextAngularCss)
+                .Include(FontAwesomeCss)
             );
         }
 
@@ -215,10 +230,17 @@ namespace Acerva.Web
         {
             const string path = ScriptsAplicacaoFolder + "Regional/";
             bundles.Add(new ScriptBundle("~/bundles/regional")
+                .Include(AngularTextAngularRangy)
+                .Include(AngularTextAngularCore)
                 .Include(path + "acerva.regional.module.js")
                 .Include(path + "acerva.regional.service.js")
                 .Include(path + "acerva.regional.controller.js")
                 .Include(path + "acerva.regional.cadastro.controller.js")
+            );
+
+            bundles.Add(new LessBundle("~/cssBundles/regional")
+                .Include(AngularTextAngularCss)
+                .Include(FontAwesomeCss)
             );
         }
 
@@ -239,6 +261,8 @@ namespace Acerva.Web
                 .Include(AngularBase64Upload)
                 .Include(AngularCroppie)
                 .Include(AngularChecklistModel)
+                .Include(AngularTextAngularRangy)
+                .Include(AngularTextAngularCore)
                 .Include(path + "acerva.usuario.module.js")
                 .Include(path + "acerva.usuario.service.js")
                 .Include(path + "acerva.usuario.controller.js")
@@ -247,6 +271,8 @@ namespace Acerva.Web
 
             bundles.Add(new LessBundle("~/cssBundles/usuario")
                 .Include(AngularCroppieCss)
+                .Include(AngularTextAngularCss)
+                .Include(FontAwesomeCss)
             );
         }
 
@@ -256,6 +282,8 @@ namespace Acerva.Web
             bundles.Add(new ScriptBundle("~/bundles/registro")
                 .Include(AngularBase64Upload)
                 .Include(AngularCroppie)
+                .Include(AngularTextAngularRangy)
+                .Include(AngularTextAngularCore)
                 .Include(path + "acerva.registro.module.js")
                 .Include(path + "acerva.registro.service.js")
                 .Include(path + "acerva.registro.controller.js")
@@ -263,6 +291,8 @@ namespace Acerva.Web
 
             bundles.Add(new LessBundle("~/cssBundles/registro")
                 .Include(AngularCroppieCss)
+                .Include(AngularTextAngularCss)
+                .Include(FontAwesomeCss)
             );
         }
 
@@ -272,6 +302,8 @@ namespace Acerva.Web
             bundles.Add(new ScriptBundle("~/bundles/meusdados")
                 .Include(AngularBase64Upload)
                 .Include(AngularCroppie)
+                .Include(AngularTextAngularRangy)
+                .Include(AngularTextAngularCore)
                 .Include(path + "acerva.meusdados.module.js")
                 .Include(path + "acerva.meusdados.service.js")
                 .Include(path + "acerva.meusdados.controller.js")
@@ -279,6 +311,8 @@ namespace Acerva.Web
 
             bundles.Add(new LessBundle("~/cssBundles/meusdados")
                 .Include(AngularCroppieCss)
+                .Include(AngularTextAngularCss)
+                .Include(FontAwesomeCss)
             );
         }
 

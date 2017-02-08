@@ -1,7 +1,7 @@
 ﻿(function () {
     "use strict";
 
-    angular.module("acerva.artigo", ["acerva", "datatables"]);
+    angular.module("acerva.artigo", ["acerva", "datatables", "textAngular"]);
 
     angular.module("acerva")
         .config(["$routeProvider", routes]);

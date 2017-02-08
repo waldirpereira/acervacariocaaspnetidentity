@@ -25,8 +25,7 @@
                     <div class="col-sm-12">
                         <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formArtigo.textoHtml")>
                             <label class="control-label" for="textoHtml">Texto HTML</label>
-                            <textarea type="text" class="form-control" name="textoHtml" required
-                                      ng-model="ctrl.modelo.textoHtml"></textarea>
+                            <text-angular ng-model="ctrl.modelo.textoHtml" required></text-angular>
                             <p ng-show="formArtigo.textoHtml.$invalid && !formArtigo.textoHtml.$pristine" class="help-block">O texto Html é obrigatório</p>
                         </div>
                     </div>

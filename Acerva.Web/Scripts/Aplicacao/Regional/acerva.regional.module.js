@@ -1,7 +1,7 @@
 ﻿(function () {
     "use strict";
 
-    angular.module("acerva.regional", ["acerva", "datatables"]);
+    angular.module("acerva.regional", ["acerva", "datatables", "textAngular"]);
 
     angular.module("acerva")
         .config(["$routeProvider", routes]);

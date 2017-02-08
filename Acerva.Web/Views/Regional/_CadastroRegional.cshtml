@@ -25,8 +25,7 @@
                     <div class="col-sm-12">
                         <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formRegional.textoHtml")>
                             <label class="control-label" for="textoHtml">Texto HTML</label>
-                            <textarea type="text" class="form-control" name="textoHtml" required
-                                      ng-model="ctrl.modelo.textoHtml"></textarea>
+                            <text-angular ng-model="ctrl.modelo.textoHtml" required></text-angular>
                             <p ng-show="formRegional.textoHtml.$invalid && !formRegional.textoHtml.$pristine" class="help-block">O texto Html é obrigatório</p>
                         </div>
                     </div>
@@ -80,7 +79,7 @@
                 <div class="col-sm-12">
                     <div class="pull-right">
                         <a class="btn btn-default" href="#/"
-                           ng-disabled="!ctrl.modelo || ctrl.status.salvando">Cancelar</a>
+                           ng-disabled="!ctrl.modelo || ctrl.status.salvando">Voltar</a>
                         <button type="submit" class="btn btn-primary" ng-hide="ctrl.status.bloqueado" ng-disabled="formRegional.$invalid || ctrl.status.salvando"
                                 ng-click="ctrl.salvaRegional()">
                             Salvar<i class="icon icon-spin2 glyphicon-spin" ng-show="ctrl.status.salvando"></i>

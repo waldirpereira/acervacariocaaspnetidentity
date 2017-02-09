@@ -36,4 +36,4 @@ using System.Runtime.InteropServices;
 
 // Ajuste devido ao .Net Framework 4.0 
 // https://msdn.microsoft.com/pt-br/library/system.security.allowpartiallytrustedcallersattribute.aspx 
-[assembly: System.Security.AllowPartiallyTrustedCallers]
+//[assembly: System.Security.AllowPartiallyTrustedCallers]

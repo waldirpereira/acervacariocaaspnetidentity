@@ -220,7 +220,7 @@
                                ng-if="ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd || ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoRenovacao.codigoBd"
                                ng-click="ctrl.confirmaPagamento(ctrl.modelo)">Confirmar pagamento</a>
                             <a class="btn btn-primary"
-                               ng-if="ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.novo.codigoBd"
+                               ng-if="ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.novo.codigoBd || ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.ativo.codigoBd"
                                ng-click="ctrl.cobrancaGerada(ctrl.modelo)">Cobrança gerada</a>
                         </span>
 

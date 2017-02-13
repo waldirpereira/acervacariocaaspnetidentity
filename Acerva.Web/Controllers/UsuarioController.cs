@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
@@ -322,6 +323,59 @@ namespace Acerva.Web.Controllers
 
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associado reativado com sucesso", "Reativação confirmada");
             return new JsonNetResult(new { growlMessage });
+        }
+
+        [Transacao]
+        [HttpPost]
+        [ValidateAjaxAntiForgeryToken]
+        [AcervaAuthorize(Roles = "ADMIN, DIRETOR")]
+        public ActionResult VoltaUsuarioParaAguardandoConfirmacaoEmail([JsonBinder] UsuarioViewModel usuarioViewModel)
+        {
+            Log.InfoFormat("Usuário está voltando para ag. confirmacao email o associado {0} de código {1} e email {2}",
+                usuarioViewModel.Name, usuarioViewModel.Id, usuarioViewModel.Email);
+
+            var usuario = _cadastroUsuarios.Busca(usuarioViewModel.Id);
+
+            if (usuario.Status != StatusUsuario.AguardandoIndicacao)
+            {
+                return RetornaJsonDeAlerta(string.Format("Associado {0} não está ag. indicação!", usuario.Name));
+            }
+
+            usuario.Status = StatusUsuario.AguardandoConfirmacaoEmail;
+            usuario.EmailConfirmed = false;
+
+            return RedirectToAction("EnviaEmailConfirmacaoEmail", "Account", new
+            {
+                userId = usuarioViewModel.Id
+            });
+        }
+
+        [Transacao]
+        [HttpPost]
+        [ValidateAjaxAntiForgeryToken]
+        [AcervaAuthorize(Roles = "ADMIN, DIRETOR")]
+        public async Task<ActionResult> VoltaUsuarioParaAguardandoIndicacao([JsonBinder] UsuarioViewModel usuarioViewModel)
+        {
+            Log.InfoFormat("Usuário está voltando para ag. indicação o associado {0} de código {1} e email {2}",
+                usuarioViewModel.Name, usuarioViewModel.Id, usuarioViewModel.Email);
+
+            var usuario = _cadastroUsuarios.Busca(usuarioViewModel.Id);
+
+            if (usuario.Status != StatusUsuario.Novo)
+            {
+                return RetornaJsonDeAlerta(string.Format("Associado {0} não está novo!", usuario.Name));
+            }
+
+            var codigoConfirmacaoIndicacao = await UserManager.GenerateUserTokenAsync("confirmacao", usuario.Id);
+
+            usuario.IndicacaoHash = codigoConfirmacaoIndicacao;
+            usuario.Status = StatusUsuario.AguardandoIndicacao;
+
+            return RedirectToAction("EnviaEmailIndicacao", "Account", new
+            {
+                userId = usuarioViewModel.Id,
+                codigoConfirmacaoIndicacao
+            });
         }
 
         private static ActionResult RetornaJsonDeAlerta(string mensagem)

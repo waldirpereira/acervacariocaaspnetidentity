@@ -27,6 +27,8 @@
         ctrl.recusaIndicacao = recusaIndicacao;
         ctrl.cancelaUsuario = cancelaUsuario;
         ctrl.reativaUsuario = reativaUsuario;
+        ctrl.voltarParaAguardandoConfirmacaoEmail = voltarParaAguardandoConfirmacaoEmail;
+        ctrl.voltarParaAguardandoIndicacao = voltarParaAguardandoIndicacao;
 
         var id = $routeParams.id ? $routeParams.id : "";
         init(id);
@@ -114,6 +116,14 @@
 
         function reativaUsuario(usuario) {
             executaAcaoComUsuario(usuario, Usuario.reativaUsuario);
+        }
+
+        function voltarParaAguardandoConfirmacaoEmail(usuario) {
+            executaAcaoComUsuario(usuario, Usuario.voltarParaAguardandoConfirmacaoEmail);
+        }
+
+        function voltarParaAguardandoIndicacao(usuario) {
+            executaAcaoComUsuario(usuario, Usuario.voltarParaAguardandoIndicacao);
         }
     }
 

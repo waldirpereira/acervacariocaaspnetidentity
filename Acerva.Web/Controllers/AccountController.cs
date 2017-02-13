@@ -446,21 +446,7 @@ namespace Acerva.Web.Controllers
                     return isJsonReturn ? RetornaJsonDeRetorno("Erro ao confirmar e-mail", ViewBag.errorMessage) : View("Error");
                 }
 
-                var callbackUrlConfirmacao = Url.Action("ConfirmDesignation", "Account",
-                   new { userId = usuarioHibernate.Id, code = codigoConfirmacaoIndicacao }, protocol: Request.Url.Scheme);
-
-                var callbackUrlRecusa = Url.Action("DenyDesignation", "Account",
-                   new { userId = usuarioHibernate.Id, code = codigoConfirmacaoIndicacao }, protocol: Request.Url.Scheme);
-
-                var mensagem = string.Format("Olá {0},<br/><br/>" +
-                                             "Recebemos um novo pedido de associação à ACervA Carioca, de {1}, da regional {2}. Esta pessoa mencionou ter sido indicada por você.<br/><br/>" +
-                                             "Por favor confirme esta indicação clicando <a href=\"{3}\">aqui</a>.<br/><br/>" +
-                                                 "Se o link para confirmar não funcionar, copie o endereço abaixo e cole em seu navegador.<br/><br/>{3}<br/><br/>" +
-                                                 "Caso não tenha sido você que indicou esta pessoa, por favor recuse a indicação clicando <a href=\"{4}\">aqui</a>.<br/><br/>" +
-                                                 "Se o link para recusar não funcionar, copie o endereço abaixo e cole em seu navegador.<br/><br/>{4}<br/><br/>" +
-                                                 "Obrigado,<br/>ACervA Carioca",
-                        usuarioHibernate.UsuarioIndicacao.Name, usuarioHibernate.Name, usuarioHibernate.Regional.Nome, callbackUrlConfirmacao, callbackUrlRecusa);
-                await UserManager.SendEmailAsync(usuarioHibernate.UsuarioIndicacao.Id, "Confirme a indicação para ACervA Carioca", mensagem);
+                await SendDesignationEmail(usuarioHibernate, codigoConfirmacaoIndicacao);
 
                 return isJsonReturn ? RetornaJsonDeRetorno("E-mail confirmado com sucesso", "Associado teve seu e-mail confirmado com sucesso", 
                     GrowlMessageSeverity.Success, JsonNetResult.HttpOk) : View();
@@ -470,6 +456,36 @@ namespace Acerva.Web.Controllers
             AddErrors(result);
             ViewBag.errorMessage = "Confirmação de e-mail falhou.";
             return View("Error");
+        }
+
+        [AllowAnonymous]
+        public async Task<ActionResult> EnviaEmailIndicacao(string userID, string codigoConfirmacaoIndicacao)
+        {
+            var usuario = _cadastroUsuarios.Busca(userID);
+
+            await SendDesignationEmail(usuario, codigoConfirmacaoIndicacao);
+
+            var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associado retornado ao status de Ag. indicação com sucesso. E-mail enviado à pessoa que indicou.", "Retorno para Ag. indicação");
+            return new JsonNetResult(new { growlMessage });
+        }
+
+        private async Task SendDesignationEmail(Usuario usuario, string codigoConfirmacaoIndicacao)
+        {
+            var callbackUrlConfirmacao = Url.Action("ConfirmDesignation", "Account",
+               new { userId = usuario.Id, code = codigoConfirmacaoIndicacao }, protocol: Request.Url.Scheme);
+
+            var callbackUrlRecusa = Url.Action("DenyDesignation", "Account",
+               new { userId = usuario.Id, code = codigoConfirmacaoIndicacao }, protocol: Request.Url.Scheme);
+
+            var mensagem = string.Format("Olá {0},<br/><br/>" +
+                                         "Recebemos um novo pedido de associação à ACervA Carioca, de {1}, da regional {2}. Esta pessoa mencionou ter sido indicada por você.<br/><br/>" +
+                                         "Por favor confirme esta indicação clicando <a href=\"{3}\">aqui</a>.<br/><br/>" +
+                                             "Se o link para confirmar não funcionar, copie o endereço abaixo e cole em seu navegador.<br/><br/>{3}<br/><br/>" +
+                                             "Caso não tenha sido você que indicou esta pessoa, por favor recuse a indicação clicando <a href=\"{4}\">aqui</a>.<br/><br/>" +
+                                             "Se o link para recusar não funcionar, copie o endereço abaixo e cole em seu navegador.<br/><br/>{4}<br/><br/>" +
+                                             "Obrigado,<br/>ACervA Carioca",
+                    usuario.UsuarioIndicacao.Name, usuario.Name, usuario.Regional.Nome, callbackUrlConfirmacao, callbackUrlRecusa);
+            await UserManager.SendEmailAsync(usuario.UsuarioIndicacao.Id, "Confirme a indicação para ACervA Carioca", mensagem);
         }
 
         //
@@ -593,6 +609,16 @@ namespace Acerva.Web.Controllers
             var userFactors = await UserManager.GetValidTwoFactorProvidersAsync(userId);
             var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
             return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
+        }
+
+        // GET: /Account/SendCode
+        [AllowAnonymous]
+        public async Task<ActionResult> EnviaEmailConfirmacaoEmail(string userID)
+        {
+            await SendEmailConfirmationTokenAsync(userID, null);
+
+            var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associado retornado ao status de Ag. confirmação de e-mail com sucesso. E-mail de conrfirmação de e-mail enviado.", "Retorno para Ag. conf. e-mail");
+            return new JsonNetResult(new { growlMessage });
         }
 
         private async Task<string> SendEmailConfirmationTokenAsync(string userID, string subject)

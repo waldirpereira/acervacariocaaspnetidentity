@@ -67,6 +67,16 @@
                     { idsUsuarios: idsUsuarios }
                 ).then(retornaDadoDoXhr);
             },
+            voltarParaAguardandoConfirmacaoEmail: function (usuario) {
+                return $http.post(ROTAS.voltarParaAguardandoConfirmacaoEmail,
+                    { usuarioViewModel: usuario }
+                ).then(retornaDadoDoXhr);
+            },
+            voltarParaAguardandoIndicacao: function (usuario) {
+                return $http.post(ROTAS.voltarParaAguardandoIndicacao,
+                    { usuarioViewModel: usuario }
+                ).then(retornaDadoDoXhr);
+            },
             buscaTiposDominio: function () {
                 if (cacheTiposDominio) {
                     return $timeout(function () { return cacheTiposDominio; });

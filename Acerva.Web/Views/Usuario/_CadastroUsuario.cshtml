@@ -198,6 +198,7 @@
                             <a class="btn btn-default" href="#/"
                                ng-disabled="ctrl.status.salvando">Voltar</a>
                         </span>
+                        <!-- FUNCOES QUE APENAS DIRETORES PODEM EXECUTAR -->
                         <span ng-if="ctrl.tipoCadastro === 'usuario' && ctrl.modelo.id && (ctrl.dominio.usuarioLogadoEhAdmin || ctrl.dominio.usuarioLogadoEhDiretor)">
                             <a class="btn btn-danger"
                                ng-if="ctrl.modelo.status.codigoBd !== ctrl.dominio.statusUsuario.cancelado.codigoBd"
@@ -212,23 +213,48 @@
                                confirm-window-type="success"
                                confirm-text="Confirma o reativamento do registro do associado {{ ctrl.modelo.name }}?">Reativar associado</a>
                         </span>
+                        
+                        <!-- FUNCOES QUE DELEGADO PODE EXECUTAR -->
+                        <span ng-if="ctrl.tipoCadastro === 'usuario' && ctrl.modelo.id && (ctrl.dominio.usuarioLogadoEhAdmin || ctrl.dominio.usuarioLogadoEhDiretor || (ctrl.dominio.usuarioLogadoEhDelegado && ctrl.dominio.regionalDoUsuarioLogado.codigo === ctrl.modelo.regional.codigo))">
+                            <a class="btn btn-default"
+                               ng-if="ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoIndicacao.codigoBd"
+                               acerva-confirm
+                               confirm-action="ctrl.voltarParaAguardandoConfirmacaoEmail(ctrl.modelo)"
+                               confirm-window-type="warning"
+                               confirm-text="Confirma que o associado {{ ctrl.modelo.name }} voltará para ag. confirmação de e-mail?">Retornar para Ag. conf. e-mail</a>
+                            <a class="btn btn-default"
+                               ng-if="ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.novo.codigoBd"
+                               acerva-confirm
+                               confirm-action="ctrl.voltarParaAguardandoIndicacao(ctrl.modelo)"
+                               confirm-window-type="warning"
+                               confirm-text="Confirma que o associado {{ ctrl.modelo.name }} voltará para ag. indicação?">Retornar para Ag. indicação</a>
+                        </span>
                     </div>
                     <div class="pull-right">
                         <!-- FUNCOES QUE APENAS DIRETORES PODEM EXECUTAR -->
                         <span ng-if="ctrl.tipoCadastro === 'usuario' && ctrl.modelo.id && (ctrl.dominio.usuarioLogadoEhAdmin || ctrl.dominio.usuarioLogadoEhDiretor)">
                             <a class="btn btn-success"
                                ng-if="ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd || ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoRenovacao.codigoBd"
-                               ng-click="ctrl.confirmaPagamento(ctrl.modelo)">Confirmar pagamento</a>
+                               acerva-confirm
+                               confirm-action="ctrl.confirmaPagamento(ctrl.modelo)"
+                               confirm-window-type="warning"
+                               confirm-text="Confirma o pagamento do associado {{ ctrl.modelo.name }}?">Confirmar pagamento</a>
                             <a class="btn btn-primary"
                                ng-if="ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.novo.codigoBd || ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.ativo.codigoBd"
-                               ng-click="ctrl.cobrancaGerada(ctrl.modelo)">Cobrança gerada</a>
+                               acerva-confirm
+                               confirm-action="ctrl.cobrancaGerada(ctrl.modelo)"
+                               confirm-window-type="warning"
+                               confirm-text="Confirma que a cobrança foi gerada para o associado {{ ctrl.modelo.name }}?">Cobrança gerada</a>
                         </span>
 
                         <!-- FUNCOES QUE DELEGADO PODE EXECUTAR -->
                         <span ng-if="ctrl.tipoCadastro === 'usuario' && ctrl.modelo.id && (ctrl.dominio.usuarioLogadoEhAdmin || ctrl.dominio.usuarioLogadoEhDiretor || (ctrl.dominio.usuarioLogadoEhDelegado && ctrl.dominio.regionalDoUsuarioLogado.codigo === ctrl.modelo.regional.codigo))">
                             <a class="btn btn-primary"
                                ng-if="ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoConfirmacaoEmail.codigoBd"
-                               ng-click="ctrl.confirmaEmail(ctrl.modelo)">Confirmar e-mail</a>
+                               acerva-confirm
+                               confirm-action="ctrl.confirmaEmail(ctrl.modelo)"
+                               confirm-window-type="warning"
+                               confirm-text="Confirma o e-mail do associado {{ ctrl.modelo.name }}?">Confirmar e-mail</a>
                             <a class="btn btn-danger"
                                ng-if="ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoIndicacao.codigoBd"
                                acerva-confirm
@@ -237,7 +263,10 @@
                                confirm-text="Confirma a recusa da indicação de {{ ctrl.modelo.name }}?">Recusar indicação</a>
                             <a class="btn btn-success"
                                ng-if="ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoIndicacao.codigoBd"
-                               ng-click="ctrl.confirmaIndicacao(ctrl.modelo)">Confirmar indicação</a>
+                               acerva-confirm
+                               confirm-action="ctrl.confirmaIndicacao(ctrl.modelo)"
+                               confirm-window-type="warning"
+                               confirm-text="Confirma indicação do associado {{ ctrl.modelo.name }}?">Confirmar indicação</a>
                         </span>
 
                         <span>

@@ -14,7 +14,7 @@ namespace Acerva.Modelo.Mapeamento
             Map(u => u.Name, "Name");
             Map(u => u.PasswordHash, "PasswordHash");
             Map(u => u.AccessFailedCount, "AccessFailedCount");
-            Map(u => u.EmailConfirmed, "EmailConfirmed").CustomType(typeof(UmZeroType));
+            Map(u => u.EmailConfirmed, "EmailConfirmed");
             Map(u => u.LockoutEnabled, "LockoutEnabled");
             Map(u => u.LockoutEndDateUtc, "LockoutEndDateUtc");
             Map(u => u.PhoneNumber, "PhoneNumber");

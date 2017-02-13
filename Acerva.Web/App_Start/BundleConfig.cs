@@ -186,7 +186,7 @@ namespace Acerva.Web
                 .Include(AngularHotkeysCss)
             );
         }
-
+        
         private static void Referencia(BundleCollection bundles)
         {
             const string path = ScriptsAplicacaoFolder + "Referencia/";

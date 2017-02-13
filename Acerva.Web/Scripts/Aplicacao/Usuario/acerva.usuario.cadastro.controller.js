@@ -29,6 +29,8 @@
         ctrl.reativaUsuario = reativaUsuario;
         ctrl.voltarParaAguardandoConfirmacaoEmail = voltarParaAguardandoConfirmacaoEmail;
         ctrl.voltarParaAguardandoIndicacao = voltarParaAguardandoIndicacao;
+        ctrl.voltaParaNovo = voltaParaNovo;
+        ctrl.voltaParaAtivo = voltaParaAtivo;
 
         var id = $routeParams.id ? $routeParams.id : "";
         init(id);
@@ -124,6 +126,14 @@
 
         function voltarParaAguardandoIndicacao(usuario) {
             executaAcaoComUsuario(usuario, Usuario.voltarParaAguardandoIndicacao);
+        }
+
+        function voltaParaNovo(usuario) {
+            executaAcaoComUsuario(usuario, Usuario.voltaParaNovo);
+        }
+
+        function voltaParaAtivo(usuario) {
+            executaAcaoComUsuario(usuario, Usuario.voltaParaAtivo);
         }
     }
 

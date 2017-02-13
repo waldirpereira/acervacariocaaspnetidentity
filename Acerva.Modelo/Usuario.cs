@@ -1,31 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 
 namespace Acerva.Modelo
 {
-    public class Usuario : IUser, IEquatable<Usuario>
+    public class Usuario : IUser, IEquatable<Usuario>, IUsuarioHistoricoStatus
     {
+        public Usuario() { }
 
-        /// <summary>
-        /// Default constructor 
-        /// </summary>
-        public Usuario()
-        {
-            //Id = Guid.NewGuid().ToString();
-        }
-
-        /// <summary>
-        /// Constructor that takes user name as argument
-        /// </summary>
-        /// <param name="userName"></param>
-        public Usuario(string userName)
-            : this()
+        public Usuario(string userName) : this()
         {
             UserName = userName;
         }
+
         public virtual string Id { get; set; }
         public virtual string UserName { get; set; }
         public virtual string Name { get; set; }
@@ -70,6 +60,21 @@ namespace Acerva.Modelo
         public override int GetHashCode()
         {
             return (GetType() + "|" + Id).GetHashCode();
+        }
+
+        public virtual HistoricoStatusUsuario GeraGeraHistoricoStatus()
+        {
+            var historico = new HistoricoStatusUsuario
+            {
+                IdUsuarioAlterado = Id,
+                DataHora = DateTime.Now,
+                StatusNovo = Status,
+                NomeUsuarioLogado = string.IsNullOrEmpty(Thread.CurrentPrincipal.Identity.Name)
+                    ? "desconhecido"
+                    : Thread.CurrentPrincipal.Identity.Name
+            };
+
+            return historico;
         }
     }
 }

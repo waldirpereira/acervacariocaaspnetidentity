@@ -77,6 +77,16 @@
                     { usuarioViewModel: usuario }
                 ).then(retornaDadoDoXhr);
             },
+            voltaParaNovo: function (usuario) {
+                return $http.post(ROTAS.voltaParaNovo,
+                    { usuarioViewModel: usuario }
+                ).then(retornaDadoDoXhr);
+            },
+            voltaParaAtivo: function (usuario) {
+                return $http.post(ROTAS.voltaParaAtivo,
+                    { usuarioViewModel: usuario }
+                ).then(retornaDadoDoXhr);
+            },
             buscaTiposDominio: function () {
                 if (cacheTiposDominio) {
                     return $timeout(function () { return cacheTiposDominio; });

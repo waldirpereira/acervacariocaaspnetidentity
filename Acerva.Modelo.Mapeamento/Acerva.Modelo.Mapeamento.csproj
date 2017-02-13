@@ -70,6 +70,7 @@
     <Compile Include="UserStore.cs" />
     <Compile Include="UserTable.cs" />
     <Compile Include="PapelClassMap.cs" />
+    <Compile Include="HistoricoStatusUsuarioClassMap.cs" />
     <Compile Include="UsuarioClassMap.cs" />
   </ItemGroup>
   <ItemGroup>

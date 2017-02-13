@@ -212,6 +212,18 @@
                                confirm-action="ctrl.reativaUsuario(ctrl.modelo)"
                                confirm-window-type="success"
                                confirm-text="Confirma o reativamento do registro do associado {{ ctrl.modelo.name }}?">Reativar associado</a>
+                            <a class="btn btn-default"
+                               ng-if="ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd"
+                               acerva-confirm
+                               confirm-action="ctrl.voltaParaNovo(ctrl.modelo)"
+                               confirm-window-type="warning"
+                               confirm-text="Confirma o retorno do associado {{ ctrl.modelo.name }} para status 'novo'?">Retornar para "Novo"</a>
+                            <a class="btn btn-default"
+                               ng-if="ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoRenovacao.codigoBd"
+                               acerva-confirm
+                               confirm-action="ctrl.voltaParaAtivo(ctrl.modelo)"
+                               confirm-window-type="warning"
+                               confirm-text="Confirma retorno do associado {{ ctrl.modelo.name }} para status 'ativo'?">Retornar para "Ativo"</a>
                         </span>
                         
                         <!-- FUNCOES QUE DELEGADO PODE EXECUTAR -->

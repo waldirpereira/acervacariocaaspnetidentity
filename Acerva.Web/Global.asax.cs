@@ -8,6 +8,7 @@ using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Acerva.Infra.Eventos;
 using AutoMapper;
 using Acerva.Infra.Web;
 using Acerva.Modelo;
@@ -22,6 +23,7 @@ using FluentNHibernate.Cfg;
 using log4net;
 using log4net.Config;
 using NHibernate;
+using NHibernate.Event;
 
 namespace Acerva.Web
 {
@@ -59,6 +61,12 @@ namespace Acerva.Web
                 .Mappings(
                     m => m.FluentMappings.AddFromAssemblyOf<RegionalClassMap>()
                 )
+                .ExposeConfiguration(
+                    config =>
+                    {
+                        config.EventListeners.PostCommitUpdateEventListeners = new IPostUpdateEventListener[] { new StatusEventListener() };
+                        config.EventListeners.PostCommitInsertEventListeners = new IPostInsertEventListener[] { new StatusEventListener() };
+                    })
                 .BuildSessionFactory();
 
             return sessionFactory;
@@ -163,7 +171,6 @@ namespace Acerva.Web
                 cfg.AddProfile<ReferenciaMapperProfile>();
                 cfg.AddProfile<CadastroUsuariosMapperProfile>();
             });
-            //Mapper.AssertConfigurationIsValid();
 
             Log.Debug("AutoMapper configurado");
         }

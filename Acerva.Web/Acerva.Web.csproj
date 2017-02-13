@@ -339,6 +339,7 @@
     <Compile Include="Models\Home\UsuarioIndicacaoViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Home\UsuarioRegistroViewModel.cs" />
+    <Compile Include="Ninject\GerenciadorTransacaoNinjectModule.cs" />
     <Compile Include="Ninject\HttpFiltersNinjectModule.cs" />
     <Compile Include="Ninject\RepositoriosNoBancoDeDadosNinjectModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

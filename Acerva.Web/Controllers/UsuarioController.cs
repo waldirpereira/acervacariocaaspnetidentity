@@ -329,6 +329,50 @@ namespace Acerva.Web.Controllers
         [HttpPost]
         [ValidateAjaxAntiForgeryToken]
         [AcervaAuthorize(Roles = "ADMIN, DIRETOR")]
+        public ActionResult VoltaUsuarioParaNovo([JsonBinder] UsuarioViewModel usuarioViewModel)
+        {
+            Log.InfoFormat("Usuário está voltando para novo o associado {0} de código {1} e email {2}",
+                usuarioViewModel.Name, usuarioViewModel.Id, usuarioViewModel.Email);
+
+            var usuario = _cadastroUsuarios.Busca(usuarioViewModel.Id);
+
+            if (usuario.Status != StatusUsuario.AguardandoPagamentoAnuidade)
+            {
+                return RetornaJsonDeAlerta(string.Format("Associado {0} não está ag. pagamento de anuidade!", usuario.Name));
+            }
+
+            usuario.Status = StatusUsuario.Novo;
+
+            var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associado retornado para Novo com sucesso", "Retorno para Novo");
+            return new JsonNetResult(new { growlMessage });
+        }
+
+        [Transacao]
+        [HttpPost]
+        [ValidateAjaxAntiForgeryToken]
+        [AcervaAuthorize(Roles = "ADMIN, DIRETOR")]
+        public ActionResult VoltaUsuarioParaAtivo([JsonBinder] UsuarioViewModel usuarioViewModel)
+        {
+            Log.InfoFormat("Usuário está voltando para ativo o associado {0} de código {1} e email {2}",
+                usuarioViewModel.Name, usuarioViewModel.Id, usuarioViewModel.Email);
+
+            var usuario = _cadastroUsuarios.Busca(usuarioViewModel.Id);
+
+            if (usuario.Status != StatusUsuario.AguardandoRenovacao)
+            {
+                return RetornaJsonDeAlerta(string.Format("Associado {0} não está ag. renovação!", usuario.Name));
+            }
+
+            usuario.Status = StatusUsuario.Ativo;
+
+            var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associado retornado para Ativo com sucesso", "Retorno para Ativo");
+            return new JsonNetResult(new { growlMessage });
+        }
+
+        [Transacao]
+        [HttpPost]
+        [ValidateAjaxAntiForgeryToken]
+        [AcervaAuthorize(Roles = "ADMIN, DIRETOR")]
         public ActionResult VoltaUsuarioParaAguardandoConfirmacaoEmail([JsonBinder] UsuarioViewModel usuarioViewModel)
         {
             Log.InfoFormat("Usuário está voltando para ag. confirmacao email o associado {0} de código {1} e email {2}",

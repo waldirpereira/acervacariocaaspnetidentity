@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
@@ -462,6 +460,9 @@ namespace Acerva.Web.Controllers
         public async Task<ActionResult> EnviaEmailIndicacao(string userID, string codigoConfirmacaoIndicacao)
         {
             var usuario = _cadastroUsuarios.Busca(userID);
+
+            if (usuario.UsuarioIndicacao == null)
+                return RetornaJsonDeRetorno("E-mail não enviado", "O e-mail não foi enviado pois o associado não possui indicação");
 
             await SendDesignationEmail(usuario, codigoConfirmacaoIndicacao);
 

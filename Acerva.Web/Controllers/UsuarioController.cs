@@ -195,6 +195,13 @@ namespace Acerva.Web.Controllers
                 usuarioViewModel.Name, usuarioViewModel.Id, usuarioViewModel.Email);
 
             var usuario = _cadastroUsuarios.Busca(usuarioViewModel.Id);
+
+            if (usuario.Status != StatusUsuario.AguardandoPagamentoAnuidade &&
+                usuario.Status != StatusUsuario.AguardandoRenovacao)
+            {
+                return RetornaJsonDeAlerta("Associado não está aguardando confirmação de pagamento!");
+            }
+
             usuario.Status = StatusUsuario.Ativo;
             usuario.Matricula = string.IsNullOrEmpty(usuario.Matricula) ? _cadastroUsuarios.PegaProximaMatricula() : usuario.Matricula;
 
@@ -215,6 +222,12 @@ namespace Acerva.Web.Controllers
             foreach (var userId in listaIdsUsuarios)
             {
                 var usuario = _cadastroUsuarios.Busca(userId);
+                if (usuario.Status != StatusUsuario.AguardandoPagamentoAnuidade &&
+                    usuario.Status != StatusUsuario.AguardandoRenovacao)
+                {
+                    return RetornaJsonDeAlerta(string.Format("Associado {0} não está aguardando confirmação de pagamento!", usuario.Name));
+                }
+
                 usuario.Status = StatusUsuario.Ativo;
                 usuario.Matricula = string.IsNullOrEmpty(usuario.Matricula) ? _cadastroUsuarios.PegaProximaMatricula() : usuario.Matricula;
             }
@@ -233,6 +246,13 @@ namespace Acerva.Web.Controllers
                 usuarioViewModel.Name, usuarioViewModel.Id, usuarioViewModel.Email);
 
             var usuario = _cadastroUsuarios.Busca(usuarioViewModel.Id);
+
+            if (usuario.Status != StatusUsuario.Ativo &&
+                usuario.Status != StatusUsuario.Novo)
+            {
+                return RetornaJsonDeAlerta(string.Format("Associado {0} não está ativo ou novo!", usuario.Name));
+            }
+
             usuario.Status = usuario.Status == StatusUsuario.Ativo ? StatusUsuario.AguardandoRenovacao :  StatusUsuario.AguardandoPagamentoAnuidade;
 
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Pretendente teve sua cobrança confirmada como gerada com sucesso", "Cobrança gerada confirmada");
@@ -252,6 +272,13 @@ namespace Acerva.Web.Controllers
             foreach (var userId in listaIdsUsuarios)
             {
                 var usuario = _cadastroUsuarios.Busca(userId);
+
+                if (usuario.Status != StatusUsuario.Ativo &&
+                    usuario.Status != StatusUsuario.Novo)
+                {
+                    return RetornaJsonDeAlerta(string.Format("Associado {0} não está ativo ou novo!", usuario.Name));
+                }
+
                 usuario.Status = usuario.Status == StatusUsuario.Ativo ? StatusUsuario.AguardandoRenovacao : StatusUsuario.AguardandoPagamentoAnuidade;
             }
 
@@ -285,6 +312,12 @@ namespace Acerva.Web.Controllers
                 usuarioViewModel.Name, usuarioViewModel.Id, usuarioViewModel.Email);
 
             var usuario = _cadastroUsuarios.Busca(usuarioViewModel.Id);
+
+            if (usuario.Status != StatusUsuario.Cancelado)
+            {
+                return RetornaJsonDeAlerta(string.Format("Associado {0} não está cancelado!", usuario.Name));
+            }
+
             usuario.Status = StatusUsuario.Novo;
 
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associado reativado com sucesso", "Reativação confirmada");

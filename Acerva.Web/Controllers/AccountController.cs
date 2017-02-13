@@ -309,7 +309,13 @@ namespace Acerva.Web.Controllers
         {
             if (usuario == null)
             {
-                ViewBag.errorMessage = "Não foi encontrado o usuário.";
+                ViewBag.errorMessage = "Pessoa não foi encontrada.";
+                return false;
+            }
+
+            if (usuario.Status != StatusUsuario.AguardandoIndicacao)
+            {
+                ViewBag.errorMessage = "Pessoa não está aguardando confirmação de indicação!";
                 return false;
             }
 
@@ -352,7 +358,7 @@ namespace Acerva.Web.Controllers
         {
             if (userId == null)
             {
-                ViewBag.errorMessage = "Não foi fornecido id para o usuário.";
+                ViewBag.errorMessage = "Não foi fornecido id da pessoa.";
                 return View("Error");
             }
 
@@ -389,10 +395,18 @@ namespace Acerva.Web.Controllers
         {
             if (userId == null || (code == null && !isJsonReturn))
             {
-                return isJsonReturn ? RetornaJsonDeRetorno("Erro ao confirmar e-mail", "Identificador do associado não foi informado") : View("Error");
+                ViewBag.errorMessage = "Identificador do associado não foi informado!";
+                return isJsonReturn ? RetornaJsonDeRetorno("Erro ao confirmar e-mail", "Identificador do associado não foi informado!") : View("Error");
             }
 
             var usuarioHibernate = _cadastroUsuarios.Busca(userId);
+
+            if (usuarioHibernate.Status != StatusUsuario.AguardandoConfirmacaoEmail)
+            {
+                ViewBag.errorMessage = "Pessoa não está aguardando confirmação de e-mail!";
+                return isJsonReturn ? RetornaJsonDeRetorno("Erro ao confirmar e-mail", "Pessoa não está aguardando confirmação de e-mail.") : View("Error");
+            }
+
             var codigoConfirmacaoIndicacao = await UserManager.GenerateUserTokenAsync("confirmacao", usuarioHibernate.Id);
 
             var result = new IdentityResult();

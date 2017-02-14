@@ -8489,3 +8489,5 @@ CREATE TABLE `historico_status_usuario` (
  PRIMARY KEY (`codigo_historico`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+ALTER TABLE `artigo` ADD `visibilidade` CHAR(1) NOT NULL DEFAULT 'P' COMMENT '[P]ublico, [U]suario autenticado, [I]nterno do sistema' AFTER `ativo`;
+

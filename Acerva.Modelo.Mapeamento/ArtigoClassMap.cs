@@ -15,6 +15,7 @@ namespace Acerva.Modelo.Mapeamento
             Map(c => c.TextoHtml, "texto_html");
             Map(c => c.DataHora, "data_hora");
             Map(c => c.Ativo, "ativo").CustomType(typeof(SimNaoType));
+            Map(c => c.Visibilidade, "visibilidade").CustomType(typeof(EnumComCodigoBdMapper<VisibilidadeArtigo>));
 
             References(a => a.Categoria, "codigo_categoria_artigo");
             References(a => a.Usuario, "codigo_usuario");

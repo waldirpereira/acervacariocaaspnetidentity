@@ -16,7 +16,7 @@
                         <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formArtigo.nome")>
                             <label class="control-label" for="titulo">Título</label>
                             <input type="text" class="form-control" name="titulo" autocomplete="off" required
-                                   ng-model="ctrl.modelo.titulo"/>
+                                   ng-model="ctrl.modelo.titulo" />
                             <p ng-show="formArtigo.titulo.$invalid && !formArtigo.titulo.$pristine" class="help-block">O título é obrigatório</p>
                         </div>
                     </div>
@@ -35,13 +35,28 @@
                         @NgHelpers.NgSelectComBuscaRespeitandoStatusBloqueado("ctrl", new NgHelpers.NgSelectOptions("categoria", "ctrl.modelo", "nome",
                                 "categoria in ctrl.dominio.categorias | filter: {nome: $select.search} | orderBy : 'nome' track by categoria.codigo",
                                 "categoria.nome | highlight: $select.search")
-                       {
-                           Obrigatorio = true,
-                           Titulo = "Categoria",
-                           NgDisabled = ""
-                       })
+                   {
+                       Obrigatorio = true,
+                       Titulo = "Categoria",
+                       NgDisabled = ""
+                   })
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12">
+                        <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formArtigo.visibilidade")>
+                            @NgHelpers.NgSelectComBuscaRespeitandoStatusBloqueado("ctrl", new NgHelpers.NgSelectOptions("visibilidade", "ctrl.modelo", "nomeExibicao",
+                                "visibilidade in ctrl.dominio.visibilidades | filter: {nomeExibicao: $select.search} | orderBy : 'nomeExibicao' track by visibilidade.codigoBd",
+                                "visibilidade.nomeExibicao | highlight: $select.search")
+                       {
+                           Obrigatorio = true,
+                           Titulo = "Visibilidade",
+                           NgDisabled = ""
+                       })
+                        </div>
+                    </div>
+                </div>
+
             </fieldset>
         </div>
         <div class="panel-footer">
@@ -49,14 +64,18 @@
                 <div class="col-sm-12">
                     <div class="pull-left">
                         <button class="btn btn-primary" href="#"
-                           ng-click="ctrl.abrePopupAnexos(ctrl.modelo)"
-                           ng-disabled="!ctrl.modelo.codigo">Gerenciar anexos</button>
+                                ng-click="ctrl.abrePopupAnexos(ctrl.modelo)"
+                                ng-disabled="!ctrl.modelo.codigo">
+                            Gerenciar anexos
+                        </button>
                     </div>
                     <div class="pull-right">
-                        <a class="btn btn-default" href="/#"
+                        <a class="btn btn-default" href="#/"
                            ng-disabled="!ctrl.modelo || ctrl.status.salvando">Cancelar</a>
                         <button type="submit" class="btn btn-primary" ng-hide="ctrl.status.bloqueado" ng-disabled="formArtigo.$invalid || ctrl.status.salvando"
-                                ng-click="ctrl.salvaArtigo()">Salvar<i class="icon icon-spin2 glyphicon-spin" ng-show="ctrl.status.salvando"></i></button>
+                                ng-click="ctrl.salvaArtigo()">
+                            Salvar<i class="icon icon-spin2 glyphicon-spin" ng-show="ctrl.status.salvando"></i>
+                        </button>
                     </div>
                 </div>
             </div>

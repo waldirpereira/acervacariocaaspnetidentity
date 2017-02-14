@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Acerva.Modelo
+@using Acerva.Web.Extensions
+@{
     ViewBag.Title = "Artigos";
     ViewBag.AngularApp = "acerva.artigo";
     var action = ViewContext.RouteData.GetRequiredString("action");
@@ -50,7 +52,8 @@
                 salvaAnexo: "@Url.Action("SalvaAnexo")",
                 excluiAnexo: "@Url.Action("ExcluiAnexo")",
                 alteraAtivacao: "@Url.Action("AlteraAtivacao")"
-            });
+            })
+            .constant("ENUMS", @Html.GeraJsonDeEnums(typeof (VisibilidadeArtigo)));
         })();
         </script>
     }

@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using AutoMapper;
 using Acerva.Infra.Repositorios;
 using Acerva.Infra.Web;
+using Acerva.Modelo;
 using Acerva.Web.Models.Referencia;
 
 namespace Acerva.Web.Controllers
@@ -25,16 +26,28 @@ namespace Acerva.Web.Controllers
 
         public ActionResult BuscaCategorias()
         {
+            var usuarioLogado = HttpContext.User;
+            
             var listaCategoriasJson = _cadastroArtigos.BuscaCategorias()
-                .Where(c => c.Ativo && c.Artigos.Any())
-                .Select(Mapper.Map<CategoriaArtigoViewModel>);
+                .Where(c => c.Ativo && c.Artigos.Any(a => a.Visibilidade == VisibilidadeArtigo.Publico || (a.Visibilidade == VisibilidadeArtigo.Autenticado && usuarioLogado.Identity.IsAuthenticated)))
+                .Select(c =>
+                {
+                    var categoriaJson = Mapper.Map<CategoriaArtigoViewModel>(c);
+                    categoriaJson.QtdArtigos = c.Artigos
+                        .Count(a => a.Visibilidade == VisibilidadeArtigo.Publico || (a.Visibilidade == VisibilidadeArtigo.Autenticado && usuarioLogado.Identity.IsAuthenticated));
+                    return categoriaJson;
+                });
+
             return new JsonNetResult(listaCategoriasJson);
         }
 
         public ActionResult BuscaArtigosDaCategoria(int codigoCategoriaArtigo)
         {
+            var usuarioLogado = HttpContext.User;
+
             var listaArtigosJson = _cadastroArtigos.BuscaTodos()
-                .Where(a => a.Categoria.Codigo == codigoCategoriaArtigo)
+                .Where(a => a.Categoria.Codigo == codigoCategoriaArtigo &&
+                            (a.Visibilidade == VisibilidadeArtigo.Publico || (a.Visibilidade == VisibilidadeArtigo.Autenticado && usuarioLogado.Identity.IsAuthenticated)))
                 .Select(Mapper.Map<ArtigoListaViewModel>);
             return new JsonNetResult(listaArtigosJson);
         }

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using Acerva.Modelo;
 
 namespace Acerva.Web.Models.Referencia
@@ -20,7 +19,6 @@ namespace Acerva.Web.Models.Referencia
                 .ReverseMap();
 
             CreateMap<CategoriaArtigo, CategoriaArtigoViewModel>()
-                .ForMember(d => d.QtdArtigos, o => o.ResolveUsing(s => s.Artigos.Count()))
                 .ReverseMap();
         }
     }

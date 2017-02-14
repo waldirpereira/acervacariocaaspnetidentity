@@ -2,9 +2,9 @@
     "use strict";
 
     angular.module("acerva.artigo")
-        .controller("CadastroArtigoController", ["$scope", "$timeout", "$routeParams", "$location", "CanalMensagemGrowl", "Artigo", "$uibModal", CadastroArtigoController]);
+        .controller("CadastroArtigoController", ["$scope", "$timeout", "$routeParams", "$location", "ENUMS", "CanalMensagemGrowl", "Artigo", "$uibModal", CadastroArtigoController]);
 
-    function CadastroArtigoController($scope, $timeout, $routeParams, $location, CanalMensagemGrowl, Artigo, $uibModal) {
+    function CadastroArtigoController($scope, $timeout, $routeParams, $location, ENUMS, CanalMensagemGrowl, Artigo, $uibModal) {
         var ctrl = this;
         ctrl.status = {
             carregando: false,
@@ -27,6 +27,9 @@
 
             Artigo.buscaTiposDominio().then(function(tipos) {
                 angular.extend(ctrl.dominio, tipos);
+
+                ctrl.dominio.visibilidade = ENUMS.visibilidadeArtigo;
+                ctrl.dominio.visibilidades = ENUMS.toArrayOfEnums(ENUMS.visibilidadeArtigo);
 
                 if (id === 0) {
                     colocaArtigoEmEdicao({ativo: true});

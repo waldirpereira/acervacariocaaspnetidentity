@@ -14,6 +14,7 @@ namespace Acerva.Modelo
         public virtual DateTime DataHora { get; set; }
         public virtual CategoriaArtigo Categoria { get; set; }
         public virtual Usuario Usuario { get; set; }
+        public virtual VisibilidadeArtigo Visibilidade { get; set; }
         public virtual bool Ativo { get; set; }
         private IEnumerable<AnexoArtigo> _anexos = new List<AnexoArtigo>();
 

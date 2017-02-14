@@ -2,10 +2,12 @@
     "use strict";
 
     angular.module("acerva.referencia")
-        .controller("ReferenciaController", ["$routeParams", "$location", "Referencia", ReferenciaController]);
+        .controller("ReferenciaController", ["$routeParams", "$location", "ENUMS", "Referencia", ReferenciaController]);
 
-    function ReferenciaController($routeParams, $location, Referencia) {
+    function ReferenciaController($routeParams, $location, ENUMS, Referencia) {
         var ctrl = this;
+
+        ctrl.dominio = {};
 
         ctrl.status =
         {
@@ -30,7 +32,11 @@
 
         function atualizaListaCategorias() {
             Referencia.buscaCategorias().then(function (listaCategorias) {
+
+                ctrl.dominio.visibilidade = ENUMS.visibilidadeArtigo;
+
                 ctrl.listaCategorias = listaCategorias;
+
                 if (!ctrl.categoriaSelecionada && listaCategorias.length) {
                     if (!codigoCategoria) {
                         codigoCategoria = listaCategorias[0].codigo;

@@ -9,7 +9,8 @@
                 <tr>
                     <th style="width: 60px;">Código</th>
                     <th>Título</th>
-                    <th>Categoria</th>
+                    <th style="width: 120px;">Categoria</th>
+                    <th style="width: 120px;">Visibilidade</th>
                     <th style="width: 40px;">Ativo?</th>
                     <th class="sorting_disabled" style="width: 60px;"></th>
                 </tr>
@@ -26,6 +27,7 @@
                            ng-href="#/Edit/{{m.codigo}}">{{m.titulo}}</a>
                     </td>
                     <td>{{m.categoria.nome}}</td>
+                    <td>{{m.visibilidade.nomeExibicao}}</td>
                     <td>
                         <input type="hidden" ng-value="!m.ativo"/>
                         <span class="label label-success" ng-if="m.ativo">Sim</span>

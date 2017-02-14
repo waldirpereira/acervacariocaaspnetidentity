@@ -61,6 +61,7 @@
     <Compile Include="Noticia.cs" />
     <Compile Include="Regional.cs" />
     <Compile Include="Papel.cs" />
+    <Compile Include="VisibilidadeArtigo.cs" />
     <Compile Include="StatusUsuario.cs" />
     <Compile Include="Usuario.cs" />
     <Compile Include="Sistema.cs" />

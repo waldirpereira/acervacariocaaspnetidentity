@@ -99,15 +99,27 @@ namespace Acerva.Web.Controllers
 
             // Require the user to have a confirmed email before they can log on.
             var user = await UserManager.FindByNameAsync(model.Email);
-            if (user != null)
+            
+            if (user == null)
             {
-                if (!await UserManager.IsEmailConfirmedAsync(user.Id))
-                {
-                    await SendEmailConfirmationTokenAsync(user.Id, "Confirmação de seu e-mail foi reenviada.");
+                //usuario inexistente
+                ViewBag.errorMessage = "Usuário não encontrado em nossa base de dados.";
+                return View("Error");
+            }
 
-                    ViewBag.errorMessage = "Você precisa confirmar seu e-mail para se logar.<br/><br/>Um novo código foi enviado para seu e-mail.";
-                    return View("Error");
-                }
+            if (!await UserManager.IsEmailConfirmedAsync(user.Id))
+            {
+                await SendEmailConfirmationTokenAsync(user.Id, "Confirmação de seu e-mail foi reenviada.");
+
+                ViewBag.errorMessage = "Você precisa confirmar seu e-mail para se logar.<br/><br/>Um novo código foi enviado para seu e-mail.";
+                return View("Error");
+            }
+
+            var usuarioBd = _cadastroUsuarios.Busca(user.Id);
+            if (usuarioBd.Status != StatusUsuario.Ativo && usuarioBd.Status != StatusUsuario.AguardandoRenovacao)
+            {
+                ViewBag.errorMessage = "Usuário não possui status Ativo ou Ag. Renovação.";
+                return View("Error");
             }
 
             // This doesn't count login failures towards account lockout

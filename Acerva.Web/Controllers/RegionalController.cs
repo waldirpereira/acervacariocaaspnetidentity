@@ -89,7 +89,7 @@ namespace Acerva.Web.Controllers
 
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success,
                 string.Format("Regional <a href='{0}#/Edit/{1}'>{2}</a> foi salvo com sucesso", Url.Action("Index"), regional.Codigo, regional.Nome),
-                "Regional salvo");
+                "Regional salva");
 
             return new JsonNetResult(new { growlMessage });
         }
@@ -159,14 +159,14 @@ namespace Acerva.Web.Controllers
 
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success,
                 string.Format("Regional <a href='{0}#/Edit/{1}'>{2}</a> foi {3}ativado com sucesso", Url.Action("Index"), regional.Codigo, regional.Codigo, prefixoOperacao),
-                string.Format("Regional {0}ativado", prefixoOperacao));
+                string.Format("Regional {0}ativada", prefixoOperacao));
 
             return new JsonNetResult(new { growlMessage });
         }
 
         private static ActionResult RetornaJsonDeAlerta(string mensagem)
         {
-            var growlMessage = new GrowlMessage(GrowlMessageSeverity.Warning, mensagem, "Regional não salvo");
+            var growlMessage = new GrowlMessage(GrowlMessageSeverity.Warning, mensagem, "Regional não salva");
 
             return new JsonNetResult(new { growlMessage }, statusCode: JsonNetResult.HttpBadRequest);
         }

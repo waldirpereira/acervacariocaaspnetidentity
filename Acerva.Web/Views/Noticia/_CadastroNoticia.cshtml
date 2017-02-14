@@ -1,0 +1,59 @@
+﻿<form name="formNoticia" novalidate>
+    <div class="panel panel-primary">
+        <div class="panel-heading" ng-show="ctrl.status.carregando">Carregando<i class="icon icon-spin2 glyphicon-spin"></i></div>
+        <div class="panel-heading" ng-hide="ctrl.status.carregando">{{ ctrl.modeloOriginal.codigo ? "Edição da notícia '" + ctrl.modelo.titulo + "'": "Nova notícia" }}</div>
+        <div class="panel-body" ng-hide="ctrl.status.carregando">
+            <fieldset ng-disabled="ctrl.status.bloqueado">
+                <div class="row" ng-if="ctrl.status.bloqueado">
+                    <div class="col-sm-12">
+                        <div class="alert alert-dismissible alert-warning">
+                            A edição está bloqueada pois a notícia está inativa.
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-10">
+                        <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formNoticia.titulo")>
+                            <label class="control-label" for="titulo">Título</label>
+                            <input type="text" class="form-control" name="titulo" autocomplete="off" required
+                                   ng-model="ctrl.modelo.titulo"/>
+                            <p ng-show="formNoticia.titulo.$invalid && !formNoticia.titulo.$pristine" class="help-block">O título é obrigatório</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formNoticia.ordem")>
+                            <label class="control-label" for="ordem">Ordem</label>
+                            <input type="text" class="form-control" name="ordem" autocomplete="off"
+                                   ng-model="ctrl.modelo.ordem" />
+                            <p ng-show="formNoticia.ordem.$invalid && !formNoticia.ordem.$pristine" class="help-block">A ordem é obrigatória</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formNoticia.textoHtml")>
+                            <label class="control-label" for="textoHtml">Texto HTML</label>
+                            <text-angular ng-model="ctrl.modelo.textoHtml" required></text-angular>
+                            <p ng-show="formNoticia.textoHtml.$invalid && !formNoticia.textoHtml.$pristine" class="help-block">O texto Html é obrigatório</p>
+                        </div>
+                    </div>
+                </div>
+
+            </fieldset>
+        </div>
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="pull-right">
+                        <a class="btn btn-default" href="#/"
+                           ng-disabled="!ctrl.modelo || ctrl.status.salvando">Voltar</a>
+                        <button type="submit" class="btn btn-primary" ng-hide="ctrl.status.bloqueado" ng-disabled="formNoticia.$invalid || ctrl.status.salvando"
+                                ng-click="ctrl.salvaNoticia()">
+                            Salvar<i class="icon icon-spin2 glyphicon-spin" ng-show="ctrl.status.salvando"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,47 +1,26 @@
 ﻿(function () {
     "use strict";
 
-    angular.module("acerva.regional")
-        .factory("Regional", ["$http", "$q", "$timeout", "ROTAS", RegionalFactory]);
+    angular.module("acerva.noticia")
+        .factory("Noticia", ["$http", "$q", "$timeout", "ROTAS", NoticiaFactory]);
 
-    function RegionalFactory($http, $q, $timeout, ROTAS) {
+    function NoticiaFactory($http, $q, $timeout, ROTAS) {
         var cacheTiposDominio;
 
         return {
-            buscaListaRegionais: function () {
+            buscaListaNoticias: function () {
                 return $http.get(ROTAS.buscaTodos)
                     .then(retornaDadoDoXhr);
             },
-            buscaRegional: function (codigo) {
+            buscaNoticia: function (codigo) {
                 return $http.get(ROTAS.busca, {
                     params: { codigo: codigo }
                 }).then(retornaDadoDoXhr);
             },
-            salvaRegional: function (regional) {
+            salvaNoticia: function (noticia) {
                 return $http.post(ROTAS.salva,
-                    { regionalViewModel: regional }
+                    { noticiaViewModel: noticia }
                 ).then(retornaDadoDoXhr);
-            },
-            anexaLogotipo: function (codigoRegional, arquivoAnexo) {
-                var formData = new FormData();
-                formData.append("codigoRegional", codigoRegional);
-                formData.append("file", arquivoAnexo);
-
-                var defer = $q.defer();
-                $http.post(ROTAS.anexaLogotipo, formData,
-                    {
-                        withCredentials: true,
-                        headers: { 'Content-Type': undefined },
-                        transformRequest: angular.identity
-                    })
-                .success(function (d) {
-                    defer.resolve(d);
-                })
-                .error(function () {
-                    defer.reject("Falha ao anexar arquivo!");
-                });
-
-                return defer.promise;
             },
             buscaTiposDominio: function () {
                 if (cacheTiposDominio) {
@@ -54,17 +33,17 @@
                         return tiposDominio;
                     });
             },
-            ativa: function (regional) {
-                return alteraAtivacao(regional, true);
+            ativa: function (noticia) {
+                return alteraAtivacao(noticia, true);
             },
-            inativa: function (regional) {
-                return alteraAtivacao(regional, false);
+            inativa: function (noticia) {
+                return alteraAtivacao(noticia, false);
             }
         }
 
-        function alteraAtivacao(regional, ativo) {
+        function alteraAtivacao(noticia, ativo) {
             return $http.post(ROTAS.alteraAtivacao,
-                { id: regional.codigo, ativo: ativo }
+                { id: noticia.codigo, ativo: ativo }
             ).then(function (response) {
                 return response.data;
             });

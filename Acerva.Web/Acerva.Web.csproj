@@ -301,9 +301,12 @@
     <Compile Include="Controllers\AgendaController.cs" />
     <Compile Include="Controllers\ListaRegionaisController.cs" />
     <Compile Include="Controllers\CategoriaArtigoController.cs" />
+    <Compile Include="Controllers\NoticiaController.cs" />
     <Compile Include="Models\CadastroArtigos\AnexoArtigoViewModel.cs" />
     <Compile Include="Models\CadastroCategoriasArtigos\CadastroCategoriasArtigosMapperProfile.cs" />
     <Compile Include="Models\CadastroCategoriasArtigos\CategoriaArtigoViewModel.cs" />
+    <Compile Include="Models\CadastroNoticias\CadastroNoticiaMapperProfile.cs" />
+    <Compile Include="Models\CadastroNoticias\NoticiaViewModel.cs" />
     <Compile Include="Models\Referencia\AnexoArtigoViewModel.cs" />
     <Compile Include="Models\Referencia\ArtigoListaViewModel.cs" />
     <Compile Include="Models\Referencia\ArtigoViewModel.cs" />
@@ -468,6 +471,9 @@
     <Content Include="Views\CategoriaArtigo\_CadastroCategoriaArtigo.cshtml" />
     <Content Include="Views\CategoriaArtigo\_ListaCategoriasArtigos.cshtml" />
     <Content Include="Views\CategoriaArtigo\Index.cshtml" />
+    <Content Include="Views\Noticia\_CadastroNoticia.cshtml" />
+    <Content Include="Views\Noticia\_ListaNoticias.cshtml" />
+    <Content Include="Views\Noticia\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Aplicacao\fonts\acerva-iconfont.svg" />

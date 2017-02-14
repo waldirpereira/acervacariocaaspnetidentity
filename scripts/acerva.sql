@@ -8491,3 +8491,8 @@ CREATE TABLE `historico_status_usuario` (
 
 ALTER TABLE `artigo` ADD `visibilidade` CHAR(1) NOT NULL DEFAULT 'P' COMMENT '[P]ublico, [U]suario autenticado, [I]nterno do sistema' AFTER `ativo`;
 
+ALTER TABLE `noticia`
+  DROP `data_inicio`,
+  DROP `data_fim`;
+  
+  

@@ -1,38 +1,38 @@
 ﻿(function () {
     "use strict";
 
-    angular.module("acerva.regional")
-        .controller("RegionalController", ["Regional", RegionalController]);
+    angular.module("acerva.noticia")
+        .controller("NoticiaController", ["Noticia", NoticiaController]);
 
-    function RegionalController(Regional) {
+    function NoticiaController(Noticia) {
         var ctrl = this;
 
-        ctrl.listaRegionais = [];
-        
+        ctrl.listaNoticias = [];
+
         ctrl.ativa = ativa;
         ctrl.inativa = inativa;
 
         init();
 
         function init() {
-            atualizaListaRegionais();
+            atualizaListaNoticias();
         }
 
-        function atualizaListaRegionais() {
-            Regional.buscaListaRegionais().then(function (listaRegionais) {
-                ctrl.listaRegionais = listaRegionais;
+        function atualizaListaNoticias() {
+            Noticia.buscaListaNoticias().then(function (listaNoticias) {
+                ctrl.listaNoticias = listaNoticias;
             });
         }
 
-         function ativa(regional) {
-            Regional.ativa(regional).then(function () {
-                regional.ativo = true;
+        function ativa(noticia) {
+            Noticia.ativa(noticia).then(function () {
+                noticia.ativo = true;
             });
         }
 
-        function inativa(regional) {
-            Regional.inativa(regional).then(function () {
-                regional.ativo = false;
+        function inativa(noticia) {
+            Noticia.inativa(noticia).then(function () {
+                noticia.ativo = false;
             });
         }
     }

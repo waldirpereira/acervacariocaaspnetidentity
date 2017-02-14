@@ -62,6 +62,7 @@
     <Compile Include="Regional.cs" />
     <Compile Include="Papel.cs" />
     <Compile Include="Validadores\CategoriaArtigoValidator.cs" />
+    <Compile Include="Validadores\NoticiaValidator.cs" />
     <Compile Include="VisibilidadeArtigo.cs" />
     <Compile Include="StatusUsuario.cs" />
     <Compile Include="Usuario.cs" />

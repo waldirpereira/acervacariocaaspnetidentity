@@ -269,7 +269,7 @@ namespace Acerva.Web
                 .Include(path + "acerva.noticia.cadastro.controller.js")
             );
 
-            bundles.Add(new LessBundle("~/cssBundles/regional")
+            bundles.Add(new LessBundle("~/cssBundles/noticia")
                 .Include(AngularTextAngularCss)
                 .Include(FontAwesomeCss)
             );

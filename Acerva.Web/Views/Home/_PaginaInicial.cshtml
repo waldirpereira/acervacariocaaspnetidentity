@@ -3,7 +3,7 @@
 }
 <h3>@ViewBag.Title</h3>
 
-<div class="container-noticias" ng-repeat="noticia in ctrl.listaNoticias">
+<div class="container-noticias" ng-repeat="noticia in ctrl.listaNoticias ">
     <h4 class="titulo text-primary">{{noticia.titulo}}</h4>
     <span ng-bind-html="noticia.textoHtml"></span>
 </div>

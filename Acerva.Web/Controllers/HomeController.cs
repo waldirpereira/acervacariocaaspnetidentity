@@ -49,6 +49,9 @@ namespace Acerva.Web.Controllers
         public ActionResult BuscaNoticias()
         {
             var listaNoticiasJson = _cadastroNoticias.BuscaTodas()
+                .Where(n => n.Ativo)
+                .OrderBy(n => n.Ordem.HasValue ? n.Ordem.Value : int.MaxValue)
+                .ThenBy(n => n.Codigo)
                 .Select(Mapper.Map<NoticiaViewModel>);
             return new JsonNetResult(listaNoticiasJson);
         }

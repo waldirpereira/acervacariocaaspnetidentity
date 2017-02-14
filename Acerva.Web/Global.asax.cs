@@ -16,6 +16,7 @@ using Acerva.Modelo.Mapeamento;
 using Acerva.Web.AttributeAdapters;
 using Acerva.Web.Models.CadastroArtigos;
 using Acerva.Web.Models.CadastroCategoriasArtigos;
+using Acerva.Web.Models.CadastroNoticias;
 using Acerva.Web.Models.CadastroRegionais;
 using Acerva.Web.Models.CadastroUsuarios;
 using Acerva.Web.Models.Home;
@@ -170,6 +171,7 @@ namespace Acerva.Web
                 cfg.AddProfile<CadastroRegionalMapperProfile>();
                 cfg.AddProfile<CadastroArtigosMapperProfile>();
                 cfg.AddProfile<CadastroCategoriasArtigosMapperProfile>();
+                cfg.AddProfile<CadastroNoticiaMapperProfile>();
                 cfg.AddProfile<ReferenciaMapperProfile>();
                 cfg.AddProfile<CadastroUsuariosMapperProfile>();
             });

@@ -2,9 +2,9 @@
     "use strict";
 
     angular.module("acerva.usuario")
-        .controller("UsuarioController", ["$scope", "Usuario", "ENUMS", "DTOptionsBuilder", "localStorageService", UsuarioController]);
+        .controller("UsuarioController", ["$scope", "Usuario", "ENUMS", "$uibModal", "DTOptionsBuilder", "localStorageService", UsuarioController]);
 
-    function UsuarioController($scope, Usuario, ENUMS, DTOptionsBuilder, localStorageService) {
+    function UsuarioController($scope, Usuario, ENUMS, $uibModal, DTOptionsBuilder, localStorageService) {
         var ctrl = this;
 
         ctrl.listaUsuarios = [];
@@ -22,6 +22,7 @@
 
         ctrl.selecionaTodosFiltrados = selecionaTodosFiltrados;
         ctrl.mudaFiltroStatus = mudaFiltroStatus;
+        ctrl.abreJanelaSelecaoEmails = abreJanelaSelecaoEmails;
         ctrl.alteraSelecao = alteraSelecao;
         ctrl.estaFiltradoPorStatus = estaFiltradoPorStatus;
         ctrl.pegaUsuariosFiltrados = pegaUsuariosFiltrados;
@@ -65,6 +66,38 @@
                 return;
 
             ctrl.pegaUsuariosFiltrados().forEach(function (usuario) { alteraSelecao(usuario.id) });
+        }
+
+        function abreJanelaSelecaoEmails() {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'modal-selecao-emails.html',
+                controller: 'SelecaoEmailsModalController',
+                controllerAs: 'ctrl',
+                resolve: {}
+            });
+
+            modalInstance.result.then(selecionaPorEmails);
+        }
+
+        function selecionaPorEmails(emails) {
+            if (!emails)
+                return;
+
+            ctrl.usuariosSelecionados = [];
+
+            var arrEmails = emails
+                .replace(/ /g, ",")
+                .replace(/\n/g, ",")
+                .replace(/\r/g, ",")
+                .replace(/\t/g, ",")
+                .replace(/;/g, ",")
+                .split(",");
+            
+            ctrl.pegaUsuariosFiltrados()
+                .forEach(function (usuario) { if (arrEmails.indexOf(usuario.email) >= 0) alteraSelecao(usuario.id) });
         }
 
         function mudaFiltroStatus(status) {

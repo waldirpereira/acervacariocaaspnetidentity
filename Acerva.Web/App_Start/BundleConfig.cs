@@ -278,6 +278,7 @@ namespace Acerva.Web
                 .Include(path + "acerva.usuario.service.js")
                 .Include(path + "acerva.usuario.controller.js")
                 .Include(path + "acerva.usuario.cadastro.controller.js")
+                .Include(path + "acerva.usuario.selecaoEmails.controller.js")
             );
 
             bundles.Add(new LessBundle("~/cssBundles/usuario")

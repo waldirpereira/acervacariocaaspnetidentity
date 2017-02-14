@@ -84,9 +84,6 @@ namespace Acerva.Web.App_Start
                 .ForEach(match => kernel.Bind(match.InterfaceType)
                 .To(match.ValidatorType));
 
-            kernel.Bind<RegionalControllerHelper>()
-                .ToSelf();
-
             kernel.Bind<UsuarioControllerHelper>()
                 .ToSelf();
         }

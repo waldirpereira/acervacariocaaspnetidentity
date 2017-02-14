@@ -43,7 +43,7 @@
                         </a>
                         <button type="button" class="btn btn-success btn-xs" title="Ativar {{ m.nome }}"
                                 acerva-confirm
-                                ng-if="!m.ativo"
+                                ng-if="!m.ativo && (listaCtrl.dominio.usuarioLogadoEhAdmin || listaCtrl.dominio.usuarioLogadoEhDiretor)"
                                 confirm-action="listaCtrl.ativa(m)"
                                 confirm-window-type="success"
                                 confirm-text="Confirma a ativação da regional {{ m.nome }}?">
@@ -51,7 +51,7 @@
                         </button>
                         <button type="button" class="btn btn-danger btn-xs" title="Inativar {{ m.nome }}"
                                 acerva-confirm
-                                ng-if="m.ativo"
+                                ng-if="m.ativo && (listaCtrl.dominio.usuarioLogadoEhAdmin || listaCtrl.dominio.usuarioLogadoEhDiretor)"
                                 confirm-action="listaCtrl.inativa(m)"
                                 confirm-window-type="danger"
                                 confirm-text="Confirma a inativação da regional {{ m.nome }}?">
@@ -112,7 +112,8 @@
             </table>
         </div>
     </div>
-    <div class="panel-footer">
+    <div class="panel-footer"
+         ng-if="listaCtrl.dominio.usuarioLogadoEhAdmin || listaCtrl.dominio.usuarioLogadoEhDiretor">
         <div class="row">
             <div class="col-sm-12">
                 <div class="pull-right">

@@ -8,32 +8,32 @@ using AutoMapper;
 using Acerva.Infra.Repositorios;
 using Acerva.Infra.Web;
 using Acerva.Modelo;
-using Acerva.Web.Controllers.Helpers;
 using Acerva.Web.Extensions;
 using Acerva.Web.Models;
 using Acerva.Web.Models.CadastroRegionais;
 using FluentValidation;
 using log4net;
+using Microsoft.AspNet.Identity;
 
 namespace Acerva.Web.Controllers
 {
     [Authorize]
-    [AcervaAuthorize(Roles = "ADMIN, DIRETOR")]
+    [AcervaAuthorize(Roles = "ADMIN, DIRETOR, DELEGADO")]
     public class RegionalController : ApplicationBaseController
     {
         private static readonly ILog Log =
             LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly ICadastroRegionais _cadastroRegionais;
         private readonly IValidator<Regional> _validator;
-        private readonly RegionalControllerHelper _helper;
+        private readonly ICadastroUsuarios _cadastroUsuarios;
         private readonly IIdentity _user;
         
         public RegionalController(ICadastroRegionais cadastroRegionais, IValidator<Regional> validator, 
-            IPrincipal user, ICadastroUsuarios cadastroUsuarios, RegionalControllerHelper helper) : base(cadastroUsuarios)
+            IPrincipal user, ICadastroUsuarios cadastroUsuarios) : base(cadastroUsuarios)
         {
             _cadastroRegionais = cadastroRegionais;
             _validator = validator;
-            _helper = helper;
+            _cadastroUsuarios = cadastroUsuarios;
             _user = user.Identity;
         }
 
@@ -44,22 +44,47 @@ namespace Acerva.Web.Controllers
 
         public ActionResult BuscaParaListagem()
         {
+            var usuarioLogado = HttpContext.User;
+            var usuarioLogadoBd = usuarioLogado.Identity.IsAuthenticated ? _cadastroUsuarios.Busca(usuarioLogado.Identity.GetUserId()) : null;
+            var usuarioLogadoEhAdmin = usuarioLogado.IsInRole("ADMIN");
+            var usuarioLogadoEhDiretor = usuarioLogado.IsInRole("DIRETOR");
+            var usuarioLogadoEhDelegado = usuarioLogado.IsInRole("DELEGADO");
+
             var listaRegionaisJson = _cadastroRegionais.BuscaParaListagem()
+                .Where(r => usuarioLogadoEhAdmin || usuarioLogadoEhDiretor || (usuarioLogadoEhDelegado && usuarioLogadoBd != null && usuarioLogadoBd.Regional.Equals(r)))
                 .Select(Mapper.Map<RegionalViewModel>);
             return new JsonNetResult(listaRegionaisJson);
         }
 
         public ActionResult BuscaTiposDominio()
         {
+            var usuarioLogado = HttpContext.User;
+            var usuarioLogadoEhAdmin = usuarioLogado.IsInRole("ADMIN");
+            var usuarioLogadoEhDiretor = usuarioLogado.IsInRole("DIRETOR");
+
             return new JsonNetResult(new
             {
-                
+                UsuarioLogadoEhAdmin = usuarioLogadoEhAdmin,
+                UsuarioLogadoEhDiretor = usuarioLogadoEhDiretor
             });
         }
 
         public ActionResult Busca(int codigo)
         {
             var regional = _cadastroRegionais.Busca(codigo);
+
+            var usuarioLogado = HttpContext.User;
+            var usuarioLogadoBd = usuarioLogado.Identity.IsAuthenticated ? _cadastroUsuarios.Busca(usuarioLogado.Identity.GetUserId()) : null;
+            var usuarioLogadoEhAdmin = usuarioLogado.IsInRole("ADMIN");
+            var usuarioLogadoEhDiretor = usuarioLogado.IsInRole("DIRETOR");
+            var usuarioLogadoEhDelegado = usuarioLogado.IsInRole("DELEGADO");
+
+            if (usuarioLogadoBd == null)
+                return RetornaJsonDeAlerta("Usuário logado não encontrado no BD");
+
+            if (!usuarioLogadoEhAdmin && !usuarioLogadoEhDiretor && (!usuarioLogadoEhDelegado || !usuarioLogadoBd.Regional.Equals(regional)))
+                return RetornaJsonDeAlerta("Usuário logado não é diretor ou delegado da regional buscada.");
+
             var regionalJson = Mapper.Map<RegionalViewModel>(regional);
             return new JsonNetResult(regionalJson);
         }
@@ -85,6 +110,18 @@ namespace Acerva.Web.Controllers
             if (ExisteComMesmoNome(regional))
                 return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Já existe uma regional com o nome {0:unsafe}", regional.Nome));
 
+            var usuarioLogado = HttpContext.User;
+            var usuarioLogadoBd = usuarioLogado.Identity.IsAuthenticated ? _cadastroUsuarios.Busca(usuarioLogado.Identity.GetUserId()) : null;
+            var usuarioLogadoEhAdmin = usuarioLogado.IsInRole("ADMIN");
+            var usuarioLogadoEhDiretor = usuarioLogado.IsInRole("DIRETOR");
+            var usuarioLogadoEhDelegado = usuarioLogado.IsInRole("DELEGADO");
+
+            if (usuarioLogadoBd == null)
+                return RetornaJsonDeAlerta("Usuário logado não encontrado no BD");
+
+            if (!usuarioLogadoEhAdmin && !usuarioLogadoEhDiretor && (!usuarioLogadoEhDelegado || !usuarioLogadoBd.Regional.Equals(regional)))
+                return RetornaJsonDeAlerta("Usuário logado não é diretor ou delegado da regional em edição.");
+
             _cadastroRegionais.Salva(regional);
 
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success,
@@ -106,6 +143,18 @@ namespace Acerva.Web.Controllers
             if (regional == null)
                 return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Regional não encontrada"));
 
+            var usuarioLogado = HttpContext.User;
+            var usuarioLogadoBd = usuarioLogado.Identity.IsAuthenticated ? _cadastroUsuarios.Busca(usuarioLogado.Identity.GetUserId()) : null;
+            var usuarioLogadoEhAdmin = usuarioLogado.IsInRole("ADMIN");
+            var usuarioLogadoEhDiretor = usuarioLogado.IsInRole("DIRETOR");
+            var usuarioLogadoEhDelegado = usuarioLogado.IsInRole("DELEGADO");
+
+            if (usuarioLogadoBd == null)
+                return RetornaJsonDeAlerta("Usuário logado não encontrado no BD");
+
+            if (!usuarioLogadoEhAdmin && !usuarioLogadoEhDiretor && (!usuarioLogadoEhDelegado || !usuarioLogadoBd.Regional.Equals(regional)))
+                return RetornaJsonDeAlerta("Usuário logado não é diretor ou delegado da regional em edição.");
+            
             if (Request.Files.Count == 0)
                 return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Nenhum arquivo anexado"));
 
@@ -155,6 +204,18 @@ namespace Acerva.Web.Controllers
             Log.InfoFormat("Usuário {0} está {1}atividando a regional de id {2}", _user.Name, prefixoOperacao, id);
 
             var regional = _cadastroRegionais.Busca(id);
+
+            var usuarioLogado = HttpContext.User;
+            var usuarioLogadoBd = usuarioLogado.Identity.IsAuthenticated ? _cadastroUsuarios.Busca(usuarioLogado.Identity.GetUserId()) : null;
+            var usuarioLogadoEhAdmin = usuarioLogado.IsInRole("ADMIN");
+            var usuarioLogadoEhDiretor = usuarioLogado.IsInRole("DIRETOR");
+
+            if (usuarioLogadoBd == null)
+                return RetornaJsonDeAlerta("Usuário logado não encontrado no BD");
+
+            if (!usuarioLogadoEhAdmin && !usuarioLogadoEhDiretor)
+                return RetornaJsonDeAlerta("Usuário logado não é diretor.");
+
             regional.Ativo = ativo;
 
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success,

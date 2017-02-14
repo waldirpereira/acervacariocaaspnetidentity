@@ -313,7 +313,6 @@
     <Compile Include="Models\Referencia\ReferenciaMapperProfile.cs" />
     <Compile Include="Models\Referencia\CategoriaArtigoViewModel.cs" />
     <Compile Include="Controllers\ReferenciaController.cs" />
-    <Compile Include="Controllers\Helpers\RegionalControllerHelper.cs" />
     <Compile Include="Controllers\Helpers\UsuarioControllerHelper.cs" />
     <Compile Include="Controllers\ArtigoController.cs" />
     <Compile Include="Controllers\SituacaoController.cs" />

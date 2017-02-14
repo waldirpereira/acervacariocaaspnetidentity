@@ -25,7 +25,8 @@
                     <div class="col-sm-12">
                         <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formRegional.textoHtml")>
                             <label class="control-label" for="textoHtml">Texto HTML</label>
-                            <text-angular ng-model="ctrl.modelo.textoHtml" required></text-angular>
+                            <text-angular ng-model="ctrl.modelo.textoHtml" required
+                                          ta-toolbar-button-class="btn btn-default btn-sm"></text-angular>
                             <p ng-show="formRegional.textoHtml.$invalid && !formRegional.textoHtml.$pristine" class="help-block">O texto Html é obrigatório</p>
                         </div>
                     </div>

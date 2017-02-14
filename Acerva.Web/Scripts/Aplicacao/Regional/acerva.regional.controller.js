@@ -15,7 +15,11 @@
         init();
 
         function init() {
-            atualizaListaRegionais();
+            RegionalController.buscaTiposDominio().then(function (tipos) {
+                angular.extend(ctrl.dominio, tipos);
+
+                return atualizaListaRegionais();
+            });
         }
 
         function atualizaListaRegionais() {

@@ -80,12 +80,9 @@
                                 <li style="margin-bottom: 15px;" ng-if="ctrl.indicacoesAConfirmar > 0"><b><a href="@Url.Action("IndicacoesAConfirmar", "Home")">Você possui {{ctrl.indicacoesAConfirmar}} {{"indicaç"+(ctrl.indicacoesAConfirmar === 1 ? "ão" : "ões")}} a confirmar!</a></b></li>
                                 @if (Request.IsAuthenticated)
                                 {
-                                    if (User.IsInRole("ADMIN") || User.IsInRole("DIRETOR"))
-                                    {
-                                        <li>@Html.ActionLink("Cad. Regionais", "Index", "Regional")</li>
-                                    }
                                     if (User.IsInRole("ADMIN") || User.IsInRole("DIRETOR") || User.IsInRole("DELEGADO"))
                                     {
+                                        <li>@Html.ActionLink("Cad. Regionais", "Index", "Regional")</li>
                                         <li>@Html.ActionLink("Cad. Associados", "Index", "Usuario")</li>
                                     }
                                     if (User.IsInRole("ADMIN") || User.IsInRole("DIRETOR"))

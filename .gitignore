@@ -99,8 +99,8 @@ node_modules/
 orleans.codegen.cs
 
 Web.Release.config
+Startup.Auth.cs
 
 **/images/fotos/*
 anexos/
-
 

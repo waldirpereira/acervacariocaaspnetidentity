@@ -8,6 +8,8 @@ namespace Acerva.Modelo
         public const int TamanhoMaximoTitulo = 300;
         public const int TamanhoMaximoTextoHtml = 8000;
 
+        public const int CodigoArtigoBoasVindas = 1;
+
         public virtual int Codigo { get; set; }
         public virtual string Titulo { get; set; }
         public virtual string TextoHtml { get; set; }

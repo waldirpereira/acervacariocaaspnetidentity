@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Net.Configuration;
 using System.Security.Claims;
@@ -11,6 +12,8 @@ using System.Net.Mail;
 using System.Reflection;
 using System.Web;
 using System.Web.Configuration;
+using System.Web.Hosting;
+using System.Web.WebPages;
 using Acerva.Infra;
 using Acerva.Modelo;
 using Acerva.Modelo.Mapeamento;
@@ -32,12 +35,29 @@ namespace Acerva.Web
 
         public Task SendAsync(IdentityMessage message)
         {
+            var pathTemplates = HostingEnvironment.MapPath("~/Templates");
+            var template = "%TITULO%<br /><hr />%CORPO%<hr /><br />ACervA Carioca %ANO%";
+
+            if (pathTemplates != null)
+            {
+                var pathTemplateEmailPadrao = Path.Combine(pathTemplates, "email-padrao.html");
+                if (File.Exists(pathTemplateEmailPadrao))
+                {
+                    template = File.ReadAllText(pathTemplateEmailPadrao);
+                }
+            }
+
             using (var smtp = new SmtpClient(_mailSettings.Smtp.Network.Host, Convert.ToInt32(_mailSettings.Smtp.Network.Port)))
             using (var email = new MailMessage())
             {
                 email.To.Add(message.Destination);
                 email.Subject = message.Subject;
-                email.Body = message.Body;
+
+                email.Body = template
+                    .Replace("%CORPO%", message.Body)
+                    .Replace("%TITULO%", message.Subject)
+                    .Replace("%ANO%", DateTime.Today.Year.ToString());
+
                 email.IsBodyHtml = true;
                 email.From = new MailAddress(_mailSettings.Smtp.From, Sistema.NomeSistema);
 

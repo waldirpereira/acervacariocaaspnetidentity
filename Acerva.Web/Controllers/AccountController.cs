@@ -5,7 +5,9 @@ using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Acerva.Infra;
 using Acerva.Infra.Repositorios;
+using Acerva.Infra.Services;
 using Acerva.Infra.Web;
 using Acerva.Modelo;
 using Acerva.Web.Controllers.Helpers;
@@ -28,17 +30,20 @@ namespace Acerva.Web.Controllers
         private readonly IValidator<Usuario> _validator;
         private readonly ICadastroUsuarios _cadastroUsuarios;
         private readonly UsuarioControllerHelper _helper;
+        private readonly ITemplateService _templateService;
         private readonly IIdentity _user;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private static readonly ILog Log =
             LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        public AccountController(IValidator<Usuario> validator, ICadastroUsuarios cadastroUsuarios, IPrincipal user, UsuarioControllerHelper helper) : base(cadastroUsuarios)
+        public AccountController(IValidator<Usuario> validator, ICadastroUsuarios cadastroUsuarios, IPrincipal user,
+            UsuarioControllerHelper helper, ITemplateService templateService) : base(cadastroUsuarios)
         {
             _validator = validator;
             _cadastroUsuarios = cadastroUsuarios;
             _helper = helper;
+            _templateService = templateService;
             _user = user.Identity;
         }
 
@@ -99,7 +104,7 @@ namespace Acerva.Web.Controllers
 
             // Require the user to have a confirmed email before they can log on.
             var user = await UserManager.FindByNameAsync(model.Email);
-            
+
             if (user == null)
             {
                 //usuario inexistente
@@ -235,7 +240,7 @@ namespace Acerva.Web.Controllers
                 return RetornaJsonDeRetorno("Erro ao registrar associado", validacao.GeraListaHtmlDeValidacoes());
 
             if (_cadastroUsuarios.ExisteComMesmoNome(usuario))
-                return RetornaJsonDeRetorno("Erro ao registrar associado",string.Format(HtmlEncodeFormatProvider.Instance, "Já existe um usuário com o nome {0:unsafe}", usuario.Name));
+                return RetornaJsonDeRetorno("Erro ao registrar associado", string.Format(HtmlEncodeFormatProvider.Instance, "Já existe um usuário com o nome {0:unsafe}", usuario.Name));
 
             if (_cadastroUsuarios.ExisteComMesmoCpf(usuario))
                 return RetornaJsonDeRetorno("Erro ao registrar associado", string.Format(HtmlEncodeFormatProvider.Instance, "Já existe um associado com o CPF {0:unsafe}", usuario.Cpf));
@@ -263,7 +268,7 @@ namespace Acerva.Web.Controllers
             return new JsonNetResult("OK");
         }
 
-        private static ActionResult RetornaJsonDeRetorno(string titulo, string mensagem, 
+        private static ActionResult RetornaJsonDeRetorno(string titulo, string mensagem,
             GrowlMessageSeverity growlSeverity = GrowlMessageSeverity.Warning, int statusCode = JsonNetResult.HttpBadRequest)
         {
             var growlMessage = new GrowlMessage(growlSeverity, mensagem, titulo);
@@ -292,8 +297,7 @@ namespace Acerva.Web.Controllers
             usuario.Status = StatusUsuario.Novo;
 
             var mensagem = string.Format("Olá Financeiro,<br/><br/>" +
-                                             "A pessoa {0} acabou de ter sua indicação confirmada.<br/><br/>" +
-                                                 "Obrigado,<br/>ACervA Carioca", usuario.Name);
+                                             "A pessoa {0} acabou de ter sua indicação confirmada.", usuario.Name);
 
             var identityMessage = new IdentityMessage
             {
@@ -382,8 +386,7 @@ namespace Acerva.Web.Controllers
             usuario.Status = StatusUsuario.Cancelado;
 
             var mensagem = string.Format("Olá {0},<br/><br/>" +
-                                             "{1} acabou de informar que não indicou você para a ACervA Carioca.<br/><br/>" +
-                                                 "Atenciosamente,<br/>ACervA Carioca", usuario.Name, HttpContext.User.Identity.Name);
+                                             "{1} acabou de informar que não indicou você para a ACervA Carioca.<br/><br/>", usuario.Name, HttpContext.User.Identity.Name);
 
             _cadastroUsuarios.Atualiza(usuario);
 
@@ -432,7 +435,7 @@ namespace Acerva.Web.Controllers
                 usuarioHibernate.Status = StatusUsuario.AguardandoIndicacao;
                 usuarioHibernate.IndicacaoHash = codigoConfirmacaoIndicacao;
                 usuarioHibernate.EmailConfirmed = true;
-                
+
                 _cadastroUsuarios.Atualiza(usuarioHibernate);
 
                 _cadastroUsuarios.Commit();
@@ -458,7 +461,7 @@ namespace Acerva.Web.Controllers
 
                 await SendDesignationEmail(usuarioHibernate, codigoConfirmacaoIndicacao);
 
-                return isJsonReturn ? RetornaJsonDeRetorno("E-mail confirmado com sucesso", "Associado teve seu e-mail confirmado com sucesso", 
+                return isJsonReturn ? RetornaJsonDeRetorno("E-mail confirmado com sucesso", "Associado teve seu e-mail confirmado com sucesso",
                     GrowlMessageSeverity.Success, JsonNetResult.HttpOk) : View();
             }
 
@@ -495,8 +498,7 @@ namespace Acerva.Web.Controllers
                                          "Por favor confirme esta indicação clicando <a href=\"{3}\">aqui</a>.<br/><br/>" +
                                              "Se o link para confirmar não funcionar, copie o endereço abaixo e cole em seu navegador.<br/><br/>{3}<br/><br/>" +
                                              "Caso não tenha sido você que indicou esta pessoa, por favor recuse a indicação clicando <a href=\"{4}\">aqui</a>.<br/><br/>" +
-                                             "Se o link para recusar não funcionar, copie o endereço abaixo e cole em seu navegador.<br/><br/>{4}<br/><br/>" +
-                                             "Obrigado,<br/>ACervA Carioca",
+                                             "Se o link para recusar não funcionar, copie o endereço abaixo e cole em seu navegador.<br/><br/>{4}",
                     usuario.UsuarioIndicacao.Name, usuario.Name, usuario.Regional.Nome, callbackUrlConfirmacao, callbackUrlRecusa);
             await UserManager.SendEmailAsync(usuario.UsuarioIndicacao.Id, "Confirme a indicação para ACervA Carioca", mensagem);
         }
@@ -541,9 +543,8 @@ namespace Acerva.Web.Controllers
             var mensagem = string.Format("Olá, {0}.<br/><br/>" +
                                          "Uma recuperação de senha foi requisitada para seu e-mail {1}.<br/><br/>" +
                                          "Clique <a href=\"{2}\">aqui</a> ou copie e cole o endereço abaixo em seu navegador para prosseguir com a recuperação de sua senha:<br/><br/>" +
-                                         "{2}<br/><br/>" +
-                                         "Obrigado por sua atenção, {3}" +
-                                         "{4}", user.Name, user.Email, callbackUrl, Sistema.NomeSistema, Url.Action("Index", "Home"));
+                                         "{2}"
+                                         , user.Name, user.Email, callbackUrl);
 
             await UserManager.SendEmailAsync(user.Id, "Recuperação de senha", mensagem);
             return RedirectToAction("ForgotPasswordConfirmation", "Account");
@@ -641,9 +642,8 @@ namespace Acerva.Web.Controllers
                new { userId = userID, code = code }, protocol: Request.Url.Scheme);
 
             var mensagem = string.Format("Por favor confirme seu e-mail de cadastro no {0} clicando <a href=\"{1}\">aqui</a>.<br/><br/>" +
-                                             "Se o link não funcionar, copie o endereço abaixo e cole em seu navegador.<br/><br/>{1}<br/><br/>" +
-                                             "Obrigado,<br/>Equipe {0}",
-                    Sistema.NomeSistema, callbackUrl);
+                                             "Se o link não funcionar, copie o endereço abaixo e cole em seu navegador.<br/><br/>{1}", Sistema.NomeSistema, callbackUrl);
+            
             await UserManager.SendEmailAsync(userID, "Confirme seu e-mail", mensagem);
 
             return callbackUrl;
@@ -708,6 +708,13 @@ namespace Acerva.Web.Controllers
                             var addLoginResult = await UserManager.AddLoginAsync(user.Id, loginInfo.Login);
                             if (addLoginResult.Succeeded)
                             {
+                                var usuarioBd = _cadastroUsuarios.Busca(user.Id);
+                                if (usuarioBd.Status != StatusUsuario.Ativo && usuarioBd.Status != StatusUsuario.AguardandoRenovacao)
+                                {
+                                    ViewBag.errorMessage = "Usuário não possui status Ativo ou Ag. Renovação.";
+                                    return View("Error");
+                                }
+
                                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                                 return RedirectToLocal(returnUrl);
                             }

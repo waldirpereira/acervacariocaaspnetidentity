@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Security.Principal;
+using Acerva.Infra.Services;
 using Acerva.Modelo.Validadores;
 using Acerva.Web.App_Start;
 using Acerva.Web.Controllers.Helpers;
@@ -86,6 +87,10 @@ namespace Acerva.Web.App_Start
 
             kernel.Bind<UsuarioControllerHelper>()
                 .ToSelf();
+
+            kernel.Bind<ITemplateService>()
+                .To<TemplateService>()
+                .InRequestScope();
         }
     }
 }

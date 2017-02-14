@@ -448,6 +448,7 @@
     <Content Include="Scripts\vendor\text-angular\textAngular-sanitize.js" />
     <Content Include="Scripts\vendor\text-angular\textAngular.js" />
     <Content Include="Scripts\vendor\text-angular\textAngular.min.js" />
+    <Content Include="Templates\email-padrao.html" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\_ListaArquivos.cshtml" />
     <Content Include="Views\Home\_PaginaInicial.cshtml" />

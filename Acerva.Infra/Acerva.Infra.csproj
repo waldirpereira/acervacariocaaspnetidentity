@@ -160,6 +160,8 @@
     <Compile Include="Repositorios\ICadastroCategoriasArtigos.cs" />
     <Compile Include="Repositorios\ICadastroRegionais.cs" />
     <Compile Include="Repositorios\ICadastroUsuarios.cs" />
+    <Compile Include="Services\ITemplateService.cs" />
+    <Compile Include="Services\TemplateService.cs" />
     <Compile Include="Web\AcervaAuthorizeAttribute.cs" />
     <Compile Include="Web\ValidateAjaxAntiForgeryTokenAttribute.cs" />
     <Compile Include="Web\FlashMessage\CookieFlashMessagePresenter.cs" />

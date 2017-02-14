@@ -80,8 +80,8 @@ namespace Acerva.Web
 
             app.UseFacebookAuthentication(new FacebookAuthenticationOptions
             {
-                AppId = "230281167425626",
-                AppSecret = "64df738f15ed37c44a09e1e896fea6c5",
+                AppId = "APP_ID",
+                AppSecret = "APP_SECRET",
                 Scope = { "email" },
                 Provider = new FacebookAuthenticationProvider
                 {

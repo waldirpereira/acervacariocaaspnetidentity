@@ -7,7 +7,6 @@ using System.Web;
 using System.Web.Mvc;
 using Acerva.Infra;
 using Acerva.Infra.Repositorios;
-using Acerva.Infra.Services;
 using Acerva.Infra.Web;
 using Acerva.Modelo;
 using Acerva.Web.Controllers.Helpers;
@@ -30,7 +29,6 @@ namespace Acerva.Web.Controllers
         private readonly IValidator<Usuario> _validator;
         private readonly ICadastroUsuarios _cadastroUsuarios;
         private readonly UsuarioControllerHelper _helper;
-        private readonly ITemplateService _templateService;
         private readonly IIdentity _user;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -38,12 +36,11 @@ namespace Acerva.Web.Controllers
             LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public AccountController(IValidator<Usuario> validator, ICadastroUsuarios cadastroUsuarios, IPrincipal user,
-            UsuarioControllerHelper helper, ITemplateService templateService) : base(cadastroUsuarios)
+            UsuarioControllerHelper helper) : base(cadastroUsuarios)
         {
             _validator = validator;
             _cadastroUsuarios = cadastroUsuarios;
             _helper = helper;
-            _templateService = templateService;
             _user = user.Identity;
         }
 

@@ -29,15 +29,17 @@ namespace Acerva.Web.Controllers
         private readonly ICadastroUsuarios _cadastroUsuarios;
         private readonly ICadastroRegionais _cadastroRegionais;
         private readonly UsuarioControllerHelper _helper;
+        private readonly ICadastroArtigos _cadastroArtigos;
         private ApplicationUserManager _userManager;
 
         public UsuarioController(IValidator<Usuario> validator,
-            ICadastroUsuarios cadastroUsuarios, ICadastroRegionais cadastroRegionais, UsuarioControllerHelper helper) : base(cadastroUsuarios)
+            ICadastroUsuarios cadastroUsuarios, ICadastroRegionais cadastroRegionais, UsuarioControllerHelper helper, ICadastroArtigos cadastroArtigos) : base(cadastroUsuarios)
         {
             _validator = validator;
             _cadastroUsuarios = cadastroUsuarios;
             _cadastroRegionais = cadastroRegionais;
             _helper = helper;
+            _cadastroArtigos = cadastroArtigos;
         }
 
         public ApplicationUserManager UserManager
@@ -190,7 +192,7 @@ namespace Acerva.Web.Controllers
         [HttpPost]
         [ValidateAjaxAntiForgeryToken]
         [AcervaAuthorize(Roles = "ADMIN, DIRETOR")]
-        public ActionResult ConfirmaPagamento([JsonBinder] UsuarioViewModel usuarioViewModel)
+        public async Task<ActionResult> ConfirmaPagamento([JsonBinder] UsuarioViewModel usuarioViewModel)
         {
             Log.InfoFormat("Usuário está confirmando pagamento de anuidade do associado {0} de código {1} e email {2}",
                 usuarioViewModel.Name, usuarioViewModel.Id, usuarioViewModel.Email);
@@ -203,11 +205,50 @@ namespace Acerva.Web.Controllers
                 return RetornaJsonDeAlerta("Associado não está aguardando confirmação de pagamento!");
             }
 
+            var enviaEmailBoasVindas = usuario.Status == StatusUsuario.AguardandoPagamentoAnuidade;
+
             usuario.Status = StatusUsuario.Ativo;
             usuario.Matricula = string.IsNullOrEmpty(usuario.Matricula) ? _cadastroUsuarios.PegaProximaMatricula() : usuario.Matricula;
 
+            if (enviaEmailBoasVindas)
+            {
+                await EnviaEmailParaAdministrativoIncluirNoCoceca(usuario);
+                await EnviaEmailDeBoasVindas(usuario);
+            }
+
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associado teve seu pagamento confirmado com sucesso", "Pagamento confirmado");
             return new JsonNetResult(new { growlMessage });
+        }
+
+        private async Task EnviaEmailDeBoasVindas(Usuario usuario)
+        {
+            var artigoMensagemBoasVindas = _cadastroArtigos.Busca(Artigo.CodigoArtigoBoasVindas);
+            if (artigoMensagemBoasVindas == null)
+            {
+                Log.Error(string.Format("Mensagem de boas vindas não encontrada ao tentar enviar para {0}", usuario.Email));
+                return;
+            }
+
+            var mensagemBoasVindas = artigoMensagemBoasVindas.TextoHtml
+                .Replace("%NOME", usuario.Name);
+            await UserManager.SendEmailAsync(usuario.Id, "Bem-vindo à ACervA Carioca", mensagemBoasVindas);
+        }
+
+        private async Task EnviaEmailParaAdministrativoIncluirNoCoceca(Usuario usuario)
+        {
+            var mensagem = string.Format("Olá Administrativo,<br/><br/>" +
+                                             "A pessoa {0} acabou de se tornar ATIVA. Favor adicioná-la ao COCECA!", usuario.Name);
+
+            var identityMessage = new IdentityMessage
+            {
+                Destination = "administrativo@acervacarioca.com.br",
+                Subject = string.Format("Adicionar ao COCECA: {0}", usuario.Email),
+                Body = mensagem
+            };
+
+            _cadastroUsuarios.Atualiza(usuario);
+
+            await UserManager.EmailService.SendAsync(identityMessage);
         }
 
         [Transacao]

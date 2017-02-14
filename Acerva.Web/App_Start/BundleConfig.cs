@@ -69,7 +69,10 @@ namespace Acerva.Web
         private static readonly string[] JQueryDatatables =
         {
             ScriptsVendorFolder + "DataTables/jquery.dataTables.js",
-            ScriptsVendorFolder + "DataTables/dataTables.bootstrap.js"
+            ScriptsVendorFolder + "DataTables/dataTables.bootstrap.js",
+            ScriptsVendorFolder + "DataTables/dataTables.buttons.js",
+            ScriptsVendorFolder + "DataTables/buttons.flash.js",
+            ScriptsVendorFolder + "DataTables/buttons.html5.js"
         };
         private const string JQueryDatatablesTableTools = ScriptsVendorFolder + "datatables-tabletools/dataTables.tableTools.js";
 
@@ -78,18 +81,23 @@ namespace Acerva.Web
             ScriptsVendorFolder + "angular-ui/ui-bootstrap.js",
             ScriptsVendorFolder + "angular-ui/ui-bootstrap-tpls.js"
         };
-        
+
         private const string AngularSelect = ScriptsVendorFolder + "select.js";
 
         private static readonly string[] AngularDataTables =
         {
             JQueryDatatables[0],
             JQueryDatatables[1],
-            ScriptsVendorFolder + "angular-datatables/angular-datatables.js"
+            JQueryDatatables[2],
+            JQueryDatatables[3],
+            ScriptsVendorFolder + "angular-datatables/angular-datatables.js",
+            ScriptsVendorFolder + "angular-datatables/angular-datatables.buttons.js"
         };
 
 
         private const string JQueryDatatablesCss = StylesVendorFolder + "DataTables/media/css/dataTables.bootstrap.css";
+        private const string JQueryDatatablesButtonsCss = StylesVendorFolder + "DataTables/media/css/buttons.dataTables.min.css";
+        private const string JQueryDatatablesButtonsSwf = StylesVendorFolder + "DataTables/media/sfw/flashExport.swf";
         private const string BootstrapDatepickerCss = StylesVendorFolder + "bootstrap-datepicker/bootstrap-datepicker.css";
 
         #region CSS dos plugins de ANGULAR
@@ -129,11 +137,14 @@ namespace Acerva.Web
             CssMinifcados(bundles);
         }
 
-       private static void CssMinifcados(BundleCollection bundles)
+        private static void CssMinifcados(BundleCollection bundles)
         {
-               bundles.Add(new StyleBundle(BundleStylesDataTables)
-                   .Include(JQueryDatatablesCss));
-            
+            bundles.Add(new StyleBundle(BundleStylesDataTables)
+                .Include(JQueryDatatablesCss)
+                .Include(JQueryDatatablesButtonsCss)
+                .Include(JQueryDatatablesButtonsSwf)
+            );
+
             bundles.Add(new LessBundle("~/cssBundles/angularForm")
                 .Include(AngularGrowlCss)
                 .Include(AngularSelectCss)
@@ -144,7 +155,7 @@ namespace Acerva.Web
         {
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
-            
+
             bundles.Add(new ScriptBundle("~/bundles/layout")
                 .Include(JQuery)
                 .Include(Bootstrap)
@@ -186,7 +197,7 @@ namespace Acerva.Web
                 .Include(AngularHotkeysCss)
             );
         }
-        
+
         private static void Referencia(BundleCollection bundles)
         {
             const string path = ScriptsAplicacaoFolder + "Referencia/";

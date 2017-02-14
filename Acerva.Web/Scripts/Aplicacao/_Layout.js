@@ -49,6 +49,9 @@ AcervaApp.Layout = function () {
             AcervaApp.FlashMessage.showFromCookie();
         }
 
+        if ($.fn.dataTable)
+            $.fn.dataTable.Buttons.swfPath =  p.pathSwfDataTablesDataTools;
+
         permiteApenasTabNosGroupButtonsDeRadioButtonsOuCheckBoxes();
         configuraLocalePtBr();
 

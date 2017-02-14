@@ -357,6 +357,8 @@
     <Content Include="Content\vendor\bootswatch\paper\css\bootstrap.css" />
     <Content Include="Content\vendor\bootswatch\paper\css\bootstrap.min.css" />
     <Content Include="Content\vendor\bootswatch\paper\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\vendor\Datatables\media\css\buttons.dataTables.min.css" />
+    <Content Include="Content\vendor\Datatables\media\swf\flashExport.swf" />
     <Content Include="Content\vendor\ng-croppie\ng-croppie.css" />
     <Content Include="Content\vendor\text-angular\textAngular.css" />
     <Content Include="Scripts\Aplicacao\acerva.filter.js" />
@@ -400,6 +402,7 @@
     <Content Include="Scripts\vendor\angular-base64-upload\angular-base64-upload.min.js" />
     <Content Include="Scripts\vendor\angular-chart\angular-chart.js" />
     <Content Include="Scripts\vendor\angular-chart\angular-chart.min.js" />
+    <Content Include="Scripts\vendor\angular-datatables\angular-datatables.buttons.js" />
     <Content Include="Scripts\vendor\angular-hotkeys\hotkeys.js" />
     <Content Include="Scripts\vendor\angular-hotkeys\hotkeys.min.js" />
     <Content Include="Scripts\vendor\angular-local-storage\angular-local-storage.js" />
@@ -423,6 +426,9 @@
     <Content Include="Content\vendor\bootswatch\darkly\css\mixins.less" />
     <None Include="Properties\PublishProfiles\acerva.pubxml" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
+    <Content Include="Scripts\vendor\Datatables\buttons.flash.js" />
+    <Content Include="Scripts\vendor\Datatables\buttons.html5.js" />
+    <Content Include="Scripts\vendor\Datatables\dataTables.buttons.js" />
     <Content Include="Scripts\vendor\ng-croppie\ng-croppie.js" />
     <Content Include="Scripts\vendor\text-angular\textAngular-rangy.min.js" />
     <Content Include="Scripts\vendor\text-angular\textAngular-sanitize.js" />

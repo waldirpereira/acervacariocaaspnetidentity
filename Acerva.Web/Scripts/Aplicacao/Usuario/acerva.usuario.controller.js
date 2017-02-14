@@ -19,7 +19,7 @@
         ctrl.filtroStatus = [];
 
         atualizaFiltrosDaLocalStorage();
-        
+
         ctrl.selecionaTodosFiltrados = selecionaTodosFiltrados;
         ctrl.mudaFiltroStatus = mudaFiltroStatus;
         ctrl.alteraSelecao = alteraSelecao;
@@ -29,7 +29,17 @@
         ctrl.cobrancaGeradaSelecionados = cobrancaGeradaSelecionados;
 
         ctrl.dtOptions = DTOptionsBuilder.newOptions()
-            .withOption('order', [2, 'asc']);
+            .withOption('order', [2, 'asc'])
+            .withButtons([
+                {
+                    extend: 'excel',
+                    text: 'Excel',
+                    footer: true,
+                    className: 'btn btn-default btn-sm',
+                    name: 'excel'
+                }
+            ])
+        ;
 
         init();
 
@@ -59,7 +69,7 @@
 
         function mudaFiltroStatus(status) {
             atualizaFiltrosDaLocalStorage();
-            var indexOf = ctrl.filtroStatus.map(function(st) { return st.codigoBd }).indexOf(status.codigoBd);
+            var indexOf = ctrl.filtroStatus.map(function (st) { return st.codigoBd }).indexOf(status.codigoBd);
             if (indexOf >= 0) {
                 ctrl.filtroStatus.splice(indexOf, 1);
                 atualizaFiltrosNaLocalStorage();
@@ -71,7 +81,7 @@
 
         function estaFiltradoPorStatus(status) {
             atualizaFiltrosDaLocalStorage();
-            return ctrl.filtroStatus.map(function(st) { return st.codigoBd }).indexOf(status.codigoBd) >= 0;
+            return ctrl.filtroStatus.map(function (st) { return st.codigoBd }).indexOf(status.codigoBd) >= 0;
         }
 
         function pegaUsuariosFiltrados() {
@@ -79,7 +89,7 @@
             if (ctrl.filtroStatus.length === 0)
                 return todosUsuarios;
 
-            return todosUsuarios.filter(function(usuario) { return estaFiltradoPorStatus(usuario.status); });
+            return todosUsuarios.filter(function (usuario) { return estaFiltradoPorStatus(usuario.status); });
         }
 
         function atualizaFiltrosDaLocalStorage() {
@@ -119,7 +129,7 @@
         }
 
         function processaOperacoesEmLoteParaStatusEspecifico(arrStatus, metodoNoService) {
-            var codigosBdStatus = arrStatus.map(function(status) { return status.codigoBd; });
+            var codigosBdStatus = arrStatus.map(function (status) { return status.codigoBd; });
             var usuariosSelecionadosComStatus = ctrl.listaUsuarios
                 .filter(function (usuario) { return codigosBdStatus.indexOf(usuario.status.codigoBd) >= 0 && ctrl.usuariosSelecionados.indexOf(usuario.id) >= 0; });
 
@@ -131,7 +141,7 @@
 
             metodoNoService(idsUsuarios)
                 .then(function () { })
-                .finally(function() {
+                .finally(function () {
                     atualizaListaUsuarios();
                 });
         }

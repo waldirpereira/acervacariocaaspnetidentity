@@ -52,7 +52,7 @@
                 .then(function () {  })
                 .finally(function() {
                     ctrl.status.salvando = false;
-                    $location("#/");
+                    $location.path("/");
                 });
         }
     }

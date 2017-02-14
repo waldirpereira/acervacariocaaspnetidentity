@@ -7,6 +7,8 @@
     function RegionalController(Regional) {
         var ctrl = this;
 
+        ctrl.dominio = {};
+
         ctrl.listaRegionais = [];
         
         ctrl.ativa = ativa;
@@ -15,7 +17,7 @@
         init();
 
         function init() {
-            RegionalController.buscaTiposDominio().then(function (tipos) {
+            Regional.buscaTiposDominio().then(function (tipos) {
                 angular.extend(ctrl.dominio, tipos);
 
                 return atualizaListaRegionais();

@@ -16,7 +16,8 @@
                         <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formRegional.nome")>
                             <label class="control-label" for="nome">Nome</label>
                             <input type="text" class="form-control" name="nome" autocomplete="off" required
-                                   ng-model="ctrl.modelo.nome" />
+                                   ng-model="ctrl.modelo.nome"
+                                   ng-disabled="!ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor" />
                             <p ng-show="formRegional.nome.$invalid && !formRegional.nome.$pristine" class="help-block">O nome é obrigatório</p>
                         </div>
                     </div>

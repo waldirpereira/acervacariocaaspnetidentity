@@ -90,6 +90,7 @@
                                     }
                                     if (User.IsInRole("ADMIN") || User.IsInRole("DIRETOR"))
                                     {
+                                        <li>@Html.ActionLink("Cad. Categorias de artigos", "Index", "CategoriaArtigo")</li>
                                         <li>@Html.ActionLink("Cad. Artigos", "Index", "Artigo")</li>
                                     }
                                     if (User.IsInRole("ADMIN"))

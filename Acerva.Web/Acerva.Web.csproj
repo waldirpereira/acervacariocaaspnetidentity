@@ -300,7 +300,10 @@
     <Compile Include="Controllers\AppplicationBaseController.cs" />
     <Compile Include="Controllers\AgendaController.cs" />
     <Compile Include="Controllers\ListaRegionaisController.cs" />
+    <Compile Include="Controllers\CategoriaArtigoController.cs" />
     <Compile Include="Models\CadastroArtigos\AnexoArtigoViewModel.cs" />
+    <Compile Include="Models\CadastroCategoriasArtigos\CadastroCategoriasArtigosMapperProfile.cs" />
+    <Compile Include="Models\CadastroCategoriasArtigos\CategoriaArtigoViewModel.cs" />
     <Compile Include="Models\Referencia\AnexoArtigoViewModel.cs" />
     <Compile Include="Models\Referencia\ArtigoListaViewModel.cs" />
     <Compile Include="Models\Referencia\ArtigoViewModel.cs" />
@@ -367,6 +370,10 @@
     <Content Include="Scripts\Aplicacao\ListaRegionais\acerva.listaRegionais.controller.js" />
     <Content Include="Scripts\Aplicacao\ListaRegionais\acerva.listaRegionais.module.js" />
     <Content Include="Scripts\Aplicacao\ListaRegionais\acerva.listaRegionais.service.js" />
+    <Content Include="Scripts\Aplicacao\CategoriaArtigo\acerva.categoriaArtigo.cadastro.controller.js" />
+    <Content Include="Scripts\Aplicacao\CategoriaArtigo\acerva.categoriaArtigo.controller.js" />
+    <Content Include="Scripts\Aplicacao\CategoriaArtigo\acerva.categoriaArtigo.module.js" />
+    <Content Include="Scripts\Aplicacao\CategoriaArtigo\acerva.categoriaArtigo.service.js" />
     <Content Include="Scripts\Aplicacao\Referencia\acerva.referencia.controller.js" />
     <Content Include="Scripts\Aplicacao\Referencia\acerva.referencia.module.js" />
     <Content Include="Scripts\Aplicacao\Referencia\acerva.referencia.service.js" />
@@ -383,6 +390,10 @@
     <Content Include="Scripts\Aplicacao\Artigo\acerva.artigo.controller.js" />
     <Content Include="Scripts\Aplicacao\Artigo\acerva.artigo.module.js" />
     <Content Include="Scripts\Aplicacao\Artigo\acerva.artigo.service.js" />
+    <Content Include="Scripts\Aplicacao\Noticia\acerva.noticia.cadastro.controller.js" />
+    <Content Include="Scripts\Aplicacao\Noticia\acerva.noticia.controller.js" />
+    <Content Include="Scripts\Aplicacao\Noticia\acerva.noticia.module.js" />
+    <Content Include="Scripts\Aplicacao\Noticia\acerva.noticia.service.js" />
     <Content Include="Scripts\Aplicacao\Registro\acerva.registro.controller.js" />
     <Content Include="Scripts\Aplicacao\Registro\acerva.registro.module.js" />
     <Content Include="Scripts\Aplicacao\Registro\acerva.registro.service.js" />
@@ -454,6 +465,9 @@
     <Content Include="Views\Agenda\Index.cshtml" />
     <Content Include="Views\ListaRegionais\Index.cshtml" />
     <Content Include="Views\Usuario\_ModalSelecaoEmails.cshtml" />
+    <Content Include="Views\CategoriaArtigo\_CadastroCategoriaArtigo.cshtml" />
+    <Content Include="Views\CategoriaArtigo\_ListaCategoriasArtigos.cshtml" />
+    <Content Include="Views\CategoriaArtigo\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Aplicacao\fonts\acerva-iconfont.svg" />

@@ -52,6 +52,10 @@
                         if (codigoArtigo) {
                             var indexOfArtigo = ctrl.listaArtigosPorCategoria[codigoCategoria]
                                 .map(function (artigo) { return artigo.codigo; }).indexOf(codigoArtigo);
+
+                            if (indexOfArtigo < 0)
+                                return null;
+
                             var artigo = ctrl.listaArtigosPorCategoria[codigoCategoria][indexOfArtigo];
                             return mostraArtigo(artigo);
                         }

@@ -118,6 +118,8 @@ namespace Acerva.Web
             ListaRegionais(bundles);
             CadastroArtigos(bundles);
             CadastroRegionais(bundles);
+            CadastroNoticias(bundles);
+            CadastroCategoriasArtigos(bundles);
             CadastroUsuarios(bundles);
             VisualizacaoSituacao(bundles);
             Inicio(bundles);
@@ -252,6 +254,35 @@ namespace Acerva.Web
             bundles.Add(new LessBundle("~/cssBundles/regional")
                 .Include(AngularTextAngularCss)
                 .Include(FontAwesomeCss)
+            );
+        }
+
+        private static void CadastroNoticias(BundleCollection bundles)
+        {
+            const string path = ScriptsAplicacaoFolder + "Noticia/";
+            bundles.Add(new ScriptBundle("~/bundles/noticia")
+                .Include(AngularTextAngularRangy)
+                .Include(AngularTextAngularCore)
+                .Include(path + "acerva.noticia.module.js")
+                .Include(path + "acerva.noticia.service.js")
+                .Include(path + "acerva.noticia.controller.js")
+                .Include(path + "acerva.noticia.cadastro.controller.js")
+            );
+
+            bundles.Add(new LessBundle("~/cssBundles/regional")
+                .Include(AngularTextAngularCss)
+                .Include(FontAwesomeCss)
+            );
+        }
+
+        private static void CadastroCategoriasArtigos(BundleCollection bundles)
+        {
+            const string path = ScriptsAplicacaoFolder + "CategoriaArtigo/";
+            bundles.Add(new ScriptBundle("~/bundles/categoriaArtigo")
+                .Include(path + "acerva.categoriaArtigo.module.js")
+                .Include(path + "acerva.categoriaArtigo.service.js")
+                .Include(path + "acerva.categoriaArtigo.controller.js")
+                .Include(path + "acerva.categoriaArtigo.cadastro.controller.js")
             );
         }
 

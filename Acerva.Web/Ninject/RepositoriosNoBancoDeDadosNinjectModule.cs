@@ -46,6 +46,10 @@ namespace Acerva.Web.Ninject
                 .WhenInjectedInto<ICadastroHistoricoStatusUsuarios>()
                 .InThreadScope();
 
+            Bind(typeof(ICadastroCategoriasArtigos))
+                .To(typeof(CadastroCategoriasArtigos))
+                .InRequestScope();
+
             Bind(typeof(ICadastroArtigos))
                 .To(typeof(CadastroArtigos))
                 .InRequestScope();

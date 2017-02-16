@@ -104,3 +104,4 @@ Startup.Auth.cs
 **/images/fotos/*
 anexos/
 
+*.pubxml

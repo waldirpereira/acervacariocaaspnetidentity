@@ -1,9 +1,12 @@
 using System.Reflection;
 using System.Security.Principal;
+using Acerva.Infra.Repositorios;
+using Acerva.Modelo.Mapeamento;
 using Acerva.Modelo.Validadores;
 using Acerva.Web.App_Start;
 using Acerva.Web.Controllers.Helpers;
 using Acerva.Web.Ninject;
+using FluentNHibernate.Cfg;
 using FluentValidation;
 using Hangfire;
 using log4net;
@@ -71,10 +74,19 @@ namespace Acerva.Web.App_Start
             kernel.Bind<ISession>()
                 .ToMethod(m => MvcApplication.NewSession)
                 .InRequestScope()
-                .OnDeactivation(s =>
+                .OnDeactivation(s => s.Dispose());
+
+            kernel.Bind<ISessionFactory>()
+                .ToMethod(ctx =>
                 {
-                    s.Dispose();
-                });
+                    return Fluently.Configure()
+                        .Mappings(m => m.FluentMappings.Add<HistoricoStatusUsuarioClassMap>())
+                        .ExposeConfiguration(config => { })
+                        .BuildSessionFactory();
+                })
+                .WhenInjectedInto(typeof(ICadastroHistoricoStatusUsuarios))
+                .InRequestScope()
+                .OnDeactivation(s => s.Dispose());
 
             kernel.Bind<IPrincipal>()
                 .ToMethod(context => HttpContext.Current != null ? HttpContext.Current.User : null)

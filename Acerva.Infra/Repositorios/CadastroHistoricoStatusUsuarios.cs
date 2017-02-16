@@ -6,20 +6,21 @@ namespace Acerva.Infra.Repositorios
 {
     public class CadastroHistoricoStatusUsuarios : ICadastroHistoricoStatusUsuarios
     {
-        private readonly ISession _sessaoEspecifica;
+        private readonly ISessionFactory _sessionFactory;
 
-        public CadastroHistoricoStatusUsuarios(ISession sessaoEspecifica)
+        public CadastroHistoricoStatusUsuarios(ISessionFactory sessionFactory)
         {
-            _sessaoEspecifica = sessaoEspecifica;
+            _sessionFactory = sessionFactory;
         }
 
         public void Salva(HistoricoStatusUsuario historico)
         {
-            using (var transacao = _sessaoEspecifica.BeginTransaction())
+            var session = _sessionFactory.OpenSession();
+            using (var transacao = session.BeginTransaction())
             {
                 try
                 {
-                    _sessaoEspecifica.Save(historico);
+                    session.Save(historico);
                     transacao.Commit();
                 }
                 catch (Exception)
@@ -30,6 +31,7 @@ namespace Acerva.Infra.Repositorios
                 finally
                 {
                     transacao.Dispose();
+                    session.Dispose();
                 }
             }
         }

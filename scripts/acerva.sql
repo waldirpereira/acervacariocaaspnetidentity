@@ -8485,7 +8485,7 @@ CREATE TABLE `historico_status_usuario` (
  `id_usuario_alterado` varchar(128) NOT NULL,
  `data_hora` datetime NOT NULL,
  `status_novo` char(1) NOT NULL,
- `historico_status_usuario` VARCHAR(256) NULL,
+ `nome_usuario_logado` VARCHAR(256) NULL,
  PRIMARY KEY (`codigo_historico`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

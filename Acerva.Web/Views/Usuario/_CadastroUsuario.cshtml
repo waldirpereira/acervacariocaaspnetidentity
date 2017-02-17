@@ -58,7 +58,7 @@
                             <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.email")>
                                 <label class="control-label" for="email">E-mail</label>
                                 <input type="text" class="form-control" email="email" autocomplete="off" required
-                                       ng-disabled="!ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
+                                       ng-disabled="ctrl.tipoCadastro !== 'registro' && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
                                        ng-model="ctrl.modelo.email" />
                                 <p ng-show="formUsuario.email.$invalid && !formUsuario.email.$pristine" class="help-block">O e-mail é obrigatório</p>
                             </div>

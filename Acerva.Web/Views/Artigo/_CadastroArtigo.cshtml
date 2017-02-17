@@ -49,11 +49,11 @@
                             @NgHelpers.NgSelectComBuscaRespeitandoStatusBloqueado("ctrl", new NgHelpers.NgSelectOptions("visibilidade", "ctrl.modelo", "nomeExibicao",
                                 "visibilidade in ctrl.dominio.visibilidades | filter: {nomeExibicao: $select.search} | orderBy : 'nomeExibicao' track by visibilidade.codigoBd",
                                 "visibilidade.nomeExibicao | highlight: $select.search")
-                       {
-                           Obrigatorio = true,
-                           Titulo = "Visibilidade",
-                           NgDisabled = ""
-                       })
+                            {
+                                Obrigatorio = true,
+                                Titulo = "Visibilidade",
+                                NgDisabled = "ctrl.modeloOriginal.codigo && ctrl.modelo.visibilidade.codigoBd === ctrl.dominio.visibilidade.internoSistema.codigoBd"
+                            })
                         </div>
                     </div>
                 </div>

@@ -293,6 +293,8 @@ namespace Acerva.Web.Controllers
             usuario.IndicacaoHash = null;
             usuario.Status = StatusUsuario.Novo;
 
+            _cadastroUsuarios.Atualiza(usuario);
+            
             var mensagem = string.Format("Olá Financeiro,<br/><br/>" +
                                              "A pessoa {0} acabou de ter sua indicação confirmada.", usuario.Name);
 
@@ -302,10 +304,10 @@ namespace Acerva.Web.Controllers
                 Subject = string.Format("Novo associado: {0}", usuario.Name),
                 Body = mensagem
             };
-
-            _cadastroUsuarios.Atualiza(usuario);
-
             await UserManager.EmailService.SendAsync(identityMessage);
+
+            await UserManager.SendEmailAsync(usuario.Id, "Indicação confirmada", string.Format("Olá {0},<br/><br/>" +
+                                             "Você acabou de ter a indicação confirmada. Em breve o financeiro gerará a cobrança de sua primeira anuidade.", usuario.Name));
 
             if (code != null)
                 return View();

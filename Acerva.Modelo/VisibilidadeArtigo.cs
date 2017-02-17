@@ -18,6 +18,6 @@ namespace Acerva.Modelo
 
         [CodigoBd("I")]
         [NomeExibicao("Interno do sistema")]
-        InternoSitema
+        InternoSistema
     }
 }

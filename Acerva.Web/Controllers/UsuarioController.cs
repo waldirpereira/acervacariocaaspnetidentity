@@ -230,7 +230,7 @@ namespace Acerva.Web.Controllers
             }
 
             var mensagemBoasVindas = artigoMensagemBoasVindas.TextoHtml
-                .Replace("%NOME", usuario.Name);
+                .Replace("%NOME%", usuario.Name);
             await UserManager.SendEmailAsync(usuario.Id, "Bem-vindo à ACervA Carioca", mensagemBoasVindas);
         }
 

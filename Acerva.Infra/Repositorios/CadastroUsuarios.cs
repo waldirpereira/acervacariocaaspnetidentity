@@ -121,5 +121,10 @@ namespace Acerva.Infra.Repositorios
 
             return temComMesmoCpf;
         }
+
+        public IEnumerable<Uf> BuscaUfs()
+        {
+            return _session.Query<Uf>();
+        }
     }
 }

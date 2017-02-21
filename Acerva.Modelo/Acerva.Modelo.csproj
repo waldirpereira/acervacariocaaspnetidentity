@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Artigo.cs" />
     <Compile Include="AnexoArtigo.cs" />
+    <Compile Include="Uf.cs" />
     <Compile Include="CategoriaArtigo.cs" />
     <Compile Include="HistoricoStatusUsuario.cs" />
     <Compile Include="IUsuarioHistoricoStatus.cs" />

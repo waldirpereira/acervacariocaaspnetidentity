@@ -95,6 +95,8 @@ namespace Acerva.Web.Controllers
 
             var papeisJson = _cadastroUsuarios.BuscaTodosPapeis()
                 .Select(Mapper.Map<PapelViewModel>);
+            var ufsJson = _cadastroUsuarios.BuscaUfs()
+                .Select(Mapper.Map<UfViewModel>);
 
             return new JsonNetResult(new
             {
@@ -104,7 +106,8 @@ namespace Acerva.Web.Controllers
                 UsuarioLogadoEhAdmin = usuarioLogadoEhAdmin,
                 UsuarioLogadoEhDiretor = usuarioLogadoEhDiretor,
                 UsuarioLogadoEhDelegado = usuarioLogadoEhDelegado,
-                Papeis = papeisJson
+                Papeis = papeisJson,
+                Ufs = ufsJson
             });
         }
 

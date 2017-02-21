@@ -27,6 +27,9 @@ namespace Acerva.Web.Models.CadastroUsuarios
 
             CreateMap<Regional, RegionalViewModel>()
                 .ReverseMap();
+
+            CreateMap<Uf, UfViewModel>()
+                .ReverseMap();
         }
 
 

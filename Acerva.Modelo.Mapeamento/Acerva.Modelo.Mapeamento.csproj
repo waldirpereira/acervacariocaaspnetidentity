@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="ArtigoClassMap.cs" />
     <Compile Include="AnexoArtigoClassMap.cs" />
+    <Compile Include="UfClassMap.cs" />
     <Compile Include="NoticiaClassMap.cs" />
     <Compile Include="CategoriaArtigoClassMap.cs" />
     <Compile Include="RegionalClassMap.cs" />

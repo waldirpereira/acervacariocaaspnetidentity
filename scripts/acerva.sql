@@ -8501,3 +8501,37 @@ DELETE FROM `artigo` WHERE `codigo_artigo` = 1;
 
 INSERT INTO `artigo` (`codigo_artigo`, `titulo`, `texto_html`, `data_hora`, `codigo_categoria_artigo`, `codigo_usuario`, `ativo`, `visibilidade`) VALUES ('1', 'Bem vindo à ACervA Carioca', '<p>Olá %NOME%! Bem-vindo à ACervA Carioca! </p><p>Somos uma associação estadual de cervejeiros caseiros, sem fins lucrativos, que visa incentivar o desenvolvimento da cultura da cerveja artesanal, no Rio de Janeiro e em todo o Brasil, promovendo encontros, palestras, cursos, concursos e degustações das mais variadas cervejas, quase sempre produzidas pelos próprios associados. <br /><br />Fundada em outubro de 2006 somos a associação pioneira no Brasil. Hoje contamos com 9 regionais espalhadas pelo estado do Rio de Janeiro: Rio, Niterói, Petrópolis, Nova Friburgo, Teresópolis, Macaé, Guapimirim, Cabo Frio e Sul Fluminense, com mais de 500 associados.</p><p>Agora que você faz parte desse time, contamos com sua ajuda para compartilhar conhecimento e divulgar com responsabilidade nossa amada cerveja caseira.</p><p>No link abaixo está o estatuto da nossa associação, é importante que ele seja lido e entendido por você.<br /><a href="sobre-a-acerva-carioca/6-informacoes/33-estatuto-da-acerva-carioca" target="_blank" title="http://acervacarioca.com.br/sobre-a-acerva-carioca/6-informacoes/33-estatuto-da-acerva-carioca">http://acervacarioca.com.br/sobre-a-acerva-carioca/6-informacoes/33-estatuto-da-acerva-carioca</a></p><p>Nossa agenda de eventos está disponível em nosso site e você pode adicioná-la à sua Google Agenda.<br />Teremos muitos eventos cervejeiros espalhados pelo Brasil e também em nosso estado, é bom ficar atento!<br /><a href="agenda">http://acervacarioca.com.br/agenda</a></p>Temos também nossa página no Facebook, onde você poderá encontrar diversas notícias e informações sobre a ACervA Carioca. Curta e compartilhe:<a href="https://www.facebook.com/acervaRJ/" target="_blank">https://www.facebook.com/acervaRJ/</a> <hr id="null" /><p>Temos várias comissões para realizar cursos, eventos, atualização do site, entre outras coisas, sinta-se à vontade para se oferecer e ajudar em alguma de nossas forças tarefas.  Tudo que é feito na associação é feito por voluntariado, por isso sua ajuda é fundamental.</p><p>Através desse link você poderá entrar em nosso fórum e ver assuntos técnicos já tratados por lá, pesquise sua dúvida e caso ainda tenha alguma dificuldade, não exite em perguntar por email.</p><p><a href="https://groups.google.com/forum/#!forum/coceca" target="_blank">https://groups.google.com/forum/#!forum/coceca</a></p><hr id="null" /><p>Em nosso site temos alguns boletins técnicos publicados. Fique à vontade para sugerir temas e até mesmo escrever sobre temas que você domine.</p><p><a href="boletins-tecnicos" target="_blank">http://acervacarioca.com.br/boletins-tecnicos</a></p><hr id="null" /><p>Camisetas e acessórios da ACervA podem ser compradas em nosso parceiro, com modelos masculinos e femininos: </p><p><a href="http://beershop.com.br/produto/camiseta-acerva/carioca" target="_blank">http://beershop.com.br/produto/camiseta-acerva/carioca</a><br /></p><hr id="null" /><p>Nossos canais de comunicação são:<br /><ul><li><a href="mailto:coceca@googlegroups.com" target="_blank">coceca@googlegroups.com</a> (confraria de cervejeiros caseiros) - grupo de emails fechado para os associados, onde todo associado é incluído. </li></ul>E os emails:<ul><li><a href="mailto:administrativo@acervacarioca.com.br" target="_blank">administrativo@acervacarioca.com.br</a></li><li><a href="mailto:financeiro@acervarioca.com.br" target="_blank">financeiro@acervarioca.com.br</a></li><li><a href="mailto:ouvidoria@acervacarioca.com.br" target="_blank">ouvidoria@acervacarioca.com.br</a></li><li><a href="mailto:presidente@acervacarioca.com.br" target="_blank">presidente@acervacarioca.com.br</a></li></ul></p><p>Nesse link você encontrará uma lista de fornecedores de insumos e equipamentos, ele é alimentado de dados por nós mesmos, dando dicas de bons e maus fornecedores:<br /><a href="https://docs.google.com/spreadsheet/ccc?key=0ApyRFgAGMr2VdFhFdHNFRUlhVmJoWU5hNE41bmx4dVE&usp=sharing" target="_blank">https://docs.google.com/spreadsheet/ccc?key=0ApyRFgAGMr2VdFhFdHNFRUlhVmJoWU5hNE41bmx4dVE&usp=sharing</a> </p><p>Enfim, somos uma grande comunidade, uma associação formada por apaixonados pela cerveja caseira e toda a cultura que a envolve. Juntos somos muito mais fortes, nunca deixe de ajudar e dar dicas aos que estão iniciando em nosso hobby, hoje você ajudará a alguém e amanhã será ajudado por outro amigo. Aqui fazemos amigos e aprendemos muito sobre esse universo, temos foco no cervejeiro caseiro, hobista, mas não nos furtamos em incentivar os que querem se profissionalizar.</p><p>Seja muito bem-vindo ao grupo!<br />Um grande abraço!</p><p><br /></p>', '2017-01-01 00:00:00', '1', '6be52512-d272-4cc2-98a9-f5bf93534082', 'S', 'I');
 
+CREATE TABLE uf( codigo_uf INT NOT NULL AUTO_INCREMENT   
+ ,codigo_ibge VARCHAR(4) NOT NULL   
+ ,sigla CHAR(2) NOT NULL   
+ ,nome VARCHAR(30) NOT NULL   
+ , PRIMARY KEY (codigo_uf) )   
+ ENGINE=INNODB CHARSET=utf8 COLLATE=utf8_general_ci ; 
+ 
+ Insert Into uf (codigo_ibge,sigla,nome) Values(12,'AC','Acre');  
+ Insert Into uf (codigo_ibge,sigla,nome) Values(27,'AL','Alagoas');  
+ Insert Into uf (codigo_ibge,sigla,nome) Values(13,'AM','Amazonas');
+ Insert Into uf (codigo_ibge,sigla,nome) Values(16,'AP','Amapá');
+ Insert Into uf (codigo_ibge,sigla,nome) Values(29,'BA','Bahia');
+ Insert Into uf (codigo_ibge,sigla,nome) Values(23,'CE','Ceará');
+ Insert Into uf (codigo_ibge,sigla,nome) Values(53,'DF','Distrito Federal');
+ Insert Into uf (codigo_ibge,sigla,nome) Values(32,'ES','Espírito Santo');
+ Insert Into uf (codigo_ibge,sigla,nome) Values(52,'GO','Goiás');
+ Insert Into uf (codigo_ibge,sigla,nome) Values(21,'MA','Maranhão');
+ Insert Into uf (codigo_ibge,sigla,nome) Values(31,'MG','Minas Gerais');
+ Insert Into uf (codigo_ibge,sigla,nome) Values(50,'MS','Mato Grosso do Sul');
+ Insert Into uf (codigo_ibge,sigla,nome) Values(51,'MT','Mato Grosso');
+ Insert Into uf (codigo_ibge,sigla,nome) Values(15,'PA','Pará');
+ Insert Into uf (codigo_ibge,sigla,nome) Values(25,'PB','Paraíba');
+ Insert Into uf (codigo_ibge,sigla,nome) Values(26,'PE','Pernambuco');
+ Insert Into uf (codigo_ibge,sigla,nome) Values(22,'PI','Piauí');
+ Insert Into uf (codigo_ibge,sigla,nome) Values(41,'PR','Paraná');
+ Insert Into uf (codigo_ibge,sigla,nome) Values(33,'RJ','Rio de Janeiro');
+ Insert Into uf (codigo_ibge,sigla,nome) Values(24,'RN','Rio Grande do Norte');
+ Insert Into uf (codigo_ibge,sigla,nome) Values(11,'RO','Rondônia');
+ Insert Into uf (codigo_ibge,sigla,nome) Values(14,'RR','Roraima');
+ Insert Into uf (codigo_ibge,sigla,nome) Values(43,'RS','Rio Grande do Sul');
+ Insert Into uf (codigo_ibge,sigla,nome) Values(42,'SC','Santa Catarina');
+ Insert Into uf (codigo_ibge,sigla,nome) Values(28,'SE','Sergipe');
+ Insert Into uf (codigo_ibge,sigla,nome) Values(35,'SP','São Paulo');
+ Insert Into uf (codigo_ibge,sigla,nome) Values(17,'TO','Tocantins');

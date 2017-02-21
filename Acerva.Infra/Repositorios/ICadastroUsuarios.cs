@@ -21,5 +21,6 @@ namespace Acerva.Infra.Repositorios
         IEnumerable<Papel> BuscaTodosPapeis();
         Usuario BuscaPeloCpf(string cpf);
         bool ExisteComMesmoCpf(Usuario usuario);
+        IEnumerable<Uf> BuscaUfs();
     }
 }

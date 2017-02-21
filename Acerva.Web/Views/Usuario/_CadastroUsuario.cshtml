@@ -212,7 +212,8 @@
                                 <div class="col-sm-2">
                                     <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.numero")>
                                         <label class="control-label" for="numero">Número</label>
-                                        <input type="text" class="form-control" numero="numero" autocomplete="off" required
+                                        <input type="text" class="form-control" numero="numero" autocomplete="off"
+                                               ng-required="ctrl.tipoCadastro === 'registro'"
                                                ng-disabled="ctrl.tipoCadastro !== 'registro' && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
                                                ng-model="ctrl.modelo.numero"/>
                                         <p ng-show="formUsuario.numero.$invalid && !formUsuario.numero.$pristine" class="help-block">O número é obrigatório</p>
@@ -221,16 +222,16 @@
                                 <div class="col-sm-4">
                                     <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.complemento")>
                                         <label class="control-label" for="complemento">Complemento</label>
-                                        <input type="text" class="form-control" complemento="complemento" autocomplete="off" required
+                                        <input type="text" class="form-control" complemento="complemento" autocomplete="off"
                                                ng-disabled="ctrl.tipoCadastro !== 'registro' && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
                                                ng-model="ctrl.modelo.complemento"/>
-                                        <p ng-show="formUsuario.complemento.$invalid && !formUsuario.complemento.$pristine" class="help-block">O complemento é obrigatório</p>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.bairro")>
                                         <label class="control-label" for="bairro">Bairro</label>
-                                        <input type="text" class="form-control" bairro="bairro" autocomplete="off" required
+                                        <input type="text" class="form-control" bairro="bairro" autocomplete="off" 
+                                               ng-required="ctrl.tipoCadastro === 'registro'"
                                                ng-disabled="ctrl.tipoCadastro !== 'registro' && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
                                                ng-model="ctrl.modelo.bairro"/>
                                         <p ng-show="formUsuario.bairro.$invalid && !formUsuario.bairro.$pristine" class="help-block">O bairro é obrigatório</p>
@@ -241,7 +242,8 @@
                                 <div class="col-sm-6">
                                     <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.cidade")>
                                         <label class="control-label" for="cidade">Cidade</label>
-                                        <input type="text" class="form-control" cidade="cidade" autocomplete="off" required
+                                        <input type="text" class="form-control" cidade="cidade" autocomplete="off" 
+                                               ng-required="ctrl.tipoCadastro === 'registro'"
                                                ng-disabled="ctrl.tipoCadastro !== 'registro' && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
                                                ng-model="ctrl.modelo.cidade" />
                                         <p ng-show="formUsuario.cidade.$invalid && !formUsuario.cidade.$pristine" class="help-block">A cidade é obrigatória</p>
@@ -250,7 +252,8 @@
                                 <div class="col-sm-3">
                                     <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.cep")>
                                         <label class="control-label" for="cep">CEP</label>
-                                        <input type="text" class="form-control" cep="cep" autocomplete="off" required
+                                        <input type="text" class="form-control" cep="cep" autocomplete="off" 
+                                               ng-required="ctrl.tipoCadastro === 'registro'"
                                                ng-disabled="ctrl.tipoCadastro !== 'registro' && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
                                                ng-model="ctrl.modelo.cep" />
                                         <p ng-show="formUsuario.cep.$invalid && !formUsuario.cep.$pristine" class="help-block">O CEP é obrigatório</p>

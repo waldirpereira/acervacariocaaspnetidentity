@@ -355,6 +355,7 @@
     <Content Include="Content\Aplicacao\css\admin.css" />
     <Content Include="Content\vendor\angular-hotkeys\hotkeys.css" />
     <Content Include="Content\vendor\angular-hotkeys\hotkeys.min.css" />
+    <Content Include="Content\vendor\angularPrint\angularPrint.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-theme.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="Content\vendor\bootswatch\darkly\css\bootstrap.css" />
@@ -428,6 +429,7 @@
     <Content Include="Scripts\vendor\angular-local-storage\angular-local-storage.js" />
     <Content Include="Scripts\vendor\angular-local-storage\angular-local-storage.min.js" />
     <Content Include="Scripts\vendor\angular-ui-mask\mask.js" />
+    <Content Include="Scripts\vendor\angularPrint\angularPrint.js" />
     <Content Include="Scripts\vendor\chart\Chart.js" />
     <Content Include="Scripts\vendor\chart\Chart.min.js" />
     <Content Include="Scripts\vendor\cpf_cnpj\cnpj.js" />

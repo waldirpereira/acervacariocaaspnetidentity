@@ -14,8 +14,25 @@
     <div class="animate-show-only">
         <div class="row">
             <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="col-sm-6">
+                <div class="panel-body"
+                     print-section>
+                    <div class="col-sm-3">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="foto">Foto</label>
+                                    <div ng-if="ctrl.modelo.fotoBase64">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <img ng-src="{{ctrl.modelo.fotoBase64}}" style="width: 160px;" alt="Foto do associado" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-9">
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
@@ -47,22 +64,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label class="control-label" for="foto">Foto</label>
-                                    <div ng-if="ctrl.modelo.fotoBase64">
-                                        <div class="panel panel-default">
-                                            <div class="panel-body">
-                                                <img ng-src="{{ctrl.modelo.fotoBase64}}" style="width: 160px;" alt="Foto do associado" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button class="btn btn-primary" print-btn>Imprimir</button>
                 </div>
             </div>
         </div>
@@ -73,6 +77,7 @@
 
 @section styles {
     @Styles.Render("~/cssBundles/angularForm")
+    @Styles.Render("~/cssBundles/carteirinha")
     @Styles.Render(BundleConfig.BundleStylesDataTables)
 }
 @section dependencies {

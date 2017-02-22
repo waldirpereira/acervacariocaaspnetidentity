@@ -62,6 +62,7 @@ namespace Acerva.Web
         private const string Cnpj = ScriptsVendorFolder + "cpf_cnpj/cnpj.js";
         private const string AngularCpfCnpj = ScriptsVendorFolder + "ng-cpf-cnpj/ngCpfCnpj.js";
         private const string AngularUiMask = ScriptsVendorFolder + "angular-ui-mask/mask.js";
+        private const string AngularPrint = ScriptsVendorFolder + "angularPrint/angularPrint.js";
 
         private static readonly string[] AngularGrowl =
         {
@@ -111,6 +112,7 @@ namespace Acerva.Web
         private const string AngularCroppieCss = StylesVendorFolder + "ng-croppie/ng-croppie.css";
         private const string FontAwesomeCss = StylesVendorFolder + "font-awesome/css/font-awesome.css";
         private const string AngularTextAngularCss = StylesVendorFolder + "text-angular/textAngular.css";
+        private const string AngularPrintCss = StylesVendorFolder + "angularPrint/angularPrint.css";
         #endregion
 
         public static void RegisterBundles(BundleCollection bundles)
@@ -303,9 +305,14 @@ namespace Acerva.Web
         {
             const string path = ScriptsAplicacaoFolder + "Carteirinha/";
             bundles.Add(new ScriptBundle("~/bundles/carteirinha")
+                .Include(AngularPrint)
                 .Include(path + "acerva.carteirinha.module.js")
                 .Include(path + "acerva.carteirinha.service.js")
                 .Include(path + "acerva.carteirinha.controller.js")
+            );
+
+            bundles.Add(new LessBundle("~/cssBundles/carteirinha")
+                .Include(AngularPrintCss)
             );
         }
 

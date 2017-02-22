@@ -1,7 +1,7 @@
 ﻿(function () {
     "use strict";
 
-    angular.module("acerva.carteirinha", ["acerva"]);
+    angular.module("acerva.carteirinha", ["acerva", "AngularPrint"]);
 
     angular.module("acerva")
         .config(["$routeProvider", routes]);

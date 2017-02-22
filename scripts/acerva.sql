@@ -8564,3 +8564,4 @@ alter table users add (data_admissao   datetime);
 alter table users add (email_lista     varchar(256));
 alter table users add (experiencia    varchar(2000));
 alter table users add (observacao    varchar(2000));
+

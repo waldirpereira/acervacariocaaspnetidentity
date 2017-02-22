@@ -32,6 +32,10 @@
         ctrl.voltaParaNovo = voltaParaNovo;
         ctrl.voltaParaAtivo = voltaParaAtivo;
 
+        ctrl.formularioDesabilitado = function() {
+            return ctrl.modeloOriginal.id && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor && ctrl.dominio.idUsuarioLogado !== ctrl.modeloOriginal.id;
+        }
+
         var id = $routeParams.id ? $routeParams.id : "";
         init(id);
 

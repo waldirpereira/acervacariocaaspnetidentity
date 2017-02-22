@@ -3,7 +3,7 @@
         <div class="panel-heading" ng-show="ctrl.status.carregando">Carregando<i class="icon icon-spin2 glyphicon-spin"></i></div>
         <div class="panel-heading" ng-hide="ctrl.status.carregando">{{ ctrl.modeloOriginal.id ? "Edição do associado '" + ctrl.modelo.name + "'" : "Novo associado" }}</div>
         <div class="panel-body" ng-hide="ctrl.status.carregando">
-            <fieldset ng-disabled="ctrl.modeloOriginal.id && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor && ctrl.dominio.idUsuarioLogado !== ctrl.modeloOriginal.id">
+            <fieldset ng-disabled="ctrl.formularioDesabilitado()">
                 <div class="row">
                     <div class="panel panel-default">
                         <div class="panel-heading">Identificação</div>
@@ -135,14 +135,14 @@
                                    {
                                        Obrigatorio = true,
                                        Titulo = "Regional",
-                                       NgDisabled = ""
+                                       NgDisabled = "ctrl.formularioDesabilitado()"
                                    })
                                     </div>
                                 </div>
 
                                 <div class="row"
                                      ng-if="ctrl.tipoCadastro === 'usuario' && (ctrl.dominio.usuarioLogadoEhAdmin || ctrl.dominio.usuarioLogadoEhDiretor)">
-                                    <div class="col-xs-12 col-sm-12" ng-if="ctrl.tipoCadastro !== 'registro'">
+                                    <div class="col-xs-12 col-sm-6" ng-if="ctrl.tipoCadastro !== 'registro'">
                                         <div class="form-group">
                                             <label class="control-label">Papéis</label>
                                             <div>
@@ -154,6 +154,11 @@
                                                     </li>
                                                 </ul>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @NgHelpers.NgDatepicker("ctrl.modelo", "dataAdmissao", "Data de admissão", "true")
                                         </div>
                                     </div>
                                 </div>
@@ -318,7 +323,8 @@
                                         <label class="control-label">Sexo</label><br/>
                                         <div class="btn-group">
                                             <label class="btn btn-default" ng-model="ctrl.modelo.sexo" ng-repeat="item in ctrl.dominio.sexos | filter: {codigo: '!0'}"
-                                                   uib-btn-radio="item">{{ item.nomeExibicao}}</label>
+                                                   uib-btn-radio="item"
+                                                   ng-disabled="ctrl.formularioDesabilitado()">{{ item.nomeExibicao}}</label>
                                         </div>
                                     </div>
                                 </div>

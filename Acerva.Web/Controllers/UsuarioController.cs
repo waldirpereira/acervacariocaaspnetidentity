@@ -220,6 +220,8 @@ namespace Acerva.Web.Controllers
                 await EnviaEmailDeBoasVindas(usuario);
             }
 
+            _cadastroUsuarios.Atualiza(usuario);
+
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associado teve seu pagamento confirmado com sucesso", "Pagamento confirmado");
             return new JsonNetResult(new { growlMessage });
         }
@@ -250,8 +252,6 @@ namespace Acerva.Web.Controllers
                 Body = mensagem
             };
 
-            _cadastroUsuarios.Atualiza(usuario);
-
             await UserManager.EmailService.SendAsync(identityMessage);
         }
 
@@ -280,6 +280,59 @@ namespace Acerva.Web.Controllers
             }
             
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associados tiveram seus pagamentos confirmados com sucesso", "Pagamentos confirmados");
+            return new JsonNetResult(new { growlMessage });
+        }
+
+        [Transacao]
+        [HttpPost]
+        [ValidateAjaxAntiForgeryToken]
+        [AcervaAuthorize(Roles = "ADMIN, DIRETOR")]
+        public async Task<ActionResult> EnviaEmailBoasVindasNaListaSelecionados([JsonBinder] IEnumerable<string> idsUsuarios)
+        {
+            var listaIdsUsuarios = idsUsuarios.ToList();
+            Log.InfoFormat("Usuário está enviando e-mail de boas vindas no COCECA para os associados de códigos {0}",
+                listaIdsUsuarios.Aggregate((x, y)=> x + ", " + y));
+
+            var emailBoasVindasNaLista = "A ACervA Carioca dá as boas-vindas aos novos associados:<br /><br /><ul>";
+
+            var listaUsuarios = new List<Usuario>();
+            listaIdsUsuarios.ForEach(id => listaUsuarios.Add(_cadastroUsuarios.Busca(id)));
+
+            listaUsuarios
+                .Where(u => !u.EmailBoasVindasListaEnviado)
+                .OrderBy(u => u.Matricula)
+                .ToList()
+                .ForEach(usuario =>
+            {
+                if (usuario.Status != StatusUsuario.Ativo)
+                {
+                    throw new Exception(string.Format("Associado {0} não está ativo!", usuario.Name));
+                }
+
+                emailBoasVindasNaLista += "<li>";
+                emailBoasVindasNaLista += string.Format("<b>{0} - {1} ({2})</b>", usuario.Matricula, usuario.Name,
+                    usuario.Regional.Nome);
+                if (!string.IsNullOrEmpty(usuario.Experiencia))
+                    emailBoasVindasNaLista += string.Format("<br />{0}", usuario.Experiencia);
+                emailBoasVindasNaLista += "</li>";
+
+                usuario.EmailBoasVindasListaEnviado = true;
+            });
+
+            emailBoasVindasNaLista += "</ul>" +
+                "Apareçam em nossos encontros, tanto aos abertos ao público quanto aos fechados para associados, para conhecer e trocar experiências " +
+                "com os demais associados. A agenda de eventos está disponível no link abaixo:<br /><br />http://www.acervacarioca.com.br/agenda";
+
+            var identityMessage = new IdentityMessage
+            {
+                Destination = "administrativo@acervacarioca.com.br",
+                Subject = "Boas vindas aos novos associados!",
+                Body = emailBoasVindasNaLista
+            };
+
+            await UserManager.EmailService.SendAsync(identityMessage);
+
+            var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associados foram incluídos no e-mail de boas vindas na lista (COCECA) com sucesso!", "E-mail de boas vindas enviado com sucesso!");
             return new JsonNetResult(new { growlMessage });
         }
         

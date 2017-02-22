@@ -46,6 +46,8 @@ namespace Acerva.Modelo.Mapeamento
             Map(u => u.Experiencia, "experiencia");
             Map(u => u.Observacao, "observacao");
 
+            Map(u => u.EmailBoasVindasListaEnviado, "email_boas_vindas_lista_enviado").CustomType(typeof(SimNaoType));
+
             References(u => u.Regional, "codigo_regional");
             References(u => u.UsuarioIndicacao, "id_indicacao");
 

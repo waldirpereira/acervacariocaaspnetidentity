@@ -51,6 +51,7 @@ namespace Acerva.Modelo
         public virtual Sexo? Sexo { get; set; }
         public virtual string Experiencia { get; set; }
         public virtual string Observacao { get; set; }
+        public virtual bool EmailBoasVindasListaEnviado { get; set; } 
 
         private ICollection<Papel> _papeis = new List<Papel>();
         public virtual ICollection<Papel> Papeis {

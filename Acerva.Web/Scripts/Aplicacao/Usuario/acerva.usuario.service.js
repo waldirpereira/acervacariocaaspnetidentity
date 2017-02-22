@@ -57,6 +57,11 @@
                     { idsUsuarios: idsUsuarios }
                 ).then(retornaDadoDoXhr);
             },
+            enviaEmailBoasVindasNaListaSelecionados: function (idsUsuarios) {
+                return $http.post(ROTAS.enviaEmailBoasVindasNaListaSelecionados,
+                    { idsUsuarios: idsUsuarios }
+                ).then(retornaDadoDoXhr);
+            },
             cobrancaGerada: function (usuario) {
                 return $http.post(ROTAS.cobrancaGerada,
                     { usuarioViewModel: usuario }

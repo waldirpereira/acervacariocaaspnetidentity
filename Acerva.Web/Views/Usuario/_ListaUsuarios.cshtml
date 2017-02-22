@@ -31,6 +31,7 @@
                     <th style="width: 60px;">Status</th>
                     <th style="width: 80px;">Regional</th>
                     <th style="width: 80px;">Papéis</th>
+                    <th style="width: 40px;" title="E-mail de boas vindas enviado à lista">Bem-vindo</th>
                     <th class="sorting_disabled" style="width: 40px;"></th>
                 </tr>
                 </thead>
@@ -59,6 +60,7 @@
                     </td>
                     <td>{{m.regional.nome}}</td>
                     <td>{{m.nomesPapeis}}</td>
+                    <td><span class="label" ng-class="{'label-success': m.emailBoasVindasListaEnviado, 'label-danger': !m.emailBoasVindasListaEnviado}">{{ m.emailBoasVindasListaEnviado ? "sim" : "não"}}</span></td>
 
                     <td style="padding: 4px;">
                         <a class="btn btn-info btn-xs" title="Editar {{ m.name }}"
@@ -127,6 +129,12 @@
                            confirm-action="listaCtrl.cobrancaGeradaSelecionados()"
                            confirm-window-type="success"
                            confirm-text="Confirma que as cobranças foram geradas para os associados selecionados?">Cobrança gerada para selecionados</a>
+                        <a class="btn btn-primary"
+                           ng-if="listaCtrl.filtroStatus.length === 1 && listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.ativo)"
+                           acerva-confirm
+                           confirm-action="listaCtrl.enviaEmailBoasVindasNaListaSelecionados()"
+                           confirm-window-type="success"
+                           confirm-text="Confirma envio de e-mail de boas vindas na lista (COCECA) para os associados selecionados?">Enviar e-mail de boas vindas no COCECA</a>
                     </span>
                     <a class="btn btn-default"
                        ng-click="listaCtrl.abreJanelaSelecaoEmails()">Seleção por e-mails</a>

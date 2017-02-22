@@ -28,6 +28,7 @@
         ctrl.pegaUsuariosFiltrados = pegaUsuariosFiltrados;
         ctrl.confirmaPagamentoSelecionados = confirmaPagamentoSelecionados;
         ctrl.cobrancaGeradaSelecionados = cobrancaGeradaSelecionados;
+        ctrl.enviaEmailBoasVindasNaListaSelecionados = enviaEmailBoasVindasNaListaSelecionados;
 
         ctrl.dtOptions = DTOptionsBuilder.newOptions()
             .withOption('order', [2, 'asc'])
@@ -159,6 +160,12 @@
                 ctrl.dominio.statusUsuario.novo,
                 ctrl.dominio.statusUsuario.ativo
             ], Usuario.cobrancaGeradaSelecionados);
+        }
+
+        function enviaEmailBoasVindasNaListaSelecionados() {
+            processaOperacoesEmLoteParaStatusEspecifico([
+                ctrl.dominio.statusUsuario.ativo
+            ], Usuario.enviaEmailBoasVindasNaListaSelecionados);
         }
 
         function processaOperacoesEmLoteParaStatusEspecifico(arrStatus, metodoNoService) {

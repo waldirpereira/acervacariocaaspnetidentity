@@ -8565,3 +8565,4 @@ alter table users add (email_lista     varchar(256));
 alter table users add (experiencia    varchar(2000));
 alter table users add (observacao    varchar(2000));
 
+ALTER TABLE `users` ADD `email_boas_vindas_lista_enviado` CHAR(1) NOT NULL DEFAULT 'N' AFTER `observacao`;

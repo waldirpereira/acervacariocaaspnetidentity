@@ -36,5 +36,6 @@ namespace Acerva.Web.Models.CadastroUsuarios
         public virtual Sexo? Sexo { get; set; }
         public virtual string Experiencia { get; set; }
         public virtual string Observacao { get; set; }
+        public virtual bool EmailBoasVindasListaEnviado { get; set; }
     }
 }

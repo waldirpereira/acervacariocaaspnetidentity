@@ -29,6 +29,15 @@ namespace Acerva.Modelo.Mapeamento
             Map(u => u.Status, "status").CustomType(typeof(EnumComCodigoBdMapper<StatusUsuario>));
             Map(u => u.Cpf, "Cpf");
 
+            Map(u => u.Endereco, "endereco");
+            Map(u => u.Numero, "numero");
+            Map(u => u.Complemento, "complemento");
+            Map(u => u.Bairro, "bairro");
+            Map(u => u.Cidade, "cidade");
+            References(u => u.Uf, "codigo_uf");
+            Map(u => u.Cep, "cep");
+            Map(u => u.TelefoneFixo, "telefone_fixo");
+            
             References(u => u.Regional, "codigo_regional");
             References(u => u.UsuarioIndicacao, "id_indicacao");
 

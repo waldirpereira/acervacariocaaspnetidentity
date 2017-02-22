@@ -8535,3 +8535,24 @@ CREATE TABLE uf( codigo_uf INT NOT NULL AUTO_INCREMENT
  Insert Into uf (codigo_ibge,sigla,nome) Values(28,'SE','Sergipe');
  Insert Into uf (codigo_ibge,sigla,nome) Values(35,'SP','São Paulo');
  Insert Into uf (codigo_ibge,sigla,nome) Values(17,'TO','Tocantins');
+ 
+alter table users add (endereco       varchar(255));
+alter table users add (numero         varchar(20));
+alter table users add (complemento    varchar(60));
+alter table users add (bairro         varchar(80));
+alter table users add (cidade         varchar(80));
+alter table users add (codigo_uf      int);
+alter table users add (cep            varchar(12));
+ALTER TABLE `users` ADD INDEX(`codigo_uf`);
+
+ALTER TABLE `users` ADD CONSTRAINT `fk_users_uf` FOREIGN KEY (`codigo_uf`) REFERENCES `uf`(`codigo_uf`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `users` ADD `telefone_fixo` VARCHAR(100) NULL AFTER `cep`;
+
+
+delete from noticia;
+
+INSERT INTO `noticia` (`codigo_noticia`, `titulo`, `texto_html`, `ativo`, `ordem`) VALUES
+(1, 'Sobre nossa associação', 'A <b>ACervA Carioca</b> é uma associação que visa incentivar o desenvolvimento da cultura da cerveja artesanal, no Rio de Janeiro e em todo o Brasil, promovendo encontros, palestras, cursos, concursos e degustações das mais variadas cervejas, em grande parte produzidas pelos próprios associados. Descubra e se delicie com essa cultura participando da associação e dos nossos encontros. E aprenda também a produzir cervejas diferenciadas e de alta qualidade.', 'S', 1),
+(2, 'Como se associar', '<p>Para conhecer melhor a associação e seus membros, participe do nosso grupo de discussões. A participação nesse grupo é gratuita e aberta a todos que se interessam por cerveja caseira. Temos encontros abertos na primeira terça-feira de cada mês, esses encontros são divulgados na lista e são parte do processo de admissão na associação.<br/><br/>A inclusão de novos membros na associação se dá por meio de convite por parte de algum membro atual. Caso já tenha sido convidado, preencha a ficha de inscrição online clicando aqui.<br/><span id="selectionBoundary_1487092377879_131683408478104" class="rangySelectionBoundary">&#65279;</span><span id="selectionBoundary_1487092378359_7118862884382526" class="rangySelectionBoundary">&#65279;</span><br/>Qualquer outra dúvida ou interesse, entre em contato que será um prazer trocar idéias.</p>', 'S', 2),
+(3, 'Fórum eletrônico', '<p>Atualmente, o fórum eletrônico da associação (para membros e não-membros) é o grupo &#34;<a href="http://groups.google.com/group/acervacarioca" target="_blank" style="text-decoration: underline;">ACervA Carioca (Associação dos Cervejeiros Artesanais Cariocas)</a>&#34; em <a href="http://groups.google.com/" target="_blank" style="text-decoration: underline;">Grupos do Google</a>. Inclusão no grupo <strong>não implica em efetivação como membro da Associação</strong>.</p>', 'S', 3),
+(4, 'Cursos de Produção de Cerveja Artesanal', '<p><span>A ACervA Carioca não oferece cursos de produção de cerveja artesanal; no entanto, alguns de seus associados o fazem de forma particular. São eles:</span></p><p><strong>11/03/2017 - Pedro Ribeiro</strong> - <a href="mailto:pedro.clock@gmail.com" target="">pedro.clock@gmail.com</a> - <strong>Rio de Janeiro/RJ</strong> - <span>Restaurante Il Piccolo Biergarten - Rua dos Inválidos, 135 - Lapa (10:00 às 18:00)</span></p><p><strong>25/03/2017 - João Veiga</strong> - <a href="mailto:joaomveiga@uol.com.br" target="">joaomveiga@uol.com.br</a> - <strong>Guapimirim/RJ</strong></p>', 'S', 4);

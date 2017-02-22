@@ -308,6 +308,7 @@
     <Compile Include="Models\CadastroNoticias\CadastroNoticiaMapperProfile.cs" />
     <Compile Include="Models\CadastroNoticias\NoticiaViewModel.cs" />
     <Compile Include="Models\CadastroUsuarios\UfViewModel.cs" />
+    <Compile Include="Models\Home\UfViewModel.cs" />
     <Compile Include="Models\Referencia\AnexoArtigoViewModel.cs" />
     <Compile Include="Models\Referencia\ArtigoListaViewModel.cs" />
     <Compile Include="Models\Referencia\ArtigoViewModel.cs" />

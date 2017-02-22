@@ -423,8 +423,12 @@
     <Content Include="Scripts\vendor\angular-hotkeys\hotkeys.min.js" />
     <Content Include="Scripts\vendor\angular-local-storage\angular-local-storage.js" />
     <Content Include="Scripts\vendor\angular-local-storage\angular-local-storage.min.js" />
+    <Content Include="Scripts\vendor\angular-ui-mask\mask.js" />
     <Content Include="Scripts\vendor\chart\Chart.js" />
     <Content Include="Scripts\vendor\chart\Chart.min.js" />
+    <Content Include="Scripts\vendor\cpf_cnpj\cnpj.js" />
+    <Content Include="Scripts\vendor\cpf_cnpj\cpf.js" />
+    <Content Include="Scripts\vendor\ng-cpf-cnpj\ngCpfCnpj.js" />
     <Content Include="Scripts\vendor\datatables-tabletools\dataTables.tableTools.js" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-theme.css.map" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap.css.map" />

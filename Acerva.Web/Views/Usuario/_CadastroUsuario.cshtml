@@ -24,6 +24,7 @@
                                         <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.cpf")>
                                             <label class="control-label" for="cpf">CPF</label>
                                             <input type="text" class="form-control" name="cpf" autocomplete="off" required
+                                                   ng-cpf ui-mask="999.999.999-99"
                                                    ng-model="ctrl.modelo.cpf" />
                                             <p ng-show="formUsuario.cpf.$invalid && !formUsuario.cpf.$pristine" class="help-block">O CPF é obrigatório</p>
                                         </div>
@@ -53,7 +54,7 @@
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-6"
-                                         ng-if="ctrl.modelo.matricula">
+                                         ng-if="ctrl.modeloOriginal.matricula">
                                         <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.matricula")>
                                             <label class="control-label" for="matricula">Matrícula</label>
                                             <input type="text" class="form-control" name="matricula" autocomplete="off" required
@@ -370,6 +371,7 @@
                     <div class="pull-left">
                         <span>
                             <a class="btn btn-default" href="#/"
+                               ng-if="ctrl.tipoCadastro !== 'registro'"
                                ng-disabled="ctrl.status.salvando">Voltar</a>
                         </span>
                         <!-- FUNCOES QUE APENAS DIRETORES PODEM EXECUTAR -->

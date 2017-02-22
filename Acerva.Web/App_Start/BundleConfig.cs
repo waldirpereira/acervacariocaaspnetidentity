@@ -46,7 +46,7 @@ namespace Acerva.Web
         private const string AngularLocalePtBr = ScriptsVendorFolder + "i18n/angular-locale_pt-br.js";
         private const string AngularAnimate = ScriptsVendorFolder + "angular-animate.js";
         private const string AngularRoute = ScriptsVendorFolder + "angular-route.js";
-
+        
         //SUBSTITUIDO PELO AngularTextAngularSanitize
         //private const string AngularSanitize = ScriptsVendorFolder + "angular-sanitize.js";
 
@@ -58,7 +58,10 @@ namespace Acerva.Web
         private const string AngularTextAngularCore = ScriptsVendorFolder + "text-angular/textAngular.min.js";
         private const string AngularTextAngularSanitize = ScriptsVendorFolder + "text-angular/textAngular-sanitize.js";
         private const string AngularTextAngularRangy = ScriptsVendorFolder + "text-angular/textAngular-rangy.min.js";
-
+        private const string Cpf = ScriptsVendorFolder + "cpf_cnpj/cpf.js";
+        private const string Cnpj = ScriptsVendorFolder + "cpf_cnpj/cnpj.js";
+        private const string AngularCpfCnpj = ScriptsVendorFolder + "ng-cpf-cnpj/ngCpfCnpj.js";
+        private const string AngularUiMask = ScriptsVendorFolder + "angular-ui-mask/mask.js";
 
         private static readonly string[] AngularGrowl =
         {
@@ -305,6 +308,10 @@ namespace Acerva.Web
                 .Include(AngularChecklistModel)
                 .Include(AngularTextAngularRangy)
                 .Include(AngularTextAngularCore)
+                .Include(Cpf)
+                .Include(Cnpj)
+                .Include(AngularCpfCnpj)
+                .Include(AngularUiMask)
                 .Include(path + "acerva.usuario.module.js")
                 .Include(path + "acerva.usuario.service.js")
                 .Include(path + "acerva.usuario.controller.js")
@@ -327,6 +334,10 @@ namespace Acerva.Web
                 .Include(AngularCroppie)
                 .Include(AngularTextAngularRangy)
                 .Include(AngularTextAngularCore)
+                .Include(Cpf)
+                .Include(Cnpj)
+                .Include(AngularCpfCnpj)
+                .Include(AngularUiMask)
                 .Include(path + "acerva.registro.module.js")
                 .Include(path + "acerva.registro.service.js")
                 .Include(path + "acerva.registro.controller.js")

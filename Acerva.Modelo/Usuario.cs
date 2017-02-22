@@ -44,6 +44,13 @@ namespace Acerva.Modelo
         public virtual Uf Uf { get; set; }
         public virtual string Cep { get; set; }
         public virtual string TelefoneFixo { get; set; }
+        public virtual string Rg { get; set; }
+        public virtual DateTime? DataNascimento { get; set; }
+        public virtual DateTime? DataAdmissao { get; set; }
+        public virtual string EmailLista { get; set; }
+        public virtual Sexo? Sexo { get; set; }
+        public virtual string Experiencia { get; set; }
+        public virtual string Observacao { get; set; }
 
         private ICollection<Papel> _papeis = new List<Papel>();
         public virtual ICollection<Papel> Papeis {

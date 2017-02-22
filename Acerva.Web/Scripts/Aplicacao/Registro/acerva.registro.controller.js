@@ -32,6 +32,8 @@
                 angular.extend(ctrl.dominio, tipos);
 
                 ctrl.dominio.statusUsuario = ENUMS.statusUsuario;
+                ctrl.dominio.sexo = ENUMS.sexo;
+                ctrl.dominio.sexos = ENUMS.toArrayOfEnums(ENUMS.sexo);
 
                 if (id)
                     return;

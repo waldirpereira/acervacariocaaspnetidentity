@@ -43,6 +43,8 @@
 
                 ctrl.dominio.statusUsuario = ENUMS.statusUsuario;
                 ctrl.dominio.listaStatusUsuario = ENUMS.toArrayOfEnums(ENUMS.statusUsuario);
+                ctrl.dominio.sexo = ENUMS.sexo;
+                ctrl.dominio.sexos = ENUMS.toArrayOfEnums(ENUMS.sexo);
 
                 if (!id) {
                     colocaUsuarioEmEdicao({ status: ctrl.dominio.statusUsuario.novo });

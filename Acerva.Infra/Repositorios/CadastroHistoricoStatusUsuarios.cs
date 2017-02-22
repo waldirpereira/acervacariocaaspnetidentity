@@ -21,6 +21,7 @@ namespace Acerva.Infra.Repositorios
                 try
                 {
                     session.Save(historico);
+                    session.Flush();
                     transacao.Commit();
                 }
                 catch (Exception)

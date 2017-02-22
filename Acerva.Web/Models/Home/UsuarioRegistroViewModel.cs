@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Web;
 using Acerva.Modelo;
 
@@ -26,5 +27,9 @@ namespace Acerva.Web.Models.Home
         public virtual UfViewModel Uf { get; set; }
         public virtual string Cep { get; set; }
         public virtual string TelefoneFixo { get; set; }
+        public virtual string Rg { get; set; }
+        public virtual DateTime? DataNascimento { get; set; }
+        public virtual Sexo? Sexo { get; set; }
+        public virtual string Experiencia { get; set; }
     }
 }

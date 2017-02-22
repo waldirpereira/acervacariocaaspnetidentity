@@ -212,6 +212,7 @@ namespace Acerva.Web.Controllers
 
             usuario.Status = StatusUsuario.Ativo;
             usuario.Matricula = string.IsNullOrEmpty(usuario.Matricula) ? _cadastroUsuarios.PegaProximaMatricula() : usuario.Matricula;
+            usuario.DataAdmissao = DateTime.Today;
 
             if (enviaEmailBoasVindas)
             {
@@ -275,6 +276,7 @@ namespace Acerva.Web.Controllers
 
                 usuario.Status = StatusUsuario.Ativo;
                 usuario.Matricula = string.IsNullOrEmpty(usuario.Matricula) ? _cadastroUsuarios.PegaProximaMatricula() : usuario.Matricula;
+                usuario.DataAdmissao = DateTime.Today;
             }
             
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associados tiveram seus pagamentos confirmados com sucesso", "Pagamentos confirmados");

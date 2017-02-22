@@ -37,7 +37,15 @@ namespace Acerva.Modelo.Mapeamento
             References(u => u.Uf, "codigo_uf");
             Map(u => u.Cep, "cep");
             Map(u => u.TelefoneFixo, "telefone_fixo");
-            
+
+            Map(u => u.Sexo, "sexo").CustomType(typeof(EnumComCodigoBdMapper<Sexo>));
+            Map(u => u.Rg, "rg");
+            Map(u => u.DataNascimento, "data_nascimento");
+            Map(u => u.DataAdmissao, "data_admissao");
+            Map(u => u.EmailLista, "email_lista");
+            Map(u => u.Experiencia, "experiencia");
+            Map(u => u.Observacao, "observacao");
+
             References(u => u.Regional, "codigo_regional");
             References(u => u.UsuarioIndicacao, "id_indicacao");
 

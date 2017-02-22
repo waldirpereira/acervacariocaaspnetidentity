@@ -6,7 +6,7 @@
             <fieldset ng-disabled="ctrl.modeloOriginal.id && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor && ctrl.dominio.idUsuarioLogado !== ctrl.modeloOriginal.id">
                 <div class="row">
                     <div class="panel panel-default">
-                        <div class="panel-heading">Dados básicos</div>
+                        <div class="panel-heading">Identificação</div>
                         <div class="panel-body">
                             <div class="col-sm-6" style="padding: 0;">
                                 <div class="row">
@@ -20,12 +20,19 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-6">
                                         <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.cpf")>
                                             <label class="control-label" for="cpf">CPF</label>
                                             <input type="text" class="form-control" name="cpf" autocomplete="off" required
                                                    ng-model="ctrl.modelo.cpf" />
                                             <p ng-show="formUsuario.cpf.$invalid && !formUsuario.cpf.$pristine" class="help-block">O CPF é obrigatório</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.rg")>
+                                            <label class="control-label" for="rg">Identidade</label>
+                                            <input type="text" class="form-control" name="rg" autocomplete="off"
+                                                   ng-model="ctrl.modelo.rg" />
                                         </div>
                                     </div>
                                 </div>
@@ -60,7 +67,7 @@
                                     <div class="col-sm-12">
                                         <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.email")>
                                             <label class="control-label" for="email">E-mail</label>
-                                            <input type="text" class="form-control" email="email" autocomplete="off" required
+                                            <input type="text" class="form-control" name="email" autocomplete="off" required
                                                    ng-disabled="ctrl.tipoCadastro !== 'registro' && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
                                                    ng-model="ctrl.modelo.email" />
                                             <p ng-show="formUsuario.email.$invalid && !formUsuario.email.$pristine" class="help-block">O e-mail é obrigatório</p>
@@ -69,16 +76,14 @@
                                 </div>
 
                                 <div class="row" ng-if="ctrl.tipoCadastro === 'registro' || !ctrl.modelo.id">
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-6">
                                         <div class="form-group">
                                             <label class="control-label" for="password">Senha</label>
                                             <input type="password" name="password" class="form-control" autocomplete="off" required
                                                    ng-model="ctrl.modelo.password" />
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row" ng-if="ctrl.tipoCadastro === 'registro' || !ctrl.modelo.id">
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-6">
                                         <div class="form-group">
                                             <label class="control-label" for="confirmPassword">Confirmação da senha</label>
                                             <input type="password" name="confirmPassword" class="form-control" autocomplete="off" required
@@ -90,7 +95,7 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.usuarioIndicacao")>
-                                            <label class="control-label" for="usuarioIndicacao">Indicação</label>
+                                            <label class="control-label" for="usuarioIndicacao">Associado que indicou</label>
                                             <div class="input-group">
                                                 <input type="text" name="usuarioIndicacao" id="usuarioIndicacao" class="form-control"
                                                        autocomplete="off"
@@ -201,9 +206,9 @@
                                 <div class="col-sm-12">
                                     <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.endereco")>
                                         <label class="control-label" for="endereco">Endereço</label>
-                                        <input type="text" class="form-control" endereco="endereco" autocomplete="off" required
+                                        <input type="text" class="form-control" name="endereco" autocomplete="off" required
                                                ng-disabled="ctrl.tipoCadastro !== 'registro' && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
-                                               ng-model="ctrl.modelo.endereco"/>
+                                               ng-model="ctrl.modelo.endereco" />
                                         <p ng-show="formUsuario.endereco.$invalid && !formUsuario.endereco.$pristine" class="help-block">O endereço é obrigatório</p>
                                     </div>
                                 </div>
@@ -211,29 +216,29 @@
                             <div class="row">
                                 <div class="col-sm-2">
                                     <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.numero")>
-                                        <label class="control-label" for="numero">Número</label>
-                                        <input type="text" class="form-control" numero="numero" autocomplete="off"
+                                        <label class="control-label" for="numero">Número<span ng-if="ctrl.tipoCadastro === 'registro'">*</span></label>
+                                        <input type="text" class="form-control" name="numero" autocomplete="off"
                                                ng-required="ctrl.tipoCadastro === 'registro'"
                                                ng-disabled="ctrl.tipoCadastro !== 'registro' && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
-                                               ng-model="ctrl.modelo.numero"/>
+                                               ng-model="ctrl.modelo.numero" />
                                         <p ng-show="formUsuario.numero.$invalid && !formUsuario.numero.$pristine" class="help-block">O número é obrigatório</p>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.complemento")>
                                         <label class="control-label" for="complemento">Complemento</label>
-                                        <input type="text" class="form-control" complemento="complemento" autocomplete="off"
+                                        <input type="text" class="form-control" name="complemento" autocomplete="off"
                                                ng-disabled="ctrl.tipoCadastro !== 'registro' && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
-                                               ng-model="ctrl.modelo.complemento"/>
+                                               ng-model="ctrl.modelo.complemento" />
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.bairro")>
-                                        <label class="control-label" for="bairro">Bairro</label>
-                                        <input type="text" class="form-control" bairro="bairro" autocomplete="off" 
+                                        <label class="control-label" for="bairro">Bairro<span ng-if="ctrl.tipoCadastro === 'registro'">*</span></label>
+                                        <input type="text" class="form-control" name="bairro" autocomplete="off"
                                                ng-required="ctrl.tipoCadastro === 'registro'"
                                                ng-disabled="ctrl.tipoCadastro !== 'registro' && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
-                                               ng-model="ctrl.modelo.bairro"/>
+                                               ng-model="ctrl.modelo.bairro" />
                                         <p ng-show="formUsuario.bairro.$invalid && !formUsuario.bairro.$pristine" class="help-block">O bairro é obrigatório</p>
                                     </div>
                                 </div>
@@ -241,8 +246,8 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.cidade")>
-                                        <label class="control-label" for="cidade">Cidade</label>
-                                        <input type="text" class="form-control" cidade="cidade" autocomplete="off" 
+                                        <label class="control-label" for="cidade">Cidade<span ng-if="ctrl.tipoCadastro === 'registro'">*</span></label>
+                                        <input type="text" class="form-control" name="cidade" autocomplete="off"
                                                ng-required="ctrl.tipoCadastro === 'registro'"
                                                ng-disabled="ctrl.tipoCadastro !== 'registro' && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
                                                ng-model="ctrl.modelo.cidade" />
@@ -251,8 +256,8 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.cep")>
-                                        <label class="control-label" for="cep">CEP</label>
-                                        <input type="text" class="form-control" cep="cep" autocomplete="off" 
+                                        <label class="control-label" for="cep">CEP<span ng-if="ctrl.tipoCadastro === 'registro'">*</span></label>
+                                        <input type="text" class="form-control" name="cep" autocomplete="off"
                                                ng-required="ctrl.tipoCadastro === 'registro'"
                                                ng-disabled="ctrl.tipoCadastro !== 'registro' && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
                                                ng-model="ctrl.modelo.cep" />
@@ -262,14 +267,88 @@
                                 <div class="col-sm-3">
                                     <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.uf")>
                                         @NgHelpers.NgSelectComBuscaRespeitandoStatusBloqueado("ctrl", new NgHelpers.NgSelectOptions("uf", "ctrl.modelo", "nome",
-                                            "uf in ctrl.dominio.ufs | filter: {nome: $select.search} | orderBy : 'sigla' track by uf.codigo",
-                                            "uf.nome | highlight: $select.search")
-                                   {
-                                       Obrigatorio = true,
-                                       Titulo = "UF",
-                                       NgDisabled = "",
-                                       BindHtmlOpcao = "uf.sigla + ' - ' + uf.nome"
-                                   })
+                                        "uf in ctrl.dominio.ufs | filter: {nome: $select.search} | orderBy : 'sigla' track by uf.codigo",
+                                        "uf.nome | highlight: $select.search")
+                                        {
+                                            Obrigatorio = true,
+                                            Titulo = "UF",
+                                            NgDisabled = "",
+                                            BindHtmlOpcao = "uf.sigla + ' - ' + uf.nome"
+                                        })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Contato</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.phoneNumber")>
+                                        <label class="control-label" for="phoneNumber">Telefone celular</label>
+                                        <input type="text" class="form-control" name="phoneNumber" autocomplete="off"
+                                               ng-disabled="ctrl.tipoCadastro !== 'registro' && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
+                                               ng-model="ctrl.modelo.phoneNumber" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.telefoneFixo")>
+                                        <label class="control-label" for="telefoneFixo">Telefone fixo</label>
+                                        <input type="text" class="form-control" name="telefoneFixo" autocomplete="off"
+                                               ng-disabled="ctrl.tipoCadastro !== 'registro' && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
+                                               ng-model="ctrl.modelo.telefoneFixo" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Dados adicionais</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.sexo")>
+                                        <label class="control-label">Sexo</label><br/>
+                                        <div class="btn-group">
+                                            <label class="btn btn-default" ng-model="ctrl.modelo.sexo" ng-repeat="item in ctrl.dominio.sexos | filter: {codigo: '!0'}"
+                                                   uib-btn-radio="item">{{ item.nomeExibicao}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        @{
+                                            var limiteSuperiorDataNascimento = DateTime.Today.AddYears(-18).ToString("dd/MM/yyyy");
+                                        }
+                                        @NgHelpers.NgDatepicker("ctrl.modelo", "dataNascimento", "Data de nascimento", null, null, null, limiteSuperiorDataNascimento)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.experiencia")>
+                                        <label class="control-label" for="experiencia">Experiência com cerveja</label>
+                                        <textarea rows="3" class="form-control" name="experiencia" autocomplete="off"
+                                                  ng-disabled="ctrl.tipoCadastro !== 'registro' && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
+                                                  ng-model="ctrl.modelo.experiencia"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row"
+                                 ng-if="ctrl.tipoCadastro !== 'registro'">
+                                <div class="col-sm-12">
+                                    <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.observacao")>
+                                        <label class="control-label" for="observacao">Observação</label>
+                                        <textarea rows="3" class="form-control" name="observacao" autocomplete="off"
+                                                  ng-disabled="ctrl.tipoCadastro !== 'registro' && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
+                                                  ng-model="ctrl.modelo.observacao"></textarea>
                                     </div>
                                 </div>
                             </div>

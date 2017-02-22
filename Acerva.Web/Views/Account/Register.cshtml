@@ -49,7 +49,7 @@
                     salva: "@Url.Action("Register")",
                     buscaUsuariosAtivosComTermo: "@Url.Action("BuscaUsuariosAtivosComTermo", "Usuario")"
                 })
-                .constant("ENUMS", @Html.GeraJsonDeEnums(typeof (StatusUsuario)));
+                .constant("ENUMS", @Html.GeraJsonDeEnums(typeof (StatusUsuario), typeof(Sexo)));
         })();
     </script>
 }

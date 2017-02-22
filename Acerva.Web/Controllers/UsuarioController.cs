@@ -325,7 +325,7 @@ namespace Acerva.Web.Controllers
 
             var identityMessage = new IdentityMessage
             {
-                Destination = "administrativo@acervacarioca.com.br",
+                Destination = "coceca_teste@googlegroups.com",
                 Subject = "Boas vindas aos novos associados!",
                 Body = emailBoasVindasNaLista
             };

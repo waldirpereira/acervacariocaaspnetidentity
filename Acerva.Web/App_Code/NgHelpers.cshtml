@@ -55,6 +55,7 @@
         public string ClasseCss { get; set; }
         public bool AllowClear { get; set; }
         public string NgDisabled { get; set; }
+        public string NgRequired { get; set; }
         public string NgDisabledOption { get; set; }
         public string ResetOn { get; set; }
         public string NgHelpText { get; set; }
@@ -129,6 +130,8 @@
                                           @: on-remove="@options.OnChange"
                                       }
                    @if (!string.IsNullOrEmpty(options.NgDisabled)) { @: ng-disabled="@options.NgDisabled"
+                                      }
+                   @if (!string.IsNullOrEmpty(options.NgRequired)) { @: ng-required="@options.NgRequired"
                                       }
                    @if (!string.IsNullOrEmpty(options.ResetOn)) { @: acerva-reset-on="@options.ResetOn"
                                       }>

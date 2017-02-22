@@ -1,0 +1,90 @@
+﻿@using Acerva.Modelo
+@using Acerva.Web.Extensions
+@{
+    ViewBag.Title = "Carteirinha";
+    ViewBag.AngularApp = "acerva.carteirinha";
+}
+
+<h4>Carteirinha</h4>
+
+<div ng-view ng-cloak></div>
+@Html.AntiForgeryToken()
+
+<script type="text/ng-template" id="index.html">
+    <div class="animate-show-only">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="name">Nome</label>
+                                    {{ctrl.modelo.name}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="matricula">Matrícula</label>
+                                    {{ctrl.modelo.matricula}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="indicacao">Associado desde</label>
+                                    {{ctrl.modelo.dataAdmissao | date: 'yyyy'}}
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="regional">Regional</label>
+                                    {{ctrl.modelo.regional.nome}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="foto">Foto</label>
+                                    <div ng-if="ctrl.modelo.fotoBase64">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <img ng-src="{{ctrl.modelo.fotoBase64}}" style="width: 160px;" alt="Foto do associado" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+
+
+@section styles {
+    @Styles.Render("~/cssBundles/angularForm")
+    @Styles.Render(BundleConfig.BundleStylesDataTables)
+}
+@section dependencies {
+    @Scripts.Render("~/bundles/carteirinha")
+}
+@section scripts {
+    <script type="text/javascript">
+        (function () {
+            angular.module("acerva")
+                .constant("ROTAS", {
+                    busca: "@Url.Action("Busca")"
+                });
+        })();
+    </script>
+}

@@ -302,6 +302,7 @@
     <Compile Include="Controllers\ListaRegionaisController.cs" />
     <Compile Include="Controllers\CategoriaArtigoController.cs" />
     <Compile Include="Controllers\NoticiaController.cs" />
+    <Compile Include="Controllers\CarteirinhaController.cs" />
     <Compile Include="Models\CadastroArtigos\AnexoArtigoViewModel.cs" />
     <Compile Include="Models\CadastroCategoriasArtigos\CadastroCategoriasArtigosMapperProfile.cs" />
     <Compile Include="Models\CadastroCategoriasArtigos\CategoriaArtigoViewModel.cs" />
@@ -401,6 +402,9 @@
     <Content Include="Scripts\Aplicacao\Registro\acerva.registro.controller.js" />
     <Content Include="Scripts\Aplicacao\Registro\acerva.registro.module.js" />
     <Content Include="Scripts\Aplicacao\Registro\acerva.registro.service.js" />
+    <Content Include="Scripts\Aplicacao\Carteirinha\acerva.carteirinha.controller.js" />
+    <Content Include="Scripts\Aplicacao\Carteirinha\acerva.carteirinha.module.js" />
+    <Content Include="Scripts\Aplicacao\Carteirinha\acerva.carteirinha.service.js" />
     <Content Include="Scripts\Aplicacao\Situacao\acerva.situacao.controller.js" />
     <Content Include="Scripts\Aplicacao\Situacao\acerva.situacao.module.js" />
     <Content Include="Scripts\Aplicacao\Situacao\acerva.situacao.service.js" />
@@ -480,6 +484,7 @@
     <Content Include="Views\Noticia\_CadastroNoticia.cshtml" />
     <Content Include="Views\Noticia\_ListaNoticias.cshtml" />
     <Content Include="Views\Noticia\Index.cshtml" />
+    <Content Include="Views\Carteirinha\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Aplicacao\fonts\acerva-iconfont.svg" />

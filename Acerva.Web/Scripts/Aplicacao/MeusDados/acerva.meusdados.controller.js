@@ -30,6 +30,8 @@
                 angular.extend(ctrl.dominio, tipos);
 
                 ctrl.dominio.statusUsuario = ENUMS.statusUsuario;
+                ctrl.dominio.sexo = ENUMS.sexo;
+                ctrl.dominio.sexos = ENUMS.toArrayOfEnums(ENUMS.sexo);
 
                 return MeusDados.buscaUsuarioLogadoParaEdicao().then(function (usuario) {
                     colocaUsuarioEmEdicao(usuario);

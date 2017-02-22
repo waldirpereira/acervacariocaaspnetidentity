@@ -125,6 +125,7 @@ namespace Acerva.Web
             CadastroCategoriasArtigos(bundles);
             CadastroUsuarios(bundles);
             VisualizacaoSituacao(bundles);
+            Carteirinha(bundles);
             Inicio(bundles);
             Indicacoes(bundles);
             Registro(bundles);
@@ -296,6 +297,15 @@ namespace Acerva.Web
                 .Include(path + "acerva.situacao.module.js")
                 .Include(path + "acerva.situacao.service.js")
                 .Include(path + "acerva.situacao.controller.js")
+            );
+        }
+        private static void Carteirinha(BundleCollection bundles)
+        {
+            const string path = ScriptsAplicacaoFolder + "Carteirinha/";
+            bundles.Add(new ScriptBundle("~/bundles/carteirinha")
+                .Include(path + "acerva.carteirinha.module.js")
+                .Include(path + "acerva.carteirinha.service.js")
+                .Include(path + "acerva.carteirinha.controller.js")
             );
         }
 

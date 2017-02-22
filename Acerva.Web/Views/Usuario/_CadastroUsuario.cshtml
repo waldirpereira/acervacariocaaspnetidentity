@@ -211,8 +211,9 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.endereco")>
-                                        <label class="control-label" for="endereco">Endereço</label>
-                                        <input type="text" class="form-control" name="endereco" autocomplete="off" required
+                                        <label class="control-label" for="endereco">Endereço<span ng-if="ctrl.tipoCadastro === 'registro'">*</span></label>
+                                        <input type="text" class="form-control" name="endereco" autocomplete="off"
+                                               ng-required="ctrl.tipoCadastro === 'registro'"
                                                ng-disabled="ctrl.tipoCadastro !== 'registro' && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
                                                ng-model="ctrl.modelo.endereco" />
                                         <p ng-show="formUsuario.endereco.$invalid && !formUsuario.endereco.$pristine" class="help-block">O endereço é obrigatório</p>
@@ -272,12 +273,14 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.uf")>
+                                        <label class="control-label" for="uf">UF<span ng-if="ctrl.tipoCadastro === 'registro'">*</span></label>
                                         @NgHelpers.NgSelectComBuscaRespeitandoStatusBloqueado("ctrl", new NgHelpers.NgSelectOptions("uf", "ctrl.modelo", "nome",
-                                        "uf in ctrl.dominio.ufs | filter: {nome: $select.search} | orderBy : 'sigla' track by uf.codigo",
-                                        "uf.nome | highlight: $select.search")
+                                            "uf in ctrl.dominio.ufs | filter: {nome: $select.search} | orderBy : 'sigla' track by uf.codigo",
+                                            "uf.nome | highlight: $select.search")
                                         {
-                                            Obrigatorio = true,
-                                            Titulo = "UF",
+                                            NgRequired = "ctrl.tipoCadastro === 'registro'",
+                                            AllowClear = true,
+                                            Titulo = "",
                                             NgDisabled = "",
                                             BindHtmlOpcao = "uf.sigla + ' - ' + uf.nome"
                                         })

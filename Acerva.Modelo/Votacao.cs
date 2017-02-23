@@ -13,8 +13,8 @@ namespace Acerva.Modelo
         public virtual DateTime DataHoraFim { get; set; }
         public virtual bool Ativo { get; set; }
 
-        private IEnumerable<Pergunta> _perguntas = new List<Pergunta>();
-        public virtual IEnumerable<Pergunta> Perguntas
+        private ICollection<Pergunta> _perguntas = new List<Pergunta>();
+        public virtual ICollection<Pergunta> Perguntas
         {
             get { return _perguntas; }
             set { _perguntas = value; }

@@ -58,7 +58,12 @@ namespace Acerva.Modelo
             get { return _papeis; }
             set { _papeis = value; } }
 
-
+        private ICollection<Resposta> _respostas = new List<Resposta>();
+        public virtual ICollection<Resposta> Respostas
+        {
+            get { return _respostas; }
+            set { _respostas = value; }
+        }
         public virtual async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<Usuario> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

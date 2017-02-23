@@ -55,6 +55,11 @@ namespace Acerva.Modelo.Mapeamento
                 .Table("userroles")
                 .ParentKeyColumn("UserId")
                 .ChildKeyColumn("RoleId");
+
+            HasManyToMany(u => u.Respostas)
+                .Table("resposta")
+                .ParentKeyColumn("id_usuario")
+                .ChildKeyColumn("codigo_resposta");
         }
     }
 }

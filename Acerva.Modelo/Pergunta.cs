@@ -14,8 +14,8 @@ namespace Acerva.Modelo
         public virtual bool Ativo { get; set; }
         public virtual Votacao Votacao { get; set; }
 
-        private IEnumerable<Opcao> _opcoes = new List<Opcao>();
-        public virtual IEnumerable<Opcao> Opcoes
+        private ICollection<Opcao> _opcoes = new List<Opcao>();
+        public virtual ICollection<Opcao> Opcoes
         {
             get { return _opcoes; }
             set { _opcoes = value; }

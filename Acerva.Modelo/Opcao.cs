@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Acerva.Modelo
 {
@@ -10,6 +11,13 @@ namespace Acerva.Modelo
         public virtual Pergunta Pergunta { get; set; }
         public virtual string Texto { get; set; }
         public virtual bool Ativo { get; set; }
+
+        private ICollection<Resposta> _respostas = new List<Resposta>();
+        public virtual ICollection<Resposta> Respostas
+        {
+            get { return _respostas; }
+            set { _respostas = value; }
+        } 
 
         public override bool Equals(object obj)
         {

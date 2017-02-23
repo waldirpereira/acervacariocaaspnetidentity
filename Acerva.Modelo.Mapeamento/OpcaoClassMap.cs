@@ -14,6 +14,11 @@ namespace Acerva.Modelo.Mapeamento
             Map(c => c.Texto, "texto");
             References(c => c.Pergunta, "codigo_pergunta");
             Map(c => c.Ativo, "ativo").CustomType(typeof(SimNaoType));
+
+            HasManyToMany(u => u.Respostas)
+                .Table("resposta")
+                .ParentKeyColumn("codigo_opcao")
+                .ChildKeyColumn("codigo_resposta");
         }
     }
 }

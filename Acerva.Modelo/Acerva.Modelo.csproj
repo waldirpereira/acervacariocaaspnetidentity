@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Artigo.cs" />
     <Compile Include="AnexoArtigo.cs" />
+    <Compile Include="Resposta.cs" />
     <Compile Include="Votacao.cs" />
     <Compile Include="Pergunta.cs" />
     <Compile Include="Opcao.cs" />

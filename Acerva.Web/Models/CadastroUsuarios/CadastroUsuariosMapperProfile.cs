@@ -30,6 +30,11 @@ namespace Acerva.Web.Models.CadastroUsuarios
 
             CreateMap<Uf, UfViewModel>()
                 .ReverseMap();
+
+            CreateMap<Usuario, UsuarioListagemViewModel>()
+                .ForMember(d => d.NomesPapeis, o => o.ResolveUsing(s => s.Papeis.Any() ? s.Papeis.Select(p => p.Name).Aggregate((x, y) => x + ", " + y) : string.Empty))
+                .ForMember(d => d.NomeRegional, o => o.ResolveUsing(s => s.UsuarioIndicacao != null ? s.UsuarioIndicacao.Regional.Nome : null))
+                .ReverseMap();
         }
 
 

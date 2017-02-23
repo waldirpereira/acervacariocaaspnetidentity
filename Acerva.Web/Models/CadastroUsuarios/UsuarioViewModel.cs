@@ -20,6 +20,7 @@ namespace Acerva.Web.Models.CadastroUsuarios
         public virtual RegionalViewModel Regional { get; set; }
         public virtual StatusUsuario Status { get; set; }
         public virtual UsuarioIndicacaoViewModel UsuarioIndicacao { get; set; }
+        public virtual string IndicacaoLegado { get; set; }
         private IEnumerable<PapelViewModel> _papeis = new List<PapelViewModel>();
         public virtual IEnumerable<PapelViewModel> Papeis { get {return _papeis; } set { _papeis = value; } }
         public virtual string NomesPapeis { get; set; }

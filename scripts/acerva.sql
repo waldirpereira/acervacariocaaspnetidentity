@@ -8599,3 +8599,4 @@ ALTER TABLE `resposta` ADD CONSTRAINT `fk_resposta_opcao` FOREIGN KEY (`codigo_o
 
 ALTER TABLE `opcao` CHANGE `texto` `texto_html` VARCHAR(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
 
+ALTER TABLE `users` ADD `indicacao_legado` VARCHAR(200) NULL AFTER `email_boas_vindas_lista_enviado`;

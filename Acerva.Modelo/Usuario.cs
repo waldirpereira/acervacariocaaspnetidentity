@@ -33,6 +33,7 @@ namespace Acerva.Modelo
         public virtual Regional Regional { get; set; }
         public virtual StatusUsuario Status { get; set; }
         public virtual Usuario UsuarioIndicacao { get; set; }
+        public virtual string IndicacaoLegado { get; set; }
         public virtual string IndicacaoHash { get; set; }
         public virtual string Matricula { get; set; }
         public virtual string Cpf { get; set; }

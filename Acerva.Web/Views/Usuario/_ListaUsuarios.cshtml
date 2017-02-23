@@ -58,7 +58,7 @@
                                   'label-primary': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd || m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoRenovacao.codigoBd
                                   }">{{m.status.nomeExibicao}}</span>
                     </td>
-                    <td>{{m.regional.nome}}</td>
+                    <td>{{m.nomeRegional}}</td>
                     <td>{{m.nomesPapeis}}</td>
                     <td><span class="label" ng-class="{'label-success': m.emailBoasVindasListaEnviado, 'label-danger': !m.emailBoasVindasListaEnviado}">{{ m.emailBoasVindasListaEnviado ? "sim" : "não"}}</span></td>
 
@@ -94,7 +94,7 @@
                                   'label-primary': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd || m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoRenovacao.codigoBd
                                   }">{{m.status.nomeExibicao}}</span>
                             <span class="label label-primary">
-                                {{m.regional.nome}}
+                                {{m.nomeRegional}}
                             </span>
                             <br />
                             <i>{{m.email}}</i>

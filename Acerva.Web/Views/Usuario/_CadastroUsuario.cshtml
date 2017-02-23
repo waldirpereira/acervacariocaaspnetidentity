@@ -75,6 +75,16 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row" ng-if="ctrl.tipoCadastro !== 'registro'">
+                                    <div class="col-sm-12">
+                                        <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.emailLista")>
+                                            <label class="control-label" for="emailLista">E-mail específico para COCECA</label>
+                                            <input type="text" class="form-control" name="emailLista" autocomplete="off"
+                                                   ng-disabled="ctrl.tipoCadastro !== 'registro' && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
+                                                   ng-model="ctrl.modelo.emailLista" />
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div class="row" ng-if="ctrl.tipoCadastro === 'registro' || !ctrl.modelo.id">
                                     <div class="col-sm-6">
@@ -100,7 +110,7 @@
                                             <div class="input-group">
                                                 <input type="text" name="usuarioIndicacao" id="usuarioIndicacao" class="form-control"
                                                        autocomplete="off"
-                                                       ng-required="ctrl.modelo.matricula !== 'FUNDADOR'"
+                                                       ng-required="ctrl.modelo.matricula !== 'FUNDADOR' && !ctrl.modelo.indicacaoLegado"
                                                        placeholder="Digite pelo menos 3 caracteres para buscar"
                                                        ng-disabled="ctrl.modelo.usuarioIndicacao.id"
                                                        ng-model="ctrl.modelo.usuarioIndicacao"
@@ -124,6 +134,14 @@
                                             <div ng-show="semResultadosParaUsuarioIndicacao">
                                                 <i class="glyphicon glyphicon-remove"></i> Nenhum associado encontrado
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.indicacaoLegado")>
+                                            <label class="control-label" for="indicacaoLegado">Indicação (legado)</label>
+                                            <input type="text" class="form-control" name="indicacaoLegado" autocomplete="off"
+                                                ng-required="ctrl.modelo.matricula !== 'FUNDADOR' && !ctrl.modelo.usuarioIndicacao"
+                                                ng-model="ctrl.modelo.indicacaoLegado" />
                                         </div>
                                     </div>
                                 </div>

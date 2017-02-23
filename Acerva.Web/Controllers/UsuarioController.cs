@@ -77,7 +77,7 @@ namespace Acerva.Web.Controllers
                 listaUsuariosJson = listaUsuariosJson.Where(u => u.Regional.Equals(usuarioLogadoBd.Regional)).ToList();
             }
 
-            var listaUsuariosViewModel = listaUsuariosJson.Select(Mapper.Map<UsuarioViewModel>);
+            var listaUsuariosViewModel = listaUsuariosJson.Select(Mapper.Map<UsuarioListagemViewModel>);
             return new JsonNetResult(listaUsuariosViewModel);
         }
 

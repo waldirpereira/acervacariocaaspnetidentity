@@ -11,7 +11,7 @@ namespace Acerva.Modelo.Mapeamento
             Cache.ReadWrite();
 
             Id(c => c.Codigo, "codigo_opcao").GeneratedBy.Increment();
-            Map(c => c.Texto, "texto");
+            Map(c => c.Texto, "texto_html");
             References(c => c.Pergunta, "codigo_pergunta");
             Map(c => c.Ativo, "ativo").CustomType(typeof(SimNaoType));
 

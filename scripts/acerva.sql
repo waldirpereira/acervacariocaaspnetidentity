@@ -8597,3 +8597,5 @@ ALTER TABLE `resposta` ADD INDEX(`id_usuario`);
 
 ALTER TABLE `resposta` ADD CONSTRAINT `fk_resposta_opcao` FOREIGN KEY (`codigo_opcao`) REFERENCES `opcao`(`codigo_opcao`) ON DELETE RESTRICT ON UPDATE RESTRICT; ALTER TABLE `resposta` ADD CONSTRAINT `fk_resposta_users` FOREIGN KEY (`id_usuario`) REFERENCES `users`(`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
+ALTER TABLE `opcao` CHANGE `texto` `texto_html` VARCHAR(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+

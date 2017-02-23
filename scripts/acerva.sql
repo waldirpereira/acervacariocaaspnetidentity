@@ -8566,3 +8566,34 @@ alter table users add (experiencia    varchar(2000));
 alter table users add (observacao    varchar(2000));
 
 ALTER TABLE `users` ADD `email_boas_vindas_lista_enviado` CHAR(1) NOT NULL DEFAULT 'N' AFTER `observacao`;
+
+CREATE TABLE `votacao` (
+ `codigo_votacao` int(11) NOT NULL AUTO_INCREMENT,
+ `nome` varchar(200) NOT NULL,
+ `data_hora_inicio` datetime NOT NULL,
+ `data_hora_fim` datetime NOT NULL,
+ `ativo` char(1) NOT NULL DEFAULT 'S',
+ PRIMARY KEY (`codigo_votacao`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `acerva`.`pergunta` ( `codigo_pergunta` INT NOT NULL AUTO_INCREMENT , `codigo_votacao` INT NOT NULL , `titulo` VARCHAR(200) NOT NULL , `texto` VARCHAR(2000) NOT NULL , PRIMARY KEY (`codigo_pergunta`)) ENGINE = InnoDB;
+
+ALTER TABLE `pergunta` ADD `ativo` CHAR(1) NOT NULL DEFAULT 'S' AFTER `texto`;
+
+ALTER TABLE `pergunta` ADD INDEX(`codigo_votacao`);
+
+ALTER TABLE `pergunta` ADD CONSTRAINT `fk_pergunta_votacao` FOREIGN KEY (`codigo_votacao`) REFERENCES `votacao`(`codigo_votacao`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+CREATE TABLE `acerva`.`opcao` ( `codigo_opcao` INT NOT NULL AUTO_INCREMENT , `codigo_pergunta` INT NOT NULL , `texto` VARCHAR(2000) NOT NULL , `ativo` CHAR(1) NOT NULL DEFAULT 'S' , PRIMARY KEY (`codigo_opcao`)) ENGINE = InnoDB;
+
+ALTER TABLE `opcao` ADD INDEX(`codigo_pergunta`);
+
+ALTER TABLE `opcao` ADD CONSTRAINT `fk_opcao_pergunta` FOREIGN KEY (`codigo_pergunta`) REFERENCES `pergunta`(`codigo_pergunta`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+CREATE TABLE `acerva`.`resposta` ( `codigo_resposta` INT NOT NULL AUTO_INCREMENT , `codigo_opcao` INT NOT NULL , `id_usuario` VARCHAR(128) NOT NULL , `data_hora` DATETIME NOT NULL , PRIMARY KEY (`codigo_resposta`)) ENGINE = InnoDB;
+
+ALTER TABLE `resposta` ADD INDEX(`codigo_opcao`);
+ALTER TABLE `resposta` ADD INDEX(`id_usuario`);
+
+ALTER TABLE `resposta` ADD CONSTRAINT `fk_resposta_opcao` FOREIGN KEY (`codigo_opcao`) REFERENCES `opcao`(`codigo_opcao`) ON DELETE RESTRICT ON UPDATE RESTRICT; ALTER TABLE `resposta` ADD CONSTRAINT `fk_resposta_users` FOREIGN KEY (`id_usuario`) REFERENCES `users`(`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+

@@ -8204,28 +8204,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`Id`, `Email`, `EmailConfirmed`, `PasswordHash`, `SecurityStamp`, `PhoneNumber`, `PhoneNumberConfirmed`, `TwoFactorEnabled`, `LockoutEndDateUtc`, `LockoutEnabled`, `AccessFailedCount`, `UserName`, `Name`, `CreationDate`, `codigo_regional`) VALUES
-('046e403c-b069-4f00-8af5-76ea78f5b728', 'filiperj22@gmail.com', 1, 'AC6xTtDDVba1etY+K7nIWuwmvpixtjUZ6lYai3b458ZihuMx7zUNzNGwbwWrLUrkuA==', 'ff231901-1dbc-4a3d-b8ad-ec1d9cba1340', NULL, 0, 0, '2016-06-22 23:01:45', 0, 0, 'filiperj22@gmail.com', 'Filipe Ferreira', '2016-07-01 21:10:40', 1),
-('08fa56d9-50a4-4ae1-b935-0eede6619dda', 'paulosergio@delamour.com.br', 0, NULL, NULL, NULL, 0, 0, NULL, 0, 0, 'paulosergio@delamour.com.br', 'Participante B', '0000-00-00 00:00:00', 1),
-('0be2fb93-10c0-40e2-be70-583abb03984c', 'brunalopesrm@gmail.com', 1, 'AHU5r36F0FCGLGdHgfM59wG9jqT7Hjw1PKZ5Ubh4kfi/724k3D1rBFn5dNf7Hlorew==', '211e137f-9cd2-45eb-a86c-8164829f4ec0', NULL, 0, 0, '2016-06-22 17:30:21', 0, 0, 'brunalopesrm@gmail.com', 'Bruna', '2016-07-01 21:10:40', 1),
-('0d7c1880-837a-44b8-bd6c-06516c7f2222', 'fernandojt1978@gmail.com', 1, 'AAY6mR2BotFjkSVijJnkLdEV8b1SR4lTAoMFvsW61r9dh1LNn6OCI5HChUKoycsf0w==', 'd0ef6cbb-445f-4558-9b9e-f6e85cc9da22', NULL, 0, 0, '2016-06-23 14:49:26', 0, 0, 'fernandojt1978@gmail.com', 'FERNANDO CARVALHO', '2016-07-01 21:10:40', 1),
-('11c8b609-bd82-44dd-8787-1b604a007c72', 'marcelo_dbi@hotmail.com', 1, 'ALiK3xbBCg7HjoHDH+wDUlS2WG1ktwGg9JO1dYezIl0qmPc8AjrfwyCmGW1rUffcNA==', '4e0d7afc-b210-4206-9fcf-5c9f8b7c0f51', NULL, 0, 0, '2016-06-22 19:10:49', 0, 0, 'marcelo_dbi@hotmail.com', 'Marcelo Grandão', '2016-07-01 21:10:40', 1),
-('1b278db4-9304-4a74-bdd1-5655aae9ccea', 'brunofigueiredo@tjrj.jus.br', 1, 'AHId1iOmRTZ0AYfYmvsbCCB0ARYOMKEYG8Le/Q6JiTT3j1xp8Q4GLs4a80QJ7tQ4/g==', '0fc71d70-a288-4321-85fa-ec9e38566e43', NULL, 0, 0, '2016-06-24 11:51:57', 0, 0, 'brunofigueiredo@tjrj.jus.br', 'Bruno Guilherme de Figueiredo ', '2016-07-01 21:10:40', 1),
-('285dd274-9448-44ee-bf10-e78a53f49ae1', 'lcsrodrigues@gmail.com', 1, 'AG9Mg0WcNLzm6HBBB6SkMkA3PUyS+da+7qFV69x08DnDmCm9VUc+A3B5d74Iate0oQ==', 'c1b783f3-349f-4bf8-8b0d-c933e09bdee7', NULL, 0, 0, '2016-06-24 12:44:15', 0, 0, 'lcsrodrigues@gmail.com', 'Luis Claudio da Silva Rodrigues', '2016-07-01 21:10:40', 1),
-('33b3b98c-5785-43b8-a65f-c48d396317f8', 'darioaca@gmail.com', 1, 'ADbjUkm4I/v2s5ZOEpe4y1Ocx4rNzxkq3N4utCJGuVycokjQBci0ouiaKvPRW5Z+6g==', '475080da-aea4-4aa7-b1f4-5b1d3ffc3751', NULL, 0, 0, '2016-06-22 14:09:02', 0, 0, 'darioaca@gmail.com', 'Dario Urubu', '2016-07-01 21:10:40', 1),
-('41c83933-6ff6-45eb-ad0a-9e6ed59fef63', 'dudaderbli@gmail.com', 1, 'AM+C4DHxQL2P0WynYbRuX3aXVJ3EcJmwSXwsU/2ow7Xx3vidfjOB/zwe1rD3ycpf+w==', 'dfd2b84e-353c-4966-985e-48aa43827096', NULL, 0, 0, '2016-11-05 10:17:21', 1, 0, 'dudaderbli@gmail.com', 'Eduardo Derbli', '2016-11-05 12:15:38', 1),
-('451ec184-6e69-45cb-99a5-7c793edde756', 'ericplopes@gmail.com', 1, 'ANqGBNLlDgxAW4x4w+M7zL8gdfvzoiv5WWB045i/K1KnuMvZwzMJ0FnTg+fWZ0Y8WA==', 'fe34c36f-13e6-45f9-85ec-546b181a729a', NULL, 0, 0, '2016-06-17 17:01:09', 0, 0, 'ericplopes@gmail.com', 'Eric Lopes', '2016-07-01 21:10:40', 1),
-('6be52512-d272-4cc2-98a9-f5bf93534082', 'waldirpereira@gmail.com', 1, 'ALGVAaupUYi8hGTbHrSSy9BKOgKC3bDokqng0zBrOnWJ14egPpQQ6+VCTj1+kniebg==', '30bb21ee-7e25-4d41-804e-1ef8750e9060', NULL, 0, 0, '2016-06-20 17:57:11', 0, 0, 'waldirpereira@gmail.com', 'Waldir Pereira', '2016-07-01 21:10:40', 1),
-('74e2f0f0-dfa7-4e3e-8a73-81b75a6a927a', 'paulo@vetcontrolonlini.com.br', 0, 'AMTaYByC79OkgZVhTUzfmKvBY2Sm+x+6PJ3Em5eL9BAKlv4xwLD9MzpSvkuJSUf0ww==', '52f410e8-0a75-4c21-aa61-4acb6f374791', NULL, 0, 0, NULL, 1, 0, 'paulo@vetcontrolonlini.com.br', 'Paulo', '2016-10-05 14:00:30', 1),
-('834e0506-fbcb-4ad9-81ae-c3664c64c11d', 'alfapampa@gmail.com', 1, 'AJSrj7NBFBVeXKewSpoJu5q/25pyPWp6UdfKYYYctBONY9kzf1ZOp/UhXushBOxL8w==', '793f25d0-ed52-4183-9863-c4c0f37c57ff', NULL, 0, 0, '2016-06-22 20:54:20', 0, 0, 'alfapampa@gmail.com', 'NARIGUDO', '2016-07-01 21:10:40', 1),
-('85500406-10cc-4e79-90a5-966b32c7b80d', 'paulo@vetnaweb.com.br', 0, NULL, NULL, NULL, 0, 0, NULL, 0, 0, 'paulo@vetnaweb.com.br', 'Participante A', '0000-00-00 00:00:00', 1),
-('d1243da4-5e06-4302-81d3-6a4d0108d5b7', 'romipaiva@gmail.com', 1, 'AMwWj52BLuczPodQZzlI9hKmovUriJt+gVQv7eETqOFX+3TVqgIN0DU9NWb+op3x2Q==', 'dd9ba71a-dc38-4612-8b31-8abfff10ae4d', NULL, 0, 0, '2016-06-22 17:39:27', 0, 0, 'romipaiva@gmail.com', 'Rodrigo Milão de Paiva ', '2016-07-01 21:10:40', 1),
-('e2e132b7-8e9a-4c69-aa1f-3a30190d974e', 'alefferraz@yahoo.com.br', 1, 'AEVm9m2XogdYTxwpbzkkztAA+miyTBKHqZxkqU0x2LbOJSHSyGuY2bgqVeQTrqQbLw==', '6323fe7b-0bc9-4fb2-90bd-4d0202845a4a', NULL, 0, 0, '2016-06-24 12:29:37', 0, 0, 'alefferraz@yahoo.com.br', 'Buluzu soltinho', '2016-07-01 21:10:40', 1),
-('e406d88a-fcf1-4160-b841-b0ef23bb3a16', 'waldirpereira.funplf@petrobras.com.br', 1, 'AFBruQjy5Ppm+JrGZGqTCrPta+wW/3uThQJCStLAWDj0hWS+zDS3GvhX6lszwPebMQ==', 'f239929d-5993-4aff-ab60-4966016aca32', NULL, 0, 0, '2016-10-04 16:46:16', 1, 0, 'waldirpereira.funplf@petrobras.com.br', 'Waldir FULPLF', '2016-10-04 19:46:05', 1),
-('e8c8bcf5-56e9-4912-b6ee-ee8314fb7bd2', 'stliindri@yahoo.com.br', 1, 'AOiaqYULxuummPecXTCmM2pkGmaUq6NDOY4AJgsVk5cQ3Q2h/ZRZH1uoD5AXrQ0mNg==', '36d5f4d9-e42d-4bb0-8f1d-62a975b23105', NULL, 0, 0, '2016-06-22 20:52:50', 0, 0, 'stliindri@yahoo.com.br', 'liindri', '2016-07-01 21:10:40', 1),
-('ea33045b-2ab7-4a4a-a836-0f122f8ca203', 'paulo@vetcontrolonline.com.br', 1, 'AKo2Cnrrn0a/Fbl0Xdpo6Vbh5sN5tbnezE5wMDkUWQboP2b5xA8lRt+SixWc3ErW/A==', 'b654d9b7-cd85-4eb9-9a50-88848dd7b1ab', NULL, 0, 0, '2016-10-05 11:39:43', 1, 0, 'paulo@vetcontrolonline.com.br', 'Paulo', '2016-10-05 14:07:18', 1),
-('f103e85f-3e18-4506-9ba6-ae8fadb1f0dd', 'ronyfla@gmail.com', 1, 'ACj8AaNzkvePAMC2/54WEpqXAKIA/LTKaUmqy2f9RnjbmWmyUD8anN7qV0cJYXX9ew==', 'abfdce0e-9a6f-41c1-a661-b633cc9702c1', NULL, 0, 0, '2016-06-25 00:29:45', 0, 0, 'ronyfla@gmail.com', 'RONALDO P OLIVEIRA', '2016-07-01 21:10:40', 1),
-('f72c4446-365a-4022-81e3-5798deb7eb12', 'gmoliveira87@hotmail.com', 1, 'AIsH4XthvD17H0CFv1nFGcmzeVYSocC5GNwnB5V0a7x0MLOOZCUCaCFwQWDyuISPpw==', 'd79ea924-4d72-4633-9880-b78b9cda5e46', NULL, 0, 0, '2016-07-02 12:02:03', 0, 0, 'gmoliveira87@hotmail.com', 'Gustavo Marques de Oliveira ', '2016-07-01 21:10:40', 1),
-('fb440cfb-5155-4842-9b12-1541608670d8', 'guilhermeml@gmail.com', 1, 'ABx901FldcwFqalcliWUOXUSFhp4xwkuiCtwlFWvzrhxaibtrm6pkEq2ByrUBLCp6A==', 'f930eafd-aca5-4936-ba59-a65d9d2f418e', NULL, 0, 0, '2016-06-22 18:44:12', 0, 0, 'guilhermeml@gmail.com', 'Guilherme Marques de Lima Valido', '2016-07-01 21:10:40', 1);
+('6be52512-d272-4cc2-98a9-f5bf93534082', 'waldirpereira@gmail.com', 1, 'ALGVAaupUYi8hGTbHrSSy9BKOgKC3bDokqng0zBrOnWJ14egPpQQ6+VCTj1+kniebg==', '30bb21ee-7e25-4d41-804e-1ef8750e9060', NULL, 0, 0, '2016-06-20 17:57:11', 0, 0, 'waldirpereira@gmail.com', 'Waldir Pereira', '2016-07-01 21:10:40', 1);
 
 --
 -- Indexes for dumped tables
@@ -8452,7 +8431,7 @@ CREATE TABLE `categoria_artigo` (
  UNIQUE KEY `un_codigo_categoria_artigo` (`codigo_categoria_artigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `acerva`.`artigo` ( `codigo_artigo` INT NOT NULL AUTO_INCREMENT , `titulo` VARCHAR(300) NOT NULL , `texto_html` VARCHAR(8000) NOT NULL , `data_hora` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`codigo_artigo`)) ENGINE = InnoDB;
+CREATE TABLE `artigo` ( `codigo_artigo` INT NOT NULL AUTO_INCREMENT , `titulo` VARCHAR(300) NOT NULL , `texto_html` VARCHAR(8000) NOT NULL , `data_hora` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`codigo_artigo`)) ENGINE = InnoDB;
 
 ALTER TABLE `artigo` ADD `codigo_categoria_artigo` INT NOT NULL AFTER `data_hora`, ADD `codigo_usuario` VARCHAR(128) NOT NULL AFTER `codigo_categoria_artigo`, ADD `ativo` CHAR(1) NOT NULL DEFAULT 'S' AFTER `codigo_usuario`;
 
@@ -8460,15 +8439,15 @@ ALTER TABLE `artigo` ADD INDEX(`codigo_categoria_artigo`);
 
 ALTER TABLE `artigo` ADD INDEX(`codigo_usuario`);
 
-ALTER TABLE `artigo` ADD CONSTRAINT `fk_artigo_usuario` FOREIGN KEY (`codigo_usuario`) REFERENCES `acerva`.`users`(`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT; ALTER TABLE `artigo` ADD CONSTRAINT `fk_artigo_categoria_artigo` FOREIGN KEY (`codigo_categoria_artigo`) REFERENCES `acerva`.`categoria_artigo`(`codigo_categoria_artigo`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `artigo` ADD CONSTRAINT `fk_artigo_usuario` FOREIGN KEY (`codigo_usuario`) REFERENCES `users`(`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT; ALTER TABLE `artigo` ADD CONSTRAINT `fk_artigo_categoria_artigo` FOREIGN KEY (`codigo_categoria_artigo`) REFERENCES `categoria_artigo`(`codigo_categoria_artigo`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 INSERT INTO `categoria_artigo` (`codigo_categoria_artigo`, `nome`, `ativo`) VALUES ('1', 'Sobre a ACervA', 'S'), ('2', 'Técnicas', 'S');
 
-CREATE TABLE `acerva`.`anexo_artigo` ( `codigo_anexo_artigo` INT NOT NULL AUTO_INCREMENT , `codigo_artigo` INT NOT NULL , `titulo` VARCHAR(300) NOT NULL , `nome_arquivo` VARCHAR(256) NOT NULL , PRIMARY KEY (`codigo_anexo_artigo`)) ENGINE = InnoDB;
+CREATE TABLE `anexo_artigo` ( `codigo_anexo_artigo` INT NOT NULL AUTO_INCREMENT , `codigo_artigo` INT NOT NULL , `titulo` VARCHAR(300) NOT NULL , `nome_arquivo` VARCHAR(256) NOT NULL , PRIMARY KEY (`codigo_anexo_artigo`)) ENGINE = InnoDB;
 
 ALTER TABLE `anexo_artigo` ADD INDEX(`codigo_artigo`);
 
-ALTER TABLE `anexo_artigo` ADD CONSTRAINT `fk_anexo_artigo_artigo` FOREIGN KEY (`codigo_artigo`) REFERENCES `acerva`.`artigo`(`codigo_artigo`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `anexo_artigo` ADD CONSTRAINT `fk_anexo_artigo_artigo` FOREIGN KEY (`codigo_artigo`) REFERENCES `artigo`(`codigo_artigo`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 ALTER TABLE `artigo` CHANGE `data_hora` `data_hora` DATETIME NOT NULL;
 
@@ -8576,7 +8555,7 @@ CREATE TABLE `votacao` (
  PRIMARY KEY (`codigo_votacao`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `acerva`.`pergunta` ( `codigo_pergunta` INT NOT NULL AUTO_INCREMENT , `codigo_votacao` INT NOT NULL , `titulo` VARCHAR(200) NOT NULL , `texto` VARCHAR(2000) NOT NULL , PRIMARY KEY (`codigo_pergunta`)) ENGINE = InnoDB;
+CREATE TABLE `pergunta` ( `codigo_pergunta` INT NOT NULL AUTO_INCREMENT , `codigo_votacao` INT NOT NULL , `titulo` VARCHAR(200) NOT NULL , `texto` VARCHAR(2000) NOT NULL , PRIMARY KEY (`codigo_pergunta`)) ENGINE = InnoDB;
 
 ALTER TABLE `pergunta` ADD `ativo` CHAR(1) NOT NULL DEFAULT 'S' AFTER `texto`;
 
@@ -8584,13 +8563,13 @@ ALTER TABLE `pergunta` ADD INDEX(`codigo_votacao`);
 
 ALTER TABLE `pergunta` ADD CONSTRAINT `fk_pergunta_votacao` FOREIGN KEY (`codigo_votacao`) REFERENCES `votacao`(`codigo_votacao`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
-CREATE TABLE `acerva`.`opcao` ( `codigo_opcao` INT NOT NULL AUTO_INCREMENT , `codigo_pergunta` INT NOT NULL , `texto` VARCHAR(2000) NOT NULL , `ativo` CHAR(1) NOT NULL DEFAULT 'S' , PRIMARY KEY (`codigo_opcao`)) ENGINE = InnoDB;
+CREATE TABLE `opcao` ( `codigo_opcao` INT NOT NULL AUTO_INCREMENT , `codigo_pergunta` INT NOT NULL , `texto` VARCHAR(2000) NOT NULL , `ativo` CHAR(1) NOT NULL DEFAULT 'S' , PRIMARY KEY (`codigo_opcao`)) ENGINE = InnoDB;
 
 ALTER TABLE `opcao` ADD INDEX(`codigo_pergunta`);
 
 ALTER TABLE `opcao` ADD CONSTRAINT `fk_opcao_pergunta` FOREIGN KEY (`codigo_pergunta`) REFERENCES `pergunta`(`codigo_pergunta`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
-CREATE TABLE `acerva`.`resposta` ( `codigo_resposta` INT NOT NULL AUTO_INCREMENT , `codigo_opcao` INT NOT NULL , `id_usuario` VARCHAR(128) NOT NULL , `data_hora` DATETIME NOT NULL , PRIMARY KEY (`codigo_resposta`)) ENGINE = InnoDB;
+CREATE TABLE `resposta` ( `codigo_resposta` INT NOT NULL AUTO_INCREMENT , `codigo_opcao` INT NOT NULL , `id_usuario` VARCHAR(128) NOT NULL , `data_hora` DATETIME NOT NULL , PRIMARY KEY (`codigo_resposta`)) ENGINE = InnoDB;
 
 ALTER TABLE `resposta` ADD INDEX(`codigo_opcao`);
 ALTER TABLE `resposta` ADD INDEX(`id_usuario`);

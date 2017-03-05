@@ -16,6 +16,10 @@ namespace Acerva.Web.Ninject
                 .To(typeof(CadastroNoticias))
                 .InRequestScope();
 
+            Bind(typeof(ICadastroVotacoes))
+                .To(typeof(CadastroVotacoes))
+                .InRequestScope();
+
             Bind(typeof(ICadastroUsuarios))
                 .To(typeof(CadastroUsuarios))
                 .InRequestScope();

@@ -1,36 +1,36 @@
 ﻿@{
-    ViewBag.Title = "Notícias";
-    ViewBag.AngularApp = "acerva.noticia";
+    ViewBag.Title = "Votações";
+    ViewBag.AngularApp = "acerva.votacao";
     var action = ViewContext.RouteData.GetRequiredString("action");
     var id = ViewContext.RouteData.Values["id"];
 }
-<h4>Notícias</h4>
+<h4>Votações</h4>
 
 <div ng-view ng-cloak></div>
 @Html.AntiForgeryToken()
 
 <script type="text/ng-template" id="index.html">
     <div class="animate-show-only">
-        @Html.Partial("_ListaNoticias")
+        @Html.Partial("_ListaVotacoes")
     </div>
 </script>
 
 <script type="text/ng-template" id="edit.html">
     <div class="animate-show-only">
-        @Html.Partial("_CadastroNoticia")
+        @Html.Partial("_CadastroVotacao")
     </div>
 </script>
 
 @section styles {
     @Styles.Render("~/cssBundles/angularForm")
-    @Styles.Render("~/cssBundles/noticia")
+    @Styles.Render("~/cssBundles/votacao")
     @Styles.Render(BundleConfig.BundleStylesDataTables)
 }
 
 @section dependencies {
     @if (ViewBag.Id == null)
     {
-        @Scripts.Render("~/bundles/noticia")
+        @Scripts.Render("~/bundles/votacao")
     }
 }
 
@@ -45,7 +45,6 @@
                 buscaTiposDominio: "@Url.Action("BuscaTiposDominio")",
                 busca: "@Url.Action("Busca")",
                 salva: "@Url.Action("Salva")",
-                anexaLogotipo: "@Url.Action("AnexaLogotipo")",
                 alteraAtivacao: "@Url.Action("AlteraAtivacao")"
             });
         })();

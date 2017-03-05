@@ -40,7 +40,6 @@ namespace Acerva.Web.Controllers
         public ActionResult BuscaParaListagem()
         {
             var listaNoticiasJson = _cadastroNoticias.BuscaParaListagem()
-                .Where(n => n.Ativo)
                 .Select(Mapper.Map<NoticiaViewModel>);
             return new JsonNetResult(listaNoticiasJson);
         }
@@ -65,7 +64,7 @@ namespace Acerva.Web.Controllers
         [ValidateAjaxAntiForgeryToken]
         public ActionResult Salva([JsonBinder]NoticiaViewModel noticiaViewModel)
         {
-            Log.InfoFormat("Usuário está salvando a noticia {0} de código {1}", noticiaViewModel.Titulo, noticiaViewModel.Codigo);
+            Log.InfoFormat("Usuário está salvando a notícia {0} de código {1}", noticiaViewModel.Titulo, noticiaViewModel.Codigo);
 
             var ehNovo = noticiaViewModel.Codigo == 0;
             var noticia = ehNovo ? new Noticia() : _cadastroNoticias.Busca(noticiaViewModel.Codigo);
@@ -84,7 +83,7 @@ namespace Acerva.Web.Controllers
             _cadastroNoticias.Salva(noticia);
 
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success,
-                string.Format("Notícia <a href='{0}#/Edit/{1}'>{2}</a> foi salvo com sucesso", Url.Action("Index"), noticia.Codigo, noticia.Titulo),
+                string.Format("Notícia <a href='{0}#/Edit/{1}'>{2}</a> foi salva com sucesso", Url.Action("Index"), noticia.Codigo, noticia.Titulo),
                 "Notícia salva");
 
             return new JsonNetResult(new { growlMessage });
@@ -102,7 +101,7 @@ namespace Acerva.Web.Controllers
             noticia.Ativo = ativo;
 
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success,
-                string.Format("Notícia <a href='{0}#/Edit/{1}'>{2}</a> foi {3}ativado com sucesso", Url.Action("Index"), noticia.Codigo, noticia.Codigo, prefixoOperacao),
+                string.Format("Notícia <a href='{0}#/Edit/{1}'>{2}</a> foi {3}ativado com sucesso", Url.Action("Index"), noticia.Codigo, noticia.Titulo, prefixoOperacao),
                 string.Format("Notícia {0}ativada", prefixoOperacao));
 
             return new JsonNetResult(new { growlMessage });

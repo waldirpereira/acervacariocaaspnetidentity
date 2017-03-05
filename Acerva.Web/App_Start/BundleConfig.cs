@@ -124,6 +124,7 @@ namespace Acerva.Web
             CadastroArtigos(bundles);
             CadastroRegionais(bundles);
             CadastroNoticias(bundles);
+            CadastroVotacoes(bundles);
             CadastroCategoriasArtigos(bundles);
             CadastroUsuarios(bundles);
             VisualizacaoSituacao(bundles);
@@ -276,6 +277,24 @@ namespace Acerva.Web
             );
 
             bundles.Add(new LessBundle("~/cssBundles/noticia")
+                .Include(AngularTextAngularCss)
+                .Include(FontAwesomeCss)
+            );
+        }
+
+        private static void CadastroVotacoes(BundleCollection bundles)
+        {
+            const string path = ScriptsAplicacaoFolder + "Votacao/";
+            bundles.Add(new ScriptBundle("~/bundles/votacao")
+                .Include(AngularTextAngularRangy)
+                .Include(AngularTextAngularCore)
+                .Include(path + "acerva.votacao.module.js")
+                .Include(path + "acerva.votacao.service.js")
+                .Include(path + "acerva.votacao.controller.js")
+                .Include(path + "acerva.votacao.cadastro.controller.js")
+            );
+
+            bundles.Add(new LessBundle("~/cssBundles/votacao")
                 .Include(AngularTextAngularCss)
                 .Include(FontAwesomeCss)
             );

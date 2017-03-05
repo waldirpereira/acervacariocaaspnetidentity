@@ -148,6 +148,7 @@
     <Compile Include="GerenciadorTransacao\IGerenciadorTransacao.cs" />
     <Compile Include="MySQLDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\CadastroVotacoes.cs" />
     <Compile Include="Repositorios\CadastroNoticias.cs" />
     <Compile Include="Repositorios\CadastroArtigos.cs" />
     <Compile Include="Repositorios\CadastroCategoriasArtigos.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="Repositorios\CadastroHistoricoStatusUsuarios.cs" />
     <Compile Include="Repositorios\CadastroUsuarios.cs" />
     <Compile Include="Repositorios\ICadastroHistoricoStatusUsuarios.cs" />
+    <Compile Include="Repositorios\ICadastroVotacoes.cs" />
     <Compile Include="Repositorios\ICadastroNoticias.cs" />
     <Compile Include="Repositorios\ICadastroArtigos.cs" />
     <Compile Include="Repositorios\ICadastroCategoriasArtigos.cs" />

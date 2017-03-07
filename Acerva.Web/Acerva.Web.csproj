@@ -357,6 +357,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Content Include="Content\Aplicacao\css\admin.css" />
+    <Content Include="Content\Aplicacao\images\Logo_ACerva_Carioca.png" />
+    <Content Include="Content\Aplicacao\images\regionais\2\niteroi.jpg" />
+    <Content Include="Content\Aplicacao\images\regionais\4\teresopolis.jpg" />
+    <Content Include="Content\Aplicacao\images\tacas.png" />
     <Content Include="Content\vendor\angular-hotkeys\hotkeys.css" />
     <Content Include="Content\vendor\angular-hotkeys\hotkeys.min.css" />
     <Content Include="Content\vendor\angularPrint\angularPrint.css" />
@@ -1419,6 +1423,7 @@
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -1456,7 +1461,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\Aplicacao\anexos\" />
     <Folder Include="Content\Aplicacao\images\fotos\" />
-    <Folder Include="Content\Aplicacao\images\regionais\" />
     <Folder Include="Content\vendor\bootswatch\darkly\css\fonts\" />
     <Folder Include="Content\vendor\datatables-tabletools\images\psd\" />
     <Folder Include="Log\" />

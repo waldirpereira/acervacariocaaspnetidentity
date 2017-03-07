@@ -21,13 +21,13 @@ namespace Acerva.Modelo.Mapeamento
         }
 
         /// <summary>
-        /// Deltes a role from the Roles table
+        /// Deltes a role from the roles table
         /// </summary>
         /// <param name="roleId">The role Id</param>
         /// <returns></returns>
         public int Delete(string roleId)
         {
-            string commandText = "Delete from Roles where Id = @id";
+            string commandText = "Delete from roles where Id = @id";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("@id", roleId);
 
@@ -35,13 +35,13 @@ namespace Acerva.Modelo.Mapeamento
         }
 
         /// <summary>
-        /// Inserts a new Role in the Roles table
+        /// Inserts a new Role in the roles table
         /// </summary>
         /// <param name="roleName">The role's name</param>
         /// <returns></returns>
         public int Insert(Papel role)
         {
-            string commandText = "Insert into Roles (Id, Name) values (@id, @name)";
+            string commandText = "Insert into roles (Id, Name) values (@id, @name)";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("@name", role.Name);
             parameters.Add("@id", role.Id);
@@ -56,7 +56,7 @@ namespace Acerva.Modelo.Mapeamento
         /// <returns>Role name</returns>
         public string GetRoleName(string roleId)
         {
-            string commandText = "Select Name from Roles where Id = @id";
+            string commandText = "Select Name from roles where Id = @id";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("@id", roleId);
 
@@ -71,7 +71,7 @@ namespace Acerva.Modelo.Mapeamento
         public string GetRoleId(string roleName)
         {
             string roleId = null;
-            string commandText = "Select Id from Roles where Name = @name";
+            string commandText = "Select Id from roles where Name = @name";
             Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@name", roleName } };
 
             var result = _database.QueryValue(commandText, parameters);
@@ -122,7 +122,7 @@ namespace Acerva.Modelo.Mapeamento
 
         public int Update(Papel role)
         {
-            string commandText = "Update Roles set Name = @name where Id = @id";
+            string commandText = "Update roles set Name = @name where Id = @id";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("@id", role.Id);
 

@@ -5,7 +5,7 @@ using Acerva.Infra;
 namespace Acerva.Modelo.Mapeamento
 {
     /// <summary>
-    /// Class that represents the UserClaims table in the MySQL Database
+    /// Class that represents the userclaims table in the MySQL Database
     /// </summary>
     public class UserClaimsTable
     {
@@ -28,7 +28,7 @@ namespace Acerva.Modelo.Mapeamento
         public ClaimsIdentity FindByUserId(string userId)
         {
             ClaimsIdentity claims = new ClaimsIdentity();
-            string commandText = "Select * from UserClaims where UserId = @userId";
+            string commandText = "Select * from userclaims where UserId = @userId";
             Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@UserId", userId } };
 
             var rows = _database.Query(commandText, parameters);
@@ -48,7 +48,7 @@ namespace Acerva.Modelo.Mapeamento
         /// <returns></returns>
         public int Delete(string userId)
         {
-            string commandText = "Delete from UserClaims where UserId = @userId";
+            string commandText = "Delete from userclaims where UserId = @userId";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("userId", userId);
 
@@ -56,14 +56,14 @@ namespace Acerva.Modelo.Mapeamento
         }
 
         /// <summary>
-        /// Inserts a new claim in UserClaims table
+        /// Inserts a new claim in userclaims table
         /// </summary>
         /// <param name="userClaim">User's claim to be added</param>
         /// <param name="userId">User's id</param>
         /// <returns></returns>
         public int Insert(Claim userClaim, string userId)
         {
-            string commandText = "Insert into UserClaims (ClaimValue, ClaimType, UserId) values (@value, @type, @userId)";
+            string commandText = "Insert into userclaims (ClaimValue, ClaimType, UserId) values (@value, @type, @userId)";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("value", userClaim.Value);
             parameters.Add("type", userClaim.Type);
@@ -80,7 +80,7 @@ namespace Acerva.Modelo.Mapeamento
         /// <returns></returns>
         public int Delete(Usuario user, Claim claim)
         {
-            string commandText = "Delete from UserClaims where UserId = @userId and @ClaimValue = @value and ClaimType = @type";
+            string commandText = "Delete from userclaims where UserId = @userId and @ClaimValue = @value and ClaimType = @type";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("userId", user.Id);
             parameters.Add("value", claim.Value);

@@ -5,7 +5,7 @@ using Microsoft.AspNet.Identity;
 namespace Acerva.Modelo.Mapeamento
 {
     /// <summary>
-    /// Class that represents the UserLogins table in the MySQL Database
+    /// Class that represents the userlogins table in the MySQL Database
     /// </summary>
     public class UserLoginsTable
     {
@@ -21,14 +21,14 @@ namespace Acerva.Modelo.Mapeamento
         }
 
         /// <summary>
-        /// Deletes a login from a user in the UserLogins table
+        /// Deletes a login from a user in the userlogins table
         /// </summary>
         /// <param name="user">User to have login deleted</param>
         /// <param name="login">Login to be deleted from user</param>
         /// <returns></returns>
         public int Delete(Usuario user, UserLoginInfo login)
         {
-            string commandText = "Delete from UserLogins where UserId = @userId and LoginProvider = @loginProvider and ProviderKey = @providerKey";
+            string commandText = "Delete from userlogins where UserId = @userId and LoginProvider = @loginProvider and ProviderKey = @providerKey";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("UserId", user.Id);
             parameters.Add("loginProvider", login.LoginProvider);
@@ -38,13 +38,13 @@ namespace Acerva.Modelo.Mapeamento
         }
 
         /// <summary>
-        /// Deletes all Logins from a user in the UserLogins table
+        /// Deletes all Logins from a user in the userlogins table
         /// </summary>
         /// <param name="userId">The user's id</param>
         /// <returns></returns>
         public int Delete(string userId)
         {
-            string commandText = "Delete from UserLogins where UserId = @userId";
+            string commandText = "Delete from userlogins where UserId = @userId";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("UserId", userId);
 
@@ -52,14 +52,14 @@ namespace Acerva.Modelo.Mapeamento
         }
 
         /// <summary>
-        /// Inserts a new login in the UserLogins table
+        /// Inserts a new login in the userlogins table
         /// </summary>
         /// <param name="user">User to have new login added</param>
         /// <param name="login">Login to be added</param>
         /// <returns></returns>
         public int Insert(Usuario user, UserLoginInfo login)
         {
-            string commandText = "Insert into UserLogins (LoginProvider, ProviderKey, UserId) values (@loginProvider, @providerKey, @userId)";
+            string commandText = "Insert into userlogins (LoginProvider, ProviderKey, UserId) values (@loginProvider, @providerKey, @userId)";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("loginProvider", login.LoginProvider);
             parameters.Add("providerKey", login.ProviderKey);
@@ -75,7 +75,7 @@ namespace Acerva.Modelo.Mapeamento
         /// <returns></returns>
         public string FindUserIdByLogin(UserLoginInfo userLogin)
         {
-            string commandText = "Select UserId from UserLogins where LoginProvider = @loginProvider and ProviderKey = @providerKey";
+            string commandText = "Select UserId from userlogins where LoginProvider = @loginProvider and ProviderKey = @providerKey";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("loginProvider", userLogin.LoginProvider);
             parameters.Add("providerKey", userLogin.ProviderKey);
@@ -91,7 +91,7 @@ namespace Acerva.Modelo.Mapeamento
         public List<UserLoginInfo> FindByUserId(string userId)
         {
             List<UserLoginInfo> logins = new List<UserLoginInfo>();
-            string commandText = "Select * from UserLogins where UserId = @userId";
+            string commandText = "Select * from userlogins where UserId = @userId";
             Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@userId", userId } };
 
             var rows = _database.Query(commandText, parameters);

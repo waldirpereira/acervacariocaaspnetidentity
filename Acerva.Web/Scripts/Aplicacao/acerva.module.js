@@ -1,8 +1,9 @@
 ﻿(function () {
 	"use strict";
 
-    angular
-        .module("acerva", ["ngSanitize",
+    var app = angular
+        .module("acerva", [
+            "ngSanitize",
             "ngAnimate", 
             "ngRoute", 
             "ngLocale", 
@@ -12,5 +13,10 @@
             "ui.select", 
             "frte.datepicker",
             "png.timeinput", 
-            "LocalStorageModule"]);
+            "LocalStorageModule"
+        ]);
+
+    app.config(function(localStorageServiceProvider) {
+        localStorageServiceProvider.setPrefix("acerva");
+    });
 })();

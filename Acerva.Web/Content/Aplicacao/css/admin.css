@@ -10,8 +10,6 @@
     background-color: #FFF; 
     z-index: 1; 
     position: fixed !important; 
-    /*top: 103px;*/ 
-    /*height: 100%;*/ 
     padding-top: 10px; 
     width: calc(100% / 12 * 2) !important;
 }
@@ -22,8 +20,6 @@
 
 .col-content .tab-content {
     top: 103px; 
-    /*position: absolute !important; 
-    width: calc(100% - 30px) !important;*/
 }
 
 .col-content .tab-content table
@@ -32,7 +28,7 @@
 	background-color: #fafafa !important;
 	border: 1px #000000 solid;
 	border-collapse: collapse;
-	border-spacing: 0px;
+	border-spacing: 0;
 }
 
 .col-content .tab-content th
@@ -57,5 +53,5 @@
 	font-weight: normal;
 	font-size: .7em;
 	color: #404040;	
-	padding: 4px 0px 4px 8px !important;
+	padding: 4px 0 4px 8px !important;
 }

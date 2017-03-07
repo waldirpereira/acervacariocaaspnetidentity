@@ -9,6 +9,7 @@ using Acerva.Infra;
 using Acerva.Infra.Repositorios;
 using Acerva.Infra.Web;
 using Acerva.Modelo;
+using Acerva.Utils;
 using Acerva.Web.Controllers.Helpers;
 using Acerva.Web.Extensions;
 using Microsoft.AspNet.Identity;
@@ -117,19 +118,18 @@ namespace Acerva.Web.Controllers
                 return View("Error");
             }
 
-            var usuarioBd = _cadastroUsuarios.Busca(user.Id);
-            if (usuarioBd.Status != StatusUsuario.Ativo && usuarioBd.Status != StatusUsuario.AguardandoRenovacao)
-            {
-                ViewBag.errorMessage = "Usuário não possui status Ativo ou Ag. Renovação.";
-                return View("Error");
-            }
-
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
+                    var usuarioBd = _cadastroUsuarios.Busca(user.Id);
+                    if (usuarioBd.Status != StatusUsuario.Ativo && usuarioBd.Status != StatusUsuario.AguardandoRenovacao)
+                    {
+                        ViewBag.errorMessage = string.Format("Usuário não possui status Ativo ou Ag. Renovação. (status atual: {0}", NomeExibicaoAttribute.GetNome(usuarioBd.Status));
+                        return View("Error");
+                    }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");

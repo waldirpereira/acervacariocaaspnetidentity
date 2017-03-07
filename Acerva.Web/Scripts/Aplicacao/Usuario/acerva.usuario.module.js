@@ -1,13 +1,10 @@
 ﻿(function () {
     "use strict";
 
-    angular.module("acerva.usuario", ["acerva", "datatables", "LocalStorageModule", "naif.base64", "ngCroppie", "checklist-model", "datatables.buttons", "ngCpfCnpj", "ui.mask"]);
+    angular.module("acerva.usuario", ["acerva", "datatables", "naif.base64", "ngCroppie", "checklist-model", "datatables.buttons", "ngCpfCnpj", "ui.mask"]);
 
     angular.module("acerva")
-        .config(["$routeProvider", routes])
-        .config(function (localStorageServiceProvider) {
-            localStorageServiceProvider.setPrefix("acerva");
-        });
+        .config(["$routeProvider", routes]);
 
     function routes($routeProvider) {
         $routeProvider

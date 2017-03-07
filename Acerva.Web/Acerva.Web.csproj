@@ -439,11 +439,11 @@
     <Content Include="Scripts\vendor\angular-hotkeys\hotkeys.js" />
     <Content Include="Scripts\vendor\angular-hotkeys\hotkeys.min.js" />
     <Content Include="Scripts\vendor\angular-local-storage\angular-local-storage.js" />
-    <Content Include="Scripts\vendor\angular-local-storage\angular-local-storage.min.js" />
     <Content Include="Scripts\vendor\angular-ui-mask\mask.js" />
     <Content Include="Scripts\vendor\angularPrint\angularPrint.js" />
     <Content Include="Scripts\vendor\chart\Chart.js" />
     <Content Include="Scripts\vendor\chart\Chart.min.js" />
+    <Content Include="Scripts\vendor\checklist-model\checklist-model.js" />
     <Content Include="Scripts\vendor\cpf_cnpj\cnpj.js" />
     <Content Include="Scripts\vendor\cpf_cnpj\cpf.js" />
     <Content Include="Scripts\vendor\ng-cpf-cnpj\ngCpfCnpj.js" />
@@ -648,7 +648,6 @@
     <Content Include="Content\Aplicacao\fonts\acerva-iconfont.ttf" />
     <Content Include="Content\Aplicacao\fonts\acerva-iconfont.woff" />
     <Content Include="Scripts\vendor\angular-chart\angular-chart.min.js.map" />
-    <Content Include="Scripts\vendor\angular-local-storage\angular-local-storage.min.js.map" />
     <Content Include="Scripts\vendor\angular-base64-upload\angular-base64-upload.min.js.map" />
     <None Include="Scripts\vendor\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\vendor\i18n\angular-locale_aa-dj.js" />
@@ -1464,7 +1463,6 @@
     <Folder Include="Content\vendor\bootswatch\darkly\css\fonts\" />
     <Folder Include="Content\vendor\datatables-tabletools\images\psd\" />
     <Folder Include="Log\" />
-    <Folder Include="Scripts\vendor\checklist-model\" />
     <Folder Include="Views\AppplicationBase\" />
   </ItemGroup>
   <ItemGroup>

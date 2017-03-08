@@ -72,7 +72,7 @@ namespace CreateModel
             if (!Directory.Exists(Path.Combine(pathWeb, string.Format("Models/Cadastro{0}", ModeloSingular))))
                 Directory.CreateDirectory(Path.Combine(pathWeb, string.Format("Models/Cadastro{0}", ModeloSingular)));
             ProcessaArquivo("Web/Models/CadastroAviao/AviaoViewModel.cs", Path.Combine(pathWeb, string.Format("Models/Cadastro{0}/{0}ViewModel.cs", ModeloSingular)));
-            ProcessaArquivo("Web/Models/CadastroAviao/CadastroAviaoMapperProfile.cs", Path.Combine(pathWeb, string.Format("Models/Cadastro{0}/Cadastro{0}MapperProfile.cs", ModeloSingular)));
+            ProcessaArquivo("Web/Models/CadastroAviao/CadastroAvioesMapperProfile.cs", Path.Combine(pathWeb, string.Format("Models/Cadastro{0}/Cadastro{1}MapperProfile.cs", ModeloSingular, ModeloPlural)));
 
             if (!Directory.Exists(Path.Combine(pathWeb, string.Format("Scripts/Aplicacao/{0}", ModeloSingular))))
                 Directory.CreateDirectory(Path.Combine(pathWeb, string.Format("Scripts/Aplicacao/{0}", ModeloSingular)));
@@ -91,7 +91,7 @@ namespace CreateModel
             {
                 string.Format("Controllers\\{0}Controller.cs", ModeloSingular),
                 string.Format("Models/Cadastro{0}\\{0}ViewModel.cs", ModeloSingular),
-                string.Format("Models/Cadastro{0}\\Cadastro{0}MapperProfile.cs", ModeloSingular)
+                string.Format("Models/Cadastro{0}\\Cadastro{1}MapperProfile.cs", ModeloSingular, ModeloPlural)
             });
 
             AlteraCsproj("Content", Path.Combine(pathWeb, string.Format("{0}.Web.csproj", PrefixoSistema)), new List<string>
@@ -124,10 +124,11 @@ namespace CreateModel
             var conteudoGlobalAsax = File.ReadAllText(caminhoCompletoGlobalAsax);
             var posicaoInclusao = conteudoGlobalAsax.IndexOf("cfg.AddProfile<", StringComparison.CurrentCulture);
 
-            var config = string.Format("cfg.AddProfile<{0}MapperProfile>();" + "\n" +
-                "                " + "\n                ", ModeloSingular);
+            var config = string.Format("cfg.AddProfile<Cadastro{0}MapperProfile>();" + "\n" +
+                "                " + "\n                ", ModeloPlural);
+            conteudoGlobalAsax = conteudoGlobalAsax.Insert(posicaoInclusao, config);
 
-            File.WriteAllText(caminhoCompletoGlobalAsax, conteudoGlobalAsax.Insert(posicaoInclusao, config));
+            File.WriteAllText(caminhoCompletoGlobalAsax, conteudoGlobalAsax.Insert(0, string.Format("using {0}.Web.Models.Cadastro{1};\n", PrefixoSistema, ModeloPlural)));
         }
 
         private static void CriaConfiguracaoNinjectRepositorio()

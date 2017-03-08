@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Aviões";
+    ViewBag.AngularApp = "acerva.aviao";
+    var action = ViewContext.RouteData.GetRequiredString("action");
+    var id = ViewContext.RouteData.Values["id"];
+}
+<h4>Aviões</h4>
+
+<div ng-view ng-cloak></div>
+@Html.AntiForgeryToken()
+
+<script type="text/ng-template" id="index.html">
+    <div class="animate-show-only">
+        @Html.Partial("_ListaAvioes")
+    </div>
+</script>
+
+<script type="text/ng-template" id="edit.html">
+    <div class="animate-show-only">
+        @Html.Partial("_CadastroAviao")
+    </div>
+</script>
+
+@section styles {
+    @Styles.Render("~/cssBundles/angularForm")
+    @Styles.Render(BundleConfig.BundleStylesDataTables)
+}
+
+@section dependencies {
+    @Scripts.Render("~/bundles/aviao")
+}
+
+@section scripts {
+    @if (action == "Index")
+    {
+        <script type="text/javascript">
+    (function () {
+        angular.module("acerva")
+            .constant("ROTAS", {
+                buscaTodos: "@Url.Action("BuscaParaListagem")",
+                buscaTiposDominio: "@Url.Action("BuscaTiposDominio")",
+                busca: "@Url.Action("Busca")",
+                salva: "@Url.Action("Salva")",
+                alteraAtivacao: "@Url.Action("AlteraAtivacao")"
+            });
+        })();
+        </script>
+    }
+    else
+    {
+        var url = Url.Action("Index") + "#/" + action + "/" + id;
+        <script type="text/javascript">
+            (function () {
+                window.location = '@url';
+            })();
+        </script>
+    }
+}

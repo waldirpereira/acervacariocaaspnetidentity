@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acerva.Tests.Modelo", "Acer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acerva.Utils", "Acerva.Utils\Acerva.Utils.csproj", "{D1804C35-558E-4DA9-ABE4-B868680B9E91}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateModel", "CreateModel\CreateModel.csproj", "{91DA5CA6-D77A-4159-B518-D1F3325E7E97}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{D1804C35-558E-4DA9-ABE4-B868680B9E91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1804C35-558E-4DA9-ABE4-B868680B9E91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1804C35-558E-4DA9-ABE4-B868680B9E91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91DA5CA6-D77A-4159-B518-D1F3325E7E97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91DA5CA6-D77A-4159-B518-D1F3325E7E97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91DA5CA6-D77A-4159-B518-D1F3325E7E97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91DA5CA6-D77A-4159-B518-D1F3325E7E97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

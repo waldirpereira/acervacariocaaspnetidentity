@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace CreateModel
 {
-    class Program
+    public class Program
     {
         public static string ModeloSingular;
         public static string ModeloPlural;
@@ -35,19 +37,37 @@ namespace CreateModel
                 Artigo = Console.ReadLine();
             }
 
+            const string prefixoSistema = "Acerva";
+
             // modelo
-            var arquivoModelo = File.ReadAllText("./Template/Modelo/Aviao.cs");
-            File.WriteAllText(string.Format("../Acerva.Modelo/{0}.cs", ModeloSingular), SubstituiTermos(arquivoModelo));
+            const string pathModelo = "../../../Acerva.Modelo";
+            ProcessaArquivo("Modelo/Aviao.cs", Path.Combine(pathModelo, string.Format("{0}.cs", ModeloSingular)));
+            ProcessaArquivo("Modelo/Validadores/AviaoValidator.cs", Path.Combine(pathModelo, string.Format("Validadores/{0}Validator.cs", ModeloSingular)));
+            AlteraCsproj(Path.Combine(pathModelo, string.Format("{0}.Modelo.csproj", prefixoSistema)), new List<string> {
+                    string.Format("{0}.cs", ModeloSingular),
+                    string.Format("Validadores\\{0}Validator.cs", ModeloSingular)
+                });
+            
+            // mapeamento
 
-            var pathCsproj = "../Modelo/Acerva.Modelo.csproj";
-            var modeloCsproj = File.ReadAllText(pathCsproj);
-            var posicaoInclusao = modeloCsproj.IndexOf("<Compile Include=", StringComparison.CurrentCulture);
-            File.WriteAllText(pathCsproj, modeloCsproj.Insert(posicaoInclusao, string.Format("<Compile Include=\"{0}.cs\" />\n\t", ModeloSingular)));
-
-            // 
 
             Console.Write("Geração terminada com sucesso. Pressione ENTER tecla para finalizar.");
             Console.ReadLine();
+        }
+
+        private static void AlteraCsproj(string caminhoCompletoCsproj, IEnumerable<string> nomesArquivos)
+        {
+            var modeloCsproj = File.ReadAllText(caminhoCompletoCsproj);
+            var posicaoInclusao = modeloCsproj.IndexOf("<Compile Include=", StringComparison.CurrentCulture);
+            var inclusoesCsprojModelo = nomesArquivos.Select(n => string.Format("<Compile Include=\"{0}\" />\n\t", n)).Aggregate((a, b) => a + b);
+            File.WriteAllText(caminhoCompletoCsproj, modeloCsproj.Insert(posicaoInclusao, inclusoesCsprojModelo));
+        }
+
+        private static void ProcessaArquivo(string pathOrigemDentroTemplate, string pathDestinoCompleto)
+        {
+            const string pathTemplate = "../../Template";
+            var arquivoModelo = File.ReadAllText(Path.Combine(pathTemplate, pathOrigemDentroTemplate));
+            File.WriteAllText(pathDestinoCompleto, SubstituiTermos(arquivoModelo));
         }
 
         private static string SubstituiTermos(string conteudoArquivo)

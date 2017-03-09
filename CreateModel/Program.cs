@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace CreateModel
 {
@@ -128,7 +129,7 @@ namespace CreateModel
                 "                " + "\n                ", ModeloPlural);
             conteudoGlobalAsax = conteudoGlobalAsax.Insert(posicaoInclusao, config);
 
-            File.WriteAllText(caminhoCompletoGlobalAsax, conteudoGlobalAsax.Insert(0, string.Format("using {0}.Web.Models.Cadastro{1};\n", PrefixoSistema, ModeloPlural)));
+            File.WriteAllText(caminhoCompletoGlobalAsax, conteudoGlobalAsax.Insert(0, string.Format("using {0}.Web.Models.Cadastro{1};\n", PrefixoSistema, ModeloPlural)), Encoding.UTF8);
         }
 
         private static void CriaConfiguracaoNinjectRepositorio()
@@ -142,7 +143,7 @@ namespace CreateModel
                 "                .InRequestScope();" + "\n" +
                 "" + "\n                ", ModeloPlural);
 
-            File.WriteAllText(caminhoCompletoNinjectModule, conteudoNinjectModule.Insert(posicaoInclusao, config));
+            File.WriteAllText(caminhoCompletoNinjectModule, conteudoNinjectModule.Insert(posicaoInclusao, config), Encoding.UTF8);
         }
 
         private static void CriaConfiguracaoBundle()
@@ -168,7 +169,7 @@ namespace CreateModel
                 "" + "\n            ", ModeloPlural, ModeloSingular, TransformaPrimeiroCaractereParaMinusculo(ModeloSingular), PrefixoSistemaNg);
             conteudoBundleConfig = conteudoBundleConfig.Insert(posicaoInclusaoMetodo, metodo);
 
-            File.WriteAllText(caminhoCompletoBundleConfig, conteudoBundleConfig);
+            File.WriteAllText(caminhoCompletoBundleConfig, conteudoBundleConfig, Encoding.UTF8);
         }
 
         private static void AlteraCsproj(string tipo, string caminhoCompletoCsproj, IEnumerable<string> nomesArquivos)
@@ -176,14 +177,14 @@ namespace CreateModel
             var conteudoCsproj = File.ReadAllText(caminhoCompletoCsproj);
             var posicaoInclusao = conteudoCsproj.IndexOf("<Compile Include=", StringComparison.CurrentCulture);
             var inclusoesCsproj = nomesArquivos.Select(n => string.Format("<{0} Include=\"{1}\" />\n\t", tipo, n)).Aggregate((a, b) => a + b);
-            File.WriteAllText(caminhoCompletoCsproj, conteudoCsproj.Insert(posicaoInclusao, inclusoesCsproj));
+            File.WriteAllText(caminhoCompletoCsproj, conteudoCsproj.Insert(posicaoInclusao, inclusoesCsproj), Encoding.UTF8);
         }
 
         private static void ProcessaArquivo(string pathOrigemDentroTemplate, string pathDestinoCompleto)
         {
             const string pathTemplate = "../../Template";
             var arquivoModelo = File.ReadAllText(Path.Combine(pathTemplate, pathOrigemDentroTemplate));
-            File.WriteAllText(pathDestinoCompleto, SubstituiTermos(arquivoModelo));
+            File.WriteAllText(pathDestinoCompleto, SubstituiTermos(arquivoModelo), Encoding.UTF8);
         }
 
         private static string SubstituiTermos(string conteudoArquivo)

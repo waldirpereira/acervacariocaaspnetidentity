@@ -376,6 +376,9 @@
     <Content Include="Content\vendor\bootswatch\paper\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\vendor\Datatables\media\css\buttons.dataTables.min.css" />
     <Content Include="Content\vendor\Datatables\media\swf\flashExport.swf" />
+    <Content Include="Content\vendor\font-awesome\css\font-awesome.css" />
+    <Content Include="Content\vendor\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Content\vendor\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\vendor\ng-croppie\ng-croppie.css" />
     <Content Include="Content\vendor\text-angular\textAngular.css" />
     <Content Include="Scripts\Aplicacao\acerva.filter.js" />
@@ -462,6 +465,11 @@
     <Content Include="Content\vendor\bootswatch\darkly\css\bootswatch.less" />
     <Content Include="Content\vendor\bootswatch\darkly\css\variables.less" />
     <Content Include="Content\vendor\bootswatch\darkly\css\mixins.less" />
+    <Content Include="Content\vendor\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\vendor\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\vendor\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\vendor\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\vendor\font-awesome\fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\acerva.pubxml" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
     <Content Include="Scripts\vendor\Datatables\buttons.flash.js" />

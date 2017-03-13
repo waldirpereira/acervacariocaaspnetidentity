@@ -139,7 +139,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-12"
+                                         ng-if="ctrl.tipoCadastro !== 'registro'">
                                         <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.indicacaoLegado")>
                                             <label class="control-label" for="indicacaoLegado">Indicação (legado)</label>
                                             <input type="text" class="form-control" name="indicacaoLegado" autocomplete="off"

@@ -60,9 +60,9 @@ namespace Acerva.Web.Controllers
         }
 
         [AcervaAuthorize(Roles = "ADMIN, DIRETOR, DELEGADO")]
-        public ActionResult BuscaParaListagem()
+        public ActionResult BuscaParaListagem(bool cancelados = false)
         {
-            var listaUsuariosJson = _cadastroUsuarios.BuscaParaListagem().ToList();
+            var listaUsuariosJson = _cadastroUsuarios.BuscaParaListagem(cancelados).ToList();
 
             var usuarioLogado = HttpContext.User;
             var usuarioLogadoBd = usuarioLogado.Identity.IsAuthenticated ? _cadastroUsuarios.Busca(usuarioLogado.Identity.GetUserId()) : null;

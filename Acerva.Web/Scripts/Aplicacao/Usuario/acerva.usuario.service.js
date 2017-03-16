@@ -8,9 +8,11 @@
         var cacheTiposDominio;
 
         return {
-            buscaListaUsuarios: function () {
-                return $http.get(ROTAS.buscaTodos)
-                    .then(retornaDadoDoXhr);
+            buscaListaUsuarios: function (cancelados) {
+                return $http.get(ROTAS.buscaTodos, {
+                    params: { cancelados: cancelados }
+                })
+                .then(retornaDadoDoXhr);
             },
             buscaUsuario: function (id) {
                 return $http.get(ROTAS.busca, {

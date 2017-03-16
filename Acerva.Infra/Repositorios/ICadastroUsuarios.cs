@@ -9,7 +9,7 @@ namespace Acerva.Infra.Repositorios
         void SalvaNovo(Usuario usuario);
         Usuario BuscaPeloEmail(string email);
         IEnumerable<Usuario> BuscaTodos();
-        IEnumerable<Usuario> BuscaParaListagem();
+        IEnumerable<Usuario> BuscaParaListagem(bool cancelados = false);
         IEnumerable<Usuario> BuscaComTermo(string termo);
         bool ExisteComMesmoNome(Usuario usuario);
         void BeginTransaction();

@@ -6,10 +6,14 @@
 
     function UsuarioController($scope, Usuario, ENUMS, $uibModal, DTOptionsBuilder, localStorageService) {
         var ctrl = this;
+        ctrl.status = {
+            carregando: false
+        };
 
         ctrl.listaUsuarios = [];
         ctrl.usuariosSelecionados = [];
         ctrl.todosFiltrados = false;
+        ctrl.canceladosCarregados = false;
 
         ctrl.dominio = {
             statusUsuario: ENUMS.statusUsuario
@@ -21,6 +25,7 @@
         atualizaFiltrosDaLocalStorage();
 
         ctrl.selecionaTodosFiltrados = selecionaTodosFiltrados;
+        ctrl.buscaCancelados = buscaCancelados;
         ctrl.mudaFiltroStatus = mudaFiltroStatus;
         ctrl.abreJanelaSelecaoEmails = abreJanelaSelecaoEmails;
         ctrl.alteraSelecao = alteraSelecao;
@@ -55,10 +60,24 @@
             });
         }
 
-        function atualizaListaUsuarios() {
-            return Usuario.buscaListaUsuarios().then(function (listaUsuarios) {
-                ctrl.listaUsuarios = listaUsuarios;
+        function atualizaListaUsuarios(cancelados) {
+            if (!cancelados) cancelados = false;
+            ctrl.status.carregando = true;
+            return Usuario.buscaListaUsuarios(cancelados).then(function (listaUsuarios) {
+                ctrl.status.carregando = false;
+                ctrl.listaUsuarios = ctrl.listaUsuarios.concat(listaUsuarios);
             });
+        }
+
+        function buscaCancelados() {
+            if (!ctrl.canceladosCarregados) {
+                ctrl.listaUsuarios = ctrl.listaUsuarios.filter(function (u) { return u.status.codigoBd !== ctrl.dominio.statusUsuario.cancelado.codigoBd; });
+                ctrl.filtroStatus = ctrl.filtroStatus.filter(function (f) { return f.codigoBd !== ctrl.dominio.statusUsuario.cancelado.codigoBd; });
+                atualizaFiltrosNaLocalStorage();
+                return;
+            }
+
+            return atualizaListaUsuarios(true);
         }
 
         function selecionaTodosFiltrados() {
@@ -104,12 +123,9 @@
         function mudaFiltroStatus(status) {
             atualizaFiltrosDaLocalStorage();
             var indexOf = ctrl.filtroStatus.map(function (st) { return st.codigoBd }).indexOf(status.codigoBd);
-            if (indexOf >= 0) {
-                ctrl.filtroStatus.splice(indexOf, 1);
-                atualizaFiltrosNaLocalStorage();
-                return;
-            }
-            ctrl.filtroStatus.push(status);
+
+            (indexOf >= 0) ? ctrl.filtroStatus.splice(indexOf, 1) : ctrl.filtroStatus.push(status);
+
             atualizaFiltrosNaLocalStorage();
         }
 
@@ -123,7 +139,9 @@
             if (ctrl.filtroStatus.length === 0)
                 return todosUsuarios;
 
-            return todosUsuarios.filter(function (usuario) { return estaFiltradoPorStatus(usuario.status); });
+            atualizaFiltrosDaLocalStorage();
+            var codigosBdFiltros = ctrl.filtroStatus.map(function(st) { return st.codigoBd });
+            return todosUsuarios.filter(function (usuario) { return codigosBdFiltros.indexOf(usuario.status.codigoBd) >= 0; });
         }
 
         function atualizaFiltrosDaLocalStorage() {

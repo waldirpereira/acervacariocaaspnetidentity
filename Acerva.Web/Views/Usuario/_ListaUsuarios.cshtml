@@ -3,6 +3,9 @@
     <div class="panel-body">
         <div class="row" style="margin-bottom: 15px;">
             <div class="col-sm-12">
+                <input type="checkbox" ng-model="listaCtrl.canceladosCarregados" ng-change="listaCtrl.buscaCancelados()" /> Carregar cancelados
+            </div>
+            <div class="col-sm-12">
                 <div class="btn-group">
                     <a ng-class="{'active': listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.ativo) }" ng-click="listaCtrl.mudaFiltroStatus(listaCtrl.dominio.statusUsuario.ativo)" class="btn btn-sm btn-default">{{ listaCtrl.dominio.statusUsuario.ativo.nomeExibicao }}</a>
                     <a ng-class="{'active': listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.aguardandoIndicacao) }" ng-click="listaCtrl.mudaFiltroStatus(listaCtrl.dominio.statusUsuario.aguardandoIndicacao)" class="btn btn-sm btn-default">{{ listaCtrl.dominio.statusUsuario.aguardandoIndicacao.nomeExibicao }}</a>
@@ -10,12 +13,13 @@
                     <a ng-class="{'active': listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.aguardandoConfirmacaoEmail) }" ng-click="listaCtrl.mudaFiltroStatus(listaCtrl.dominio.statusUsuario.aguardandoConfirmacaoEmail)" class="btn btn-sm btn-default">{{ listaCtrl.dominio.statusUsuario.aguardandoConfirmacaoEmail.nomeExibicao }}</a>
                     <a ng-class="{'active': listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade) }" ng-click="listaCtrl.mudaFiltroStatus(listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade)" class="btn btn-sm btn-default">{{ listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.nomeExibicao }}</a>
                     <a ng-class="{'active': listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.aguardandoRenovacao) }" ng-click="listaCtrl.mudaFiltroStatus(listaCtrl.dominio.statusUsuario.aguardandoRenovacao)" class="btn btn-sm btn-default">{{ listaCtrl.dominio.statusUsuario.aguardandoRenovacao.nomeExibicao }}</a>
-                    <a ng-class="{'active': listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.cancelado) }" ng-click="listaCtrl.mudaFiltroStatus(listaCtrl.dominio.statusUsuario.cancelado)" class="btn btn-sm btn-default">{{ listaCtrl.dominio.statusUsuario.cancelado.nomeExibicao }}</a>
+                    <a ng-class="{'active': listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.cancelado) }" ng-click="listaCtrl.mudaFiltroStatus(listaCtrl.dominio.statusUsuario.cancelado)" ng-if="listaCtrl.canceladosCarregados" class="btn btn-sm btn-default">{{ listaCtrl.dominio.statusUsuario.cancelado.nomeExibicao }}</a>
                 </div>
             </div>
         </div>
-
-        <div class="row hidden-xs">
+        <h3 ng-if="listaCtrl.status.carregando">Loading...</h3>
+        <div class="row hidden-xs"
+             ng-if="!listaCtrl.status.carregando">
             <table id="tabelaUsuarios"
                    datatable="ng" dt-disable-deep-watchers="true"
                    dt-options="listaCtrl.dtOptions"
@@ -72,7 +76,8 @@
                 </tbody>
             </table>
         </div>
-        <div class="row visible-xs">
+        <div class="row visible-xs"
+             ng-if="!listaCtrl.status.carregando">
             <table class="table table-bordered table-striped table-responsive table-hover table-condensed visible-xs" style="width: 100%;">
                 <thead>
                     <tr>

@@ -60,12 +60,12 @@
             });
         }
 
-        function atualizaListaUsuarios(cancelados) {
-            if (!cancelados) cancelados = false;
+        function atualizaListaUsuarios(incluiCancelados) {
+            if (!incluiCancelados) incluiCancelados = false;
             ctrl.status.carregando = true;
-            return Usuario.buscaListaUsuarios(cancelados).then(function (listaUsuarios) {
+            return Usuario.buscaListaUsuarios(incluiCancelados).then(function (listaUsuarios) {
                 ctrl.status.carregando = false;
-                ctrl.listaUsuarios = ctrl.listaUsuarios.concat(listaUsuarios);
+                ctrl.listaUsuarios = listaUsuarios;
             });
         }
 

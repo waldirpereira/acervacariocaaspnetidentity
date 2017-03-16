@@ -36,10 +36,10 @@ namespace Acerva.Infra.Repositorios
             return _session.Query<Usuario>();
         }
 
-        public IEnumerable<Usuario> BuscaParaListagem(bool cancelados = false)
+        public IEnumerable<Usuario> BuscaParaListagem(bool incluiCancelados = false)
         {
             return _session.Query<Usuario>()
-                .Where(u => ((cancelados && u.Status == StatusUsuario.Cancelado) || (!cancelados && u.Status != StatusUsuario.Cancelado)));
+                .Where(u => (incluiCancelados || (!incluiCancelados && u.Status != StatusUsuario.Cancelado)));
         }
 
         public IEnumerable<Usuario> BuscaComTermo(string termo)
@@ -124,6 +124,13 @@ namespace Acerva.Infra.Repositorios
         public IEnumerable<Uf> BuscaUfs()
         {
             return _session.Query<Uf>();
+        }
+
+        public IEnumerable<Usuario> BuscaDelegadosDaRegional(int codigo)
+        {
+            return _session.Query<Usuario>()
+                .ToList()
+                .Where((u => u.EstaAssociado && u.Regional.Codigo == codigo && u.EhDelegado));
         }
     }
 }

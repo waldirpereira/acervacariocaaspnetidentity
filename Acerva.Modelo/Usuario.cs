@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
@@ -65,6 +66,10 @@ namespace Acerva.Modelo
             get { return _respostas; }
             set { _respostas = value; }
         }
+
+        public virtual bool EstaAssociado { get { return Status == StatusUsuario.AguardandoRenovacao || Status == StatusUsuario.Ativo; } }
+        public virtual bool EhDelegado { get { return Papeis.Select(p => p.Name).Contains("DELEGADO"); } }
+
         public virtual async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<Usuario> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

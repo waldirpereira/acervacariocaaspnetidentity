@@ -60,9 +60,9 @@ namespace Acerva.Web.Controllers
         }
 
         [AcervaAuthorize(Roles = "ADMIN, DIRETOR, DELEGADO")]
-        public ActionResult BuscaParaListagem(bool cancelados = false)
+        public ActionResult BuscaParaListagem(bool incluiCancelados = false)
         {
-            var listaUsuariosJson = _cadastroUsuarios.BuscaParaListagem(cancelados).ToList();
+            var listaUsuariosJson = _cadastroUsuarios.BuscaParaListagem(incluiCancelados).ToList();
 
             var usuarioLogado = HttpContext.User;
             var usuarioLogadoBd = usuarioLogado.Identity.IsAuthenticated ? _cadastroUsuarios.Busca(usuarioLogado.Identity.GetUserId()) : null;
@@ -208,22 +208,30 @@ namespace Acerva.Web.Controllers
                 return RetornaJsonDeAlerta("Associado não está aguardando confirmação de pagamento!");
             }
 
+            await ProcessaConfirmacaoPagamentoUsuario(usuario);
+
+            var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associado teve seu pagamento confirmado com sucesso", "Pagamento confirmado");
+            return new JsonNetResult(new { growlMessage });
+        }
+
+        private async Task ProcessaConfirmacaoPagamentoUsuario(Usuario usuario)
+        {
             var enviaEmailBoasVindas = usuario.Status == StatusUsuario.AguardandoPagamentoAnuidade;
 
             usuario.Status = StatusUsuario.Ativo;
-            usuario.Matricula = string.IsNullOrEmpty(usuario.Matricula) ? _cadastroUsuarios.PegaProximaMatricula() : usuario.Matricula;
+            usuario.Matricula = string.IsNullOrEmpty(usuario.Matricula)
+                ? _cadastroUsuarios.PegaProximaMatricula()
+                : usuario.Matricula;
             usuario.DataAdmissao = DateTime.Today;
 
             if (enviaEmailBoasVindas)
             {
                 await EnviaEmailParaAdministrativoIncluirNoCoceca(usuario);
+                await EnviaEmailParaDelegadosDaRegional(usuario);
                 await EnviaEmailDeBoasVindas(usuario);
             }
 
             _cadastroUsuarios.Atualiza(usuario);
-
-            var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associado teve seu pagamento confirmado com sucesso", "Pagamento confirmado");
-            return new JsonNetResult(new { growlMessage });
         }
 
         private async Task EnviaEmailDeBoasVindas(Usuario usuario)
@@ -255,11 +263,31 @@ namespace Acerva.Web.Controllers
             await UserManager.EmailService.SendAsync(identityMessage);
         }
 
+        private async Task EnviaEmailParaDelegadosDaRegional(Usuario usuario)
+        {
+            var mensagem = string.Format("Olá delegado,<br/><br/>" +
+                                             "A pessoa '{0}' ({1}) acabou de se tornar associada!", usuario.Name, usuario.Email);
+
+            var delegados = _cadastroUsuarios.BuscaDelegadosDaRegional(usuario.Regional.Codigo).ToList();
+
+            delegados.ForEach(async d =>
+            {
+                var identityMessage = new IdentityMessage
+                {
+                    Destination = d.Email,
+                    Subject = string.Format("ACervA Carioca - novo associado: {0}({1})", usuario.Name, usuario.Email),
+                    Body = mensagem
+                };
+
+                await UserManager.EmailService.SendAsync(identityMessage);
+            });
+        }
+
         [Transacao]
         [HttpPost]
         [ValidateAjaxAntiForgeryToken]
         [AcervaAuthorize(Roles = "ADMIN, DIRETOR")]
-        public ActionResult ConfirmaPagamentoSelecionados([JsonBinder] IEnumerable<string> idsUsuarios)
+        public async Task<ActionResult> ConfirmaPagamentoSelecionados([JsonBinder] IEnumerable<string> idsUsuarios)
         {
             var listaIdsUsuarios = idsUsuarios.ToList();
             Log.InfoFormat("Usuário está confirmando pagamento de anuidade dos associados de códigos {0}",
@@ -274,9 +302,7 @@ namespace Acerva.Web.Controllers
                     return RetornaJsonDeAlerta(string.Format("Associado {0} não está aguardando confirmação de pagamento!", usuario.Name));
                 }
 
-                usuario.Status = StatusUsuario.Ativo;
-                usuario.Matricula = string.IsNullOrEmpty(usuario.Matricula) ? _cadastroUsuarios.PegaProximaMatricula() : usuario.Matricula;
-                usuario.DataAdmissao = DateTime.Today;
+                await ProcessaConfirmacaoPagamentoUsuario(usuario);
             }
             
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associados tiveram seus pagamentos confirmados com sucesso", "Pagamentos confirmados");

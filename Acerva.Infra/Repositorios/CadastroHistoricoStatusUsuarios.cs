@@ -1,5 +1,7 @@
 using System;
+using System.Linq;
 using Acerva.Modelo;
+using NHibernate.Linq;
 using NHibernate;
 
 namespace Acerva.Infra.Repositorios
@@ -20,6 +22,12 @@ namespace Acerva.Infra.Repositorios
             {
                 try
                 {
+                    if (!string.IsNullOrEmpty(historico.EmailUsuarioLogado))
+                        historico.Usuario = session.Query<Usuario>()
+                            .FirstOrDefault(u => u.Email == historico.EmailUsuarioLogado &&
+                                        (u.Status == StatusUsuario.Ativo ||
+                                         u.Status == StatusUsuario.AguardandoRenovacao));
+
                     session.Save(historico);
                     session.Flush();
                     transacao.Commit();

@@ -1,6 +1,7 @@
 using System.Reflection;
 using System.Security.Principal;
 using Acerva.Infra.Repositorios;
+using Acerva.Modelo;
 using Acerva.Modelo.Mapeamento;
 using Acerva.Modelo.Validadores;
 using Acerva.Web.App_Start;
@@ -80,7 +81,7 @@ namespace Acerva.Web.App_Start
                 .ToMethod(ctx =>
                 {
                     return Fluently.Configure()
-                        .Mappings(m => m.FluentMappings.Add<HistoricoStatusUsuarioClassMap>())
+                        .Mappings(m => m.FluentMappings.AddFromAssemblyOf<HistoricoStatusUsuarioClassMap>())
                         .ExposeConfiguration(config => { })
                         .BuildSessionFactory();
                 })

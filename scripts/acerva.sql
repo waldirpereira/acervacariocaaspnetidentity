@@ -8579,3 +8579,11 @@ ALTER TABLE `resposta` ADD CONSTRAINT `fk_resposta_opcao` FOREIGN KEY (`codigo_o
 ALTER TABLE `opcao` CHANGE `texto` `texto_html` VARCHAR(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
 
 ALTER TABLE `users` ADD `indicacao_legado` VARCHAR(200) NULL AFTER `email_boas_vindas_lista_enviado`;
+
+ALTER TABLE `historico_status_usuario` CHANGE `nome_usuario_logado` `id_usuario` VARCHAR(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+
+delete from historico_status_usuario;
+
+ALTER TABLE `historico_status_usuario` ADD INDEX(` id_usuario `);
+
+ALTER TABLE `historico_status_usuario` ADD CONSTRAINT `fk_historico_status_usuario_users_logado` FOREIGN KEY (`id_usuario`) REFERENCES `users`(`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT;

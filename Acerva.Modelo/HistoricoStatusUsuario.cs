@@ -8,6 +8,7 @@ namespace Acerva.Modelo
         public virtual DateTime DataHora { get; set; }
         public virtual StatusUsuario StatusNovo { get; set; }
         public virtual string IdUsuarioAlterado { get; set; }
-        public virtual string NomeUsuarioLogado { get; set; }
+        public virtual Usuario Usuario { get; set; }
+        public virtual string EmailUsuarioLogado { get; set; }
     }
 }

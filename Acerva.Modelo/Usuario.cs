@@ -96,7 +96,7 @@ namespace Acerva.Modelo
                 IdUsuarioAlterado = Id,
                 DataHora = DateTime.Now,
                 StatusNovo = Status,
-                NomeUsuarioLogado = string.IsNullOrEmpty(Thread.CurrentPrincipal.Identity.Name)
+                EmailUsuarioLogado = string.IsNullOrEmpty(Thread.CurrentPrincipal.Identity.Name)
                     ? "desconhecido"
                     : Thread.CurrentPrincipal.Identity.Name
             };

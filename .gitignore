@@ -101,6 +101,4 @@ orleans.codegen.cs
 Web.Release.config
 Startup.Auth.cs
 
-**/images/fotos/*
-
 *.pubxml

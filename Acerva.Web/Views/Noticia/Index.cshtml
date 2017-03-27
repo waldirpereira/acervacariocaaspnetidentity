@@ -21,6 +21,10 @@
     </div>
 </script>
 
+<script type="text/ng-template" id="modal-anexos-noticia.html">
+    @Html.Partial("_ModalAnexosNoticia")
+</script>
+
 @section styles {
     @Styles.Render("~/cssBundles/angularForm")
     @Styles.Render("~/cssBundles/noticia")
@@ -42,7 +46,9 @@
                 buscaTiposDominio: "@Url.Action("BuscaTiposDominio")",
                 busca: "@Url.Action("Busca")",
                 salva: "@Url.Action("Salva")",
-                anexaLogotipo: "@Url.Action("AnexaLogotipo")",
+                buscaAnexos: "@Url.Action("BuscaAnexos")",
+                salvaAnexo: "@Url.Action("SalvaAnexo")",
+                excluiAnexo: "@Url.Action("ExcluiAnexo")",
                 alteraAtivacao: "@Url.Action("AlteraAtivacao")"
             });
         })();

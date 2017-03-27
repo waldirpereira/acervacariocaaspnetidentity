@@ -274,6 +274,7 @@ namespace Acerva.Web
                 .Include(path + "acerva.noticia.service.js")
                 .Include(path + "acerva.noticia.controller.js")
                 .Include(path + "acerva.noticia.cadastro.controller.js")
+                .Include(path + "acerva.noticia.anexos.controller.js")
             );
 
             bundles.Add(new LessBundle("~/cssBundles/noticia")

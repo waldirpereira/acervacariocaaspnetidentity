@@ -9,6 +9,9 @@ namespace Acerva.Web.Models.CadastroNoticias
         {
             CreateMap<Noticia, NoticiaViewModel>()
                 .ReverseMap();
+
+            CreateMap<AnexoNoticia, AnexoNoticiaViewModel>()
+                .ReverseMap();
         }
     }
 }

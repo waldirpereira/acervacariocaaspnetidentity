@@ -2,9 +2,9 @@
     "use strict";
 
     angular.module("acerva.noticia")
-        .controller("CadastroNoticiaController", ["$scope", "$timeout", "$routeParams", "$location", "CanalMensagemGrowl", "Noticia", CadastroNoticiaController]);
+        .controller("CadastroNoticiaController", ["$scope", "$timeout", "$routeParams", "$location", "CanalMensagemGrowl", "Noticia", "$uibModal", CadastroNoticiaController]);
 
-    function CadastroNoticiaController($scope, $timeout, $routeParams, $location, CanalMensagemGrowl, Noticia) {
+    function CadastroNoticiaController($scope, $timeout, $routeParams, $location, CanalMensagemGrowl, Noticia, $uibModal) {
         var ctrl = this;
         ctrl.status = {
             carregando: false,
@@ -17,6 +17,7 @@
         ctrl.dominio = {};
         
         ctrl.salvaNoticia = salvaNoticia;
+        ctrl.abrePopupAnexos = abrePopupAnexos;
 
         var idNoticia = $routeParams.id ? parseInt($routeParams.id) : 0;
         init(idNoticia);
@@ -57,6 +58,26 @@
                 .finally(function() {
                     ctrl.status.salvando = false;
                     $location.path("/");
+                });
+        }
+
+        function abrePopupAnexos(noticia) {
+            Noticia.buscaAnexos(noticia.codigo)
+                .then(function (anexos) {
+                    $uibModal.open({
+                        animation: true,
+                        ariaLabelledBy: 'modal-title',
+                        ariaDescribedBy: 'modal-body',
+                        templateUrl: 'modal-anexos-noticia.html',
+                        controller: 'NoticiaAnexosModalController',
+                        controllerAs: 'ctrl',
+                        resolve: {
+                            noticia: noticia,
+                            anexos: function () {
+                                return anexos;
+                            }
+                        }
+                    });
                 });
         }
     }

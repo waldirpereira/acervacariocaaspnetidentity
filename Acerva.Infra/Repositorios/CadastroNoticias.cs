@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Acerva.Modelo;
 using NHibernate;
 using NHibernate.Linq;
@@ -38,6 +37,22 @@ namespace Acerva.Infra.Repositorios
         public IEnumerable<Noticia> BuscaTodas()
         {
             return _session.Query<Noticia>();
+        }
+
+        public void SalvaAnexo(AnexoNoticia anexo)
+        {
+            _session.SaveOrUpdate(anexo);
+            _session.Flush();
+        }
+
+        public AnexoNoticia BuscaAnexo(int codigoAnexo)
+        {
+            return _session.Get<AnexoNoticia>(codigoAnexo);
+        }
+
+        public void ExcluiAnexo(AnexoNoticia anexo)
+        {
+            _session.Delete(anexo);
         }
     }
 }

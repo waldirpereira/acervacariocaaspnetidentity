@@ -8587,3 +8587,17 @@ delete from historico_status_usuario;
 ALTER TABLE `historico_status_usuario` ADD INDEX(`id_usuario`);
 
 ALTER TABLE `historico_status_usuario` ADD CONSTRAINT `fk_historico_status_usuario_users_logado` FOREIGN KEY (`id_usuario`) REFERENCES `users`(`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE noticia ENGINE=InnoDB;
+
+CREATE TABLE `anexo_noticia` (
+ `codigo_anexo_noticia` int(11) NOT NULL AUTO_INCREMENT,
+ `codigo_noticia` int(11) NOT NULL,
+ `titulo` varchar(300) NOT NULL,
+ `nome_arquivo` varchar(256) NOT NULL,
+ PRIMARY KEY (`codigo_anexo_noticia`),
+ KEY `codigo_noticia` (`codigo_noticia`),
+ CONSTRAINT `fk_anexo_noticia_noticia` FOREIGN KEY (`codigo_noticia`) REFERENCES `noticia` (`codigo_noticia`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+ALTER TABLE `noticia` ADD `mostra_lista_anexos` CHAR(1) NOT NULL DEFAULT 'N' AFTER `ordem`;

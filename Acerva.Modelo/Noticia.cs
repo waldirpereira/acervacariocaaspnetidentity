@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Acerva.Modelo
 {
@@ -12,5 +13,13 @@ namespace Acerva.Modelo
         public virtual string TextoHtml { get; set; }
         public virtual bool Ativo { get; set; }
         public virtual int? Ordem { get; set; }
+        public virtual bool MostraListaAnexos { get; set; }
+
+        private IEnumerable<AnexoNoticia> _anexos = new List<AnexoNoticia>();
+        public virtual IEnumerable<AnexoNoticia> Anexos
+        {
+            get { return _anexos; }
+            set { _anexos = value; }
+        }
     }
 }

@@ -123,7 +123,7 @@ namespace Acerva.Web.Controllers
             if (anexo == null)
                 return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Arquivo não encontrado"));
 
-            var caminhoCompleto= Path.Combine(Server.MapPath("~/Content/Aplicacao/anexos/" + anexo.Artigo.Codigo), anexo.NomeArquivo);
+            var caminhoCompleto= Path.Combine(Server.MapPath("~/Content/Aplicacao/anexos/artigos/" + anexo.Artigo.Codigo), anexo.NomeArquivo);
             try
             {
                 if (System.IO.File.Exists(caminhoCompleto))
@@ -169,7 +169,7 @@ namespace Acerva.Web.Controllers
 
             try
             {
-                var path = Server.MapPath("~/Content/Aplicacao/anexos/" + codigoArtigo);
+                var path = Server.MapPath("~/Content/Aplicacao/anexos/artigos/" + codigoArtigo);
                 if (!Directory.Exists(path))
                 {
                     Directory.CreateDirectory(path);

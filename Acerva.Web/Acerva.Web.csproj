@@ -315,6 +315,7 @@
     <Compile Include="Models\CadastroArtigos\AnexoArtigoViewModel.cs" />
     <Compile Include="Models\CadastroCategoriasArtigos\CadastroCategoriasArtigosMapperProfile.cs" />
     <Compile Include="Models\CadastroCategoriasArtigos\CategoriaArtigoViewModel.cs" />
+    <Compile Include="Models\CadastroNoticias\AnexoNoticiaViewModel.cs" />
     <Compile Include="Models\CadastroVotacoes\CadastroVotacaoMapperProfile.cs" />
     <Compile Include="Models\CadastroVotacoes\VotacaoViewModel.cs" />
     <Compile Include="Models\CadastroNoticias\CadastroNoticiaMapperProfile.cs" />
@@ -439,6 +440,7 @@
     <Content Include="Scripts\Aplicacao\CategoriaArtigo\acerva.categoriaArtigo.controller.js" />
     <Content Include="Scripts\Aplicacao\CategoriaArtigo\acerva.categoriaArtigo.module.js" />
     <Content Include="Scripts\Aplicacao\CategoriaArtigo\acerva.categoriaArtigo.service.js" />
+    <Content Include="Scripts\Aplicacao\Noticia\acerva.noticia.anexos.controller.js" />
     <Content Include="Scripts\Aplicacao\Votacao\acerva.votacao.cadastro.controller.js" />
     <Content Include="Scripts\Aplicacao\Votacao\acerva.votacao.controller.js" />
     <Content Include="Scripts\Aplicacao\Votacao\acerva.votacao.module.js" />
@@ -1341,6 +1343,7 @@
     <Content Include="Views\Votacao\_ListaVotacoes.cshtml" />
     <Content Include="Views\Votacao\Index.cshtml" />
     <Content Include="Scripts\version.json" />
+    <Content Include="Views\Noticia\_ModalAnexosNoticia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Aplicacao\fonts\acerva-iconfont.svg" />

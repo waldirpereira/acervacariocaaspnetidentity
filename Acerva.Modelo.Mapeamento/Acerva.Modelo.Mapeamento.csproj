@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnexoNoticiaClassMap.cs" />
     <Compile Include="ArtigoClassMap.cs" />
     <Compile Include="AnexoArtigoClassMap.cs" />
     <Compile Include="RespostaClassMap.cs" />

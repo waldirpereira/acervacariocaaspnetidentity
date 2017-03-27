@@ -5,7 +5,7 @@ namespace Acerva.Web.Models.Home
 {
     public class HomeMapperProfile : Profile
     {
-        protected override void Configure()
+        public HomeMapperProfile()
         {
             CreateMap<Noticia, NoticiaViewModel>()
                 .ReverseMap();
@@ -13,8 +13,8 @@ namespace Acerva.Web.Models.Home
             CreateMap<Usuario, UsuarioRegistroViewModel>()
                 .ReverseMap()
                 .ForMember(d => d.UserName, o => o.ResolveUsing(s => s.Email))
-                .ForMember(d => d.Regional, o => o.DoNotUseDestinationValue())
-                .ForMember(d => d.UsuarioIndicacao, o => o.DoNotUseDestinationValue());
+                .ForMember(d => d.Regional, o => o.ResolveUsing(s => Mapper.Map<Regional>(s.Regional)))
+                .ForMember(d => d.UsuarioIndicacao, o => o.ResolveUsing(s => Mapper.Map<Usuario>(s.UsuarioIndicacao)));
 
             CreateMap<Usuario, UsuarioIndicacaoViewModel>()
                 .ForMember(d => d.NomeRegional, o => o.ResolveUsing(s => s.Regional.Nome))

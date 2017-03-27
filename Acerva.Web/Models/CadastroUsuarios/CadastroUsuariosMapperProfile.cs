@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using AutoMapper;
 using Acerva.Modelo;
 
@@ -7,14 +6,14 @@ namespace Acerva.Web.Models.CadastroUsuarios
 {
     public class CadastroUsuariosMapperProfile : Profile
     {
-        protected override void Configure()
+        public CadastroUsuariosMapperProfile()
         {
             CreateMap<Usuario, UsuarioViewModel>()
                 .ForMember(d => d.NomesPapeis, o => o.ResolveUsing(s => s.Papeis.Any() ? s.Papeis.Select(p => p.Name).Aggregate((x, y) => x + ", " + y) : string.Empty))
                 .ReverseMap()
                 .ForMember(d => d.UserName, o => o.ResolveUsing(s => s.Email))
-                .ForMember(d => d.Regional, o => o.DoNotUseDestinationValue())
-                .ForMember(d => d.UsuarioIndicacao, o => o.DoNotUseDestinationValue())
+                .ForMember(d => d.Regional, o => o.ResolveUsing(s => Mapper.Map<Regional>(s.Regional)))
+                .ForMember(d => d.UsuarioIndicacao, o => o.ResolveUsing(s => Mapper.Map<Usuario>(s.UsuarioIndicacao)))
                 .ForMember(s => s.Papeis, o => o.Ignore())
                 .AfterMap(ProcessaAlteracoesNosPapeis);
 

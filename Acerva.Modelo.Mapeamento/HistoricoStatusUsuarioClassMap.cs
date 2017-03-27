@@ -13,7 +13,7 @@ namespace Acerva.Modelo.Mapeamento
             Id(u => u.Codigo, "codigo_historico").GeneratedBy.Increment();
 
             Map(u => u.DataHora, "data_hora");
-            References(u => u.Usuario, "id_usuario");
+            References(u => u.UsuarioLogado, "id_usuario");
             Map(u => u.StatusNovo, "status_novo").CustomType(typeof(EnumComCodigoBdMapper<StatusUsuario>));
             Map(u => u.IdUsuarioAlterado, "id_usuario_alterado");
         }

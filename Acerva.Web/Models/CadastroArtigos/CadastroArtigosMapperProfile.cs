@@ -5,7 +5,7 @@ namespace Acerva.Web.Models.CadastroArtigos
 {
     public class CadastroArtigosMapperProfile : Profile
     {
-        protected override void Configure()
+        public CadastroArtigosMapperProfile()
         {
             CreateMap<Artigo, ArtigoViewModel>()
                 .ReverseMap();

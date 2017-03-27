@@ -5,7 +5,7 @@ namespace Acerva.Web.Models.CadastroVotacoes
 {
     public class CadastroVotacaoMapperProfile : Profile
     {
-        protected override void Configure()
+        public CadastroVotacaoMapperProfile()
         {
             CreateMap<Votacao, VotacaoViewModel>()
                 .ReverseMap();

@@ -8584,6 +8584,6 @@ ALTER TABLE `historico_status_usuario` CHANGE `nome_usuario_logado` `id_usuario`
 
 delete from historico_status_usuario;
 
-ALTER TABLE `historico_status_usuario` ADD INDEX(` id_usuario `);
+ALTER TABLE `historico_status_usuario` ADD INDEX(`id_usuario`);
 
 ALTER TABLE `historico_status_usuario` ADD CONSTRAINT `fk_historico_status_usuario_users_logado` FOREIGN KEY (`id_usuario`) REFERENCES `users`(`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT;

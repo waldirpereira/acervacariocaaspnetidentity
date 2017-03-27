@@ -5,7 +5,7 @@ namespace Acerva.Web.Models.Referencia
 {
     public class ReferenciaMapperProfile : Profile
     {
-        protected override void Configure()
+        public ReferenciaMapperProfile()
         {
             CreateMap<Artigo, ArtigoViewModel>()
                 .ForMember(d => d.NomeUsuario, o => o.ResolveUsing(s => s.Usuario.Name))

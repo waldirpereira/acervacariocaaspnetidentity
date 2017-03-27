@@ -22,8 +22,16 @@ namespace Acerva.Infra.Repositorios
             {
                 try
                 {
+                    var ultimoHistorico = session.Query<HistoricoStatusUsuario>()
+                        .Where(h => h.IdUsuarioAlterado == historico.IdUsuarioAlterado)
+                        .OrderByDescending(h => h.DataHora)
+                        .FirstOrDefault();
+
+                    if (ultimoHistorico != null && historico.StatusNovo == ultimoHistorico.StatusNovo)
+                        return;
+
                     if (!string.IsNullOrEmpty(historico.EmailUsuarioLogado))
-                        historico.Usuario = session.Query<Usuario>()
+                        historico.UsuarioLogado = session.Query<Usuario>()
                             .FirstOrDefault(u => u.Email == historico.EmailUsuarioLogado &&
                                         (u.Status == StatusUsuario.Ativo ||
                                          u.Status == StatusUsuario.AguardandoRenovacao));

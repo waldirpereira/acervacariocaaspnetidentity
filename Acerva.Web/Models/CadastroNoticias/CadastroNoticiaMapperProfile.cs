@@ -5,7 +5,7 @@ namespace Acerva.Web.Models.CadastroNoticias
 {
     public class CadastroNoticiaMapperProfile : Profile
     {
-        protected override void Configure()
+        public CadastroNoticiaMapperProfile()
         {
             CreateMap<Noticia, NoticiaViewModel>()
                 .ReverseMap();

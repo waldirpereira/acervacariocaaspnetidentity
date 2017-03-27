@@ -5,7 +5,7 @@ namespace Acerva.Web.Models.CadastroRegionais
 {
     public class CadastroRegionalMapperProfile : Profile
     {
-        protected override void Configure()
+        public CadastroRegionalMapperProfile()
         {
             CreateMap<Regional, RegionalViewModel>()
                 .ReverseMap();

@@ -2314,7 +2314,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Aplicacao\anexos\" />
+    <Folder Include="Content\Aplicacao\anexos\artigos\" />
+    <Folder Include="Content\Aplicacao\anexos\noticias\" />
     <Folder Include="Content\Aplicacao\images\fotos\" />
     <Folder Include="Content\vendor\bootswatch\darkly\css\fonts\" />
     <Folder Include="Content\vendor\datatables-tabletools\images\psd\" />

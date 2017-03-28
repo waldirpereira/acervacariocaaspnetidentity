@@ -1,10 +1,10 @@
 ﻿(function () {
     "use strict";
 
-    angular.module("acerva.referencia")
-        .controller("ReferenciaController", ["$routeParams", "$location", "ENUMS", "Referencia", ReferenciaController]);
+    angular.module("acerva.acervo")
+        .controller("AcervoController", ["$routeParams", "$location", "ENUMS", "Acervo", AcervoController]);
 
-    function ReferenciaController($routeParams, $location, ENUMS, Referencia) {
+    function AcervoController($routeParams, $location, ENUMS, Acervo) {
         var ctrl = this;
 
         ctrl.dominio = {};
@@ -31,7 +31,7 @@
         }
 
         function atualizaListaCategorias() {
-            Referencia.buscaCategorias().then(function (listaCategorias) {
+            Acervo.buscaCategorias().then(function (listaCategorias) {
 
                 ctrl.dominio.visibilidade = ENUMS.visibilidadeArtigo;
 
@@ -68,7 +68,7 @@
             ctrl.categoriaSelecionada = categoria;
             ctrl.status.carregandoArtigos = true;
             ctrl.artigo = null;
-            return Referencia.buscaArtigosDaCategoria(categoria.codigo)
+            return Acervo.buscaArtigosDaCategoria(categoria.codigo)
                 .then(function (artigos) {
                     ctrl.listaArtigosPorCategoria[categoria.codigo] = artigos;
                 })
@@ -77,7 +77,7 @@
 
         function mostraArtigo(artigo) {
             ctrl.status.carregandoArtigo = true;
-            Referencia.buscaArtigo(artigo.codigo)
+            Acervo.buscaArtigo(artigo.codigo)
                 .then(function (artigo) {
                     ctrl.artigo = artigo;
                 })

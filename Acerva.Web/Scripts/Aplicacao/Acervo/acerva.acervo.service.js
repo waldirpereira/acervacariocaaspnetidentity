@@ -1,10 +1,10 @@
 ﻿(function () {
     "use strict";
 
-    angular.module("acerva.referencia")
-        .factory("Referencia", ["$http", "$timeout", "ROTAS", ReferenciaFactory]);
+    angular.module("acerva.acervo")
+        .factory("Acervo", ["$http", "$timeout", "ROTAS", AcervoFactory]);
 
-    function ReferenciaFactory($http, $timeout, ROTAS) {
+    function AcervoFactory($http, $timeout, ROTAS) {
         return {
             buscaCategorias: function () {
                 return $http.get(ROTAS.buscaCategorias)

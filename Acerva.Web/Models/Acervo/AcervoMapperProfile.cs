@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Acerva.Modelo;
 
-namespace Acerva.Web.Models.Referencia
+namespace Acerva.Web.Models.Acervo
 {
-    public class ReferenciaMapperProfile : Profile
+    public class AcervoMapperProfile : Profile
     {
-        public ReferenciaMapperProfile()
+        public AcervoMapperProfile()
         {
             CreateMap<Artigo, ArtigoViewModel>()
                 .ForMember(d => d.NomeUsuario, o => o.ResolveUsing(s => s.Usuario.Name))

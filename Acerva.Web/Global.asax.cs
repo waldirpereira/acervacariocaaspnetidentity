@@ -21,7 +21,7 @@ using Acerva.Web.Models.CadastroRegionais;
 using Acerva.Web.Models.CadastroUsuarios;
 using Acerva.Web.Models.CadastroVotacoes;
 using Acerva.Web.Models.Home;
-using Acerva.Web.Models.Referencia;
+using Acerva.Web.Models.Acervo;
 using FluentNHibernate.Cfg;
 using log4net;
 using log4net.Config;
@@ -174,7 +174,7 @@ namespace Acerva.Web
                 cfg.AddProfile<CadastroCategoriasArtigosMapperProfile>();
                 cfg.AddProfile<CadastroNoticiaMapperProfile>();
                 cfg.AddProfile<CadastroVotacaoMapperProfile>();
-                cfg.AddProfile<ReferenciaMapperProfile>();
+                cfg.AddProfile<AcervoMapperProfile>();
                 cfg.AddProfile<CadastroUsuariosMapperProfile>();
             });
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Acerva.Web.Models.Referencia
+namespace Acerva.Web.Models.Acervo
 {
     public class ArtigoListaViewModel
     {

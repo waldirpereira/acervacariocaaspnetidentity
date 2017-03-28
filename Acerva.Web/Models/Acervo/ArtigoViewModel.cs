@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Acerva.Modelo;
 
-namespace Acerva.Web.Models.Referencia
+namespace Acerva.Web.Models.Acervo
 {
     public class ArtigoViewModel
     {

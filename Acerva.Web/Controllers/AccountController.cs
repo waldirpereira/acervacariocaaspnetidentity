@@ -259,8 +259,11 @@ namespace Acerva.Web.Controllers
                 return RetornaJsonDeRetorno("Erro ao registrar associado", e.Message);
             }
 
-            Log.InfoFormat("E-mail de confirmação de conta sendo enviado para '{0}'", usuario.Email);
-            await SendEmailConfirmationTokenAsync(usuario.Id, "Confirme seu e-mail");
+            if (ehNovo)
+            {
+                Log.InfoFormat("E-mail de confirmação de conta sendo enviado para '{0}'", usuario.Email);
+                await SendEmailConfirmationTokenAsync(usuario.Id, "Confirme seu e-mail");
+            }
 
             return new JsonNetResult("OK");
         }

@@ -119,7 +119,7 @@ namespace Acerva.Web
         {
             Layout(bundles);
 
-            Referencia(bundles);
+            Acervo(bundles);
             ListaRegionais(bundles);
             CadastroArtigos(bundles);
             CadastroRegionais(bundles);
@@ -207,13 +207,13 @@ namespace Acerva.Web
             );
         }
 
-        private static void Referencia(BundleCollection bundles)
+        private static void Acervo(BundleCollection bundles)
         {
-            const string path = ScriptsAplicacaoFolder + "Referencia/";
-            bundles.Add(new ScriptBundle("~/bundles/referencia")
-                .Include(path + "acerva.referencia.module.js")
-                .Include(path + "acerva.referencia.service.js")
-                .Include(path + "acerva.referencia.controller.js")
+            const string path = ScriptsAplicacaoFolder + "Acervo/";
+            bundles.Add(new ScriptBundle("~/bundles/acervo")
+                .Include(path + "acerva.acervo.module.js")
+                .Include(path + "acerva.acervo.service.js")
+                .Include(path + "acerva.acervo.controller.js")
             );
         }
 

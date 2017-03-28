@@ -4,16 +4,16 @@ using AutoMapper;
 using Acerva.Infra.Repositorios;
 using Acerva.Infra.Web;
 using Acerva.Modelo;
-using Acerva.Web.Models.Referencia;
+using Acerva.Web.Models.Acervo;
 
 namespace Acerva.Web.Controllers
 {
     [AllowAnonymous]
-    public class ReferenciaController : ApplicationBaseController
+    public class AcervoController : ApplicationBaseController
     {
         private readonly ICadastroArtigos _cadastroArtigos;
 
-        public ReferenciaController(ICadastroArtigos cadastroArtigos, ICadastroUsuarios cadastroUsuarios) 
+        public AcervoController(ICadastroArtigos cadastroArtigos, ICadastroUsuarios cadastroUsuarios) 
             : base(cadastroUsuarios)
         {
             _cadastroArtigos = cadastroArtigos;

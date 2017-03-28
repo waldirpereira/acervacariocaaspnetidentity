@@ -324,12 +324,12 @@
     <Compile Include="Models\CadastroUsuarios\UsuarioListagemViewModel.cs" />
     <Compile Include="Models\Home\AnexoNoticiaViewModel.cs" />
     <Compile Include="Models\Home\UfViewModel.cs" />
-    <Compile Include="Models\Referencia\AnexoArtigoViewModel.cs" />
-    <Compile Include="Models\Referencia\ArtigoListaViewModel.cs" />
-    <Compile Include="Models\Referencia\ArtigoViewModel.cs" />
-    <Compile Include="Models\Referencia\ReferenciaMapperProfile.cs" />
-    <Compile Include="Models\Referencia\CategoriaArtigoViewModel.cs" />
-    <Compile Include="Controllers\ReferenciaController.cs" />
+    <Compile Include="Models\Acervo\AnexoArtigoViewModel.cs" />
+    <Compile Include="Models\Acervo\ArtigoListaViewModel.cs" />
+    <Compile Include="Models\Acervo\ArtigoViewModel.cs" />
+    <Compile Include="Models\Acervo\AcervoMapperProfile.cs" />
+    <Compile Include="Models\Acervo\CategoriaArtigoViewModel.cs" />
+    <Compile Include="Controllers\AcervoController.cs" />
     <Compile Include="Controllers\Helpers\UsuarioControllerHelper.cs" />
     <Compile Include="Controllers\ArtigoController.cs" />
     <Compile Include="Controllers\SituacaoController.cs" />
@@ -366,7 +366,10 @@
     <Compile Include="Ninject\RepositoriosNoBancoDeDadosNinjectModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Content Include="Content\Aplicacao\anexos\artigos\.gitignore" />
+    <Content Include="Content\Aplicacao\anexos\noticias\.gitignore" />
     <Content Include="Content\Aplicacao\css\admin.css" />
+    <Content Include="Content\Aplicacao\images\fotos\.gitignore" />
     <Content Include="Content\Aplicacao\images\Logo_ACerva_Carioca.png" />
     <Content Include="Content\Aplicacao\images\regionais\2\niteroi.jpg" />
     <Content Include="Content\Aplicacao\images\regionais\4\teresopolis.jpg" />
@@ -446,9 +449,9 @@
     <Content Include="Scripts\Aplicacao\Votacao\acerva.votacao.controller.js" />
     <Content Include="Scripts\Aplicacao\Votacao\acerva.votacao.module.js" />
     <Content Include="Scripts\Aplicacao\Votacao\acerva.votacao.service.js" />
-    <Content Include="Scripts\Aplicacao\Referencia\acerva.referencia.controller.js" />
-    <Content Include="Scripts\Aplicacao\Referencia\acerva.referencia.module.js" />
-    <Content Include="Scripts\Aplicacao\Referencia\acerva.referencia.service.js" />
+    <Content Include="Scripts\Aplicacao\Acervo\acerva.acervo.controller.js" />
+    <Content Include="Scripts\Aplicacao\Acervo\acerva.acervo.module.js" />
+    <Content Include="Scripts\Aplicacao\Acervo\acerva.acervo.service.js" />
     <Content Include="Scripts\Aplicacao\Indicacoes\acerva.indicacoes.controller.js" />
     <Content Include="Scripts\Aplicacao\Indicacoes\acerva.indicacoes.module.js" />
     <Content Include="Scripts\Aplicacao\Indicacoes\acerva.indicacoes.service.js" />
@@ -1328,7 +1331,7 @@
     <Content Include="Views\Artigo\_CadastroArtigo.cshtml" />
     <Content Include="Views\Artigo\_ListaArtigos.cshtml" />
     <Content Include="Views\Artigo\Index.cshtml" />
-    <Content Include="Views\Referencia\Index.cshtml" />
+    <Content Include="Views\Acervo\Index.cshtml" />
     <Content Include="Views\Artigo\_ModalAnexosArtigo.cshtml" />
     <Content Include="Views\Agenda\Index.cshtml" />
     <Content Include="Views\ListaRegionais\Index.cshtml" />
@@ -2315,9 +2318,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Aplicacao\anexos\artigos\" />
-    <Folder Include="Content\Aplicacao\anexos\noticias\" />
-    <Folder Include="Content\Aplicacao\images\fotos\" />
     <Folder Include="Content\vendor\bootswatch\darkly\css\fonts\" />
     <Folder Include="Content\vendor\datatables-tabletools\images\psd\" />
     <Folder Include="Log\" />

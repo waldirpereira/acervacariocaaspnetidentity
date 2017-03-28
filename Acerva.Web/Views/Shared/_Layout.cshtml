@@ -25,7 +25,7 @@
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <div>
                         <a href="@Url.Action("Index", "Home")" class="navbar-brand" style="padding: 5px;">
-                            <img src="@Url.Content("~/Content/Aplicacao/images/Logo_ACerva_Carioca.png")" style="height: 50px; margin-left: 10px;" alt="ACervA Carioca"
+                            <img src="@Url.Content("~/Content/Aplicacao/images/Logo_ACerva_Carioca.png")" style="height: 50px; margin-left: 20px;" alt="ACervA Carioca"
                                  class="hidden-xs"/>
                             <img src="@Url.Content("~/Content/Aplicacao/images/Logo_ACerva_Carioca.png")" style="height: 45px; margin-left: -10px;" alt="ACervA Carioca"
                                  class="visible-xs"/>
@@ -59,7 +59,7 @@
                     <li>@Html.ActionLink("Sobre", "About", "Home")</li>
                     <li>@Html.ActionLink("Agenda", "Index", "Agenda")</li>
                     <li>@Html.ActionLink("Regionais", "Index", "ListaRegionais")</li>
-                    <li>@Html.ActionLink("Acervo", "Index", "Referencia")</li>
+                    <li>@Html.ActionLink("Acervo", "Index", "Acervo")</li>
                     @if (Request.IsAuthenticated)
                     {
                         if (User.IsInRole("ADMIN") || User.IsInRole("DIRETOR") || User.IsInRole("DELEGADO"))

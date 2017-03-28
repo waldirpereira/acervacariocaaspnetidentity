@@ -1,7 +1,7 @@
 ﻿(function () {
     "use strict";
 
-    angular.module("acerva.referencia", ["acerva"]);
+    angular.module("acerva.acervo", ["acerva"]);
 
     angular.module("acerva")
         .config(["$routeProvider", routes]);
@@ -10,17 +10,17 @@
         $routeProvider
             .when("/", {
                 templateUrl: "index.html",
-                controller: "ReferenciaController",
+                controller: "AcervoController",
                 controllerAs: "ctrl"
             })
             .when("/:codigoCategoria", {
                 templateUrl: "index.html",
-                controller: "ReferenciaController",
+                controller: "AcervoController",
                 controllerAs: "ctrl"
             })
             .when("/:codigoCategoria/:codigoArtigo", {
                 templateUrl: "index.html",
-                controller: "ReferenciaController",
+                controller: "AcervoController",
                 controllerAs: "ctrl"
             })
             .otherwise({

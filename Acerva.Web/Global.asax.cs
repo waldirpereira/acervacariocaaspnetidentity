@@ -22,6 +22,8 @@ using Acerva.Web.Models.CadastroUsuarios;
 using Acerva.Web.Models.CadastroVotacoes;
 using Acerva.Web.Models.Home;
 using Acerva.Web.Models.Acervo;
+using Acerva.Web.Models.CartilhaBoasVindas;
+using Acerva.Web.Models.Estatuto;
 using FluentNHibernate.Cfg;
 using log4net;
 using log4net.Config;
@@ -176,6 +178,8 @@ namespace Acerva.Web
                 cfg.AddProfile<CadastroVotacaoMapperProfile>();
                 cfg.AddProfile<AcervoMapperProfile>();
                 cfg.AddProfile<CadastroUsuariosMapperProfile>();
+                cfg.AddProfile<EstatutoMapperProfile>();
+                cfg.AddProfile<CartilhaBoasVindasMapperProfile>();
             });
 
             Log.Debug("AutoMapper configurado");

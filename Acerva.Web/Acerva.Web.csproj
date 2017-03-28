@@ -307,6 +307,8 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AppplicationBaseController.cs" />
     <Compile Include="Controllers\AgendaController.cs" />
+    <Compile Include="Controllers\CartilhaBoasVindasController.cs" />
+    <Compile Include="Controllers\EstatutoController.cs" />
     <Compile Include="Controllers\ListaRegionaisController.cs" />
     <Compile Include="Controllers\CategoriaArtigoController.cs" />
     <Compile Include="Controllers\VotacaoController.cs" />
@@ -322,6 +324,12 @@
     <Compile Include="Models\CadastroNoticias\NoticiaViewModel.cs" />
     <Compile Include="Models\CadastroUsuarios\UfViewModel.cs" />
     <Compile Include="Models\CadastroUsuarios\UsuarioListagemViewModel.cs" />
+    <Compile Include="Models\CartilhaBoasVindas\AnexoArtigoViewModel.cs" />
+    <Compile Include="Models\CartilhaBoasVindas\ArtigoViewModel.cs" />
+    <Compile Include="Models\CartilhaBoasVindas\CartilhaBoasVindasMapperProfile.cs" />
+    <Compile Include="Models\Estatuto\EstatutoMapperProfile.cs" />
+    <Compile Include="Models\Estatuto\AnexoArtigoViewModel.cs" />
+    <Compile Include="Models\Estatuto\ArtigoViewModel.cs" />
     <Compile Include="Models\Home\AnexoNoticiaViewModel.cs" />
     <Compile Include="Models\Home\UfViewModel.cs" />
     <Compile Include="Models\Acervo\AnexoArtigoViewModel.cs" />
@@ -435,6 +443,12 @@
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\Aplicacao\acerva.filter.js" />
+    <Content Include="Scripts\Aplicacao\CartilhaBoasVindas\acerva.cartilhaBoasVindas.controller.js" />
+    <Content Include="Scripts\Aplicacao\CartilhaBoasVindas\acerva.cartilhaBoasVindas.module.js" />
+    <Content Include="Scripts\Aplicacao\CartilhaBoasVindas\acerva.cartilhaBoasVindas.service.js" />
+    <Content Include="Scripts\Aplicacao\Estatuto\acerva.estatuto.controller.js" />
+    <Content Include="Scripts\Aplicacao\Estatuto\acerva.estatuto.module.js" />
+    <Content Include="Scripts\Aplicacao\Estatuto\acerva.estatuto.service.js" />
     <Content Include="Scripts\Aplicacao\Admin\admin.js" />
     <Content Include="Scripts\Aplicacao\Artigo\acerva.artigo.anexos.controller.js" />
     <Content Include="Scripts\Aplicacao\ListaRegionais\acerva.listaRegionais.controller.js" />
@@ -1348,6 +1362,8 @@
     <Content Include="Views\Votacao\Index.cshtml" />
     <Content Include="Scripts\version.json" />
     <Content Include="Views\Noticia\_ModalAnexosNoticia.cshtml" />
+    <Content Include="Views\Estatuto\Index.cshtml" />
+    <Content Include="Views\CartilhaBoasVindas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Aplicacao\fonts\acerva-iconfont.svg" />

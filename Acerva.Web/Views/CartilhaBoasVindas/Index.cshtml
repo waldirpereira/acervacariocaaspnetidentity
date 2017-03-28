@@ -1,0 +1,50 @@
+﻿@using Acerva.Web.Extensions
+@{
+    ViewBag.Title = "Cartilha de boas vindas";
+    ViewBag.AngularApp = "acerva.cartilhaBoasVindas";
+}
+
+<p></p>
+<div ng-view ng-cloak></div>
+@Html.AntiForgeryToken()
+
+<script type="text/ng-template" id="index.html">
+    <div class="animate-show-only">
+        <div>
+            <h3 class="titulo text-primary" style="margin-top: 0; margin-bottom: 15px;">
+                {{ctrl.modelo.titulo}}
+            </h3>
+            <span ng-bind-html="ctrl.modelo.textoHtml"></span>
+            <div ng-if="ctrl.modelo.anexos.length > 0">
+                <hr />
+                <h5>Anexos</h5>
+                <ul>
+                    <li ng-repeat="anexo in ctrl.modelo.anexos" style="margin-bottom: 10px;">
+                        <a ng-href="@Url.Content("~/Content/Aplicacao/anexos/artigos/")/{{ctrl.modelo.codigo}}/{{anexo.nomeArquivo}}" target="_new">{{anexo.titulo}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</script>
+
+
+@section styles {
+    @Styles.Render("~/cssBundles/angularForm")
+    @Styles.Render(BundleConfig.BundleStylesDataTables)
+}
+
+@section dependencies {
+    @Scripts.Render("~/bundles/cartilhaBoasVindas")
+}
+
+@section scripts {
+<script type="text/javascript">
+        (function () {
+            angular.module("acerva")
+                .constant("ROTAS", {
+                    busca: "@Url.Action("Busca")"
+                });
+        })();
+</script>
+}

@@ -120,6 +120,8 @@ namespace Acerva.Web
             Layout(bundles);
 
             Acervo(bundles);
+            Estatuto(bundles);
+            CartilhaBoasVindas(bundles);
             ListaRegionais(bundles);
             CadastroArtigos(bundles);
             CadastroRegionais(bundles);
@@ -214,6 +216,26 @@ namespace Acerva.Web
                 .Include(path + "acerva.acervo.module.js")
                 .Include(path + "acerva.acervo.service.js")
                 .Include(path + "acerva.acervo.controller.js")
+            );
+        }
+
+        private static void Estatuto(BundleCollection bundles)
+        {
+            const string path = ScriptsAplicacaoFolder + "Estatuto/";
+            bundles.Add(new ScriptBundle("~/bundles/estatuto")
+                .Include(path + "acerva.estatuto.module.js")
+                .Include(path + "acerva.estatuto.service.js")
+                .Include(path + "acerva.estatuto.controller.js")
+            );
+        }
+
+        private static void CartilhaBoasVindas(BundleCollection bundles)
+        {
+            const string path = ScriptsAplicacaoFolder + "CartilhaBoasVindas/";
+            bundles.Add(new ScriptBundle("~/bundles/cartilhaBoasVindas")
+                .Include(path + "acerva.cartilhaBoasVindas.module.js")
+                .Include(path + "acerva.cartilhaBoasVindas.service.js")
+                .Include(path + "acerva.cartilhaBoasVindas.controller.js")
             );
         }
 

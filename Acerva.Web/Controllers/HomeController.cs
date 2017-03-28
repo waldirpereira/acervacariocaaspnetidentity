@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using Acerva.Infra.Repositorios;
 using Acerva.Infra.Web;
@@ -6,6 +7,7 @@ using Acerva.Modelo;
 using Acerva.Web.Models.Home;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
+using NHibernate.Util;
 
 namespace Acerva.Web.Controllers
 {
@@ -48,11 +50,9 @@ namespace Acerva.Web.Controllers
 
         public ActionResult BuscaNoticias()
         {
-            var listaNoticiasJson = _cadastroNoticias.BuscaTodas()
-                .Where(n => n.Ativo)
-                .OrderBy(n => n.Ordem.HasValue ? n.Ordem.Value : int.MaxValue)
-                .ThenBy(n => n.Codigo)
+            var listaNoticiasJson = _cadastroNoticias.BuscaParaPaginaInicial()
                 .Select(Mapper.Map<NoticiaViewModel>);
+            
             return new JsonNetResult(listaNoticiasJson);
         }
 

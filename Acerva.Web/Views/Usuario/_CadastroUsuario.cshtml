@@ -205,7 +205,8 @@
                                                 </div>
 
                                             </div>
-                                            <div ng-if="!ctrl.modelo.fotoBase64 || ctrl.modelo.fotoSelecionada">
+                                            <div ng-if="!ctrl.modelo.fotoBase64 || ctrl.modelo.fotoSelecionada"
+                                                 style="overflow-x: hidden;">
                                                 <input type="file" ng-model="ctrl.modelo.fotoSelecionada"
                                                        base-sixty-four-input
                                                        accept="image/jpeg, image/png, image/gif" />

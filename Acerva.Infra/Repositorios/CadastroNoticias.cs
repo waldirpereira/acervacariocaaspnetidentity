@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Acerva.Modelo;
 using NHibernate;
 using NHibernate.Linq;
@@ -53,6 +54,16 @@ namespace Acerva.Infra.Repositorios
         public void ExcluiAnexo(AnexoNoticia anexo)
         {
             _session.Delete(anexo);
+        }
+
+        public IEnumerable<Noticia> BuscaParaPaginaInicial()
+        {
+            return _session.Query<Noticia>()
+                .FetchMany(n => n.Anexos)
+                .ToList()
+                .Where(n => n.Ativo)
+                .OrderBy(n => n.Ordem.HasValue ? n.Ordem.Value : int.MaxValue)
+                .ThenBy(n => n.Codigo);
         }
     }
 }

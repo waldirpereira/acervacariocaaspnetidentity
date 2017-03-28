@@ -24,8 +24,11 @@
             <div class="container">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <div>
-                        <a href="@Url.Action("Index", "Home")" class="navbar-brand" style="padding: 5px; margin-left: 15px;">
-                            <img src="@Url.Content("~/Content/Aplicacao/images/Logo_ACerva_Carioca.png")" style="height: 50px;" />
+                        <a href="@Url.Action("Index", "Home")" class="navbar-brand" style="padding: 5px;">
+                            <img src="@Url.Content("~/Content/Aplicacao/images/Logo_ACerva_Carioca.png")" style="height: 50px; margin-left: 10px;" alt="ACervA Carioca"
+                                 class="hidden-xs"/>
+                            <img src="@Url.Content("~/Content/Aplicacao/images/Logo_ACerva_Carioca.png")" style="height: 45px; margin-left: -10px;" alt="ACervA Carioca"
+                                 class="visible-xs"/>
                         </a>
                     </div>
                     <div class="hidden-xs">

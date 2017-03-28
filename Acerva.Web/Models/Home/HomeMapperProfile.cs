@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using Acerva.Modelo;
 
 namespace Acerva.Web.Models.Home
@@ -8,6 +9,7 @@ namespace Acerva.Web.Models.Home
         public HomeMapperProfile()
         {
             CreateMap<Noticia, NoticiaViewModel>()
+                .ForMember(d => d.Anexos, o => o.ResolveUsing(s => s.MostraListaAnexos ? s.Anexos : new List<AnexoNoticia>()))
                 .ReverseMap();
 
             CreateMap<Usuario, UsuarioRegistroViewModel>()
@@ -24,6 +26,9 @@ namespace Acerva.Web.Models.Home
                 .ReverseMap();
 
             CreateMap<Uf, UfViewModel>()
+                .ReverseMap();
+
+            CreateMap<AnexoNoticia, AnexoNoticiaViewModel>()
                 .ReverseMap();
         }
     }

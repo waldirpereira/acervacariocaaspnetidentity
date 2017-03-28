@@ -13,5 +13,6 @@ namespace Acerva.Infra.Repositorios
         void SalvaAnexo(AnexoNoticia anexo);
         AnexoNoticia BuscaAnexo(int codigoAnexo);
         void ExcluiAnexo(AnexoNoticia anexo);
+        IEnumerable<Noticia> BuscaParaPaginaInicial();
     }
 }

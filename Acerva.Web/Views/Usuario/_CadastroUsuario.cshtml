@@ -299,7 +299,7 @@
                                     <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.uf")>
                                         <label class="control-label" for="uf">UF<span ng-if="ctrl.tipoCadastro === 'registro'">*</span></label>
                                         @NgHelpers.NgSelectComBuscaRespeitandoStatusBloqueado("ctrl", new NgHelpers.NgSelectOptions("uf", "ctrl.modelo", "nome",
-                                            "uf in ctrl.dominio.ufs | filter: {nome: $select.search} | orderBy : 'sigla' track by uf.codigo",
+                                            "uf in ctrl.dominio.ufs | filter: $select.search | orderBy : 'sigla' track by uf.codigo",
                                             "uf.nome | highlight: $select.search")
                                         {
                                             NgRequired = "ctrl.tipoCadastro === 'registro'",
@@ -349,10 +349,15 @@
                                 <div class="col-sm-6">
                                     <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.sexo")>
                                         <label class="control-label">Sexo</label><br/>
-                                        <div class="btn-group">
+                                        <div class="btn-group hidden-xs">
                                             <label class="btn btn-default" ng-model="ctrl.modelo.sexo" ng-repeat="item in ctrl.dominio.sexos | filter: {codigo: '!0'}"
                                                    uib-btn-radio="item"
-                                                   ng-disabled="ctrl.formularioDesabilitado()">{{ item.nomeExibicao}}</label>
+                                                   ng-disabled="ctrl.formularioDesabilitado()">{{ item.nomeExibicao }}</label>
+                                        </div>
+                                        <div class="btn-group visible-xs-inline-block">
+                                            <label class="btn btn-default" ng-model="ctrl.modelo.sexo" ng-repeat="item in ctrl.dominio.sexos | filter: {codigo: '!0'}"
+                                                   uib-btn-radio="item"
+                                                   ng-disabled="ctrl.formularioDesabilitado()">{{ item.codigoBd }}</label>
                                         </div>
                                     </div>
                                 </div>

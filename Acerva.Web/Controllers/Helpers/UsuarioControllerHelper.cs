@@ -8,6 +8,7 @@ namespace Acerva.Web.Controllers.Helpers
     public class UsuarioControllerHelper
     {
         private const string CaminhoFotos = "~/Content/Aplicacao/images/fotos";
+        private const string CaminhoImagens = "~/Content/Aplicacao/images";
 
         public void SalvaFoto(string userId, string fotoBase64, HttpContextBase httpContext)
         {
@@ -30,13 +31,18 @@ namespace Acerva.Web.Controllers.Helpers
             }
         }
 
-        public string BuscaFotoBase64(string userId, HttpContextBase httpContext)
+        public string BuscaFotoBase64(string userId, HttpContextBase httpContext, bool substituiPorPadraoSeNaoExistir = false)
         {
             var caminhoFotos = httpContext.Server.MapPath(CaminhoFotos);
             var caminhoCompleto = string.Format("{0}\\{1}.png", caminhoFotos, userId);
 
             if (!File.Exists(caminhoCompleto))
-                return null;
+            {
+                if (!substituiPorPadraoSeNaoExistir)
+                    return null;
+
+                caminhoCompleto = string.Format("{0}\\{1}", httpContext.Server.MapPath(CaminhoImagens), "tacas.png");
+            }
 
             using (var image = Image.FromFile(caminhoCompleto))
             {

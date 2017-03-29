@@ -27,14 +27,13 @@ namespace Acerva.Web.Controllers
 
         public ActionResult Busca()
         {
-
             var usuarioLogado = HttpContext.User;
             var usuarioLogadoBd = usuarioLogado.Identity.IsAuthenticated ? _cadastroUsuarios.Busca(usuarioLogado.Identity.GetUserId()) : null;
 
             var userJson = Mapper.Map<UsuarioViewModel>(usuarioLogadoBd);
 
             if (usuarioLogadoBd != null)
-                userJson.FotoBase64 = _usuarioControllerHelper.BuscaFotoBase64(usuarioLogadoBd.Id, HttpContext);
+                userJson.FotoBase64 = _usuarioControllerHelper.BuscaFotoBase64(usuarioLogadoBd.Id, HttpContext, true);
 
             return new JsonNetResult(userJson);
         }

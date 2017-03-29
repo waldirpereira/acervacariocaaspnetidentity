@@ -377,6 +377,8 @@
     <Content Include="Content\Aplicacao\anexos\artigos\.gitignore" />
     <Content Include="Content\Aplicacao\anexos\noticias\.gitignore" />
     <Content Include="Content\Aplicacao\css\admin.css" />
+    <Content Include="Content\Aplicacao\images\carteirinha_frente.jpg" />
+    <Content Include="Content\Aplicacao\images\carteirinha_verso.jpg" />
     <Content Include="Content\Aplicacao\images\fotos\.gitignore" />
     <Content Include="Content\Aplicacao\images\Logo_ACerva_Carioca.png" />
     <Content Include="Content\Aplicacao\images\regionais\2\niteroi.jpg" />

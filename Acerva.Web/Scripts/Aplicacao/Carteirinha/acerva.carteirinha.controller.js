@@ -2,9 +2,9 @@
     "use strict";
 
     angular.module("acerva.carteirinha")
-        .controller("CarteirinhaController", ["Carteirinha", CarteirinhaController]);
+        .controller("CarteirinhaController", ["ENUMS", "Carteirinha", CarteirinhaController]);
 
-    function CarteirinhaController(Carteirinha) {
+    function CarteirinhaController(ENUMS, Carteirinha) {
         var ctrl = this;
 
         ctrl.status = {
@@ -21,6 +21,7 @@
         init();
 
         function init() {
+            ctrl.dominio.sexo = ENUMS.sexo;
             return busca();
         }
 

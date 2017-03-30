@@ -132,5 +132,11 @@ namespace Acerva.Infra.Repositorios
                 .ToList()
                 .Where((u => u.EstaAssociado && u.Regional.Codigo == codigo && u.EhDelegado));
         }
+
+        public IEnumerable<HistoricoStatusUsuario> BuscaHistoricoStatus(string id)
+        {
+            return _session.Query<HistoricoStatusUsuario>()
+                .Where(h => h.IdUsuarioAlterado == id);
+        }
     }
 }

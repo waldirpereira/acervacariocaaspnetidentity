@@ -2,9 +2,9 @@
     "use strict";
 
     angular.module("acerva.usuario")
-        .controller("CadastroUsuarioController", ["$scope", "$timeout", "$routeParams", "$location", "ENUMS", "CanalMensagemGrowl", "Usuario", CadastroUsuarioController]);
+        .controller("CadastroUsuarioController", ["$scope", "$timeout", "$routeParams", "$location", "$uibModal", "ENUMS", "CanalMensagemGrowl", "Usuario", CadastroUsuarioController]);
 
-    function CadastroUsuarioController($scope, $timeout, $routeParams, $location, ENUMS, CanalMensagemGrowl, Usuario) {
+    function CadastroUsuarioController($scope, $timeout, $routeParams, $location, $uibModal, ENUMS, CanalMensagemGrowl, Usuario) {
         var ctrl = this;
         ctrl.status = {
             carregando: false,
@@ -31,6 +31,7 @@
         ctrl.voltarParaAguardandoIndicacao = voltarParaAguardandoIndicacao;
         ctrl.voltaParaNovo = voltaParaNovo;
         ctrl.voltaParaAtivo = voltaParaAtivo;
+        ctrl.mostraHistoricoStatus = mostraHistoricoStatus;
 
         ctrl.formularioDesabilitado = function() {
             return ctrl.modeloOriginal.id && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor && ctrl.dominio.idUsuarioLogado !== ctrl.modeloOriginal.id;
@@ -141,6 +142,25 @@
         function voltaParaAtivo(usuario) {
             executaAcaoComUsuario(usuario, Usuario.voltaParaAtivo);
         }
-    }
 
+        function mostraHistoricoStatus(usuario) {
+            Usuario.buscaHistoricoStatus(usuario.id).then(function (listaHistorico) {
+                $uibModal.open({
+                    animation: true,
+                    ariaLabelledBy: 'modal-title',
+                    ariaDescribedBy: 'modal-body',
+                    templateUrl: 'modal-historico-status.html',
+                    controller: 'HistoricoStatusModalController',
+                    controllerAs: 'ctrl',
+                    resolve: {
+                        usuario: usuario,
+                        dominio: {statusUsuario:ctrl.dominio.statusUsuario},
+                        listaHistorico: function () {
+                            return listaHistorico;
+                        }
+                    }
+                });
+            });
+        }
+    }
 })();

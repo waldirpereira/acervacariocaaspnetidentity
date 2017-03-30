@@ -569,5 +569,14 @@ namespace Acerva.Web.Controllers
 
             return new JsonNetResult(usuariosDisponiveis);
         }
+
+        public ActionResult BuscaHistoricoStatus(string id)
+        {
+            var listaHistoricoJson = _cadastroUsuarios.BuscaHistoricoStatus(id)
+                .OrderBy(h => h.DataHora)
+                .Select(Mapper.Map<HistoricoStatusUsuarioViewModel>);
+            
+            return new JsonNetResult(listaHistoricoJson);
+        }
     }
 }

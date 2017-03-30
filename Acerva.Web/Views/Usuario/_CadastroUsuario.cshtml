@@ -50,6 +50,9 @@
                                   'btn-default': ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoConfirmacaoEmail.codigoBd || ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.novo.codigoBd,
                                   'btn-primary': ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd || ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoRenovacao.codigoBd
                                   }">{{ctrl.modelo.status.nomeExibicao}}</a>
+                                                <a class="btn btn-default"
+                                                   ng-if="ctrl.tipoCadastro !== 'registro' && (ctrl.dominio.usuarioLogadoEhAdmin || ctrl.dominio.usuarioLogadoEhDiretor || ctrl.dominio.usuarioLogadoEhDelegado)"
+                                                   ng-click="ctrl.mostraHistoricoStatus(ctrl.modelo)">Histórico</a>
                                             </div>
                                         </div>
                                     </div>

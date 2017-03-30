@@ -109,6 +109,11 @@
                 return $http.get(ROTAS.buscaUsuariosAtivosComTermo, {
                     params: { termo: termo }
                 }).then(retornaDadoDoXhr);
+            },
+            buscaHistoricoStatus: function (id) {
+                return $http.get(ROTAS.buscaHistoricoStatus, {
+                    params: { id: id }
+                }).then(retornaDadoDoXhr);
             }
         }
 

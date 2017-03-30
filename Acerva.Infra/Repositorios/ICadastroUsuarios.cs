@@ -23,5 +23,6 @@ namespace Acerva.Infra.Repositorios
         bool ExisteComMesmoCpf(Usuario usuario);
         IEnumerable<Uf> BuscaUfs();
         IEnumerable<Usuario> BuscaDelegadosDaRegional(int codigo);
+        IEnumerable<HistoricoStatusUsuario> BuscaHistoricoStatus(string id);
     }
 }

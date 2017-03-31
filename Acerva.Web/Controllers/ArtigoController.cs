@@ -101,9 +101,10 @@ namespace Acerva.Web.Controllers
             if (ExisteComMesmoTitulo(artigo))
                 return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Já existe uma artigo com o nome {0:unsafe}", artigo.Titulo));
 
-            artigo.DataHora = DateTime.Now;
+            artigo.DataHora = artigoViewModel.DataHora ?? DateTime.Now;
 
-            _cadastroArtigos.Salva(artigo);
+            if (ehNovo)
+                _cadastroArtigos.Salva(artigo);
 
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success,
                 string.Format("Artigo <a href='{0}#/Edit/{1}'>{2}</a> foi salvo com sucesso", Url.Action("Index"), artigo.Codigo, artigo.Titulo),

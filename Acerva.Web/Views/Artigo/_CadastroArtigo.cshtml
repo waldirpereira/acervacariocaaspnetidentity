@@ -32,32 +32,43 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12 col-sm-12">
+                    <div class="col-sm-4">
                         @NgHelpers.NgSelectComBuscaRespeitandoStatusBloqueado("ctrl", new NgHelpers.NgSelectOptions("categoria", "ctrl.modelo", "nome",
-                                "categoria in ctrl.dominio.categorias | filter: {nome: $select.search} | orderBy : 'nome' track by categoria.codigo",
-                                "categoria.nome | highlight: $select.search")
+                            "categoria in ctrl.dominio.categorias | filter: {nome: $select.search} | orderBy : 'nome' track by categoria.codigo",
+                            "categoria.nome | highlight: $select.search")
                    {
                        Obrigatorio = true,
                        Titulo = "Categoria",
                        NgDisabled = ""
                    })
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12">
+                    <div class="col-sm-4">
                         <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formArtigo.visibilidade")>
                             @NgHelpers.NgSelectComBuscaRespeitandoStatusBloqueado("ctrl", new NgHelpers.NgSelectOptions("visibilidade", "ctrl.modelo", "nomeExibicao",
                                 "visibilidade in ctrl.dominio.visibilidades | filter: {nomeExibicao: $select.search} | orderBy : 'nomeExibicao' track by visibilidade.codigoBd",
                                 "visibilidade.nomeExibicao | highlight: $select.search")
-                            {
-                                Obrigatorio = true,
-                                Titulo = "Visibilidade",
-                                NgDisabled = "ctrl.modeloOriginal.codigo && ctrl.modelo.visibilidade.codigoBd === ctrl.dominio.visibilidade.internoSistema.codigoBd"
-                            })
+                       {
+                           Obrigatorio = true,
+                           Titulo = "Visibilidade",
+                           NgDisabled = "ctrl.modeloOriginal.codigo && ctrl.modelo.visibilidade.codigoBd === ctrl.dominio.visibilidade.internoSistema.codigoBd"
+                       })
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <label class="control-label" for="dataHora">Data/hora</label>
+                        <div class="dropdown">
+                            <a class="dataHora dropdown-toggle" role="button" data-toggle="dropdown" data-target="#">
+                                <div class="input-group">
+                                    <input type="text" datepicker-formatter mo-date-input="DD/MM/YYYY HH:mm" class="form-control" data-ng-model="ctrl.modelo.dataHora">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" style="top: auto; bottom: 100%; margin-bottom: 2px;">
+                                <datetimepicker data-ng-model="ctrl.modelo.dataHora" data-datetimepicker-config="{ modelType: 'YYYY-MM-DDTHH:mm:ss', dropdownSelector: '.dataHora.dropdown-toggle' }" />
+                            </ul>
                         </div>
                     </div>
                 </div>
-
             </fieldset>
         </div>
         <div class="panel-footer">

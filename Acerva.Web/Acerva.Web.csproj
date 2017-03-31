@@ -395,6 +395,7 @@
     <Content Include="Content\select.css" />
     <Content Include="Content\select.min.css" />
     <Content Include="Content\ui-bootstrap-csp.css" />
+    <Content Include="Content\vendor\angular-bootstrap-datetimepicker\datetimepicker.css" />
     <Content Include="Content\vendor\angular-hotkeys\hotkeys.css" />
     <Content Include="Content\vendor\angular-hotkeys\hotkeys.min.css" />
     <Content Include="Content\vendor\angularPrint\angularPrint.css" />
@@ -1292,14 +1293,19 @@
     <Content Include="Scripts\select.min.js" />
     <Content Include="Scripts\vendor\angular-base64-upload\angular-base64-upload.js" />
     <Content Include="Scripts\vendor\angular-base64-upload\angular-base64-upload.min.js" />
+    <Content Include="Scripts\vendor\angular-bootstrap-datetimepicker\datetimepicker.js" />
+    <Content Include="Scripts\vendor\angular-bootstrap-datetimepicker\datetimepicker.templates.js" />
     <Content Include="Scripts\vendor\angular-chart\angular-chart.js" />
     <Content Include="Scripts\vendor\angular-chart\angular-chart.min.js" />
     <Content Include="Scripts\vendor\angular-datatables\angular-datatables.buttons.js" />
+    <Content Include="Scripts\vendor\angular-date-time-input\dateTimeInput.js" />
     <Content Include="Scripts\vendor\angular-hotkeys\hotkeys.js" />
     <Content Include="Scripts\vendor\angular-hotkeys\hotkeys.min.js" />
     <Content Include="Scripts\vendor\angular-local-storage\angular-local-storage.js" />
     <Content Include="Scripts\vendor\angular-ui-mask\mask.js" />
     <Content Include="Scripts\vendor\angularPrint\angularPrint.js" />
+    <Content Include="Scripts\vendor\bootstrap-datetimepicker\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\vendor\bootstrap-datetimepicker\pt-br.js" />
     <Content Include="Scripts\vendor\chart\Chart.js" />
     <Content Include="Scripts\vendor\chart\Chart.min.js" />
     <Content Include="Scripts\vendor\checklist-model\checklist-model.js" />
@@ -2354,7 +2360,6 @@
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Project_Readme.html" />
     <Content Include="Scripts\vendor\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>

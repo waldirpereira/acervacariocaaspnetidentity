@@ -32,7 +32,7 @@
                 ctrl.dominio.visibilidades = ENUMS.toArrayOfEnums(ENUMS.visibilidadeArtigo);
 
                 if (id === 0) {
-                    colocaArtigoEmEdicao({ativo: true});
+                    colocaArtigoEmEdicao({ ativo: true, dataHora: moment().toISOString() });
                     ctrl.status.carregando = false;
                     return;
                 }
@@ -57,10 +57,11 @@
             ctrl.status.salvando = true;
             
             Artigo.salvaArtigo(ctrl.modelo)
-                .then(function () {  })
+                .then(function() {
+                    $location.path("/");
+                })
                 .finally(function() {
                     ctrl.status.salvando = false;
-                    $location.path("/");
                 });
         }
 

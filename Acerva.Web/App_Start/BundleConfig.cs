@@ -36,11 +36,23 @@ namespace Acerva.Web
             ScriptsVendorFolder + "bootstrap-datepicker/bootstrap-datepicker.js",
             ScriptsVendorFolder + "bootstrap-datepicker/bootstrap-datepicker.pt-BR.min.js"
         };
+        //private static readonly string[] BootstrapDateTimePicker =
+        //{
+        //    ScriptsVendorFolder + "bootstrap-datetimepicker/bootstrap-datetimepicker.min.js",
+        //    ScriptsVendorFolder + "bootstrap-datetimepicker/pt-br.js"
+        //};
         private const string Chart = ScriptsVendorFolder + "chart/Chart.js";
         private static readonly string AngularTimeInputJs = ScriptsVendorFolder + "png-time-input/png-time-input.js";
         #endregion
 
         private const string AngularDatepicker = ScriptsVendorFolder + "frte-ng-datepicker/frte-ng-datepicker.js";
+        private static readonly string[] AngularDateTimePicker =
+        {
+            ScriptsVendorFolder + "angular-bootstrap-datetimepicker/datetimepicker.js",
+            ScriptsVendorFolder + "angular-bootstrap-datetimepicker/datetimepicker.templates.js"
+        };
+
+        private const string AngularDateTimeInput = ScriptsVendorFolder + "angular-date-time-input/dateTimeInput.js";
         private const string AngularHotKeys = ScriptsVendorFolder + "angular-hotkeys/hotkeys.js";
         private const string Angular = ScriptsVendorFolder + "angular.js";
         private const string AngularLocalePtBr = ScriptsVendorFolder + "i18n/angular-locale_pt-br.js";
@@ -103,6 +115,7 @@ namespace Acerva.Web
         private const string JQueryDatatablesButtonsCss = StylesVendorFolder + "DataTables/media/css/buttons.dataTables.min.css";
         private const string JQueryDatatablesButtonsSwf = StylesVendorFolder + "DataTables/media/sfw/flashExport.swf";
         private const string BootstrapDatepickerCss = StylesVendorFolder + "bootstrap-datepicker/bootstrap-datepicker.css";
+        private const string AngularDateTimePickerCss = StylesVendorFolder + "angular-bootstrap-datetimepicker/datetimepicker.css";
 
         #region CSS dos plugins de ANGULAR
         private const string AngularGrowlCss = StylesVendorFolder + "angular-growl-v2/angular-growl.min.css";
@@ -186,7 +199,10 @@ namespace Acerva.Web
                 .Include(AngularGrowl)
                 .Include(AngularSelect)
                 .Include(BootstrapDatepicker)
+                //.Include(BootstrapDateTimePicker)
                 .Include(AngularDatepicker)
+                .Include(AngularDateTimeInput)
+                .Include(AngularDateTimePicker)
                 .Include(AngularTimeInputJs)
                 .Include(AngularDataTables)
                 .Include(AngularHotKeys)
@@ -204,6 +220,7 @@ namespace Acerva.Web
                 .Include(StylesVendorFolder + "animate.css/animate.css")
                 .Include(StylesVendorFolder + "bootstrap-dialog/bootstrap-dialog.css")
                 .Include(BootstrapDatepickerCss)
+                .Include(AngularDateTimePickerCss)
                 .Include(AngularTimeInputCss)
                 .Include(AngularHotkeysCss)
             );

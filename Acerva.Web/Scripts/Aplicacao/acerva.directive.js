@@ -277,7 +277,7 @@
 
                 ctrl.$parsers.unshift(function (viewValue) {
                     var date = moment(viewValue, dateFormat);
-                    return (date && date.isValid() && date.year() > 1950) ? date.toDate() : "";
+                    return (date && date.isValid() && date.year() > 1950) ? moment(date).format("YYYY-MM-DDTHH:mm") : "";
                 });
             }
         };

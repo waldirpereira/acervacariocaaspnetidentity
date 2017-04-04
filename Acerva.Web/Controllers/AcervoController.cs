@@ -50,7 +50,7 @@ namespace Acerva.Web.Controllers
             var listaArtigosJson = _cadastroArtigos.BuscaTodos()
                 .Where(a => a.Categoria.Codigo == codigoCategoriaArtigo &&
                             a.Ativo && 
-                            a.DataHora > DateTime.Now &&
+                            a.DataHora <= DateTime.Now &&
                             (a.Visibilidade == VisibilidadeArtigo.Publico || (a.Visibilidade == VisibilidadeArtigo.Autenticado && usuarioLogado.Identity.IsAuthenticated)))
                  .OrderBy(a => a.DataHora)
                  .ThenBy(a => a.Codigo)

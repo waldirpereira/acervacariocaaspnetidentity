@@ -64,9 +64,10 @@
                                 </div>
                             </a>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" style="top: auto; bottom: 100%; margin-bottom: 2px;">
-                                <datetimepicker data-ng-model="ctrl.modelo.dataHora" data-datetimepicker-config="{ modelType: 'YYYY-MM-DDTHH:mm:ss', dropdownSelector: '.dataHora.dropdown-toggle' }" />
+                                <datetimepicker data-ng-model="ctrl.modelo.dataHora" data-datetimepicker-config="{ modelType: 'YYYY-MM-DDTHH:mm:ss', dropdownSelector: '.dataHora.dropdown-toggle' }"/>
                             </ul>
                         </div>
+                        {{ctrl.modelo.dataHora}}
                     </div>
                 </div>
             </fieldset>

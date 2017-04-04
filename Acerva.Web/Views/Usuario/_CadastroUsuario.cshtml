@@ -169,7 +169,7 @@
 
                                 <div class="row"
                                      ng-if="ctrl.tipoCadastro === 'usuario' && (ctrl.dominio.usuarioLogadoEhAdmin || ctrl.dominio.usuarioLogadoEhDiretor)">
-                                    <div class="col-xs-12 col-sm-6" ng-if="ctrl.tipoCadastro !== 'registro'">
+                                    <div class="col-sm-6">
                                         <div class="form-group">
                                             <label class="control-label">Papéis</label>
                                             <div>
@@ -177,6 +177,7 @@
                                                     <li ng-repeat="papel in ctrl.dominio.papeis">
                                                         <input type="checkbox"
                                                                checklist-model="ctrl.modelo.papeis"
+                                                               ng-model="checkboxPapel"
                                                                checklist-value="papel"> {{papel.name}}
                                                     </li>
                                                 </ul>

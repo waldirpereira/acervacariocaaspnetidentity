@@ -32,7 +32,7 @@
                 ctrl.dominio.visibilidades = ENUMS.toArrayOfEnums(ENUMS.visibilidadeArtigo);
 
                 if (id === 0) {
-                    colocaArtigoEmEdicao({ ativo: true, dataHora: moment().toISOString() });
+                    colocaArtigoEmEdicao({ ativo: true, dataHora: moment().format("YYYY-MM-DDTHH:mm") });
                     ctrl.status.carregando = false;
                     return;
                 }

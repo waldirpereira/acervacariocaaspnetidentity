@@ -318,7 +318,6 @@
     <Compile Include="AttributeAdapters\CustomRangeAttributeAdapter.cs" />
     <Compile Include="AttributeAdapters\CustomRequiredAttributeAdapter.cs" />
     <Compile Include="AttributeAdapters\CustomStringLengthAttributeAdapter.cs" />
-    <None Include="Content\Aplicacao\fonts\fontello.json" />
     <Compile Include="AttributeAdapters\HandleErrorFazendoLogAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
@@ -1257,6 +1256,8 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\Aplicacao\fonts\imprima-regular-webfont.woff" />
+    <Content Include="Content\Aplicacao\fonts\imprima-regular-webfont.woff2" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -1370,7 +1371,6 @@
     <Content Include="Views\ListaBeneficios\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Aplicacao\fonts\acerva-iconfont.svg" />
     <Content Include="Content\vendor\angular-growl-v2\angular-growl.css" />
     <Content Include="Content\vendor\angular-growl-v2\angular-growl.min.css" />
     <Content Include="Content\vendor\angular-ui-select\select.css" />
@@ -1509,9 +1509,6 @@
     <Content Include="Scripts\vendor\angular-animate.min.js.map" />
     <Content Include="Scripts\Aplicacao\acerva.module.js" />
     <Content Include="Content\vendor\Datatables\media\images\Sorting icons.psd" />
-    <Content Include="Content\Aplicacao\fonts\acerva-iconfont.eot" />
-    <Content Include="Content\Aplicacao\fonts\acerva-iconfont.ttf" />
-    <Content Include="Content\Aplicacao\fonts\acerva-iconfont.woff" />
     <Content Include="Scripts\vendor\angular-chart\angular-chart.min.js.map" />
     <Content Include="Scripts\vendor\angular-base64-upload\angular-base64-upload.min.js.map" />
     <Content Include="Scripts\select.min.js.map" />

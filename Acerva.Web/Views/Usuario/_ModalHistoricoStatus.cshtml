@@ -14,7 +14,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="historicoStatus in ctrl.listaHistorico">
-                        <td>{{historicoStatus.dataHora | date:'dd/MM/yyyy hh:mm:ss'}}</td>
+                        <td>{{historicoStatus.dataHora | date:'dd/MM/yyyy HH:mm:ss'}}</td>
                         <td>
                             <span class="label" ng-class="{
                                   'label-success': historicoStatus.statusNovo.codigoBd === ctrl.dominio.statusUsuario.ativo.codigoBd,

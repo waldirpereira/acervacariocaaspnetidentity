@@ -66,7 +66,7 @@ namespace Acerva.Web.Controllers
                 return RetornaJsonDeAlerta("O artigo buscado não está ativo.");
             }
 
-            if (artigo.DataHora < DateTime.Now)
+            if (artigo.DataHora > DateTime.Now)
             {
                 return RetornaJsonDeAlerta(string.Format("O artigo buscado não liberado para visualização (data de publicação: {0}).", artigo.DataHora.ToString("dd/MM/yyyy HH:mm")));
             }

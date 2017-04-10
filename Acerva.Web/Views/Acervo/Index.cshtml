@@ -32,7 +32,7 @@
                     <ul ng-if="ctrl.listaArtigosPorCategoria[ctrl.categoriaSelecionada.codigo].length > 0 && !ctrl.artigo && !ctrl.status.carregandoArtigo">
                         <li ng-repeat="artigo in ctrl.listaArtigosPorCategoria[ctrl.categoriaSelecionada.codigo]" style="margin-bottom: 10px;">
                             <a ng-href="#/{{ctrl.categoriaSelecionada.codigo}}/{{artigo.codigo}}" ng-click="ctrl.mostraArtigo(artigo)" style="cursor: pointer;"><h4 style="margin-bottom: -10px;">{{artigo.titulo}}</h4></a><br />
-                            por <em>{{artigo.nomeUsuario}} em {{artigo.dataHora | date:'dd/MM/yyyy hh:mm:ss'}}</em>
+                            por <em>{{artigo.nomeUsuario}} em {{artigo.dataHora | date:'dd/MM/yyyy HH:mm:ss'}}</em>
                         </li>
                     </ul>
                     <!-- ARTIGO -->
@@ -43,7 +43,7 @@
                                     {{ctrl.artigo.titulo}}
                                     <span ng-if="ctrl.artigo.visibilidade.codigoBd === ctrl.dominio.visibilidade.autenticado.codigoBd" class="label label-success">Apenas para associados!</span>
                                 </h3>
-                                por <em>{{ctrl.artigo.nomeUsuario}} em {{ctrl.artigo.dataHora | date:'dd/MM/yyyy hh:mm:ss'}}</em>
+                                por <em>{{ctrl.artigo.nomeUsuario}} em {{ctrl.artigo.dataHora | date:'dd/MM/yyyy HH:mm:ss'}}</em>
                             </div>
                             <div class="panel-body">
                                 <span ng-bind-html="ctrl.artigo.textoHtml"></span>

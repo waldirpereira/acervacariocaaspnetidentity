@@ -31,7 +31,7 @@ namespace Acerva.Web.Controllers
             var usuarioLogado = HttpContext.User;
             
             var listaCategoriasJson = _cadastroArtigos.BuscaCategorias()
-                .Where(c => c.Ativo && c.Artigos.Where(a => a.Ativo && a.DataHora > DateTime.Now).Any(a => a.Visibilidade == VisibilidadeArtigo.Publico || (a.Visibilidade == VisibilidadeArtigo.Autenticado && usuarioLogado.Identity.IsAuthenticated)))
+                .Where(c => c.Ativo && c.Artigos.Where(a => a.Ativo && a.DataHora <= DateTime.Now).Any(a => a.Visibilidade == VisibilidadeArtigo.Publico || (a.Visibilidade == VisibilidadeArtigo.Autenticado && usuarioLogado.Identity.IsAuthenticated)))
                 .Select(c =>
                 {
                     var categoriaJson = Mapper.Map<CategoriaArtigoViewModel>(c);

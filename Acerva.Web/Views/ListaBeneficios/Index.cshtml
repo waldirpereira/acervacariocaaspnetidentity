@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Benefícios";
+    ViewBag.AngularApp = "acerva.listaBeneficios";
+}
+<h4>Benefícios</h4>
+
+<div ng-view ng-cloak></div>
+@Html.AntiForgeryToken()
+
+<script type="text/ng-template" id="index.html">
+    <div class="animate-show-only">
+        <div class="row">
+            <div class="col-sm-12" style="padding-left: 0;">
+                <ul class=" list-group" style="list-style: none;">
+                    <li class="list-group-item"
+                        ng-repeat="beneficio in ctrl.listaBeneficios">
+                        <h4 class="titulo text-primary" style="margin-top: 0;">{{beneficio.nome}}</h4>
+                        <span ng-bind-html="beneficio.textoHtml"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</script>
+
+@section styles {
+    @Styles.Render("~/cssBundles/angularForm")
+    @Styles.Render(BundleConfig.BundleStylesDataTables)
+}
+
+@section dependencies {
+    @Scripts.Render("~/bundles/listaBeneficios")
+}
+
+@section scripts {
+    <script type="text/javascript">
+        (function () {
+            angular.module("acerva")
+                .constant("ROTAS", {
+                    buscaBeneficios: "@Url.Action("BuscaParaListagem")"
+                });
+        })();
+    </script>
+}

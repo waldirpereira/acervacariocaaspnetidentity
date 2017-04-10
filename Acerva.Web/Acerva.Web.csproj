@@ -286,6 +286,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\Aplicacao\Beneficio\acerva.beneficio.cadastro.controller.js" />
+    <Content Include="Scripts\Aplicacao\Beneficio\acerva.beneficio.controller.js" />
+    <Content Include="Scripts\Aplicacao\Beneficio\acerva.beneficio.module.js" />
+    <Content Include="Scripts\Aplicacao\Beneficio\acerva.beneficio.service.js" />
+    <Content Include="Scripts\Aplicacao\ListaBeneficios\acerva.listaBeneficios.controller.js" />
+    <Content Include="Scripts\Aplicacao\ListaBeneficios\acerva.listaBeneficios.module.js" />
+    <Content Include="Scripts\Aplicacao\ListaBeneficios\acerva.listaBeneficios.service.js" />
+    <Content Include="Views\Beneficio\_CadastroBeneficio.cshtml" />
+    <Content Include="Views\Beneficio\_ListaBeneficios.cshtml" />
+    <Content Include="Views\Beneficio\Index.cshtml" />
+    <Compile Include="Controllers\BeneficioController.cs" />
+    <Compile Include="Controllers\ListaBeneficiosController.cs" />
+    <Compile Include="Models\CadastroBeneficios\BeneficioViewModel.cs" />
+    <Compile Include="Models\CadastroBeneficios\CadastroBeneficiosMapperProfile.cs" />
     <Compile Include="App_GlobalResources\Messages.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -417,7 +431,6 @@
     <Content Include="Content\vendor\ng-croppie\ng-croppie.css" />
     <Content Include="Content\vendor\text-angular\textAngular.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="LinqToDB.Templates\CopyMe.MySql.tt.txt" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -1244,30 +1257,6 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="LinqToDB.Templates\LinqToDB.MySql.Tools.ttinclude" />
-    <Content Include="LinqToDB.Templates\Validation.ttinclude" />
-    <Content Include="LinqToDB.Templates\T4Model.ttinclude" />
-    <Content Include="LinqToDB.Templates\ReadMe.LinqToDB.md" />
-    <Content Include="LinqToDB.Templates\PluralizationService.ttinclude" />
-    <Content Include="LinqToDB.Templates\ObsoleteAttributes.ttinclude" />
-    <Content Include="LinqToDB.Templates\NotifyPropertyChanged.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.Tools.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.Sybase.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.SqlServer.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.SqlServer.SqlTypes.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.SQLite.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.SqlCe.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.PostgreSQL.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.Oracle.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.MySql.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.Informix.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.Firebird.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.DB2.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.Access.ttinclude" />
-    <Content Include="LinqToDB.Templates\EditableObject.ttinclude" />
-    <Content Include="LinqToDB.Templates\DataModel.ttinclude" />
-    <Content Include="LinqToDB.Templates\DataAnnotations.ttinclude" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -1378,6 +1367,7 @@
     <Content Include="Views\Estatuto\Index.cshtml" />
     <Content Include="Views\CartilhaBoasVindas\Index.cshtml" />
     <Content Include="Views\Usuario\_ModalHistoricoStatus.cshtml" />
+    <Content Include="Views\ListaBeneficios\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Aplicacao\fonts\acerva-iconfont.svg" />

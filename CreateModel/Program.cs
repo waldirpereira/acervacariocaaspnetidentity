@@ -70,10 +70,10 @@ namespace CreateModel
             var pathWeb = string.Format("../../../{0}.Web", PrefixoSistema);
             ProcessaArquivo("Web/Controllers/AviaoController.cs", Path.Combine(pathWeb, string.Format("Controllers/{0}Controller.cs", ModeloSingular)));
 
-            if (!Directory.Exists(Path.Combine(pathWeb, string.Format("Models/Cadastro{0}", ModeloSingular))))
-                Directory.CreateDirectory(Path.Combine(pathWeb, string.Format("Models/Cadastro{0}", ModeloSingular)));
-            ProcessaArquivo("Web/Models/CadastroAviao/AviaoViewModel.cs", Path.Combine(pathWeb, string.Format("Models/Cadastro{0}/{0}ViewModel.cs", ModeloSingular)));
-            ProcessaArquivo("Web/Models/CadastroAviao/CadastroAvioesMapperProfile.cs", Path.Combine(pathWeb, string.Format("Models/Cadastro{0}/Cadastro{1}MapperProfile.cs", ModeloSingular, ModeloPlural)));
+            if (!Directory.Exists(Path.Combine(pathWeb, string.Format("Models/Cadastro{0}", ModeloPlural))))
+                Directory.CreateDirectory(Path.Combine(pathWeb, string.Format("Models/Cadastro{0}", ModeloPlural)));
+            ProcessaArquivo("Web/Models/CadastroAvioes/AviaoViewModel.cs", Path.Combine(pathWeb, string.Format("Models/Cadastro{0}/{0}ViewModel.cs", ModeloPlural)));
+            ProcessaArquivo("Web/Models/CadastroAvioes/CadastroAvioesMapperProfile.cs", Path.Combine(pathWeb, string.Format("Models/Cadastro{0}/Cadastro{0}MapperProfile.cs", ModeloPlural)));
 
             if (!Directory.Exists(Path.Combine(pathWeb, string.Format("Scripts/Aplicacao/{0}", ModeloSingular))))
                 Directory.CreateDirectory(Path.Combine(pathWeb, string.Format("Scripts/Aplicacao/{0}", ModeloSingular)));
@@ -91,8 +91,8 @@ namespace CreateModel
             AlteraCsproj("Compile", Path.Combine(pathWeb, string.Format("{0}.Web.csproj", PrefixoSistema)), new List<string>
             {
                 string.Format("Controllers\\{0}Controller.cs", ModeloSingular),
-                string.Format("Models/Cadastro{0}\\{0}ViewModel.cs", ModeloSingular),
-                string.Format("Models/Cadastro{0}\\Cadastro{1}MapperProfile.cs", ModeloSingular, ModeloPlural)
+                string.Format("Models/Cadastro{0}\\{0}ViewModel.cs", ModeloPlural),
+                string.Format("Models/Cadastro{0}\\Cadastro{0}MapperProfile.cs", ModeloPlural)
             });
 
             AlteraCsproj("Content", Path.Combine(pathWeb, string.Format("{0}.Web.csproj", PrefixoSistema)), new List<string>

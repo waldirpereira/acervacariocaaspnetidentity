@@ -155,7 +155,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Eventos\StatusEventListener.cs" />
+    <Compile Include="Repositorios\CadastroBeneficios.cs" />
+	<Compile Include="Repositorios\ICadastroBeneficios.cs" />
+	<Compile Include="Eventos\StatusEventListener.cs" />
     <Compile Include="GerenciadorTransacao\GerenciadorTransacao.cs" />
     <Compile Include="GerenciadorTransacao\IGerenciadorTransacao.cs" />
     <Compile Include="MySQLDatabase.cs" />

@@ -1,0 +1,51 @@
+﻿<form name="formBeneficio" novalidate>
+    <div class="panel panel-primary">
+        <div class="panel-heading" ng-show="ctrl.status.carregando">Carregando<i class="icon icon-spin2 glyphicon-spin"></i></div>
+        <div class="panel-heading" ng-hide="ctrl.status.carregando">{{ ctrl.modeloOriginal.codigo ? "Edição do benefício '" + ctrl.modelo.nome + "'": "Novo benefício" }}</div>
+        <div class="panel-body" ng-hide="ctrl.status.carregando">
+            <fieldset ng-disabled="ctrl.status.bloqueado">
+                <div class="row" ng-if="ctrl.status.bloqueado">
+                    <div class="col-sm-12">
+                        <div class="alert alert-dismissible alert-warning">
+                            A edição está bloqueada pois o benefício está inativo.
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formBeneficio.nome")>
+                            <label class="control-label" for="nome">Nome</label>
+                            <input type="text" class="form-control" name="nome" autocomplete="off" required
+                                   ng-model="ctrl.modelo.nome"/>
+                            <p ng-show="formBeneficio.nome.$invalid && !formBeneficio.nome.$pristine" class="help-block">O nome é obrigatório</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formNoticia.textoHtml")>
+                            <label class="control-label" for="textoHtml">Texto HTML</label>
+                            <text-angular ng-model="ctrl.modelo.textoHtml" required
+                                          ta-toolbar-button-class="btn btn-default btn-sm"></text-angular>
+                            <p ng-show="formBeneficio.textoHtml.$invalid && !formBeneficio.textoHtml.$pristine" class="help-block">O texto Html é obrigatório</p>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="pull-right">
+                        <a class="btn btn-default" href="#/"
+                           ng-disabled="!ctrl.modelo || ctrl.status.salvando">Voltar</a>
+                        <button type="submit" class="btn btn-primary" ng-hide="ctrl.status.bloqueado" ng-disabled="formBeneficio.$invalid || ctrl.status.salvando"
+                                ng-click="ctrl.salvaBeneficio()">
+                            Salvar<i class="icon icon-spin2 glyphicon-spin" ng-show="ctrl.status.salvando"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

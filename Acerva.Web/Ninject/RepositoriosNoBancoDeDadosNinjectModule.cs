@@ -1,4 +1,4 @@
-using Acerva.Infra.Repositorios;
+﻿using Acerva.Infra.Repositorios;
 using Ninject.Modules;
 using Ninject.Web.Common;
 
@@ -8,7 +8,11 @@ namespace Acerva.Web.Ninject
     {
         public override void Load()
         {
-            Bind(typeof(ICadastroRegionais))
+            Bind(typeof(ICadastroBeneficios))
+                .To(typeof(CadastroBeneficios))
+                .InRequestScope();
+
+                Bind(typeof(ICadastroRegionais))
                 .To(typeof(CadastroRegionais))
                 .InRequestScope();
 

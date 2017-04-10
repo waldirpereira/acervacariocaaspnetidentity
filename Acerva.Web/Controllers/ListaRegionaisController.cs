@@ -25,6 +25,7 @@ namespace Acerva.Web.Controllers
         public ActionResult BuscaParaListagem()
         {
             var listaRegionaisJson = _cadastroRegionais.BuscaParaListagem()
+                .Where(r => r.Ativo)
                 .Select(Mapper.Map<RegionalViewModel>);
             return new JsonNetResult(listaRegionaisJson);
         }

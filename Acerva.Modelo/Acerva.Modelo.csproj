@@ -53,7 +53,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnexoNoticia.cs" />
+    <Compile Include="Beneficio.cs" />
+	<Compile Include="Validadores\BeneficioValidator.cs" />
+	<Compile Include="AnexoNoticia.cs" />
     <Compile Include="Artigo.cs" />
     <Compile Include="AnexoArtigo.cs" />
     <Compile Include="Resposta.cs" />

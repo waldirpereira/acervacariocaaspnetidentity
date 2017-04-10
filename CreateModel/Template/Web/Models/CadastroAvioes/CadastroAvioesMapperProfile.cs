@@ -5,7 +5,7 @@ namespace Acerva.Web.Models.CadastroAvioes
 {
     public class CadastroAvioesMapperProfile : Profile
     {
-        protected override void Configure()
+        public CadastroAvioesMapperProfile()
         {
             CreateMap<Aviao, AviaoViewModel>()
                 .ReverseMap();

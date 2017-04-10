@@ -58,7 +58,7 @@ namespace Acerva.Web
         private const string AngularLocalePtBr = ScriptsVendorFolder + "i18n/angular-locale_pt-br.js";
         private const string AngularAnimate = ScriptsVendorFolder + "angular-animate.js";
         private const string AngularRoute = ScriptsVendorFolder + "angular-route.js";
-        
+
         //SUBSTITUIDO PELO AngularTextAngularSanitize
         //private const string AngularSanitize = ScriptsVendorFolder + "angular-sanitize.js";
 
@@ -136,6 +136,7 @@ namespace Acerva.Web
             Estatuto(bundles);
             CartilhaBoasVindas(bundles);
             ListaRegionais(bundles);
+            ListaBeneficios(bundles);
             CadastroArtigos(bundles);
             CadastroRegionais(bundles);
             CadastroNoticias(bundles);
@@ -148,6 +149,7 @@ namespace Acerva.Web
             Indicacoes(bundles);
             Registro(bundles);
             MeusDados(bundles);
+            CadastroBeneficios(bundles);
             Admin(bundles);
 
             bundles.Add(new ScriptBundle("~/bundles/admin")
@@ -263,6 +265,16 @@ namespace Acerva.Web
                 .Include(path + "acerva.listaRegionais.module.js")
                 .Include(path + "acerva.listaRegionais.service.js")
                 .Include(path + "acerva.listaRegionais.controller.js")
+            );
+        }
+
+        private static void ListaBeneficios(BundleCollection bundles)
+        {
+            const string path = ScriptsAplicacaoFolder + "ListaBeneficios/";
+            bundles.Add(new ScriptBundle("~/bundles/listaBeneficios")
+                .Include(path + "acerva.listaBeneficios.module.js")
+                .Include(path + "acerva.listaBeneficios.service.js")
+                .Include(path + "acerva.listaBeneficios.controller.js")
             );
         }
 
@@ -464,6 +476,24 @@ namespace Acerva.Web
                 .Include(path + "acerva.indicacoes.module.js")
                 .Include(path + "acerva.indicacoes.service.js")
                 .Include(path + "acerva.indicacoes.controller.js")
+            );
+        }
+
+        private static void CadastroBeneficios(BundleCollection bundles)
+        {
+            const string path = ScriptsAplicacaoFolder + "Beneficio/";
+            bundles.Add(new ScriptBundle("~/bundles/beneficio")
+                .Include(AngularTextAngularRangy)
+                .Include(AngularTextAngularCore)
+                .Include(path + "acerva.beneficio.module.js")
+                .Include(path + "acerva.beneficio.service.js")
+                .Include(path + "acerva.beneficio.controller.js")
+                .Include(path + "acerva.beneficio.cadastro.controller.js")
+            );
+
+            bundles.Add(new LessBundle("~/cssBundles/beneficio")
+                .Include(AngularTextAngularCss)
+                .Include(FontAwesomeCss)
             );
         }
 

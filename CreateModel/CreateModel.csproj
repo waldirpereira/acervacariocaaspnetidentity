@@ -45,9 +45,26 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Template\Infra\Repositorios\CadastroAvioes.cs" />
+    <Compile Include="Template\Infra\Repositorios\ICadastroAvioes.cs" />
+    <Compile Include="Template\Modelo.Mapeamento\AviaoClassMap.cs" />
+    <Compile Include="Template\Modelo\Aviao.cs" />
+    <Compile Include="Template\Modelo\Validadores\AviaoValidator.cs" />
+    <Compile Include="Template\Web\Controllers\AviaoController.cs" />
+    <Compile Include="Template\Web\Models\CadastroAvioes\AviaoViewModel.cs" />
+    <Compile Include="Template\Web\Models\CadastroAvioes\CadastroAvioesMapperProfile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Template\Web\Views\Aviao\Index.cshtml" />
+    <None Include="Template\Web\Views\Aviao\_CadastroAviao.cshtml" />
+    <None Include="Template\Web\Views\Aviao\_ListaAvioes.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Template\Web\Scripts\Aplicacao\Aviao\acerva.aviao.cadastro.controller.js" />
+    <Content Include="Template\Web\Scripts\Aplicacao\Aviao\acerva.aviao.controller.js" />
+    <Content Include="Template\Web\Scripts\Aplicacao\Aviao\acerva.aviao.module.js" />
+    <Content Include="Template\Web\Scripts\Aplicacao\Aviao\acerva.aviao.service.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

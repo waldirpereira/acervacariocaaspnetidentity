@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Acerva.Web.Models.CadastroBeneficios;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Reflection;
@@ -170,6 +171,8 @@ namespace Acerva.Web
             // https://github.com/AutoMapper/AutoMapper/wiki/Configuration
             Mapper.Initialize(cfg =>
             {
+                cfg.AddProfile<CadastroBeneficiosMapperProfile>();
+                
                 cfg.AddProfile<HomeMapperProfile>();
                 cfg.AddProfile<CadastroRegionalMapperProfile>();
                 cfg.AddProfile<CadastroArtigosMapperProfile>();

@@ -59,6 +59,7 @@
                     <li>@Html.ActionLink("Sobre", "About", "Home")</li>
                     <li>@Html.ActionLink("Agenda", "Index", "Agenda")</li>
                     <li>@Html.ActionLink("Regionais", "Index", "ListaRegionais")</li>
+                    <li>@Html.ActionLink("Benefícios", "Index", "ListaBeneficios")</li>
                     <li>@Html.ActionLink("Acervo", "Index", "Acervo")</li>
                     @if (Request.IsAuthenticated)
                     {
@@ -79,6 +80,7 @@
                                         <li>@Html.ActionLink("Cad. Artigos", "Index", "Artigo")</li>
                                         <li>@Html.ActionLink("Cad. Notícias", "Index", "Noticia")</li>
                                         <li>@Html.ActionLink("Cad. Votações", "Index", "Votacao")</li>
+                                        <li>@Html.ActionLink("Cad. Benefícios", "Index", "Beneficio")</li>
                                     }
                                     @if (User.IsInRole("ADMIN"))
                                     {

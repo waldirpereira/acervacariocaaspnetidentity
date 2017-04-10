@@ -9,6 +9,7 @@ using AutoMapper;
 using Acerva.Infra.Repositorios;
 using Acerva.Infra.Web;
 using Acerva.Modelo;
+using Acerva.Utils;
 using Acerva.Web.Controllers.Helpers;
 using Acerva.Web.Extensions;
 using Acerva.Web.Models;
@@ -231,6 +232,10 @@ namespace Acerva.Web.Controllers
                 await EnviaEmailDeBoasVindas(usuario);
             }
 
+            await UserManager.SendEmailAsync(usuario.Id, "ACervA Carioca - Pagamento confirmado", string.Format("Olá {0},<br/><br/>" +
+                                 "Acabamos de confirmar que o seu pagamento foi realizado.<br/>"+
+                                 "Você agora é um(a) associado(a) ativo(a) na ACervA Carioca.<br/><br/>Muito obrigado!", usuario.Name));
+
             _cadastroUsuarios.Atualiza(usuario);
         }
 
@@ -366,7 +371,7 @@ namespace Acerva.Web.Controllers
         [HttpPost]
         [ValidateAjaxAntiForgeryToken]
         [AcervaAuthorize(Roles = "ADMIN, DIRETOR")]
-        public ActionResult CobrancaGerada([JsonBinder] UsuarioViewModel usuarioViewModel)
+        public async Task<ActionResult> CobrancaGerada([JsonBinder] UsuarioViewModel usuarioViewModel)
         {
             Log.InfoFormat("Usuário está confirmando que a cobrança foi gerada para o associado {0} de código {1} e email {2}",
                 usuarioViewModel.Name, usuarioViewModel.Id, usuarioViewModel.Email);
@@ -381,6 +386,10 @@ namespace Acerva.Web.Controllers
 
             usuario.Status = usuario.Status == StatusUsuario.Ativo ? StatusUsuario.AguardandoRenovacao :  StatusUsuario.AguardandoPagamentoAnuidade;
 
+            await UserManager.SendEmailAsync(usuario.Id, "ACervA Carioca - Cobrança gerada", string.Format("Olá {0},<br/><br/>" +
+                                 "Acabamos de gerar uma cobrança em seu nome.<br/>" +
+                                 "Seu status agora é {1} na ACervA Carioca.", usuario.Name, NomeExibicaoAttribute.GetNome(usuario.Status)));
+
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Pretendente teve sua cobrança confirmada como gerada com sucesso", "Cobrança gerada confirmada");
             return new JsonNetResult(new { growlMessage });
         }
@@ -389,7 +398,7 @@ namespace Acerva.Web.Controllers
         [HttpPost]
         [ValidateAjaxAntiForgeryToken]
         [AcervaAuthorize(Roles = "ADMIN, DIRETOR")]
-        public ActionResult CobrancaGeradaSelecionados([JsonBinder] IEnumerable<string> idsUsuarios)
+        public async Task<ActionResult> CobrancaGeradaSelecionados([JsonBinder] IEnumerable<string> idsUsuarios)
         {
             var listaIdsUsuarios = idsUsuarios.ToList();
             Log.InfoFormat("Usuário está confirmando que as cobranças foram geradas para os associados de códigos {0}",
@@ -406,6 +415,10 @@ namespace Acerva.Web.Controllers
                 }
 
                 usuario.Status = usuario.Status == StatusUsuario.Ativo ? StatusUsuario.AguardandoRenovacao : StatusUsuario.AguardandoPagamentoAnuidade;
+
+                await UserManager.SendEmailAsync(usuario.Id, "ACervA Carioca - Cobrança gerada", string.Format("Olá {0},<br/><br/>" +
+                                     "Acabamos de gerar uma cobrança em seu nome.<br/>" +
+                                     "Seu status agora é {1} na ACervA Carioca.", usuario.Name, NomeExibicaoAttribute.GetNome(usuario.Status)));
             }
 
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Pretendentes tiveram suas cobranças confirmadas como geradas com sucesso", "Cobranças geradas confirmadas");
@@ -416,13 +429,16 @@ namespace Acerva.Web.Controllers
         [HttpPost]
         [ValidateAjaxAntiForgeryToken]
         [AcervaAuthorize(Roles = "ADMIN, DIRETOR")]
-        public ActionResult CancelaUsuario([JsonBinder] UsuarioViewModel usuarioViewModel)
+        public async Task<ActionResult> CancelaUsuario([JsonBinder] UsuarioViewModel usuarioViewModel)
         {
             Log.InfoFormat("Usuário está cancelando o registro do associado {0} de código {1} e email {2}",
                 usuarioViewModel.Name, usuarioViewModel.Id, usuarioViewModel.Email);
 
             var usuario = _cadastroUsuarios.Busca(usuarioViewModel.Id);
             usuario.Status = StatusUsuario.Cancelado;
+
+            await UserManager.SendEmailAsync(usuario.Id, "ACervA Carioca - Cancelamento", string.Format("Olá {0},<br/><br/>" +
+                                 "Seu status agora é {1} na ACervA Carioca.", usuario.Name, NomeExibicaoAttribute.GetNome(usuario.Status)));
 
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associado cancelado com sucesso", "Cancelamento confirmado");
             return new JsonNetResult(new { growlMessage });
@@ -432,7 +448,7 @@ namespace Acerva.Web.Controllers
         [HttpPost]
         [ValidateAjaxAntiForgeryToken]
         [AcervaAuthorize(Roles = "ADMIN, DIRETOR")]
-        public ActionResult ReativaUsuario([JsonBinder] UsuarioViewModel usuarioViewModel)
+        public async Task<ActionResult> ReativaUsuario([JsonBinder] UsuarioViewModel usuarioViewModel)
         {
             Log.InfoFormat("Usuário está reativando o registro do associado {0} de código {1} e email {2}",
                 usuarioViewModel.Name, usuarioViewModel.Id, usuarioViewModel.Email);
@@ -446,6 +462,10 @@ namespace Acerva.Web.Controllers
 
             usuario.Status = StatusUsuario.Novo;
 
+            await UserManager.SendEmailAsync(usuario.Id, "ACervA Carioca - Reativação", string.Format("Olá {0},<br/><br/>" +
+                                 "Acabamos de reativar seu registro.<br/>" +
+                                 "Seu status agora é {1} na ACervA Carioca. Em breve o financeiro enviará a cobrança ou confirmará sua adimplência.", usuario.Name, NomeExibicaoAttribute.GetNome(usuario.Status)));
+
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associado reativado com sucesso", "Reativação confirmada");
             return new JsonNetResult(new { growlMessage });
         }
@@ -454,7 +474,7 @@ namespace Acerva.Web.Controllers
         [HttpPost]
         [ValidateAjaxAntiForgeryToken]
         [AcervaAuthorize(Roles = "ADMIN, DIRETOR")]
-        public ActionResult VoltaUsuarioParaNovo([JsonBinder] UsuarioViewModel usuarioViewModel)
+        public async Task<ActionResult> VoltaUsuarioParaNovo([JsonBinder] UsuarioViewModel usuarioViewModel)
         {
             Log.InfoFormat("Usuário está voltando para novo o associado {0} de código {1} e email {2}",
                 usuarioViewModel.Name, usuarioViewModel.Id, usuarioViewModel.Email);
@@ -468,6 +488,9 @@ namespace Acerva.Web.Controllers
 
             usuario.Status = StatusUsuario.Novo;
 
+            await UserManager.SendEmailAsync(usuario.Id, "ACervA Carioca - Retorno para ag. geração de cobrança de anuidade", string.Format("Olá {0},<br/><br/>" +
+                                 "Seu status agora é {1} na ACervA Carioca.", usuario.Name, NomeExibicaoAttribute.GetNome(usuario.Status)));
+
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associado retornado para Novo com sucesso", "Retorno para Novo");
             return new JsonNetResult(new { growlMessage });
         }
@@ -476,7 +499,7 @@ namespace Acerva.Web.Controllers
         [HttpPost]
         [ValidateAjaxAntiForgeryToken]
         [AcervaAuthorize(Roles = "ADMIN, DIRETOR")]
-        public ActionResult VoltaUsuarioParaAtivo([JsonBinder] UsuarioViewModel usuarioViewModel)
+        public async Task<ActionResult> VoltaUsuarioParaAtivo([JsonBinder] UsuarioViewModel usuarioViewModel)
         {
             Log.InfoFormat("Usuário está voltando para ativo o associado {0} de código {1} e email {2}",
                 usuarioViewModel.Name, usuarioViewModel.Id, usuarioViewModel.Email);
@@ -490,6 +513,9 @@ namespace Acerva.Web.Controllers
 
             usuario.Status = StatusUsuario.Ativo;
 
+            await UserManager.SendEmailAsync(usuario.Id, "ACervA Carioca - Retorno para status ativo", string.Format("Olá {0},<br/><br/>" +
+                                 "Seu status agora é {1} na ACervA Carioca.", usuario.Name, NomeExibicaoAttribute.GetNome(usuario.Status)));
+
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associado retornado para Ativo com sucesso", "Retorno para Ativo");
             return new JsonNetResult(new { growlMessage });
         }
@@ -498,7 +524,7 @@ namespace Acerva.Web.Controllers
         [HttpPost]
         [ValidateAjaxAntiForgeryToken]
         [AcervaAuthorize(Roles = "ADMIN, DIRETOR")]
-        public ActionResult VoltaUsuarioParaAguardandoConfirmacaoEmail([JsonBinder] UsuarioViewModel usuarioViewModel)
+        public async Task<ActionResult> VoltaUsuarioParaAguardandoConfirmacaoEmail([JsonBinder] UsuarioViewModel usuarioViewModel)
         {
             Log.InfoFormat("Usuário está voltando para ag. confirmacao email o associado {0} de código {1} e email {2}",
                 usuarioViewModel.Name, usuarioViewModel.Id, usuarioViewModel.Email);
@@ -512,6 +538,9 @@ namespace Acerva.Web.Controllers
 
             usuario.Status = StatusUsuario.AguardandoConfirmacaoEmail;
             usuario.EmailConfirmed = false;
+            
+            await UserManager.SendEmailAsync(usuario.Id, "ACervA Carioca - Retorno para status ag. confirmação de e-mail", string.Format("Olá {0},<br/><br/>" +
+                                 "Seu status agora é {1} na ACervA Carioca.", usuario.Name, NomeExibicaoAttribute.GetNome(usuario.Status)));
 
             return RedirectToAction("EnviaEmailConfirmacaoEmail", "Account", new
             {
@@ -539,6 +568,9 @@ namespace Acerva.Web.Controllers
 
             usuario.IndicacaoHash = codigoConfirmacaoIndicacao;
             usuario.Status = StatusUsuario.AguardandoIndicacao;
+            
+            await UserManager.SendEmailAsync(usuario.Id, "ACervA Carioca - Retorno para status ag. indicação", string.Format("Olá {0},<br/><br/>" +
+                                 "Seu status agora é {1} na ACervA Carioca.", usuario.Name, NomeExibicaoAttribute.GetNome(usuario.Status)));
 
             return RedirectToAction("EnviaEmailIndicacao", "Account", new
             {

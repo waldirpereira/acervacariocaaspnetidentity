@@ -391,11 +391,12 @@ namespace Acerva.Web.Controllers
             usuario.IndicacaoHash = null;
             usuario.Status = StatusUsuario.Cancelado;
 
-            var mensagem = string.Format("Olá {0},<br/><br/>" +
-                                             "{1} acabou de informar que não indicou você para a ACervA Carioca.<br/><br/>", usuario.Name, HttpContext.User.Identity.Name);
-
             _cadastroUsuarios.Atualiza(usuario);
 
+            var mensagem = string.Format("Olá {0},<br/><br/>" +
+                                             "{1} acabou de informar que não indicou você para a ACervA Carioca.<br/>"+
+                                             "Seu processo foi cancelado.<br/>"+
+                                             "Caso queira reativar seu processo informando uma nova pessoa para confirmar sua indicação, favor entrar em contato com o delegado de sua regional ou com a diretoria administrativa, através do e-mail <a href=\"mailto:administrativo@acervacarioca.com.br\">administrativo@acervacarioca.com.br</a>.<br/><br/>", usuario.Name, HttpContext.User.Identity.Name);
             await UserManager.SendEmailAsync(usuario.Id, "Indicação recusada", mensagem);
 
             if (code != null)
@@ -466,6 +467,14 @@ namespace Acerva.Web.Controllers
                 }
 
                 await SendDesignationEmail(usuarioHibernate, codigoConfirmacaoIndicacao);
+
+                //email de retorno da situação para o usuário
+                var mensagem = string.Format("Olá {0},<br/><br/>" +
+                                             "Você acabou de confirmar seu e-mail. A pessoa que você mencionou ter indicado ({1}) você acabou de receber um e-mail para que confirme a indicação.<br/>" +
+                                             "Além de {1}, o(a) delegado(a) de sua regional ou qualquer membro da diretoria poderá confirmar sua indicação através do site da ACervA.<br/>"+
+                                             "Portanto, caso a confirmação não seja realizada em até 5 dias úteis, sugerimos que entre em contato com o delegado de sua regional ou com a diretoria.<br/>",
+                        usuarioHibernate.Name, usuarioHibernate.UsuarioIndicacao.Name);
+                await UserManager.SendEmailAsync(usuarioHibernate.Id, "E-mail confirmado no site da ACervA Carioca", mensagem);
 
                 return isJsonReturn ? RetornaJsonDeRetorno("E-mail confirmado com sucesso", "Associado teve seu e-mail confirmado com sucesso",
                     GrowlMessageSeverity.Success, JsonNetResult.HttpOk) : View();

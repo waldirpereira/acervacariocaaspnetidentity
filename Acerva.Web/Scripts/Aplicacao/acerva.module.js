@@ -21,17 +21,4 @@
     app.config(function (localStorageServiceProvider) {
         localStorageServiceProvider.setPrefix("acerva");
     });
-
-    //app.config([
-	//			'datetimepickerProvider',
-	//			function (datetimepickerProvider) {
-	//			    datetimepickerProvider.setOptions({
-    //                    allowInputToggle: true,
-	//			        locale: 'pt-br',
-	//			        sideBySide: true,
-	//			        showClear: true,
-    //                    showClose: true
-	//			    });
-	//			}
-    //]);
 })();

@@ -99,7 +99,7 @@ namespace Acerva.Infra.Repositorios
 
             var proximaMatricula = matriculasNumericas.Max(m => m ?? 0) + 1;
 
-            return proximaMatricula.ToString("D5");
+            return proximaMatricula.ToString();
         }
 
         public IEnumerable<Papel> BuscaTodosPapeis()

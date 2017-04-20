@@ -47,7 +47,10 @@
                                ng-model="listaCtrl.usuariosSelecionados[m.id]"
                                ng-change="listaCtrl.alteraSelecao(m.id);"/>
                     </td>
-                    <td>{{m.matricula}}</td>
+                    <td>
+                        <span class="hidden">{{("00000"+m.matricula).slice(-6)}}</span>
+                        {{m.matricula}}
+                    </td>
                     <td>
                         <a title="Editar associado"
                            ng-href="#/Edit/{{m.id}}">{{m.name}}</a>

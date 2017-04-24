@@ -10,7 +10,7 @@ namespace Acerva.Modelo.Mapeamento
             Table("historico_status_usuario");
             Cache.ReadWrite();
             
-            Id(u => u.Codigo, "codigo_historico").GeneratedBy.Increment();
+            Id(u => u.Codigo, "codigo_historico").GeneratedBy.Native();
 
             Map(u => u.DataHora, "data_hora");
             References(u => u.UsuarioLogado, "id_usuario");

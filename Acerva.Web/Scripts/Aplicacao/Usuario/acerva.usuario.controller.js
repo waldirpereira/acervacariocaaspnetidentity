@@ -2,15 +2,16 @@
     "use strict";
 
     angular.module("acerva.usuario")
-        .controller("UsuarioController", ["$scope", "Usuario", "ENUMS", "$uibModal", "DTOptionsBuilder", "localStorageService", UsuarioController]);
+        .controller("UsuarioController", ["$scope", "$timeout", "$q", "Usuario", "ENUMS", "$uibModal", "DTOptionsBuilder", "localStorageService", UsuarioController]);
 
-    function UsuarioController($scope, Usuario, ENUMS, $uibModal, DTOptionsBuilder, localStorageService) {
+    function UsuarioController($scope, $timeout, $q, Usuario, ENUMS, $uibModal, DTOptionsBuilder, localStorageService) {
         var ctrl = this;
         ctrl.status = {
             carregando: false
         };
 
         ctrl.listaUsuarios = [];
+        ctrl.usuariosFiltrados = [];
         ctrl.usuariosSelecionados = [];
         ctrl.todosFiltrados = false;
         ctrl.canceladosCarregados = false;
@@ -30,7 +31,6 @@
         ctrl.abreJanelaSelecaoEmails = abreJanelaSelecaoEmails;
         ctrl.alteraSelecao = alteraSelecao;
         ctrl.estaFiltradoPorStatus = estaFiltradoPorStatus;
-        ctrl.pegaUsuariosFiltrados = pegaUsuariosFiltrados;
         ctrl.confirmaPagamentoSelecionados = confirmaPagamentoSelecionados;
         ctrl.cobrancaGeradaSelecionados = cobrancaGeradaSelecionados;
         ctrl.enviaEmailBoasVindasNaListaSelecionados = enviaEmailBoasVindasNaListaSelecionados;
@@ -66,6 +66,7 @@
             return Usuario.buscaListaUsuarios(incluiCancelados).then(function (listaUsuarios) {
                 ctrl.status.carregando = false;
                 ctrl.listaUsuarios = listaUsuarios;
+                atualizaUsuariosFiltrados();
             });
         }
 
@@ -85,7 +86,7 @@
             if (!ctrl.todosFiltrados)
                 return;
 
-            ctrl.pegaUsuariosFiltrados().forEach(function (usuario) { alteraSelecao(usuario.id) });
+            ctrl.usuariosFiltrados.forEach(function (usuario) { alteraSelecao(usuario.id) });
         }
 
         function abreJanelaSelecaoEmails() {
@@ -115,8 +116,8 @@
                 .replace(/\t/g, ",")
                 .replace(/;/g, ",")
                 .split(",");
-            
-            ctrl.pegaUsuariosFiltrados()
+
+            ctrl.usuariosFiltrados
                 .forEach(function (usuario) { if (arrEmails.indexOf(usuario.email) >= 0) alteraSelecao(usuario.id) });
         }
 
@@ -127,6 +128,7 @@
             (indexOf >= 0) ? ctrl.filtroStatus.splice(indexOf, 1) : ctrl.filtroStatus.push(status);
 
             atualizaFiltrosNaLocalStorage();
+            atualizaUsuariosFiltrados();
         }
 
         function estaFiltradoPorStatus(status) {
@@ -134,14 +136,19 @@
             return ctrl.filtroStatus.map(function (st) { return st.codigoBd }).indexOf(status.codigoBd) >= 0;
         }
 
-        function pegaUsuariosFiltrados() {
+        function atualizaUsuariosFiltrados() {
             var todosUsuarios = ctrl.listaUsuarios;
             if (ctrl.filtroStatus.length === 0)
                 return todosUsuarios;
 
             atualizaFiltrosDaLocalStorage();
-            var codigosBdFiltros = ctrl.filtroStatus.map(function(st) { return st.codigoBd });
-            return todosUsuarios.filter(function (usuario) { return codigosBdFiltros.indexOf(usuario.status.codigoBd) >= 0; });
+            var codigosBdFiltros = ctrl.filtroStatus.map(function (st) { return st.codigoBd });
+
+            ctrl.status.carregando = true;
+            $timeout(function() {
+                ctrl.usuariosFiltrados = todosUsuarios.filter(function (usuario) { return codigosBdFiltros.indexOf(usuario.status.codigoBd) >= 0; });
+                ctrl.status.carregando = false;
+            }, 0);
         }
 
         function atualizaFiltrosDaLocalStorage() {

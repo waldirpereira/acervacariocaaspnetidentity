@@ -138,15 +138,16 @@
 
         function atualizaUsuariosFiltrados() {
             var todosUsuarios = ctrl.listaUsuarios;
-            if (ctrl.filtroStatus.length === 0)
-                return todosUsuarios;
 
             atualizaFiltrosDaLocalStorage();
             var codigosBdFiltros = ctrl.filtroStatus.map(function (st) { return st.codigoBd });
 
             ctrl.status.carregando = true;
-            $timeout(function() {
-                ctrl.usuariosFiltrados = todosUsuarios.filter(function (usuario) { return codigosBdFiltros.indexOf(usuario.status.codigoBd) >= 0; });
+            $timeout(function () {
+                if (ctrl.filtroStatus.length === 0)
+                    ctrl.usuariosFiltrados = todosUsuarios;
+                else
+                   ctrl.usuariosFiltrados = todosUsuarios.filter(function (usuario) { return codigosBdFiltros.indexOf(usuario.status.codigoBd) >= 0; });
                 ctrl.status.carregando = false;
             }, 0);
         }

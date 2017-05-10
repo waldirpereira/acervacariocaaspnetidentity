@@ -14,9 +14,10 @@
         @Html.AntiForgeryToken()
 
         <ul class="nav navbar-nav navbar-right" style="margin-right: 15px;">
+            <li>@Html.ActionLink("Contatos", "Contact", "Home")</li>
             <li style="display: block; margin-top: 13px;">
                 <a href="@Url.Action("Index", "Manage")" style="display: inline;">
-                    <img src="@caminhoFoto" alt="@ViewData["Name"]" style="width: 35px; height: 35px; display: inline;" />
+                    <img src="@caminhoFoto" alt="@ViewData["Name"]" style="width: 35px; height: 35px; display: inline;"/>
                     <span style="margin-left: 5px;">@ViewData["Name"]</span>
                 </a>
             </li>

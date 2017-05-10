@@ -1,7 +1,7 @@
 ﻿(function () {
     "use strict";
 
-    angular.module("acerva.meusdados", ["acerva", "naif.base64", "ngCroppie"]);
+    angular.module("acerva.meusdados", ["acerva", "naif.base64", "ngCroppie", "ngCpfCnpj", "ui.mask"]);
 
     angular.module("acerva")
         .config(["$routeProvider", routes]);

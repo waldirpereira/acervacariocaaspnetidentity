@@ -74,8 +74,17 @@
         }
 
         function salvaUsuario() {
-            if ($scope.formUsuario.$invalid)
+            if ($scope.formUsuario.$invalid) {
+                var mensagemGrowl = {
+                    message: "Por favor verifique os campos marcados em vermelho.",
+                    severity: "error",
+                    config: {
+                        title: "Não foi possível salvar"
+                    }
+                };
+                CanalMensagemGrowl.enviaNovaMensagem(mensagemGrowl);
                 return;
+            }
 
             ctrl.status.salvando = true;
             Usuario.salvaUsuario(ctrl.modelo)

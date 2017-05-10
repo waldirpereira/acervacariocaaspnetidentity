@@ -238,7 +238,8 @@ var modeloComPropriedade = modelo + "." + nomePropriedade;
 
 @helper NgClassErrorOnInvalid(string nome)
 {
-    @:ng-class="{ 'has-error': @nome.$invalid && !@nome.$pristine}"
+    var nomeForm = nome.Split('.').FirstOrDefault();
+    @:ng-class="{ 'has-error': @nome.$invalid && @nomeForm.$submitted}"
 }
 
 @helper NgHelpText(string text, string ngIf = null)

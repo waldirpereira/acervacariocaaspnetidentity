@@ -2,9 +2,9 @@
     "use strict";
 
     angular.module("acerva.meusdados")
-        .controller("MeusDadosController", ["$scope", "$timeout", "$routeParams", "$location", "ENUMS", "MeusDados", MeusDadosController]);
+        .controller("MeusDadosController", ["$scope", "$timeout", "$routeParams", "$location", "CanalMensagemGrowl", "ENUMS", "MeusDados", MeusDadosController]);
 
-    function MeusDadosController($scope, $timeout, $routeParams, $location, ENUMS, MeusDados) {
+    function MeusDadosController($scope, $timeout, $routeParams, $location, CanalMensagemGrowl, ENUMS, MeusDados) {
         var ctrl = this;
         ctrl.status = {
             carregando: false,
@@ -20,6 +20,10 @@
         ctrl.salvaUsuario = salvaUsuario;
         ctrl.recuperaUsuariosIndicacao = recuperaUsuariosIndicacao;
         ctrl.pegaSrcFoto = pegaSrcFoto;
+
+        ctrl.formularioDesabilitado = function() {
+            return ctrl.dominio.idUsuarioLogado !== ctrl.modeloOriginal.id;
+        }
 
         init();
 
@@ -46,9 +50,17 @@
         }
 
         function salvaUsuario() {
-            if ($scope.formUsuario.$invalid)
+            if ($scope.formUsuario.$invalid) {
+                var mensagemGrowl = {
+                    message: "Por favor verifique os campos marcados em vermelho.",
+                    severity: "error",
+                    config: {
+                        title: "Não foi possível salvar"
+                    }
+                };
+                CanalMensagemGrowl.enviaNovaMensagem(mensagemGrowl);
                 return;
-
+            }
             ctrl.status.salvando = true;
 
             MeusDados.salvaUsuario(ctrl.modelo)

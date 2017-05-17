@@ -232,9 +232,14 @@ namespace Acerva.Web
         {
             const string path = ScriptsAplicacaoFolder + "Acervo/";
             bundles.Add(new ScriptBundle("~/bundles/acervo")
+                .Include(AngularPrint)
                 .Include(path + "acerva.acervo.module.js")
                 .Include(path + "acerva.acervo.service.js")
                 .Include(path + "acerva.acervo.controller.js")
+            );
+
+            bundles.Add(new LessBundle("~/cssBundles/acervo")
+                .Include(AngularPrintCss)
             );
         }
 

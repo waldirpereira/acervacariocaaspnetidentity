@@ -37,7 +37,8 @@
                     </ul>
                     <!-- ARTIGO -->
                     <div ng-if="ctrl.artigo">
-                        <div class="panel panel-default">
+                        <div class="panel panel-default"
+                             print-section>
                             <div class="panel-heading">
                                 <h3 class="titulo text-primary" style="margin-top: 0; margin-bottom: 15px;">
                                     {{ctrl.artigo.titulo}}
@@ -61,6 +62,7 @@
                                 <a class="btn btn-default"
                                    ng-href="#/{{ctrl.categoriaSelecionada.codigo}}"
                                    ng-click="ctrl.artigo = null;">Voltar</a>
+                                <button class="btn btn-primary pull-right" print-btn>Imprimir</button>
                             </div>
                         </div>
                     </div>
@@ -72,6 +74,7 @@
 
 @section styles {
     @Styles.Render("~/cssBundles/angularForm")
+    @Styles.Render("~/cssBundles/acervo")
     @Styles.Render(BundleConfig.BundleStylesDataTables)
 }
 

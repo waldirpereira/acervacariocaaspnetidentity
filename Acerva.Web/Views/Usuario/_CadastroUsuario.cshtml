@@ -5,232 +5,267 @@
         <div class="panel-body" ng-hide="ctrl.status.carregando">
             <fieldset ng-disabled="ctrl.formularioDesabilitado()">
                 <div class="row">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Identificação</div>
-                        <div class="panel-body">
-                            <div class="col-sm-6" style="padding: 0;">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.name")>
-                                            <label class="control-label" for="name">Nome</label>
-                                            <input type="text" class="form-control" name="name" autocomplete="off" required
-                                                   ng-model="ctrl.modelo.name" />
-                                            <p ng-show="formUsuario.name.$invalid && formUsuario.$submitted" class="help-block">O nome é obrigatório</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.cpf")>
-                                            <label class="control-label" for="cpf">CPF</label>
-                                            <input type="text" class="form-control" name="cpf" autocomplete="off" required
-                                                   ng-cpf ui-mask="999.999.999-99"
-                                                   ng-model="ctrl.modelo.cpf" />
-                                            <p ng-show="formUsuario.cpf.$invalid" class="help-block">O CPF é obrigatório e deve ser válido</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.rg")>
-                                            <label class="control-label" for="rg">Identidade</label>
-                                            <input type="text" class="form-control" name="rg" autocomplete="off"
-                                                   ng-model="ctrl.modelo.rg" />
-                                        </div>
-                                    </div>
-                                </div>
+                <div class="panel panel-default">
+                <div class="panel-heading">Identificação</div>
+                <div class="panel-body">
+                <div class="col-sm-6" style="padding: 0;">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.name")>
+                                <label class="control-label" for="name">Nome</label>
+                                <input type="text" class="form-control" name="name" autocomplete="off" required
+                                       ng-model="ctrl.modelo.name"/>
+                                <p ng-show="formUsuario.name.$invalid && formUsuario.$submitted" class="help-block">O nome é obrigatório</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.cpf")>
+                                <label class="control-label" for="cpf">CPF</label>
+                                <input type="text" class="form-control" name="cpf" autocomplete="off" required
+                                       ng-cpf ui-mask="999.999.999-99"
+                                       ng-model="ctrl.modelo.cpf"/>
+                                <p ng-show="formUsuario.cpf.$invalid" class="help-block">O CPF é obrigatório e deve ser válido</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.rg")>
+                                <label class="control-label" for="rg">Identidade</label>
+                                <input type="text" class="form-control" name="rg" autocomplete="off"
+                                       ng-model="ctrl.modelo.rg"/>
+                            </div>
+                        </div>
+                    </div>
 
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-6" ng-if="ctrl.tipoCadastro !== 'registro'">
-                                        <div class="form-group">
-                                            <label class="control-label">Status</label>
-                                            <div>
-                                                <a class="btn disabled" ng-class="{
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6" ng-if="ctrl.tipoCadastro !== 'registro'">
+                            <div class="form-group">
+                                <label class="control-label">Status</label>
+                                <div>
+                                    <a class="btn disabled" ng-class="{
                                   'btn-success': (ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.ativo.codigoBd),
                                   'btn-danger':  ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.cancelado.codigoBd,
                                   'btn-warning': ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoIndicacao.codigoBd,
                                   'btn-default': ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoConfirmacaoEmail.codigoBd || ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.novo.codigoBd,
                                   'btn-primary': ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd || ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoRenovacao.codigoBd
                                   }">{{ctrl.modelo.status.nomeExibicao}}</a>
-                                                <a class="btn btn-default"
-                                                   ng-if="ctrl.tipoCadastro !== 'registro' && (ctrl.dominio.usuarioLogadoEhAdmin || ctrl.dominio.usuarioLogadoEhDiretor || ctrl.dominio.usuarioLogadoEhDelegado)"
-                                                   ng-click="ctrl.mostraHistoricoStatus(ctrl.modelo)">Histórico</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6"
-                                         ng-if="ctrl.modeloOriginal.matricula">
-                                        <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.matricula")>
-                                            <label class="control-label" for="matricula">Matrícula<span ng-if="ctrl.modelo.status.codugoBd === ctrl.dominio.status.ativo.codigoBd">*</span></label>
-                                            <input type="text" class="form-control" name="matricula" autocomplete="off"
-                                                   ng-required="ctrl.modelo.status.codugoBd === ctrl.dominio.status.ativo.codigoBd"
-                                                   ng-disabled="!ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
-                                                   ng-model="ctrl.modelo.matricula" />
-                                            <p ng-show="formUsuario.matricula.$invalid && formUsuario.$submitted" class="help-block">Matrícula é obrigatória</p>
-                                        </div>
-                                    </div>
+                                    <a class="btn btn-default"
+                                       ng-if="ctrl.tipoCadastro !== 'registro' && (ctrl.dominio.usuarioLogadoEhAdmin || ctrl.dominio.usuarioLogadoEhDiretor || ctrl.dominio.usuarioLogadoEhDelegado)"
+                                       ng-click="ctrl.mostraHistoricoStatus(ctrl.modelo)">Histórico</a>
                                 </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.email")>
-                                            <label class="control-label" for="email">E-mail</label>
-                                            <input type="text" class="form-control" name="email" autocomplete="off" required
-                                                   ng-disabled="ctrl.tipoCadastro !== 'registro' && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
-                                                   ng-model="ctrl.modelo.email" />
-                                            <p ng-show="formUsuario.email.$invalid && formUsuario.$submitted" class="help-block">O e-mail é obrigatório</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row" ng-if="ctrl.tipoCadastro !== 'registro'">
-                                    <div class="col-sm-12">
-                                        <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.emailLista")>
-                                            <label class="control-label" for="emailLista">E-mail específico para COCECA</label>
-                                            <input type="text" class="form-control" name="emailLista" autocomplete="off"
-                                                   ng-disabled="ctrl.tipoCadastro !== 'registro' && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
-                                                   ng-model="ctrl.modelo.emailLista" />
-                                        </div>
-                                    </div>
-                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6"
+                             ng-if="ctrl.modeloOriginal.matricula">
+                            <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.matricula")>
+                                <label class="control-label" for="matricula">Matrícula<span ng-if="ctrl.modelo.status.codugoBd === ctrl.dominio.status.ativo.codigoBd">*</span></label>
+                                <input type="text" class="form-control" name="matricula" autocomplete="off"
+                                       ng-required="ctrl.modelo.status.codugoBd === ctrl.dominio.status.ativo.codigoBd"
+                                       ng-disabled="!ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
+                                       ng-model="ctrl.modelo.matricula"/>
+                                <p ng-show="formUsuario.matricula.$invalid && formUsuario.$submitted" class="help-block">Matrícula é obrigatória</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.email")>
+                                <label class="control-label" for="email">E-mail</label>
+                                <input type="text" class="form-control" name="email" autocomplete="off" required
+                                       ng-disabled="ctrl.tipoCadastro !== 'registro' && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
+                                       ng-model="ctrl.modelo.email"/>
+                                <p ng-show="formUsuario.email.$invalid && formUsuario.$submitted" class="help-block">O e-mail é obrigatório</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" ng-if="ctrl.tipoCadastro !== 'registro'">
+                        <div class="col-sm-12">
+                            <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.emailLista")>
+                                <label class="control-label" for="emailLista">E-mail específico para COCECA</label>
+                                <input type="text" class="form-control" name="emailLista" autocomplete="off"
+                                       ng-disabled="ctrl.tipoCadastro !== 'registro' && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
+                                       ng-model="ctrl.modelo.emailLista"/>
+                            </div>
+                        </div>
+                    </div>
 
-                                <div class="row" ng-if="ctrl.tipoCadastro === 'registro' || !ctrl.modelo.id">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="control-label" for="password">Senha<span ng-if="ctrl.tipoCadastro === 'registro' || !ctrl.modelo.id">*</span></label>
-                                            <input type="password" name="password" class="form-control" autocomplete="off"
-                                                   ng-required="ctrl.tipoCadastro === 'registro' || !ctrl.modelo.id"
-                                                   ng-model="ctrl.modelo.password" />
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="control-label" for="confirmPassword">Confirmação da senha<span ng-if="ctrl.tipoCadastro === 'registro' || !ctrl.modelo.id">*</span></label>
-                                            <input type="password" name="confirmPassword" class="form-control" autocomplete="off"
-                                                   ng-required="ctrl.tipoCadastro === 'registro' || !ctrl.modelo.id"
-                                                   ng-model="ctrl.modelo.confirmPassword" />
-                                        </div>
-                                    </div>
-                                </div>
+                    <div class="row" ng-if="ctrl.tipoCadastro === 'registro' || !ctrl.modelo.id">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label" for="password">Senha<span ng-if="ctrl.tipoCadastro === 'registro' || !ctrl.modelo.id">*</span></label>
+                                <input type="password" name="password" class="form-control" autocomplete="off"
+                                       ng-required="ctrl.tipoCadastro === 'registro' || !ctrl.modelo.id"
+                                       ng-model="ctrl.modelo.password"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label" for="confirmPassword">Confirmação da senha<span ng-if="ctrl.tipoCadastro === 'registro' || !ctrl.modelo.id">*</span></label>
+                                <input type="password" name="confirmPassword" class="form-control" autocomplete="off"
+                                       ng-required="ctrl.tipoCadastro === 'registro' || !ctrl.modelo.id"
+                                       ng-model="ctrl.modelo.confirmPassword"/>
+                            </div>
+                        </div>
+                    </div>
 
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.usuarioIndicacao")>
-                                            <label class="control-label" for="usuarioIndicacao">Associado que indicou</label>
-                                            <div class="input-group">
-                                                <input type="text" name="usuarioIndicacao" id="usuarioIndicacao" class="form-control"
-                                                       autocomplete="off"
-                                                       ng-required="ctrl.modelo.matricula !== 'FUNDADOR' && !ctrl.modelo.indicacaoLegado"
-                                                       placeholder="Digite pelo menos 3 caracteres para buscar"
-                                                       ng-disabled="ctrl.modelo.usuarioIndicacao.id"
-                                                       ng-model="ctrl.modelo.usuarioIndicacao"
-                                                       typeahead-wait-ms="300"
-                                                       typeahead-min-length="3"
-                                                       uib-typeahead="usuarioIndicacao as (usuarioIndicacao.name + (usuarioIndicacao.nomeRegional ? (' (' + usuarioIndicacao.nomeRegional + ')') : '')) for usuarioIndicacao in ctrl.recuperaUsuariosIndicacao($viewValue)"
-                                                       typeahead-editable="false"
-                                                       typeahead-select-on-exact="true"
-                                                       typeahead-select-on-blur="true"
-                                                       typeahead-no-results="semResultadosParaUsuarioIndicacao"
-                                                       typeahead-loading="buscandoUsuariosIndicacao" />
-                                                <span class="input-group-btn">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.usuarioIndicacao")>
+                                <label class="control-label" for="usuarioIndicacao">Associado que indicou</label>
+                                <div class="input-group">
+                                    <input type="text" name="usuarioIndicacao" id="usuarioIndicacao" class="form-control"
+                                           autocomplete="off"
+                                           ng-required="ctrl.modelo.matricula !== 'FUNDADOR' && !ctrl.modelo.indicacaoLegado"
+                                           placeholder="Digite pelo menos 3 caracteres para buscar"
+                                           ng-disabled="ctrl.modelo.usuarioIndicacao.id"
+                                           ng-model="ctrl.modelo.usuarioIndicacao"
+                                           typeahead-wait-ms="300"
+                                           typeahead-min-length="3"
+                                           uib-typeahead="usuarioIndicacao as (usuarioIndicacao.name + (usuarioIndicacao.nomeRegional ? (' (' + usuarioIndicacao.nomeRegional + ')') : '')) for usuarioIndicacao in ctrl.recuperaUsuariosIndicacao($viewValue)"
+                                           typeahead-editable="false"
+                                           typeahead-select-on-exact="true"
+                                           typeahead-select-on-blur="true"
+                                           typeahead-no-results="semResultadosParaUsuarioIndicacao"
+                                           typeahead-loading="buscandoUsuariosIndicacao"/>
+                                    <span class="input-group-btn">
                                                     <button type="button" class="btn btn-default"
                                                             ng-disabled="!ctrl.modelo.usuarioIndicacao.id"
                                                             ng-click="ctrl.modelo.usuarioIndicacao = null">
                                                         Limpar
                                                     </button>
                                                 </span>
-                                            </div>
-                                            <i ng-show="buscandoUsuariosIndicacao" class="glyphicon glyphicon-refresh"></i>
-                                            <div ng-show="semResultadosParaUsuarioIndicacao">
-                                                <i class="glyphicon glyphicon-remove"></i> Nenhum associado encontrado
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12"
-                                         ng-if="ctrl.tipoCadastro !== 'registro'">
-                                        <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.indicacaoLegado")>
-                                            <label class="control-label" for="indicacaoLegado">Indicação (legado)</label>
-                                            <input type="text" class="form-control" name="indicacaoLegado" autocomplete="off"
-                                                   ng-required="ctrl.modelo.matricula !== 'FUNDADOR' && !ctrl.modelo.usuarioIndicacao"
-                                                   ng-disabled="ctrl.modelo.matricula !== 'FUNDADOR' && ctrl.modelo.usuarioIndicacao"
-                                                ng-model="ctrl.modelo.indicacaoLegado" />
-                                        </div>
-                                    </div>
                                 </div>
-
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12">
-                                        @NgHelpers.NgSelectComBuscaRespeitandoStatusBloqueado("ctrl", new NgHelpers.NgSelectOptions("regional", "ctrl.modelo", "nome",
-                                "regional in ctrl.dominio.regionais | filter: {nome: $select.search} | orderBy : 'nome' track by regional.codigo",
-                                "regional.nome | highlight: $select.search")
-                                   {
-                                       Obrigatorio = true,
-                                       Titulo = "Regional",
-                                       NgDisabled = "ctrl.formularioDesabilitado()"
-                                   })
-                                    </div>
-                                </div>
-
-                                <div class="row"
-                                     ng-if="ctrl.tipoCadastro === 'usuario' && (ctrl.dominio.usuarioLogadoEhAdmin || ctrl.dominio.usuarioLogadoEhDiretor)">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Papéis</label>
-                                            <div>
-                                                <ul style="list-style: none; padding-left: 0;">
-                                                    <li ng-repeat="papel in ctrl.dominio.papeis">
-                                                        <input type="checkbox"
-                                                               checklist-model="ctrl.modelo.papeis"
-                                                               ng-model="checkboxPapel"
-                                                               checklist-value="papel"> {{papel.name}}
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            @NgHelpers.NgDatepicker("ctrl.modelo", "dataAdmissao", "Data de admissão", "true")
-                                        </div>
-                                    </div>
+                                <i ng-show="buscandoUsuariosIndicacao" class="glyphicon glyphicon-refresh"></i>
+                                <div ng-show="semResultadosParaUsuarioIndicacao">
+                                    <i class="glyphicon glyphicon-remove"></i> Nenhum associado encontrado
                                 </div>
                             </div>
-                            <div class="col-sm-6" style="padding: 0;">
-                                <div class="row">
-                                    <div class="col-sm-12 hidden-xs">
-                                        <div class="form-group">
-                                            <label class="control-label" for="foto">Foto</label>
+                        </div>
+                        <div class="col-sm-12"
+                             ng-if="ctrl.tipoCadastro !== 'registro'">
+                            <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.indicacaoLegado")>
+                                <label class="control-label" for="indicacaoLegado">Indicação (legado)</label>
+                                <input type="text" class="form-control" name="indicacaoLegado" autocomplete="off"
+                                       ng-required="ctrl.modelo.matricula !== 'FUNDADOR' && !ctrl.modelo.usuarioIndicacao"
+                                       ng-disabled="ctrl.modelo.matricula !== 'FUNDADOR' && ctrl.modelo.usuarioIndicacao"
+                                       ng-model="ctrl.modelo.indicacaoLegado"/>
+                            </div>
+                        </div>
+                    </div>
 
-                                            <div ng-if="!ctrl.modelo.fotoSelecionada && ctrl.modelo.fotoBase64">
-                                                <div class="panel panel-default">
-                                                    <div class="panel-body">
-                                                        <img ng-src="{{ctrl.modelo.fotoBase64}}" alt="Foto do associado" />
-                                                    </div>
-                                                    <div class="panel-footer">
-                                                        <a class="btn btn-default"
-                                                           ng-click="ctrl.modelo.fotoBase64 = null;">Trocar foto</a>
-                                                    </div>
-                                                </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12">
+                            @NgHelpers.NgSelectComBuscaRespeitandoStatusBloqueado("ctrl", new NgHelpers.NgSelectOptions("regional", "ctrl.modelo", "nome",
+                                "regional in ctrl.dominio.regionais | filter: {nome: $select.search} | orderBy : 'nome' track by regional.codigo",
+                                "regional.nome | highlight: $select.search")
+                            {
+                                Obrigatorio = true,
+                                Titulo = "Regional",
+                                NgDisabled = "ctrl.formularioDesabilitado()"
+                            })
+                        </div>
+                    </div>
 
-                                            </div>
-                                            <div ng-if="!ctrl.modelo.fotoBase64 || ctrl.modelo.fotoSelecionada"
-                                                 style="overflow-x: hidden;">
-                                                <input type="file" ng-model="ctrl.modelo.fotoSelecionada"
-                                                       base-sixty-four-input
-                                                       accept="image/jpeg, image/png, image/gif" />
+                    <div class="row"
+                         ng-if="ctrl.tipoCadastro === 'usuario' && (ctrl.dominio.usuarioLogadoEhAdmin || ctrl.dominio.usuarioLogadoEhDiretor)">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Papéis</label>
+                                <div>
+                                    <ul style="list-style: none; padding-left: 0;">
+                                        <li ng-repeat="papel in ctrl.dominio.papeis">
+                                            <input type="checkbox"
+                                                   checklist-model="ctrl.modelo.papeis"
+                                                   ng-model="checkboxPapel"
+                                                   checklist-value="papel"> {{papel.name}}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                @NgHelpers.NgDatepicker("ctrl.modelo", "dataAdmissao", "Data de admissão", "true")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6" style="padding: 0;">
+                    <div class="row">
+                        <div class="col-sm-12 visible-xs">
+                            <div class="form-group">
+                                <label class="control-label" for="foto">Foto</label>
 
-                                                <ng-croppie src="ctrl.pegaSrcFoto()"
-                                                            ng-if="ctrl.modelo.fotoSelecionada"
-                                                            ng-model="ctrl.modelo.fotoBase64"
-                                                            boundry="{w: 300, h: 300}"
-                                                            viewport="{w: 200, h: 200}"
-                                                            mousezoom="true"
-                                                            zoom="true"
-                                                            type="square">
-                                                </ng-croppie>
-                                            </div>
+                                <div ng-if="!ctrl.modelo.fotoSelecionada && ctrl.modelo.fotoBase64">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <img ng-src="{{ctrl.modelo.fotoBase64}}" alt="Foto do associado"/>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <a class="btn btn-default"
+                                               ng-click="ctrl.modelo.fotoBase64 = null;">Trocar foto</a>
                                         </div>
                                     </div>
+
+                                </div>
+                                <div ng-if="!ctrl.modelo.fotoBase64 || ctrl.modelo.fotoSelecionada"
+                                     style="overflow-x: hidden;">
+                                    
+                                    <input type="file" onchange="angular.element(this).scope().onFile(this.files[0])">
+
+                                    <div ng-if="dataUrl" class="img-container" style="max-height: 200px;">
+                                        <img ng-if="dataUrl" ng-src="{{dataUrl}}" 
+                                             ng-cropper
+                                             ng-cropper-proxy="cropperProxy"
+                                             ng-cropper-show="showEvent"
+                                             ng-cropper-hide="hideEvent"
+                                             ng-cropper-options="options">
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 hidden-xs">
+                            <div class="form-group">
+                                <label class="control-label" for="foto">Foto</label>
+
+                                <div ng-if="!ctrl.modelo.fotoSelecionada && ctrl.modelo.fotoBase64">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <img ng-src="{{ctrl.modelo.fotoBase64}}" alt="Foto do associado"/>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <a class="btn btn-default"
+                                               ng-click="ctrl.modelo.fotoBase64 = null;">Trocar foto</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div ng-if="!ctrl.modelo.fotoBase64 || ctrl.modelo.fotoSelecionada"
+                                     style="overflow-x: hidden;">
+                                    <input type="file" ng-model="ctrl.modelo.fotoSelecionada"
+                                           base-sixty-four-input
+                                           accept="image/jpeg, image/png, image/gif"/>
+
+                                    <ng-croppie src="ctrl.pegaSrcFoto()"
+                                                ng-if="ctrl.modelo.fotoSelecionada"
+                                                ng-model="ctrl.modelo.fotoBase64"
+                                                boundry="{w: 300, h: 300}"
+                                                viewport="{w: 200, h: 200}"
+                                                mousezoom="true"
+                                                zoom="true"
+                                                type="square">
+                                    </ng-croppie>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+                </div>
+                </div>
                 </div>
                 <div class="row">
                     <div class="panel panel-default">

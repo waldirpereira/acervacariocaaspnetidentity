@@ -305,6 +305,7 @@
     <Content Include="Scripts\Aplicacao\ListaBeneficios\acerva.listaBeneficios.controller.js" />
     <Content Include="Scripts\Aplicacao\ListaBeneficios\acerva.listaBeneficios.module.js" />
     <Content Include="Scripts\Aplicacao\ListaBeneficios\acerva.listaBeneficios.service.js" />
+    <Content Include="Scripts\vendor\cropper\cropper.js" />
     <Content Include="Scripts\vendor\ngCropper\ngCropper.all.js" />
     <Content Include="Scripts\vendor\ngCropper\ngCropper.js" />
     <Content Include="Views\Beneficio\_CadastroBeneficio.cshtml" />
@@ -2352,7 +2353,6 @@
     <Folder Include="Content\vendor\bootswatch\darkly\css\fonts\" />
     <Folder Include="Content\vendor\datatables-tabletools\images\psd\" />
     <Folder Include="Log\" />
-    <Folder Include="Scripts\vendor\cropper\" />
     <Folder Include="Views\AppplicationBase\" />
   </ItemGroup>
   <ItemGroup>

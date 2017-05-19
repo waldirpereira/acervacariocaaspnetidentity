@@ -121,7 +121,7 @@
                 .then(Cropper.encode)
                 .then(function (dataUrl) {
                     return $timeout(function () {
-                        ctrl.modelo.fotoBase64 = dataUrl.replace("data:image/jpeg;base64,", "");
+                        ctrl.modelo.fotoBase64 = dataUrl.replace(/^data:image\/[a-z]+;base64,/, "");
                     });
                 })
                 .then(function () {

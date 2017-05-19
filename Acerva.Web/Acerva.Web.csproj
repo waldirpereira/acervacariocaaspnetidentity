@@ -296,6 +296,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Aplicacao\images\like_facebook.png" />
+    <Content Include="Content\Aplicacao\images\regionais\.gitignore" />
     <Content Include="Content\vendor\cropper\cropper.css" />
     <Content Include="Content\vendor\ngCropper\ngCropper.all.css" />
     <Content Include="Scripts\Aplicacao\Beneficio\acerva.beneficio.cadastro.controller.js" />
@@ -415,8 +416,6 @@
     <Content Include="Content\Aplicacao\images\carteirinha_verso.jpg" />
     <Content Include="Content\Aplicacao\images\fotos\.gitignore" />
     <Content Include="Content\Aplicacao\images\Logo_ACerva_Carioca.png" />
-    <Content Include="Content\Aplicacao\images\regionais\2\niteroi.jpg" />
-    <Content Include="Content\Aplicacao\images\regionais\4\teresopolis.jpg" />
     <Content Include="Content\Aplicacao\images\tacas.png" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -1274,6 +1273,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\Aplicacao\fonts\imprima-regular-webfont.woff" />
     <Content Include="Content\Aplicacao\fonts\imprima-regular-webfont.woff2" />
+    <None Include="Properties\PublishProfiles\ftp-novo.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />

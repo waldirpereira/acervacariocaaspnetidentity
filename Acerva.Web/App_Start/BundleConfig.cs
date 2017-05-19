@@ -64,7 +64,6 @@ namespace Acerva.Web
 
         private const string AngularLocalStorage = ScriptsVendorFolder + "angular-local-storage/angular-local-storage.js";
         private const string AngularBase64Upload = ScriptsVendorFolder + "angular-base64-upload/angular-base64-upload.js";
-        private const string AngularCroppie = ScriptsVendorFolder + "ng-croppie/ng-croppie.js";
         private static readonly string[] AngularCropper =
         {
             ScriptsVendorFolder + "cropper/cropper.js",
@@ -127,7 +126,6 @@ namespace Acerva.Web
         private const string AngularSelectCss = StylesVendorFolder + "angular-ui-select/select.css";
         private const string AngularTimeInputCss = StylesVendorFolder + "png-time-input/png-time-input.css";
         private const string AngularHotkeysCss = StylesVendorFolder + "angular-hotkeys/hotkeys.css";
-        private const string AngularCroppieCss = StylesVendorFolder + "ng-croppie/ng-croppie.css";
         private static readonly string[] AngularCropperCss =
         {
             StylesVendorFolder + "cropper/cropper.css",
@@ -407,7 +405,7 @@ namespace Acerva.Web
             const string path = ScriptsAplicacaoFolder + "usuario/";
             bundles.Add(new ScriptBundle("~/bundles/usuario")
                 .Include(AngularBase64Upload)
-                .Include(AngularCroppie)
+                .Include(AngularCropper)
                 .Include(AngularChecklistModel)
                 .Include(AngularTextAngularRangy)
                 .Include(AngularTextAngularCore)
@@ -424,7 +422,7 @@ namespace Acerva.Web
             );
 
             bundles.Add(new LessBundle("~/cssBundles/usuario")
-                .Include(AngularCroppieCss)
+                .Include(AngularCropperCss)
                 .Include(AngularTextAngularCss)
                 .Include(FontAwesomeCss)
             );
@@ -435,7 +433,6 @@ namespace Acerva.Web
             const string path = ScriptsAplicacaoFolder + "registro/";
             bundles.Add(new ScriptBundle("~/bundles/registro")
                 .Include(AngularBase64Upload)
-                .Include(AngularCroppie)
                 .Include(AngularCropper)
                 .Include(AngularTextAngularRangy)
                 .Include(AngularTextAngularCore)
@@ -449,7 +446,6 @@ namespace Acerva.Web
             );
 
             bundles.Add(new LessBundle("~/cssBundles/registro")
-                .Include(AngularCroppieCss)
                 .Include(AngularCropperCss)
                 .Include(AngularTextAngularCss)
                 .Include(FontAwesomeCss)
@@ -461,7 +457,7 @@ namespace Acerva.Web
             const string path = ScriptsAplicacaoFolder + "meusdados/";
             bundles.Add(new ScriptBundle("~/bundles/meusdados")
                 .Include(AngularBase64Upload)
-                .Include(AngularCroppie)
+                .Include(AngularCropper)
                 .Include(AngularCropper)
                 .Include(AngularTextAngularRangy)
                 .Include(AngularTextAngularCore)
@@ -475,7 +471,7 @@ namespace Acerva.Web
             );
 
             bundles.Add(new LessBundle("~/cssBundles/meusdados")
-                .Include(AngularCroppieCss)
+                .Include(AngularCropperCss)
                 .Include(AngularCropperCss)
                 .Include(AngularTextAngularCss)
                 .Include(FontAwesomeCss)

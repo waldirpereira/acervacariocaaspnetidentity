@@ -2,9 +2,9 @@
     "use strict";
 
     angular.module("acerva.meusdados")
-        .controller("MeusDadosController", ["$scope", "$timeout", "$routeParams", "$location", "CanalMensagemGrowl", "ENUMS", "MeusDados", MeusDadosController]);
+        .controller("MeusDadosController", ["$scope", "$timeout", "$routeParams", "$location", "Cropper", "CanalMensagemGrowl", "ENUMS", "MeusDados", MeusDadosController]);
 
-    function MeusDadosController($scope, $timeout, $routeParams, $location, CanalMensagemGrowl, ENUMS, MeusDados) {
+    function MeusDadosController($scope, $timeout, $routeParams, $location, Cropper, CanalMensagemGrowl, ENUMS, MeusDados) {
         var ctrl = this;
         ctrl.status = {
             carregando: false,
@@ -20,6 +20,31 @@
         ctrl.salvaUsuario = salvaUsuario;
         ctrl.recuperaUsuariosIndicacao = recuperaUsuariosIndicacao;
         ctrl.pegaSrcFoto = pegaSrcFoto;
+
+        ctrl.arquivoFoto = null;
+        ctrl.dadosFoto = null;
+
+        ctrl.cropperShowEvent = 'show';
+        function showCropper() { $scope.$broadcast(ctrl.cropperShowEvent); }
+        $scope.onFile = function (blob) {
+            Cropper.encode((ctrl.arquivoFoto = blob)).then(function (dataUrl) {
+                ctrl.modelo.fotoBase64Url = dataUrl;
+                $timeout(showCropper);  // wait for $digest to set image's src
+            });
+        };
+
+        ctrl.cropperOptions = {
+            movable: true,
+            dragMode: "move",
+            aspectRatio: 1,
+            viewMode: 2,
+            autoCropArea: 1,
+            minContainerWidth: 200,
+            minContainerHeight: 200,
+            crop: function (dataNew) {
+                ctrl.dadosFoto = dataNew;
+            }
+        };
 
         ctrl.formularioDesabilitado = function() {
             return ctrl.dominio.idUsuarioLogado !== ctrl.modeloOriginal.id;
@@ -63,7 +88,20 @@
             }
             ctrl.status.salvando = true;
 
-            MeusDados.salvaUsuario(ctrl.modelo)
+            Cropper.crop(ctrl.arquivoFoto, ctrl.dadosFoto)
+                .then(function (blob) {
+                    var ratio = ctrl.dadosFoto.width > 200 ? 200 / ctrl.dadosFoto.width : 1;
+                    return Cropper.scale(blob, ratio);
+                })
+                .then(Cropper.encode)
+                .then(function (dataUrl) {
+                    return $timeout(function () {
+                        ctrl.modelo.fotoBase64 = dataUrl.replace("data:image/jpeg;base64,", "");
+                    });
+                })
+                .then(function () {
+                    return MeusDados.salvaUsuario(ctrl.modelo);
+                })
                 .then(function (retorno) {
                     if (retorno === "OK") {
                         $location.path("/Edited");

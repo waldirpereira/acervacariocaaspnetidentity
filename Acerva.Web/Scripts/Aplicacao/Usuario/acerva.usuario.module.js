@@ -1,7 +1,7 @@
 ﻿(function () {
     "use strict";
 
-    angular.module("acerva.usuario", ["acerva", "datatables", "naif.base64", "ngCroppie", "checklist-model", "datatables.buttons", "ngCpfCnpj", "ui.mask"]);
+    angular.module("acerva.usuario", ["acerva", "datatables", "naif.base64", "ngCropper", "checklist-model", "datatables.buttons", "ngCpfCnpj", "ui.mask"]);
 
     angular.module("acerva")
         .config(["$routeProvider", routes]);

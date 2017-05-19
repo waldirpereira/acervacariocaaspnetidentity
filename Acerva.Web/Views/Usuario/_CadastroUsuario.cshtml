@@ -199,15 +199,14 @@
 
                                 <div ng-if="!ctrl.modelo.fotoSelecionada && ctrl.modelo.fotoBase64">
                                     <div class="panel panel-default">
-                                        <div class="panel-body">
-                                            <img ng-src="{{ctrl.modelo.fotoBase64}}" alt="Foto do associado"/>
+                                        <div class="panel-body" style="max-width: 200px;">
+                                            <img ng-src="{{ctrl.modelo.fotoBase64}}" class="img-responsive" alt="Foto do associado"/>
                                         </div>
                                         <div class="panel-footer">
                                             <a class="btn btn-default"
                                                ng-click="ctrl.modelo.fotoBase64 = null;">Trocar foto</a>
                                         </div>
                                     </div>
-
                                 </div>
                                 <div ng-if="!ctrl.modelo.fotoBase64 || ctrl.modelo.fotoSelecionada"
                                      style="overflow-x: hidden;">
@@ -215,7 +214,7 @@
                                     <input type="file" onchange="angular.element(this).scope().onFile(this.files[0])">
 
                                     <div ng-if="ctrl.modelo.fotoBase64Url" class="img-container" style="max-height: 300px;">
-                                        <img ng-if="ctrl.modelo.fotoBase64Url" ng-src="{{ctrl.modelo.fotoBase64Url}}" 
+                                        <img ng-if="ctrl.modelo.fotoBase64Url" ng-src="{{ctrl.modelo.fotoBase64Url}}"
                                              ng-cropper
                                              ng-cropper-show="ctrl.cropperShowEvent"
                                              ng-cropper-options="ctrl.cropperOptions">

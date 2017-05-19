@@ -307,8 +307,8 @@
     <Content Include="Scripts\Aplicacao\ListaBeneficios\acerva.listaBeneficios.module.js" />
     <Content Include="Scripts\Aplicacao\ListaBeneficios\acerva.listaBeneficios.service.js" />
     <Content Include="Scripts\vendor\cropper\cropper.js" />
-    <Content Include="Scripts\vendor\ngCropper\ngCropper.all.js" />
-    <Content Include="Scripts\vendor\ngCropper\ngCropper.js" />
+    <Content Include="Scripts\vendor\exif\exif.js" />
+    <Content Include="Scripts\vendor\ngCropperCustom\ngCropperCustom.js" />
     <Content Include="Views\Beneficio\_CadastroBeneficio.cshtml" />
     <Content Include="Views\Beneficio\_ListaBeneficios.cshtml" />
     <Content Include="Views\Beneficio\Index.cshtml" />

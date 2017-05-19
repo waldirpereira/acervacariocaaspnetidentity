@@ -27,10 +27,11 @@
         ctrl.cropperShowEvent = 'show';
         function showCropper() { $scope.$broadcast(ctrl.cropperShowEvent); }
         $scope.onFile = function (blob) {
-            Cropper.encode((ctrl.arquivoFoto = blob)).then(function (dataUrl) {
-                ctrl.modelo.fotoBase64Url = dataUrl;
-                $timeout(showCropper);  // wait for $digest to set image's src
-            });
+            Cropper.encode((ctrl.arquivoFoto = blob))
+                .then(function (dataUrl) {
+                    ctrl.modelo.fotoBase64Url = dataUrl;
+                    $timeout(showCropper);  // wait for $digest to set image's src
+                });
         };
 
         ctrl.cropperOptions = {
@@ -39,14 +40,17 @@
             aspectRatio: 1,
             viewMode: 2,
             autoCropArea: 1,
-            minContainerWidth: 200,
-            minContainerHeight: 200,
+            minContainerWidth: 100,
+            minContainerHeight: 100,
+            rotatable: true,
+            scalable: true,
+            checkOrientation: true,
             crop: function (dataNew) {
                 ctrl.dadosFoto = dataNew;
             }
         };
 
-        ctrl.formularioDesabilitado = function() {
+        ctrl.formularioDesabilitado = function () {
             return ctrl.dominio.idUsuarioLogado !== ctrl.modeloOriginal.id;
         }
 
@@ -88,15 +92,20 @@
             }
             ctrl.status.salvando = true;
 
+            if (ctrl.arquivoFoto && ctrl.arquivoFoto.type !== "image/png")
+                ctrl.arquivoFoto = new File([ctrl.arquivoFoto], "newphoto.png", { type: "image/png" });
+
             Cropper.crop(ctrl.arquivoFoto, ctrl.dadosFoto)
                 .then(function (blob) {
-                    var ratio = ctrl.dadosFoto.width > 200 ? 200 / ctrl.dadosFoto.width : 1;
+                    var ratio = ctrl.dadosFoto.width > 500 ? 500 / ctrl.dadosFoto.width : 1;
                     return Cropper.scale(blob, ratio);
                 })
-                .then(Cropper.encode)
+                .then(function (blob) {
+                    return Cropper.encode(blob);
+                })
                 .then(function (dataUrl) {
                     return $timeout(function () {
-                        ctrl.modelo.fotoBase64 = dataUrl.replace(/^data:image\/[a-z]+;base64,/, "");
+                        ctrl.modelo.fotoBase64 = dataUrl;
                     });
                 })
                 .then(function () {

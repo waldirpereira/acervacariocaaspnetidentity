@@ -1,7 +1,9 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Reflection;
 using System.Web;
+using log4net;
 
 namespace Acerva.Web.Controllers.Helpers
 {
@@ -9,6 +11,9 @@ namespace Acerva.Web.Controllers.Helpers
     {
         private const string CaminhoFotos = "~/Content/Aplicacao/images/fotos";
         private const string CaminhoImagens = "~/Content/Aplicacao/images";
+
+        private static readonly ILog Log =
+            LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public void SalvaFoto(string userId, string fotoBase64, HttpContextBase httpContext)
         {
@@ -21,7 +26,9 @@ namespace Acerva.Web.Controllers.Helpers
                 return;
             }
 
-            fotoBase64 = fotoBase64.Replace("data:image/png;base64,", "");
+            Log.InfoFormat("fotoBase64 ANTES do replace: {0}", fotoBase64);
+            fotoBase64 = fotoBase64.Substring(fotoBase64.IndexOf(',') + 1);
+
             var bytes = Convert.FromBase64String(fotoBase64);
 
             using (var imageFile = new FileStream(caminhoCompleto, FileMode.Create))

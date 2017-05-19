@@ -41,6 +41,9 @@
             autoCropArea: 1,
             minContainerWidth: 200,
             minContainerHeight: 200,
+            rotatable: true,
+            scalable: true,
+            checkOrientation: true,
             crop: function (dataNew) {
                 ctrl.dadosFoto = dataNew;
             }
@@ -94,15 +97,18 @@
 
             ctrl.status.salvando = true;
 
+            if (ctrl.arquivoFoto && ctrl.arquivoFoto.type !== "image/png")
+                ctrl.arquivoFoto = new File([ctrl.arquivoFoto], "newphoto.png", { type: "image/png" });
+
             Cropper.crop(ctrl.arquivoFoto, ctrl.dadosFoto)
                 .then(function (blob) {
-                    var ratio = ctrl.dadosFoto.width > 200 ? 200 / ctrl.dadosFoto.width : 1;
+                    var ratio = ctrl.dadosFoto.width > 500 ? 500 / ctrl.dadosFoto.width : 1;
                     return Cropper.scale(blob, ratio);
                 })
                 .then(Cropper.encode)
                 .then(function (dataUrl) {
                     return $timeout(function () {
-                        ctrl.modelo.fotoBase64 = dataUrl.replace(/^data:image\/[a-z]+;base64,/, "");
+                        ctrl.modelo.fotoBase64 = dataUrl;
                     });
                 })
                 .then(function () {

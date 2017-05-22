@@ -25,13 +25,13 @@
         ctrl.cropperOptions = {
             dragMode: "move",
             aspectRatio: 1,
-            viewMode: 1,
+            viewMode: 3,
             minContainerWidth: 100,
             minContainerHeight: 100,
             autoCropArea: 1,
             movable: true,
-            rotatable: true,
-            scalable: true,
+            rotatable: false,
+            scalable: false,
             checkOrientation: true,
             crop: function (dataNew) {
                 ctrl.dadosFoto = dataNew;

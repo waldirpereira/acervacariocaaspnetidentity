@@ -92,6 +92,7 @@
                 templateUrl: 'modal-troca-foto.html',
                 controller: 'TrocaFotoModalController',
                 controllerAs: 'ctrl',
+                backdrop: "static",
                 resolve: {}
             });
 

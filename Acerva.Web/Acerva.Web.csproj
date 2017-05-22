@@ -306,6 +306,7 @@
     <Content Include="Scripts\Aplicacao\ListaBeneficios\acerva.listaBeneficios.controller.js" />
     <Content Include="Scripts\Aplicacao\ListaBeneficios\acerva.listaBeneficios.module.js" />
     <Content Include="Scripts\Aplicacao\ListaBeneficios\acerva.listaBeneficios.service.js" />
+    <Content Include="Scripts\Aplicacao\Usuario\acerva.usuario.trocaFoto.controller.js" />
     <Content Include="Scripts\vendor\cropper\cropper.js" />
     <Content Include="Scripts\vendor\exif\exif.js" />
     <Content Include="Scripts\vendor\ngCropperCustom\ngCropperCustom.js" />
@@ -1384,6 +1385,7 @@
     <Content Include="Views\CartilhaBoasVindas\Index.cshtml" />
     <Content Include="Views\Usuario\_ModalHistoricoStatus.cshtml" />
     <Content Include="Views\ListaBeneficios\Index.cshtml" />
+    <Content Include="Views\Usuario\_ModalTrocaFoto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\vendor\angular-growl-v2\angular-growl.css" />

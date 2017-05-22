@@ -420,6 +420,7 @@ namespace Acerva.Web
                 .Include(path + "acerva.usuario.cadastro.controller.js")
                 .Include(path + "acerva.usuario.selecaoEmails.controller.js")
                 .Include(path + "acerva.usuario.historicoStatus.controller.js")
+                .Include(path + "acerva.usuario.trocaFoto.controller.js")
             );
 
             bundles.Add(new LessBundle("~/cssBundles/usuario")
@@ -432,6 +433,7 @@ namespace Acerva.Web
         private static void Registro(BundleCollection bundles)
         {
             const string path = ScriptsAplicacaoFolder + "registro/";
+            const string pathUsuario = ScriptsAplicacaoFolder + "usuario/";
             bundles.Add(new ScriptBundle("~/bundles/registro")
                 .Include(AngularBase64Upload)
                 .Include(Exif)
@@ -445,6 +447,7 @@ namespace Acerva.Web
                 .Include(path + "acerva.registro.module.js")
                 .Include(path + "acerva.registro.service.js")
                 .Include(path + "acerva.registro.controller.js")
+                .Include(pathUsuario + "acerva.usuario.trocaFoto.controller.js")
             );
 
             bundles.Add(new LessBundle("~/cssBundles/registro")
@@ -457,6 +460,7 @@ namespace Acerva.Web
         private static void MeusDados(BundleCollection bundles)
         {
             const string path = ScriptsAplicacaoFolder + "meusdados/";
+            const string pathUsuario = ScriptsAplicacaoFolder + "usuario/";
             bundles.Add(new ScriptBundle("~/bundles/meusdados")
                 .Include(AngularBase64Upload)
                 .Include(Exif)
@@ -470,6 +474,7 @@ namespace Acerva.Web
                 .Include(path + "acerva.meusdados.module.js")
                 .Include(path + "acerva.meusdados.service.js")
                 .Include(path + "acerva.meusdados.controller.js")
+                .Include(pathUsuario + "acerva.usuario.trocaFoto.controller.js")
             );
 
             bundles.Add(new LessBundle("~/cssBundles/meusdados")

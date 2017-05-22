@@ -2,9 +2,9 @@
     "use strict";
 
     angular.module("acerva.registro")
-        .controller("RegistroController", ["$scope", "$timeout", "$routeParams", "$location", "ENUMS", "Cropper", "CanalMensagemGrowl", "Registro", RegistroController]);
+        .controller("RegistroController", ["$scope", "$timeout", "$routeParams", "$location", "$uibModal", "ENUMS", "CanalMensagemGrowl", "Registro", RegistroController]);
 
-    function RegistroController($scope, $timeout, $routeParams, $location, ENUMS, Cropper, CanalMensagemGrowl, Registro) {
+    function RegistroController($scope, $timeout, $routeParams, $location, $uibModal, ENUMS, CanalMensagemGrowl, Registro) {
         var ctrl = this;
         ctrl.status = {
             carregando: false,
@@ -19,36 +19,7 @@
 
         ctrl.salvaUsuario = salvaUsuario;
         ctrl.recuperaUsuariosIndicacao = recuperaUsuariosIndicacao;
-        ctrl.pegaSrcFoto = pegaSrcFoto;
-
-        ctrl.arquivoFoto = null;
-        ctrl.dadosFoto = null;
-
-        ctrl.cropperShowEvent = 'show';
-        function showCropper() { $scope.$broadcast(ctrl.cropperShowEvent); }
-        $scope.onFile = function (blob) {
-            Cropper.encode((ctrl.arquivoFoto = blob)).then(function (dataUrl) {
-                ctrl.modelo.fotoBase64Url = dataUrl;
-                $timeout(showCropper);  // wait for $digest to set image's src
-            });
-        };
-
-        ctrl.cropperOptions = {
-            movable: true,
-            dragMode: "move",
-            aspectRatio: 1,
-            viewMode: 1,
-            autoCropArea: 1,
-            minContainerWidth: 100,
-            minContainerHeight: 100,
-            rotatable: true,
-            scalable: true,
-            checkOrientation: true,
-            crop: function (dataNew) {
-                ctrl.dadosFoto = dataNew;
-            }
-        };
-
+        ctrl.abrirModalTrocaFoto = abrirModalTrocaFoto;
 
         ctrl.formularioDesabilitado = function () {
             return ctrl.modeloOriginal.id && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor && ctrl.dominio.idUsuarioLogado !== ctrl.modeloOriginal.id;
@@ -97,28 +68,7 @@
 
             ctrl.status.salvando = true;
 
-            var promise = $timeout();
-
-            if (ctrl.arquivoFoto && ctrl.arquivoFoto.type !== "image/png") {
-                ctrl.arquivoFoto = new File([ctrl.arquivoFoto], "newphoto.png", { type: "image/png" });
-
-                promise = Cropper.crop(ctrl.arquivoFoto, ctrl.dadosFoto)
-                    .then(function(blob) {
-                        var ratio = ctrl.dadosFoto.width > 500 ? 500 / ctrl.dadosFoto.width : 1;
-                        return Cropper.scale(blob, ratio);
-                    })
-                    .then(Cropper.encode)
-                    .then(function(dataUrl) {
-                        return $timeout(function() {
-                            ctrl.modelo.fotoBase64 = dataUrl;
-                        });
-                    });
-            }
-
-            promise
-                .then(function () {
-                    return Registro.salvaUsuario(ctrl.modelo);
-                })
+            Registro.salvaUsuario(ctrl.modelo)
                 .then(function (retorno) {
                     if (retorno === "OK") {
                         $location.path("/ConfirmSent");
@@ -134,8 +84,25 @@
             });
         }
 
-        function pegaSrcFoto() {dragMode
-            return ctrl.modelo.fotoSelecionada && ctrl.modelo.fotoSelecionada.base64 ? "data:image/png;base64," + ctrl.modelo.fotoSelecionada.base64 : "";
+        function abrirModalTrocaFoto() {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'modal-troca-foto.html',
+                controller: 'TrocaFotoModalController',
+                controllerAs: 'ctrl',
+                resolve: {}
+            });
+
+            modalInstance.result.then(trocaFoto);
+        }
+
+        function trocaFoto(fotoBase64) {
+            if (!fotoBase64)
+                return;
+
+            ctrl.modelo.fotoBase64 = fotoBase64;
         }
     }
 

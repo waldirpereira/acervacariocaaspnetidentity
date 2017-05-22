@@ -7,12 +7,15 @@
     function SelecaoEmailsModalController($scope, $uibModalInstance) {
         var ctrl = this;
 
-        ctrl.modelo = {};
+        ctrl.modelo = {
+            limpaSelecaoAtual: true,
+            emais: null
+        };
 
         ctrl.ok = ok;
 
         function ok() {
-            $uibModalInstance.close(ctrl.modelo.emails);
+            $uibModalInstance.close(ctrl.modelo);
         }
     }
 

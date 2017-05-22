@@ -23,13 +23,13 @@
         };
 
         ctrl.cropperOptions = {
-            movable: true,
             dragMode: "move",
             aspectRatio: 1,
             viewMode: 1,
-            autoCropArea: 1,
             minContainerWidth: 100,
             minContainerHeight: 100,
+            autoCropArea: 1,
+            movable: true,
             rotatable: true,
             scalable: true,
             checkOrientation: true,
@@ -39,6 +39,7 @@
         };
 
         ctrl.ok = ok;
+        ctrl.cancel = cancel;
 
         function ok() {
             if (ctrl.arquivoFoto) {
@@ -60,6 +61,10 @@
                         });
                     });
             }
+        }
+
+        function cancel() {
+            $uibModalInstance.close();
         }
     }
 

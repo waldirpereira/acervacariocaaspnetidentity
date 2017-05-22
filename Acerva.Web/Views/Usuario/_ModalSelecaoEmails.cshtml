@@ -12,6 +12,11 @@
                         <p ng-show="formSelecaoEmails.emails.$invalid && !formSelecaoEmails.emails.$pristine" class="help-block">O campo de e-mails é obrigatório</p>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <input type="checkbox" ng-model="ctrl.modelo.limpaSelecaoAtual"/> Limpar seleção atual
+                    </div>
+                </div>
             </form>
         </div>
     </div>

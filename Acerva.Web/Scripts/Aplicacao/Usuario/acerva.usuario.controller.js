@@ -34,6 +34,8 @@
         ctrl.confirmaPagamentoSelecionados = confirmaPagamentoSelecionados;
         ctrl.cobrancaGeradaSelecionados = cobrancaGeradaSelecionados;
         ctrl.enviaEmailBoasVindasNaListaSelecionados = enviaEmailBoasVindasNaListaSelecionados;
+        ctrl.montaMensagemConfirmacaoOperacaoLote = montaMensagemConfirmacaoOperacaoLote;
+        ctrl.getLabelStatusClass = getLabelStatusClass;
 
         ctrl.dtOptions = DTOptionsBuilder.newOptions()
             .withOption('order', [2, 'asc'])
@@ -103,13 +105,11 @@
             modalInstance.result.then(selecionaPorEmails);
         }
 
-        function selecionaPorEmails(emails) {
-            if (!emails)
+        function selecionaPorEmails(selecionaPorEmailsModel) {
+            if (!selecionaPorEmailsModel || !selecionaPorEmailsModel.emails)
                 return;
 
-            ctrl.usuariosSelecionados = [];
-
-            var arrEmails = emails
+            var arrEmails = selecionaPorEmailsModel.emails
                 .replace(/ /g, ",")
                 .replace(/\n/g, ",")
                 .replace(/\r/g, ",")
@@ -117,8 +117,17 @@
                 .replace(/;/g, ",")
                 .split(",");
 
+            if (selecionaPorEmailsModel.limpaSelecaoAtual)
+                ctrl.usuariosSelecionados = [];
+
             ctrl.usuariosFiltrados
-                .forEach(function (usuario) { if (arrEmails.indexOf(usuario.email) >= 0) alteraSelecao(usuario.id) });
+                .filter(function (usuario) {
+                    return arrEmails.indexOf(usuario.email) >= 0;
+                })
+                .map(function (usuario) {
+                    return usuario.id;
+                })
+                .map(alteraSelecao);
         }
 
         function mudaFiltroStatus(status) {
@@ -147,7 +156,7 @@
                 if (ctrl.filtroStatus.length === 0)
                     ctrl.usuariosFiltrados = todosUsuarios;
                 else
-                   ctrl.usuariosFiltrados = todosUsuarios.filter(function (usuario) { return codigosBdFiltros.indexOf(usuario.status.codigoBd) >= 0; });
+                    ctrl.usuariosFiltrados = todosUsuarios.filter(function (usuario) { return codigosBdFiltros.indexOf(usuario.status.codigoBd) >= 0; });
                 ctrl.status.carregando = false;
             }, 0);
         }
@@ -210,6 +219,58 @@
                 .finally(function () {
                     atualizaListaUsuarios();
                 });
+        }
+
+        function getLabelStatusClass(status) {
+            var cls;
+            switch(status.codigoBd) {
+                case ctrl.dominio.statusUsuario.ativo.codigoBd:
+                    cls = "label-success";
+                    break;
+                case ctrl.dominio.statusUsuario.cancelado.codigoBd:
+                    cls = "label-danger";
+                    break;
+                case ctrl.dominio.statusUsuario.aguardandoIndicacao.codigoBd:
+                    cls = "label-warning";
+                    break;
+                case ctrl.dominio.statusUsuario.aguardandoConfirmacaoEmail.codigoBd:
+                case ctrl.dominio.statusUsuario.novo.codigoBd:
+                    cls = "label-default";
+                    break;
+                case ctrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd:
+                case ctrl.dominio.statusUsuario.aguardandoRenovacao.codigoBd:
+                    cls = "label-primary";
+            }
+            return cls;
+        }
+
+        function montaMensagemConfirmacaoOperacaoLote(pergunta) {
+            var usuariosSelecionados = ctrl.usuariosFiltrados
+                .filter(function (usuario) {
+                    return ctrl.usuariosSelecionados.indexOf(usuario.id) >= 0;
+                })
+                .map(function (usuario) {
+                    return {
+                        name: usuario.name,
+                        status: usuario.status
+                    };
+                });
+
+            var listaUsuarios = "";
+            if (usuariosSelecionados.length) {
+
+                listaUsuarios = "<br/><br/><ul><li>"
+                    + usuariosSelecionados
+                    .map(function (usuario) {
+                        return usuario.name + " <span class='label " + getLabelStatusClass(usuario.status) + "'>" + usuario.status.nomeExibicao + "</span>";
+                    })
+                    .join("</li><li>")
+                    + "</li></ul>";
+            }
+
+            pergunta = pergunta.replace("%QUANTIDADE%", usuariosSelecionados.length > 0 ? usuariosSelecionados.length : "");
+
+            return pergunta + listaUsuarios;
         }
     }
 })();

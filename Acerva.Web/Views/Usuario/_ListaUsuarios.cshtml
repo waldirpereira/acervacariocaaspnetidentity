@@ -42,7 +42,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="m in listaCtrl.usuariosFiltrados track by m.id">
+                <tr ng-repeat="m in listaCtrl.usuariosFiltrados track by m.id"
+                    ng-class="{'linhaSelecionada': listaCtrl.usuariosSelecionados[m.id]}">
 
                     <td class="text-center">
                         <input type="checkbox"
@@ -59,13 +60,7 @@
                     </td>
                     <td>{{m.email}}</td>
                     <td>
-                        <span class="label" ng-class="{
-                                  'label-success': m.status.codigoBd === listaCtrl.dominio.statusUsuario.ativo.codigoBd,
-                                  'label-danger':  m.status.codigoBd === listaCtrl.dominio.statusUsuario.cancelado.codigoBd,
-                                  'label-warning': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoIndicacao.codigoBd,
-                                  'label-default': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoConfirmacaoEmail.codigoBd || m.status.codigoBd === listaCtrl.dominio.statusUsuario.novo.codigoBd,
-                                  'label-primary': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd || m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoRenovacao.codigoBd
-                                  }">{{m.status.nomeExibicao}}</span>
+                        <span class="label" ng-class="listaCtrl.getLabelStatusClass(m.status);">{{m.status.nomeExibicao}}</span>
                     </td>
                     <td>{{m.nomeRegional}}</td>
                     <td>{{m.nomesPapeis}}</td>
@@ -96,13 +91,7 @@
                             <a title="Editar associado"
                                ng-href="#/Edit/{{m.id}}">{{m.matricula}}-{{m.name}}</a>
                         </strong>
-                        <span class="label" ng-class="{
-                                  'label-success': m.status.codigoBd === listaCtrl.dominio.statusUsuario.ativo.codigoBd,
-                                  'label-danger':  m.status.codigoBd === listaCtrl.dominio.statusUsuario.cancelado.codigoBd,
-                                  'label-warning': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoIndicacao.codigoBd,
-                                  'label-default': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoConfirmacaoEmail.codigoBd || m.status.codigoBd === listaCtrl.dominio.statusUsuario.novo.codigoBd,
-                                  'label-primary': m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd || m.status.codigoBd === listaCtrl.dominio.statusUsuario.aguardandoRenovacao.codigoBd
-                                  }">{{m.status.nomeExibicao}}</span>
+                        <span class="label" ng-class="listaCtrl.getLabelStatusClass(m.status);">{{m.status.nomeExibicao}}</span>
                         <span class="label label-primary">
                                 {{m.nomeRegional}}
                             </span>
@@ -131,14 +120,14 @@
                            acerva-confirm
                            confirm-action="listaCtrl.confirmaPagamentoSelecionados()"
                            confirm-window-type="success"
-                           confirm-text="Confirma que os associados selecionados realizaram pagamento?">Confirmar pagamento para selecionados</a>
+                           confirm-text="{{listaCtrl.montaMensagemConfirmacaoOperacaoLote('Confirma que os %QUANTIDADE% associados selecionados realizaram pagamento?');}}">Confirmar pagamento para selecionados</a>
                         <a class="btn btn-primary"
                            ng-if="(listaCtrl.filtroStatus.length === 1 && (listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.ativo) || listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.novo))) || 
                                     (listaCtrl.filtroStatus.length === 2 && (listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.ativo) && listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.novo)))"
                            acerva-confirm
                            confirm-action="listaCtrl.cobrancaGeradaSelecionados()"
                            confirm-window-type="success"
-                           confirm-text="Confirma que as cobranças foram geradas para os associados selecionados?">Cobrança gerada para selecionados</a>
+                           confirm-text="{{listaCtrl.montaMensagemConfirmacaoOperacaoLote('Confirma que as cobranças foram geradas para os %QUANTIDADE% associados selecionados?');}}">Cobrança gerada para selecionados</a>
                         <a class="btn btn-primary"
                            ng-if="listaCtrl.filtroStatus.length === 1 && listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.ativo)"
                            acerva-confirm

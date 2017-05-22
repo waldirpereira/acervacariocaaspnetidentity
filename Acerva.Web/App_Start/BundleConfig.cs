@@ -129,8 +129,7 @@ namespace Acerva.Web
         private const string AngularHotkeysCss = StylesVendorFolder + "angular-hotkeys/hotkeys.css";
         private static readonly string[] AngularCropperCss =
         {
-            StylesVendorFolder + "cropper/cropper.css",
-            StylesVendorFolder + "ngCropper/ngCropper.all.css"
+            StylesVendorFolder + "cropper/cropper.css"
         };
         private const string FontAwesomeCss = StylesVendorFolder + "font-awesome/css/font-awesome.css";
         private const string AngularTextAngularCss = StylesVendorFolder + "text-angular/textAngular.css";

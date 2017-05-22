@@ -13,19 +13,20 @@ body {
 }
 
 a {
-    color:#f39c12;
+    color: #f39c12;
+
     &:hover {
-        color: #e74c3c; 
+        color: #e74c3c;
     }
 }
 
-.ui-select-bootstrap .ui-select-choices-row>a {
+.ui-select-bootstrap .ui-select-choices-row > a {
     &:hover, &:focus {
         color: black !important;
     }
 }
 
-.ui-select-bootstrap .ui-select-choices-row>a:hover, .ui-select-bootstrap .ui-select-choices-row>a:focus {
+.ui-select-bootstrap .ui-select-choices-row > a:hover, .ui-select-bootstrap .ui-select-choices-row > a:focus {
     text-decoration: none;
     color: #262626;
     background-color: #f5f5f5;
@@ -41,11 +42,14 @@ a {
     background-color: #f39c12;
     border-color: transparent;
     opacity: 0.95;
+
     .navbar-collapse, .navbar-inverse .navbar-form {
         border-color: #d08106;
     }
+
     .navbar-toggle {
         border-color: #b97305;
+
         &:hover, .navbar-toggle:focus {
             background-color: #d08106;
         }
@@ -67,9 +71,11 @@ a {
         float: right;
         margin-left: 10px;
     }
+
     .dataTables_length {
         display: inline;
     }
+
     table.dataTable tr th input.campoFiltroColunaDataTable {
         width: 100%;
     }
@@ -107,8 +113,7 @@ footer {
 /* fonts */
 @font-face {
     font-family: 'imprimaregular';
-    src: url('../fonts/imprima-regular-webfont.woff2') format('woff2'),
-         url('../fonts/imprima-regular-webfont.woff') format('woff');
+    src: url('../fonts/imprima-regular-webfont.woff2') format('woff2'), url('../fonts/imprima-regular-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -134,9 +139,11 @@ footer {
     > .growl-item.ng-enter {
         .animation(fadeIn 0.5s)
     }
+
     > .growl-item.ng-leave {
         .animation(bounceOutRight 1s)
     }
+
     .alert-success .growl-message a {
         color: darkblue;
     }
@@ -215,9 +222,15 @@ fieldset[disabled] {
     margin-top: 15px;
     margin-bottom: 15px;
 }
+
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .container-noticias .titulo {
@@ -228,24 +241,39 @@ fieldset[disabled] {
     max-width: 100%;
 }
 
-.photo-upload[type="file"] {
-    display: none;
-}
-.custom-file-upload {
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    display: inline-block;
-    padding: 6px 12px;
-    cursor: pointer;
-    margin-bottom: 10px;
+.container-crop-photo {
+    .photo-upload[type="file"] {
+        display: none;
+    }
+
+    .custom-file-upload {
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        display: inline-block;
+        padding: 6px 12px;
+        cursor: pointer;
+        margin-bottom: 10px;
+    }
 }
 
 .account-action {
     padding: 20px;
     border: 1px solid transparent;
+
     &:hover {
         border: 1px solid silver;
         border-radius: 5px;
         background-color: #f3f3f3; /* Light grey */
     }
+}
+
+.confirm-window {
+    .modal-body {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+}
+
+.linhaSelecionada {
+    background-color: #dddddd !important;
 }

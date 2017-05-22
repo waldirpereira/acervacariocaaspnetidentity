@@ -167,14 +167,14 @@
                     var defaultType = "warning";
                     var modalInstance = $uibModal.open({
                         //templateUrl: '/views/modal.html',
-                        windowClass: "bootstrap-dialog size-normal type-" + (scope.confirmWindowType || defaultType),
+                        windowClass: "bootstrap-dialog size-normal confirm-window type-" + (scope.confirmWindowType || defaultType),
                         template:
                             "<div class=\"modal-header\"> \
                                 <div class=\"bootstrap-dialog-header\"> \
                                     <div class=\"bootstrap-dialog-title\">Confirmação</div> \
                                 </div> \
                             </div> \
-                        <div class=\"modal-body bootstrap-dialog-message\">{{text}}</div><div class=\"modal-footer\"><button class=\"btn btn-default\" ng-click=\"cancel()\">Não</button><button class=\"btn {{confirmButtonType}}\" ng-click=\"ok()\">Sim</button></div>",
+                        <div class=\"modal-body bootstrap-dialog-message\" ng-bind-html=\"text\"></div><div class=\"modal-footer\"><button class=\"btn btn-default\" ng-click=\"cancel()\">Não</button><button class=\"btn {{confirmButtonType}}\" ng-click=\"ok()\">Sim</button></div>",
                         controller: ["$scope", "$uibModalInstance", "text", "confirmButtonType", function ($scope, $uibModalInstance, text, confirmButtonType) {
                             $scope.text = text;
                             $scope.confirmButtonType = confirmButtonType;

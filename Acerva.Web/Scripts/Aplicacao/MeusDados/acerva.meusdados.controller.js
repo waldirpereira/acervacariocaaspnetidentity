@@ -38,7 +38,7 @@
             movable: true,
             dragMode: "move",
             aspectRatio: 1,
-            viewMode: 2,
+            viewMode: 1,
             autoCropArea: 1,
             minContainerWidth: 100,
             minContainerHeight: 100,
@@ -92,22 +92,27 @@
             }
             ctrl.status.salvando = true;
 
-            if (ctrl.arquivoFoto && ctrl.arquivoFoto.type !== "image/png")
+            var promise = $timeout();
+
+            if (ctrl.arquivoFoto && ctrl.arquivoFoto.type !== "image/png") {
                 ctrl.arquivoFoto = new File([ctrl.arquivoFoto], "newphoto.png", { type: "image/png" });
 
-            Cropper.crop(ctrl.arquivoFoto, ctrl.dadosFoto)
-                .then(function (blob) {
-                    var ratio = ctrl.dadosFoto.width > 500 ? 500 / ctrl.dadosFoto.width : 1;
-                    return Cropper.scale(blob, ratio);
-                })
-                .then(function (blob) {
-                    return Cropper.encode(blob);
-                })
-                .then(function (dataUrl) {
-                    return $timeout(function () {
-                        ctrl.modelo.fotoBase64 = dataUrl;
+                promise = Cropper.crop(ctrl.arquivoFoto, ctrl.dadosFoto)
+                    .then(function(blob) {
+                        var ratio = ctrl.dadosFoto.width > 500 ? 500 / ctrl.dadosFoto.width : 1;
+                        return Cropper.scale(blob, ratio);
+                    })
+                    .then(function(blob) {
+                        return Cropper.encode(blob);
+                    })
+                    .then(function(dataUrl) {
+                        return $timeout(function() {
+                            ctrl.modelo.fotoBase64 = dataUrl;
+                        });
                     });
-                })
+            }
+
+            promise
                 .then(function () {
                     return MeusDados.salvaUsuario(ctrl.modelo);
                 })

@@ -39,6 +39,8 @@
                 ctrl.dominio.sexo = ENUMS.sexo;
                 ctrl.dominio.sexos = ENUMS.toArrayOfEnums(ENUMS.sexo);
 
+                ctrl.dominio.regionais = ctrl.dominio.regionais.filter(function(regional) { return regional.ativo; });
+
                 if (id)
                     return;
 

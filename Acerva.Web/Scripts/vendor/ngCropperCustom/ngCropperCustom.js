@@ -17,7 +17,7 @@
                 scope.$on(scope.showEvent, function () {
                     if (shown) return;
                     shown = true;
-
+                    
                     preprocess(scope.options, element[0])
                         .then(function (options) {
                             setProxy(element);
@@ -48,6 +48,7 @@
         function preprocess(options, img) {
             options = options || {};
             var result = $q.when(options); // No changes.
+            
             if (options.maximize) {
                 result = maximizeSelection(options, img);
             }
@@ -189,14 +190,14 @@
         };
 
         function _fixOrientation(canvas, context, orientation) {
+            var width = canvas.width;
+            var height = canvas.height;
+
             if ([5, 6, 7, 8].indexOf(orientation) > -1) {
                 var tempWidth = canvas.width;
                 canvas.width = canvas.height;
                 canvas.height = tempWidth;
             }
-
-            var width = canvas.width;
-            var height = canvas.height;
 
             switch (orientation) {
                 case 2: context.transform(-1, 0, 0, 1, width, 0); break;

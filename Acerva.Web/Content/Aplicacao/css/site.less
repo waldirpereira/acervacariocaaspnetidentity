@@ -242,6 +242,10 @@ fieldset[disabled] {
 }
 
 .container-crop-photo {
+    img {
+        max-width: 100%; /* This rule is very important, please do not ignore this! */
+    }
+
     .photo-upload[type="file"] {
         display: none;
     }

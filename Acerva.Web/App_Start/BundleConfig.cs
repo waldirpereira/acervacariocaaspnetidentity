@@ -92,11 +92,10 @@ namespace Acerva.Web
             ScriptsVendorFolder + "DataTables/jquery.dataTables.js",
             ScriptsVendorFolder + "DataTables/dataTables.bootstrap.js",
             ScriptsVendorFolder + "DataTables/dataTables.buttons.js",
-            ScriptsVendorFolder + "DataTables/buttons.flash.js",
+            ScriptsVendorFolder + "jszip/jszip.js",
             ScriptsVendorFolder + "DataTables/buttons.html5.js"
         };
-        private const string JQueryDatatablesTableTools = ScriptsVendorFolder + "datatables-tabletools/dataTables.tableTools.js";
-
+        
         private static readonly string[] AngularUi =
         {
             ScriptsVendorFolder + "angular-ui/ui-bootstrap.js",
@@ -111,13 +110,13 @@ namespace Acerva.Web
             JQueryDatatables[1],
             JQueryDatatables[2],
             JQueryDatatables[3],
+            JQueryDatatables[4],
             ScriptsVendorFolder + "angular-datatables/angular-datatables.js",
             ScriptsVendorFolder + "angular-datatables/angular-datatables.buttons.js"
         };
 
 
         private const string JQueryDatatablesCss = StylesVendorFolder + "DataTables/media/css/dataTables.bootstrap.css";
-        private const string JQueryDatatablesButtonsCss = StylesVendorFolder + "DataTables/media/css/buttons.dataTables.min.css";
         private const string JQueryDatatablesButtonsSwf = StylesVendorFolder + "DataTables/media/sfw/flashExport.swf";
         private const string BootstrapDatepickerCss = StylesVendorFolder + "bootstrap-datepicker/bootstrap-datepicker.css";
         private const string AngularDateTimePickerCss = StylesVendorFolder + "angular-bootstrap-datetimepicker/datetimepicker.css";
@@ -175,7 +174,6 @@ namespace Acerva.Web
         {
             bundles.Add(new StyleBundle(BundleStylesDataTables)
                 .Include(JQueryDatatablesCss)
-                .Include(JQueryDatatablesButtonsCss)
                 .Include(JQueryDatatablesButtonsSwf)
             );
 

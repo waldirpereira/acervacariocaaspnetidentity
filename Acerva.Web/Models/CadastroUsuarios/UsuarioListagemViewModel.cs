@@ -12,5 +12,7 @@ namespace Acerva.Web.Models.CadastroUsuarios
         public virtual StatusUsuario Status { get; set; }
         public virtual string NomesPapeis { get; set; }
         public virtual bool EmailBoasVindasListaEnviado { get; set; }
+        public virtual string Telefone { get; set; }
+        public virtual string PhoneNumber { get; set; }
     }
 }

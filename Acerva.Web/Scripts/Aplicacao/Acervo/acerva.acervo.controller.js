@@ -2,9 +2,9 @@
     "use strict";
 
     angular.module("acerva.acervo")
-        .controller("AcervoController", ["$routeParams", "$location", "ENUMS", "Acervo", AcervoController]);
+        .controller("AcervoController", ["$timeout", "$routeParams", "$location", "ENUMS", "Acervo", AcervoController]);
 
-    function AcervoController($routeParams, $location, ENUMS, Acervo) {
+    function AcervoController($timeout, $routeParams, $location, ENUMS, Acervo) {
         var ctrl = this;
 
         ctrl.dominio = {};
@@ -49,16 +49,17 @@
                     var categoriaSelecionada = listaCategorias[indexOfCategoria];
                     
                     return selecionaCategoria(categoriaSelecionada).then(function () {
-                        if (codigoArtigo) {
-                            var indexOfArtigo = ctrl.listaArtigosPorCategoria[codigoCategoria]
-                                .map(function (artigo) { return artigo.codigo; }).indexOf(codigoArtigo);
+                        if (!codigoArtigo)
+                            return;
 
-                            if (indexOfArtigo < 0)
-                                return null;
+                        var indexOfArtigo = ctrl.listaArtigosPorCategoria[codigoCategoria]
+                            .map(function (artigo) { return artigo.codigo; }).indexOf(codigoArtigo);
 
-                            var artigo = ctrl.listaArtigosPorCategoria[codigoCategoria][indexOfArtigo];
-                            return mostraArtigo(artigo);
-                        }
+                        if (indexOfArtigo < 0)
+                            return null;
+
+                        var artigo = ctrl.listaArtigosPorCategoria[codigoCategoria][indexOfArtigo];
+                        return mostraArtigo(artigo);
                     });
                 }
             });
@@ -68,6 +69,10 @@
             ctrl.categoriaSelecionada = categoria;
             ctrl.status.carregandoArtigos = true;
             ctrl.artigo = null;
+
+            if (!categoria)
+                return $timeout();
+
             return Acervo.buscaArtigosDaCategoria(categoria.codigo)
                 .then(function (artigos) {
                     ctrl.listaArtigosPorCategoria[categoria.codigo] = artigos;

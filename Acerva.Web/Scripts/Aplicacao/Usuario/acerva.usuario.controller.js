@@ -39,13 +39,24 @@
 
         ctrl.dtOptions = DTOptionsBuilder.newOptions()
             .withOption('order', [2, 'asc'])
+            .withOption('lengthMenu', [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]])
             .withButtons([
                 {
-                    extend: 'excel',
-                    text: 'Excel',
+                    extend: "excelHtml5",
+                    text: '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Excel',
                     footer: true,
-                    className: 'btn btn-default btn-sm',
-                    name: 'excel'
+                    className: 'btn btn-primary btn-sm btn-export-excel',
+                    name: 'excel',
+                    exportOptions: {
+                        format: {
+                            body: function (data, row, column, node) {
+                                return node.outerHTML.indexOf("remove-html-and-content-on-exporting") >= 0
+                                    ? data.replace(/<([^>]+?)([^>]*?)>(.*?)<\/\1>/ig, "").trim()
+                                    : data.replace(/<(?:.|\n)*?>/gm, '');
+                            }
+                        },
+                        columns: ':not(.ignore-on-exporting)'
+                    }
                 }
             ])
         ;
@@ -223,7 +234,7 @@
 
         function getLabelStatusClass(status) {
             var cls;
-            switch(status.codigoBd) {
+            switch (status.codigoBd) {
                 case ctrl.dominio.statusUsuario.ativo.codigoBd:
                     cls = "label-success";
                     break;

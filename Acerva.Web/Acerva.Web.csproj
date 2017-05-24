@@ -309,6 +309,8 @@
     <Content Include="Scripts\Aplicacao\Usuario\acerva.usuario.trocaFoto.controller.js" />
     <Content Include="Scripts\vendor\cropper\cropper.js" />
     <Content Include="Scripts\vendor\exif\exif.js" />
+    <Content Include="Scripts\vendor\jszip\jszip.js" />
+    <Content Include="Scripts\vendor\jszip\jszip.min.js" />
     <Content Include="Scripts\vendor\ngCropperCustom\ngCropperCustom.js" />
     <Content Include="Views\Beneficio\_CadastroBeneficio.cshtml" />
     <Content Include="Views\Beneficio\_ListaBeneficios.cshtml" />
@@ -440,7 +442,6 @@
     <Content Include="Content\vendor\bootswatch\paper\css\bootstrap.min.css" />
     <Content Include="Content\vendor\bootswatch\paper\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\vendor\Datatables\media\css\buttons.dataTables.min.css" />
-    <Content Include="Content\vendor\Datatables\media\swf\flashExport.swf" />
     <Content Include="Content\vendor\font-awesome\css\font-awesome.css" />
     <Content Include="Content\vendor\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\vendor\font-awesome\fonts\fontawesome-webfont.svg" />
@@ -1419,8 +1420,6 @@
     <Content Include="Content\vendor\datatables-tabletools\images\print_hover.png" />
     <Content Include="Content\vendor\datatables-tabletools\images\xls.png" />
     <Content Include="Content\vendor\datatables-tabletools\images\xls_hover.png" />
-    <Content Include="Content\vendor\datatables-tabletools\swf\copy_csv_xls.swf" />
-    <Content Include="Content\vendor\datatables-tabletools\swf\copy_csv_xls_pdf.swf" />
     <Content Include="Content\vendor\Datatables\media\css\dataTables.bootstrap.css" />
     <Content Include="Content\vendor\Datatables\media\css\dataTables.bootstrap.min.css" />
     <Content Include="Content\vendor\Datatables\media\css\dataTables.foundation.css" />

@@ -48,10 +48,7 @@ AcervaApp.Layout = function () {
         if (!(AcervaApp.FlashMessage == undefined)) {
             AcervaApp.FlashMessage.showFromCookie();
         }
-
-        if ($.fn.dataTable)
-            $.fn.dataTable.Buttons.swfPath =  p.pathSwfDataTablesDataTools;
-
+        
         permiteApenasTabNosGroupButtonsDeRadioButtonsOuCheckBoxes();
         configuraLocalePtBr();
 
@@ -191,10 +188,6 @@ AcervaApp.Layout = function () {
             .removeClass('display')
             .addClass('table table-striped table-bordered table-condensed hover')
             .DataTable(settings);
-
-        if (settings.exporting) {
-            configuraBotoesExportacao(table);
-        }
 
         if (settings.multifiltering) {
             configuraMultifiltering(table);
@@ -489,66 +482,7 @@ AcervaApp.Layout = function () {
         if (typeof moment !== "undefined")
             moment.locale("pt-BR");
     }
-
-    function configuraBotoesExportacao(table) {
-        if (!$.fn.DataTable.TableTools)
-            return;
-
-        $.extend(true, $.fn.DataTable.TableTools.classes, {
-            "container": "DTTT btn-group pull-right",
-            "buttons": { "normal": "btn btn-default btn-sm" },
-            "print": { "info": "DTTT_print_info" }
-        });
-
-        $.extend(true, $.fn.DataTable.TableTools.buttons, {
-            "copy": {
-                sButtonText: "Copiar",
-                sToolTip: "Copiar para área de transferência",
-
-                // http://datatables.net/forums/discussion/5485/translation-copied-xyz-rows-to-the-clipboard
-                fnComplete: function (nButton, oConfig, flash, text) {
-                    var lines = text.split('\n').length;
-                    if (oConfig.bHeader) lines--;
-                    if (this.s.dt.nTFoot !== null && oConfig.bFooter) lines--;
-                    var plural = (lines === 1) ? "" : "s";
-                    this.fnInfo("<h6>Tabela copiada</h6>" +
-                        "<p>" + lines + " linha" + plural + " copiadas para a área de transferência do seu computador.</p>",
-                        1500
-                    );
-                }
-            },
-            "print": {
-                sButtonText: "Imprimir",
-                sToolTip: "Imprimir esta visão",
-                sInfo: "<h6>Visualização para impressão</h6><p>Por favor, utilize a funcionalidade de impressão do browser para " +
-                    "imprimir esta tabela. Pressione ESC após concluir.</p>"
-            }
-        });
-
-        var tableTools = new $.fn.dataTable.TableTools(table, { sSwfPath: AcervaApp.Layout.params.pathSwfDataTablesDataTools });
-        var tableId = table.attr("id");
-        var tableSelector = '#' + tableId;
-        $(tableTools.fnContainer()).insertAfter(tableSelector + '_filter');
-
-        // TableTools export not working in DataTables on multiple JQuery tabs
-        // http://stackoverflow.com/questions/8424253/tabletools-export-not-working-in-datatables-on-multiple-jquery-tabs
-        var $tabContent = $(".tab-pane:has(" + tableSelector + ")");
-        if ($tabContent.size() > 0) {
-            var idTab = $tabContent.attr("id");
-
-            // Bootstrap 3 jquery event for active tab change
-            // http://stackoverflow.com/questions/20705905/bootstrap-3-jquery-event-for-active-tab-change
-            $('a[data-toggle="tab"][href="#' + idTab + '"]').on('shown.bs.tab', function () {
-                var tableInstances = TableTools.fnGetMasters();
-                var tableInstance = _.head(_(tableInstances).filter(function (ti) { return ti.dom.table.id === tableId; }).value());
-
-                if (tableInstance && tableInstance.fnResizeRequired()) {
-                    tableInstance.fnResizeButtons();
-                }
-            });
-        }
-    }
-
+    
     function configuraMultifiltering(table) {
         if (table.find(".campoFiltroColunaDataTable").size() > 0) {
             return;

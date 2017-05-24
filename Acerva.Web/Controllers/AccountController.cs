@@ -217,6 +217,9 @@ namespace Acerva.Web.Controllers
                 return View(usuarioViewModel);
 
             var ehNovo = string.IsNullOrEmpty(usuarioViewModel.Id);
+
+            usuarioViewModel.Email = usuarioViewModel.Email.Trim();
+
             var usuarioBd = _cadastroUsuarios.BuscaPeloEmail(usuarioViewModel.Email);
             if (usuarioBd != null && (ehNovo || usuarioBd.Id != usuarioViewModel.Id))
             {

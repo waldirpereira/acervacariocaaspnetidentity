@@ -6,6 +6,26 @@ namespace Acerva.Infra.Web
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     public class ModelBinder : DefaultModelBinder
     {
+        protected override void SetProperty(ControllerContext controllerContext, ModelBindingContext bindingContext,
+            System.ComponentModel.PropertyDescriptor propertyDescriptor, object value)
+        {
+            if (propertyDescriptor.PropertyType == typeof(string))
+            {
+                var stringValue = (string)value;
+                if (!string.IsNullOrWhiteSpace(stringValue))
+                {
+                    value = stringValue.Trim();
+                }
+                else
+                {
+                    value = null;
+                }
+            }
+
+            base.SetProperty(controllerContext, bindingContext,
+                                propertyDescriptor, value);
+        }
+
         public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
             if (!EhTipoDefinidoNoAcerva(bindingContext) || bindingContext.ModelMetadata.ContainerType == null)

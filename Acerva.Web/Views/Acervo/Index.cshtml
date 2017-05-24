@@ -26,7 +26,7 @@
                 </ul>
             </div>
             <div class="col-sm-9">
-                <div ng-if="ctrl.categoriaSelecionada">
+                <div ng-if="ctrl.categoriaSelecionada" class="lista-artigos">
                     <!-- LISTA DE ARTIGOS -->
                     <h4 ng-if="ctrl.status.carregandoArtigos || ctrl.status.carregandoArtigo">Carregando...</h4>
                     <ul ng-if="ctrl.listaArtigosPorCategoria[ctrl.categoriaSelecionada.codigo].length > 0 && !ctrl.artigo && !ctrl.status.carregandoArtigo">

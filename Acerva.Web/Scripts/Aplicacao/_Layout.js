@@ -491,12 +491,17 @@ AcervaApp.Layout = function () {
         var datatable = table.DataTable();
         var tr = $("<tr />");
         _.forEach(table.find("thead tr th"), function (th, indice) {
+            var hasHideClass = $(th).hasClass("hide");
+            var hasHiddenClass = $(th).hasClass("hidden");
             var title = $(th).text();
             var value = datatable
                 .column(indice)
                 .search();
             var input = title.trim() !== "" ? '<input type="text" class="campoFiltroColunaDataTable" placeholder="' + title + '" value="' + value + '"/>' : '';
-            tr.append($("<th />").html(input));
+            var filterCell = $("<th />").html(input);
+            hasHideClass && filterCell.addClass("hide");
+            hasHiddenClass && filterCell.addClass("hidden");
+            tr.append(filterCell);
         });
 
         table.find("thead").append(tr);

@@ -713,14 +713,9 @@ namespace Acerva.Web.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
                 case SignInStatus.Failure:
                 default:
-                    var identity = AuthenticationManager.GetExternalIdentity(DefaultAuthenticationTypes.ExternalCookie);
-                    var accessToken = identity.FindFirstValue("FacebookAccessToken");
-                    if (accessToken != null)
+                    if (!string.IsNullOrEmpty(loginInfo.Email))
                     {
-                        var fb = new FacebookClient(accessToken);
-                        dynamic myInfo = fb.Get("/me?fields=email"); // specify the email field    
-
-                        var user = await UserManager.FindByNameAsync(myInfo.email);
+                        var user = await UserManager.FindByNameAsync(loginInfo.Email);
                         if (user != null)
                         {
                             var addLoginResult = await UserManager.AddLoginAsync(user.Id, loginInfo.Login);

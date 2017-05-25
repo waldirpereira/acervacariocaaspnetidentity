@@ -95,7 +95,7 @@ namespace Acerva.Web
             ScriptsVendorFolder + "jszip/jszip.js",
             ScriptsVendorFolder + "DataTables/buttons.html5.js"
         };
-        
+
         private static readonly string[] AngularUi =
         {
             ScriptsVendorFolder + "angular-ui/ui-bootstrap.js",
@@ -116,6 +116,7 @@ namespace Acerva.Web
         };
 
 
+        private const string BootstrapSocialButton = StylesVendorFolder + "social-button/bootstrap-social.css";
         private const string JQueryDatatablesCss = StylesVendorFolder + "DataTables/media/css/dataTables.bootstrap.css";
         private const string JQueryDatatablesButtonsSwf = StylesVendorFolder + "DataTables/media/sfw/flashExport.swf";
         private const string BootstrapDatepickerCss = StylesVendorFolder + "bootstrap-datepicker/bootstrap-datepicker.css";
@@ -488,6 +489,11 @@ namespace Acerva.Web
                 .Include(path + "acerva.inicio.module.js")
                 .Include(path + "acerva.inicio.service.js")
                 .Include(path + "acerva.inicio.controller.js")
+            );
+
+            bundles.Add(new LessBundle("~/cssBundles/inicio")
+                .Include(FontAwesomeCss)
+                .Include(BootstrapSocialButton)
             );
         }
 

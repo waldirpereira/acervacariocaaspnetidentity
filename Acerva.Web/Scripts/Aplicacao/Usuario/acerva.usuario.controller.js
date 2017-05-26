@@ -29,14 +29,13 @@
         ctrl.buscaCancelados = buscaCancelados;
         ctrl.mudaFiltroStatus = mudaFiltroStatus;
         ctrl.abreJanelaSelecaoEmails = abreJanelaSelecaoEmails;
-        ctrl.alteraSelecao = alteraSelecao;
         ctrl.estaFiltradoPorStatus = estaFiltradoPorStatus;
         ctrl.confirmaPagamentoSelecionados = confirmaPagamentoSelecionados;
         ctrl.cobrancaGeradaSelecionados = cobrancaGeradaSelecionados;
         ctrl.enviaEmailBoasVindasNaListaSelecionados = enviaEmailBoasVindasNaListaSelecionados;
         ctrl.montaMensagemConfirmacaoOperacaoLote = montaMensagemConfirmacaoOperacaoLote;
         ctrl.getLabelStatusClass = getLabelStatusClass;
-
+        
         ctrl.dtOptions = DTOptionsBuilder.newOptions()
             .withOption('order', [2, 'asc'])
             .withOption('lengthMenu', [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]])
@@ -99,7 +98,8 @@
             if (!ctrl.todosFiltrados)
                 return;
 
-            ctrl.usuariosFiltrados.forEach(function (usuario) { alteraSelecao(usuario.id) });
+            ctrl.usuariosFiltrados
+                .forEach(function (usuario) { ctrl.usuariosSelecionados[usuario.id] = true; });
         }
 
         function abreJanelaSelecaoEmails() {
@@ -136,9 +136,8 @@
                     return arrEmails.indexOf(usuario.email) >= 0;
                 })
                 .map(function (usuario) {
-                    return usuario.id;
-                })
-                .map(alteraSelecao);
+                    ctrl.usuariosSelecionados[usuario.id] = true;
+                });
         }
 
         function mudaFiltroStatus(status) {
@@ -184,16 +183,6 @@
             }
         }
 
-        function alteraSelecao(userId) {
-            var indexOfUserId = ctrl.usuariosSelecionados.indexOf(userId);
-            if (indexOfUserId < 0) {
-                ctrl.usuariosSelecionados.push(userId);
-                ctrl.usuariosSelecionados[userId] = true;
-                return;
-            }
-            ctrl.usuariosSelecionados.splice(indexOfUserId, 1);
-        }
-
         function confirmaPagamentoSelecionados() {
             processaOperacoesEmLoteParaStatusEspecifico([
                 ctrl.dominio.statusUsuario.aguardandoPagamentoAnuidade,
@@ -217,7 +206,7 @@
         function processaOperacoesEmLoteParaStatusEspecifico(arrStatus, metodoNoService) {
             var codigosBdStatus = arrStatus.map(function (status) { return status.codigoBd; });
             var usuariosSelecionadosComStatus = ctrl.listaUsuarios
-                .filter(function (usuario) { return codigosBdStatus.indexOf(usuario.status.codigoBd) >= 0 && ctrl.usuariosSelecionados.indexOf(usuario.id) >= 0; });
+                .filter(function (usuario) { return codigosBdStatus.indexOf(usuario.status.codigoBd) >= 0 && ctrl.usuariosSelecionados[usuario.id]; });
 
             if (usuariosSelecionadosComStatus.length === 0)
                 return;
@@ -226,7 +215,9 @@
                 .map(function (usuario) { return usuario.id; });
 
             metodoNoService(idsUsuarios)
-                .then(function () { })
+                .then(function() {
+                    ctrl.usuariosSelecionados = [];
+                })
                 .finally(function () {
                     atualizaListaUsuarios();
                 });
@@ -258,7 +249,7 @@
         function montaMensagemConfirmacaoOperacaoLote(pergunta) {
             var usuariosSelecionados = ctrl.usuariosFiltrados
                 .filter(function (usuario) {
-                    return ctrl.usuariosSelecionados.indexOf(usuario.id) >= 0;
+                    return ctrl.usuariosSelecionados[usuario.id];
                 })
                 .map(function (usuario) {
                     return {
@@ -272,10 +263,10 @@
 
                 listaUsuarios = "<br/><br/><ul><li>"
                     + usuariosSelecionados
-                    .map(function (usuario) {
-                        return usuario.name + " <span class='label " + getLabelStatusClass(usuario.status) + "'>" + usuario.status.nomeExibicao + "</span>";
-                    })
-                    .join("</li><li>")
+                        .map(function (usuario) {
+                            return usuario.name + " <span class='label " + getLabelStatusClass(usuario.status) + "'>" + usuario.status.nomeExibicao + "</span>";
+                        })
+                        .join("</li><li>")
                     + "</li></ul>";
             }
 

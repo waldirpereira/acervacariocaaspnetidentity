@@ -48,8 +48,7 @@
 
                     <td class="text-center">
                         <input type="checkbox"
-                               ng-model="listaCtrl.usuariosSelecionados[m.id]"
-                               ng-change="listaCtrl.alteraSelecao(m.id);"/>
+                               ng-model="listaCtrl.usuariosSelecionados[m.id]" />
                     </td>
                     <td class="remove-html-and-content-on-exporting">
                         <span class="hidden">{{("00000"+m.matricula).slice(-6)}}</span>
@@ -136,7 +135,7 @@
                            acerva-confirm
                            confirm-action="listaCtrl.enviaEmailBoasVindasNaListaSelecionados()"
                            confirm-window-type="success"
-                           confirm-text="Confirma envio de e-mail de boas vindas na lista (COCECA) para os associados selecionados?">Enviar e-mail de boas vindas no COCECA</a>
+                           confirm-text="{{listaCtrl.montaMensagemConfirmacaoOperacaoLote('Confirma envio de e-mail de boas vindas na lista (COCECA) para os %QUANTIDADE% associados selecionados?');}}">Enviar e-mail de boas vindas no COCECA</a>
                     </span>
                     <a class="btn btn-default"
                        ng-click="listaCtrl.abreJanelaSelecaoEmails()">Seleção por e-mails</a>

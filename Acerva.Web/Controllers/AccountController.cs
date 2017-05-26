@@ -624,6 +624,9 @@ namespace Acerva.Web.Controllers
         [AllowAnonymous]
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
+            if (ControllerContext.HttpContext.Session != null)
+                ControllerContext.HttpContext.Session.RemoveAll();
+
             // Request a redirect to the external login provider
             return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
         }

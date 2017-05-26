@@ -1,7 +1,6 @@
 using System.Reflection;
 using System.Security.Principal;
 using Acerva.Infra.Repositorios;
-using Acerva.Modelo;
 using Acerva.Modelo.Mapeamento;
 using Acerva.Modelo.Validadores;
 using Acerva.Web.App_Start;
@@ -9,7 +8,6 @@ using Acerva.Web.Controllers.Helpers;
 using Acerva.Web.Ninject;
 using FluentNHibernate.Cfg;
 using FluentValidation;
-using Hangfire;
 using log4net;
 using NHibernate;
 using Ninject;
@@ -56,9 +54,7 @@ namespace Acerva.Web.App_Start
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
 
                 RegisterServices(kernel);
-
-                GlobalConfiguration.Configuration.UseNinjectActivator(kernel);
-
+                
                 return kernel;
             }
             catch

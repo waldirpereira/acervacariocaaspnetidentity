@@ -9,19 +9,24 @@
 
 <script type="text/ng-template" id="index.html">
     <div class="animate-show-only">
-        <div class="row">
-            <div class="col-sm-12" style="padding-left: 0;">
-                <ul class=" list-group" style="list-style: none;">
-                    <li class="list-group-item"
-                        ng-repeat="regional in ctrl.listaRegionais">
-                        <h4 class="titulo text-primary" style="margin-top: 0;">{{regional.nome}}</h4>
-                        <img style="display: block; max-height: 100px; margin-bottom: 10px;"
+        <div class="row" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: flex-start; align-items: stretch;">
+
+            <div class="col-xs-12 col-sm-4 col-md-3 cartao-regional"
+                 ng-repeat="regional in ctrl.listaRegionais">
+                <div class="thumbnail">
+                    <div class="text-center cartao-regional-logo">
+                        <span class="cartao-regional-logo-helper"></span>
+                        <img 
                              ng-if="regional.nomeArquivoLogo"
-                             ng-src="@Url.Content("~/Content/Aplicacao/images/regionais/"){{regional.codigo}}/{{regional.nomeArquivoLogo}}"  />
-                        <span ng-bind-html="regional.textoHtml"></span>
-                    </li>
-                </ul>
+                             ng-src="@Url.Content("~/Content/Aplicacao/images/regionais/"){{regional.codigo}}/{{regional.nomeArquivoLogo}}" />
+                    </div>
+                    <div class="caption cartao-regional-texto">
+                        <h3 class="titulo text-primary"><strong>{{regional.nome}}</strong></h3>
+                        <p><span ng-bind-html="regional.textoHtml"></span></p>
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
 </script>

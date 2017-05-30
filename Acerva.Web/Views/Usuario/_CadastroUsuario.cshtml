@@ -112,7 +112,7 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.usuarioIndicacao")>
-                                            <label class="control-label" for="usuarioIndicacao">Associado que indicou</label>
+                                            <label class="control-label" for="usuarioIndicacao">Associado que indicou <i class="glyphicon glyphicon-question-sign" style="cursor: help;" title="É necessário informar algum associado ativo para se associar. Caso já seja associado e não lembre qual associado te indicou, favor informar o associado que você conhece há mais tempo."></i></label>
                                             <div class="input-group">
                                                 <input type="text" name="usuarioIndicacao" id="usuarioIndicacao" class="form-control"
                                                        autocomplete="off"
@@ -143,12 +143,12 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-12"
-                                         ng-if="ctrl.tipoCadastro !== 'registro'">
+                                         ng-if="ctrl.tipoCadastro !== 'registro' && (ctrl.modelo.indicacaoLegado || ctrl.tipoCadastro !== 'meusdados')">
                                         <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.indicacaoLegado")>
-                                            <label class="control-label" for="indicacaoLegado">Indicação (legado)</label>
+                                            <label class="control-label" for="indicacaoLegado">Associado que indicou (importado da planilha) <i class="glyphicon glyphicon-question-sign" style="cursor: help;" title="Este campo só se torna obrigatório em cadastros antigos, em que não há (ainda) o campo 'Usuário que indicou' preenchido"></i></label>
                                             <input type="text" class="form-control" name="indicacaoLegado" autocomplete="off"
-                                                   ng-required="ctrl.modelo.matricula !== 'FUNDADOR' && !ctrl.modelo.usuarioIndicacao"
-                                                   ng-disabled="ctrl.modelo.matricula !== 'FUNDADOR' && ctrl.modelo.usuarioIndicacao"
+                                                   ng-required="ctrl.modelo.matricula !== 'FUNDADOR' && !ctrl.modelo.usuarioIndicacao && ctrl.tipoCadastro !== 'meusdados'"
+                                                   ng-disabled="(ctrl.modelo.matricula !== 'FUNDADOR' && ctrl.modelo.usuarioIndicacao) || ctrl.tipoCadastro === 'meusdados'"
                                                    ng-model="ctrl.modelo.indicacaoLegado" />
                                         </div>
                                     </div>

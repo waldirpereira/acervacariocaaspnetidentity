@@ -69,7 +69,7 @@ namespace Acerva.Web.Controllers
             var usuarioLogadoBd = usuarioLogado.Identity.IsAuthenticated ? _cadastroUsuarios.Busca(usuarioLogado.Identity.GetUserId()) : null;
             var usuarioLogadoEhAdmin = usuarioLogado.IsInRole("ADMIN");
             var usuarioLogadoEhDiretor = usuarioLogado.IsInRole("DIRETOR");
-            
+
             // é delegado (só visualiza associados de sua regional)
             if (!usuarioLogadoEhAdmin && !usuarioLogadoEhDiretor)
             {
@@ -176,7 +176,7 @@ namespace Acerva.Web.Controllers
 
             return new JsonNetResult(new { growlMessage });
         }
-        
+
         [HttpPost]
         [ValidateAjaxAntiForgeryToken]
         [AcervaAuthorize(Roles = "ADMIN, DIRETOR, DELEGADO")]
@@ -227,13 +227,18 @@ namespace Acerva.Web.Controllers
 
             if (enviaEmailBoasVindas)
             {
-                await EnviaEmailParaAdministrativoIncluirNoCoceca(usuario);
-                await EnviaEmailParaDelegadosDaRegional(usuario);
+                await EnviaEmailParaAdministrativo($"Adicionar ao COCECA: {usuario.Email}",
+                    $"Olá Administrativo,<br/><br/>A pessoa {usuario.Name} acabou de se tornar ATIVA. Favor adicioná-la ao COCECA!");
+
+                var mensagemDelegado = "Olá delegado,<br/><br/>" +
+                                       $"A pessoa '{usuario.Name}' (e-mail: {usuario.Email} - celular: {usuario.PhoneNumber}) acabou de se tornar associada!";
+                await EnviaEmailParaDelegadosDaRegional(usuario, mensagemDelegado,
+                    $"ACervA Carioca - novo associado: {usuario.Name}({usuario.Email})");
                 await EnviaEmailDeBoasVindas(usuario);
             }
 
             await UserManager.SendEmailAsync(usuario.Id, "ACervA Carioca - Pagamento confirmado", string.Format("Olá {0},<br/><br/>" +
-                                 "Acabamos de confirmar que o seu pagamento foi realizado.<br/>"+
+                                 "Acabamos de confirmar que o seu pagamento foi realizado.<br/>" +
                                  "Você agora é um(a) associado(a) ativo(a) na ACervA Carioca.<br/><br/>Muito obrigado!", usuario.Name));
 
             _cadastroUsuarios.Atualiza(usuario);
@@ -253,26 +258,21 @@ namespace Acerva.Web.Controllers
             await UserManager.SendEmailAsync(usuario.Id, "Bem-vindo à ACervA Carioca", mensagemBoasVindas);
         }
 
-        private async Task EnviaEmailParaAdministrativoIncluirNoCoceca(Usuario usuario)
+        private async Task EnviaEmailParaAdministrativo(string mensagem, string titulo)
         {
-            var mensagem = string.Format("Olá Administrativo,<br/><br/>" +
-                                             "A pessoa {0} acabou de se tornar ATIVA. Favor adicioná-la ao COCECA!", usuario.Name);
-
             var identityMessage = new IdentityMessage
             {
                 Destination = "administrativo@acervacarioca.com.br",
-                Subject = string.Format("Adicionar ao COCECA: {0}", usuario.Email),
+                Subject = titulo,
                 Body = mensagem
             };
 
             await UserManager.EmailService.SendAsync(identityMessage);
         }
 
-        private async Task EnviaEmailParaDelegadosDaRegional(Usuario usuario)
+        private async Task EnviaEmailParaDelegadosDaRegional(Usuario usuario, string mensagem, string titulo)
         {
-            var mensagem = string.Format("Olá delegado,<br/><br/>" +
-                                             "A pessoa '{0}' ({1}) acabou de se tornar associada!", usuario.Name, usuario.Email);
-
+            
             var delegados = _cadastroUsuarios.BuscaDelegadosDaRegional(usuario.Regional.Codigo).ToList();
 
             delegados.ForEach(async d =>
@@ -280,7 +280,7 @@ namespace Acerva.Web.Controllers
                 var identityMessage = new IdentityMessage
                 {
                     Destination = d.Email,
-                    Subject = string.Format("ACervA Carioca - novo associado: {0}({1})", usuario.Name, usuario.Email),
+                    Subject = titulo,
                     Body = mensagem
                 };
 
@@ -296,7 +296,7 @@ namespace Acerva.Web.Controllers
         {
             var listaIdsUsuarios = idsUsuarios.ToList();
             Log.InfoFormat("Usuário está confirmando pagamento de anuidade dos associados de códigos {0}",
-                listaIdsUsuarios.Aggregate((x, y)=> x + ", " + y));
+                listaIdsUsuarios.Aggregate((x, y) => x + ", " + y));
 
             foreach (var userId in listaIdsUsuarios)
             {
@@ -309,7 +309,7 @@ namespace Acerva.Web.Controllers
 
                 await ProcessaConfirmacaoPagamentoUsuario(usuario);
             }
-            
+
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associados tiveram seus pagamentos confirmados com sucesso", "Pagamentos confirmados");
             return new JsonNetResult(new { growlMessage });
         }
@@ -322,7 +322,7 @@ namespace Acerva.Web.Controllers
         {
             var listaIdsUsuarios = idsUsuarios.ToList();
             Log.InfoFormat("Usuário está enviando e-mail de boas vindas no COCECA para os associados de códigos {0}",
-                listaIdsUsuarios.Aggregate((x, y)=> x + ", " + y));
+                listaIdsUsuarios.Aggregate((x, y) => x + ", " + y));
 
             var emailBoasVindasNaLista = "A ACervA Carioca dá as boas-vindas aos novos associados:<br /><br /><ul>";
 
@@ -366,7 +366,7 @@ namespace Acerva.Web.Controllers
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associados foram incluídos no e-mail de boas vindas na lista (COCECA) com sucesso!", "E-mail de boas vindas enviado com sucesso!");
             return new JsonNetResult(new { growlMessage });
         }
-        
+
         [Transacao]
         [HttpPost]
         [ValidateAjaxAntiForgeryToken]
@@ -384,7 +384,7 @@ namespace Acerva.Web.Controllers
                 return RetornaJsonDeAlerta(string.Format("Associado {0} não está ativo ou novo!", usuario.Name));
             }
 
-            usuario.Status = usuario.Status == StatusUsuario.Ativo ? StatusUsuario.AguardandoRenovacao :  StatusUsuario.AguardandoPagamentoAnuidade;
+            usuario.Status = usuario.Status == StatusUsuario.Ativo ? StatusUsuario.AguardandoRenovacao : StatusUsuario.AguardandoPagamentoAnuidade;
 
             await UserManager.SendEmailAsync(usuario.Id, "ACervA Carioca - Cobrança gerada", string.Format("Olá {0},<br/><br/>" +
                                  "Acabamos de gerar uma cobrança em seu nome.<br/>" +
@@ -437,11 +437,24 @@ namespace Acerva.Web.Controllers
             var usuario = _cadastroUsuarios.Busca(usuarioViewModel.Id);
             usuario.Status = StatusUsuario.Cancelado;
 
-            await UserManager.SendEmailAsync(usuario.Id, "ACervA Carioca - Cancelamento", string.Format("Olá {0},<br/><br/>" +
-                                 "Seu status agora é {1} na ACervA Carioca.", usuario.Name, NomeExibicaoAttribute.GetNome(usuario.Status)));
+            await ProcessaCancelamentoUsuario(usuario);
 
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associado cancelado com sucesso", "Cancelamento confirmado");
             return new JsonNetResult(new { growlMessage });
+        }
+
+        private async Task ProcessaCancelamentoUsuario(Usuario usuario)
+        {
+            await EnviaEmailParaAdministrativo($"Olá Administrativo,<br/><br/>A pessoa {usuario.Name} acabou de se tornar CANCELADA. Favor removê-la ao COCECA!",
+                $"Retirar do COCECA: {usuario.Email}");
+
+            var mensagemDelegado = "Olá delegado,<br/><br/>" +
+                                       $"A pessoa '{usuario.Name}' (e-mail: {usuario.Email} - celular: {usuario.PhoneNumber}) acabou de ser CANCELADA!";
+            await EnviaEmailParaDelegadosDaRegional(usuario, mensagemDelegado,
+                    $"ACervA Carioca - cancelamento de associado: {usuario.Name}({usuario.Email} - {usuario.PhoneNumber})");
+
+            await UserManager.SendEmailAsync(usuario.Id, "ACervA Carioca - Cancelamento", string.Format("Olá {0},<br/><br/>" +
+                                 "Seu status agora é {1} na ACervA Carioca.", usuario.Name, NomeExibicaoAttribute.GetNome(usuario.Status)));
         }
 
         [Transacao]
@@ -538,7 +551,7 @@ namespace Acerva.Web.Controllers
 
             usuario.Status = StatusUsuario.AguardandoConfirmacaoEmail;
             usuario.EmailConfirmed = false;
-            
+
             await UserManager.SendEmailAsync(usuario.Id, "ACervA Carioca - Retorno para status ag. confirmação de e-mail", string.Format("Olá {0},<br/><br/>" +
                                  "Seu status agora é {1} na ACervA Carioca.", usuario.Name, NomeExibicaoAttribute.GetNome(usuario.Status)));
 
@@ -568,7 +581,7 @@ namespace Acerva.Web.Controllers
 
             usuario.IndicacaoHash = codigoConfirmacaoIndicacao;
             usuario.Status = StatusUsuario.AguardandoIndicacao;
-            
+
             await UserManager.SendEmailAsync(usuario.Id, "ACervA Carioca - Retorno para status ag. indicação", string.Format("Olá {0},<br/><br/>" +
                                  "Seu status agora é {1} na ACervA Carioca.", usuario.Name, NomeExibicaoAttribute.GetNome(usuario.Status)));
 
@@ -607,7 +620,7 @@ namespace Acerva.Web.Controllers
             var listaHistoricoJson = _cadastroUsuarios.BuscaHistoricoStatus(id)
                 .OrderBy(h => h.DataHora)
                 .Select(Mapper.Map<HistoricoStatusUsuarioViewModel>);
-            
+
             return new JsonNetResult(listaHistoricoJson);
         }
     }

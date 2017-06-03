@@ -227,8 +227,8 @@ namespace Acerva.Web.Controllers
 
             if (enviaEmailBoasVindas)
             {
-                await EnviaEmailParaAdministrativo($"Adicionar ao COCECA: {usuario.Email}",
-                    $"Olá Administrativo,<br/><br/>A pessoa {usuario.Name} acabou de se tornar ATIVA. Favor adicioná-la ao COCECA!");
+                await EnviaEmailParaAdministrativo($"Olá Administrativo,<br/><br/>A pessoa {usuario.Name} acabou de se tornar ATIVA. Favor adicioná-la ao COCECA!",
+                    $"Adicionar ao COCECA: {usuario.Email}");
 
                 var mensagemDelegado = "Olá delegado,<br/><br/>" +
                                        $"A pessoa '{usuario.Name}' (e-mail: {usuario.Email} - celular: {usuario.PhoneNumber}) acabou de se tornar associada!";

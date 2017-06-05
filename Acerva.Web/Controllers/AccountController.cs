@@ -237,6 +237,7 @@ namespace Acerva.Web.Controllers
                 usuario.PasswordHash = UserManager.PasswordHasher.HashPassword(usuarioViewModel.Password);
                 usuario.SecurityStamp = Guid.NewGuid().ToString();
                 usuario.Status = StatusUsuario.AguardandoConfirmacaoEmail;
+                usuario.EmailBoasVindasListaEnviado = false;
             }
 
             var validacao = _validator.Validate(usuario);

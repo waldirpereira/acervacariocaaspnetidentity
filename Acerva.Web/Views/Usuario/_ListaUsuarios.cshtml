@@ -2,8 +2,8 @@
     <div class="panel-heading">Associados</div>
     <div class="panel-body">
         <fieldset ng-disabled="listaCtrl.status.carregando">
-            <div class="row" style="margin-bottom: 15px;">
-                <div class="col-sm-12">
+            <div class="row" style="margin-bottom: 15px; margin-left: -15px;">
+                <div class="col-sm-12" style="margin-bottom: 5px;">
                     <input type="checkbox" ng-model="listaCtrl.canceladosCarregados" ng-change="listaCtrl.buscaCancelados()" /> Carregar cancelados
                 </div>
                 <div class="col-sm-12">
@@ -25,7 +25,9 @@
             <table id="tabelaUsuarios"
                    datatable="ng" dt-disable-deep-watchers="true"
                    dt-options="listaCtrl.dtOptions"
-                   dt-multifiltering="multifiltering" class="table table-bordered table-striped table-responsive table-hover table-condensed">
+                   dt-multifiltering="multifiltering"
+                   dt-instance="listaCtrl.tabelaUsuariosDTInstance"
+                   class="table table-bordered table-striped table-responsive table-hover table-condensed">
                 <thead>
                 <tr>
                     <th class="sorting_disabled text-center ignore-on-exporting" style="width: 30px; padding-right: 0;">
@@ -37,7 +39,7 @@
                     <th style="width: 60px;">Status</th>
                     <th style="width: 80px;">Regional</th>
                     <th style="width: 80px;">Papéis</th>
-                    <th class="ignore-on-exporting" style="width: 40px;" title="E-mail de boas vindas enviado à lista">Bem-vindo</th>
+                    <th class="ignore-on-exporting" style="width: 45px;" title="E-mail de boas vindas enviado à lista COCECA">coceca</th>
                     <th class="hide">Telefone</th>
                     <th class="sorting_disabled ignore-on-exporting" style="width: 40px;"></th>
                 </tr>
@@ -117,31 +119,28 @@
                     <!-- FUNCOES QUE APENAS DIRETORES PODEM EXECUTAR -->
                     <span ng-if="(listaCtrl.dominio.usuarioLogadoEhAdmin || listaCtrl.dominio.usuarioLogadoEhDiretor)">
                         <a class="btn btn-success"
-                           ng-if="(listaCtrl.filtroStatus.length === 1 && (listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade) || listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.aguardandoRenovacao))) || 
-                                    (listaCtrl.filtroStatus.length === 2 && (listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade) && listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.aguardandoRenovacao)))"
                            acerva-confirm
                            confirm-action="listaCtrl.confirmaPagamentoSelecionados()"
                            confirm-window-type="success"
-                           confirm-text="{{listaCtrl.montaMensagemConfirmacaoOperacaoLote('Confirma que os %QUANTIDADE% associados selecionados realizaram pagamento?');}}">Confirmar pagamento para selecionados</a>
+                           confirm-text="{{listaCtrl.montaMensagemConfirmacaoOperacaoLote([listaCtrl.dominio.statusUsuario.aguardandoRenovacao, listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade], 'Confirma que os %QUANTIDADE% associados selecionados (com status Ag. Pagamento ou Ag. Renovação) realizaram pagamento?');}}">Confirmar pagto.</a>
+                        
                         <a class="btn btn-primary"
-                           ng-if="(listaCtrl.filtroStatus.length === 1 && (listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.ativo) || listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.novo))) || 
-                                    (listaCtrl.filtroStatus.length === 2 && (listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.ativo) && listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.novo)))"
                            acerva-confirm
                            confirm-action="listaCtrl.cobrancaGeradaSelecionados()"
                            confirm-window-type="success"
-                           confirm-text="{{listaCtrl.montaMensagemConfirmacaoOperacaoLote('Confirma que as cobranças foram geradas para os %QUANTIDADE% associados selecionados?');}}">Cobrança gerada para selecionados</a>
+                           confirm-text="{{listaCtrl.montaMensagemConfirmacaoOperacaoLote([listaCtrl.dominio.statusUsuario.ativo, listaCtrl.dominio.statusUsuario.novo], 'Confirma que as cobranças foram geradas para os %QUANTIDADE% associados selecionados (com status Novo ou Ativo)?');}}">Cobrança gerada</a>
+                        
                         <a class="btn btn-primary"
-                           ng-if="listaCtrl.filtroStatus.length === 1 && listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.ativo)"
                            acerva-confirm
                            confirm-action="listaCtrl.enviaEmailBoasVindasNaListaSelecionados()"
                            confirm-window-type="success"
-                           confirm-text="{{listaCtrl.montaMensagemConfirmacaoOperacaoLote('Confirma envio de e-mail de boas vindas na lista (COCECA) para os %QUANTIDADE% associados selecionados?');}}">Enviar e-mail de boas vindas no COCECA</a>
+                           confirm-text="{{listaCtrl.montaMensagemConfirmacaoOperacaoLote([listaCtrl.dominio.statusUsuario.ativo], 'Confirma envio de e-mail de boas vindas na lista (COCECA) para os %QUANTIDADE% associados selecionados (com status Ativo e que ainda não tenham constado em nenhum e-mail de boas vindas no COCECA)?');}}">Enviar boas-vindas COCECA</a>
                     </span>
                     <a class="btn btn-default"
                        ng-click="listaCtrl.abreJanelaSelecaoEmails()">Seleção por e-mails</a>
                 </div>
                 <div class="pull-right">
-                    <a class="btn btn-primary" href="#/Create">Novo associado</a>
+                    <a class="btn btn-primary" href="#/Create">Incluir</a>
                 </div>
             </div>
         </div>

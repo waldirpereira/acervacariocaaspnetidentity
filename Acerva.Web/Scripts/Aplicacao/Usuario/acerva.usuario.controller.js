@@ -16,11 +16,14 @@
         ctrl.todosFiltrados = false;
         ctrl.canceladosCarregados = false;
 
+        ctrl.tabelaUsuariosDTInstance = {};
+
         ctrl.dominio = {
             statusUsuario: ENUMS.statusUsuario
         };
 
         var filtroStatusKey = "usuario.filtroStatus";
+        var canceladosCarregadosKey = "usuario.canceladosCarregados";
         ctrl.filtroStatus = [];
 
         atualizaFiltrosDaLocalStorage();
@@ -73,7 +76,8 @@
         }
 
         function atualizaListaUsuarios(incluiCancelados) {
-            if (!incluiCancelados) incluiCancelados = false;
+            atualizaFiltrosDaLocalStorage();
+            incluiCancelados = !!incluiCancelados || ctrl.canceladosCarregados;
             ctrl.status.carregando = true;
             return Usuario.buscaListaUsuarios(incluiCancelados).then(function (listaUsuarios) {
                 ctrl.status.carregando = false;
@@ -86,10 +90,9 @@
             if (!ctrl.canceladosCarregados) {
                 ctrl.listaUsuarios = ctrl.listaUsuarios.filter(function (u) { return u.status.codigoBd !== ctrl.dominio.statusUsuario.cancelado.codigoBd; });
                 ctrl.filtroStatus = ctrl.filtroStatus.filter(function (f) { return f.codigoBd !== ctrl.dominio.statusUsuario.cancelado.codigoBd; });
-                atualizaFiltrosNaLocalStorage();
-                return;
             }
 
+            atualizaFiltrosNaLocalStorage();
             return atualizaListaUsuarios(true);
         }
 
@@ -98,8 +101,18 @@
             if (!ctrl.todosFiltrados)
                 return;
 
+            var datatablesUsuarioData = ctrl.tabelaUsuariosDTInstance
+                && ctrl.tabelaUsuariosDTInstance.DataTable.data();
+
+            var indicesLinhasFiltradas = datatablesUsuarioData 
+                && datatablesUsuarioData.context[0]
+                && datatablesUsuarioData.context[0].aiDisplay;
+
             ctrl.usuariosFiltrados
-                .forEach(function (usuario) { ctrl.usuariosSelecionados[usuario.id] = true; });
+                .forEach(function (usuario, index) {
+                    if (indicesLinhasFiltradas.indexOf(index) < 0) return;
+                    ctrl.usuariosSelecionados[usuario.id] = true;
+                });
         }
 
         function abreJanelaSelecaoEmails() {
@@ -174,12 +187,14 @@
         function atualizaFiltrosDaLocalStorage() {
             if (localStorageService.isSupported) {
                 ctrl.filtroStatus = localStorageService.get(filtroStatusKey) || [ctrl.dominio.statusUsuario.ativo];
+                ctrl.canceladosCarregados = localStorageService.get(canceladosCarregadosKey) || false;
             }
         }
 
         function atualizaFiltrosNaLocalStorage() {
             if (localStorageService.isSupported) {
                 localStorageService.set(filtroStatusKey, ctrl.filtroStatus);
+                localStorageService.set(canceladosCarregadosKey, ctrl.canceladosCarregados);
             }
         }
 
@@ -246,10 +261,11 @@
             return cls;
         }
 
-        function montaMensagemConfirmacaoOperacaoLote(pergunta) {
+        function montaMensagemConfirmacaoOperacaoLote(arrayStatusParaFiltro, pergunta) {
+            var codigosBdStatus = arrayStatusParaFiltro.map(function (status) { return status.codigoBd; });
             var usuariosSelecionados = ctrl.usuariosFiltrados
                 .filter(function (usuario) {
-                    return ctrl.usuariosSelecionados[usuario.id];
+                    return ctrl.usuariosSelecionados[usuario.id] && codigosBdStatus.indexOf(usuario.status.codigoBd) >= 0;
                 })
                 .map(function (usuario) {
                     return {

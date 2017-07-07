@@ -6,7 +6,7 @@ namespace Acerva.Modelo
     public class Artigo
     {
         public const int TamanhoMaximoTitulo = 300;
-        public const int TamanhoMaximoTextoHtml = 20000;
+        public const int TamanhoMaximoTextoHtml = 80000;
 
         public const int CodigoArtigoBoasVindas = 1;
         public const int CodigoArtigoEstatuto = 2;

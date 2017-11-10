@@ -472,6 +472,16 @@ namespace Acerva.Web.Controllers
 
                 await SendDesignationEmail(usuarioHibernate, codigoConfirmacaoIndicacao);
 
+                _cadastroUsuarios.BeginTransaction();
+
+                usuarioHibernate.Status = StatusUsuario.AguardandoIndicacao;
+                usuarioHibernate.IndicacaoHash = codigoConfirmacaoIndicacao;
+                usuarioHibernate.EmailConfirmed = true;
+
+                _cadastroUsuarios.Atualiza(usuarioHibernate);
+
+                _cadastroUsuarios.Commit();
+
                 //email de retorno da situação para o usuário
                 var mensagem = string.Format("Olá {0},<br/><br/>" +
                                              "Você acabou de confirmar seu e-mail. A pessoa que você mencionou ter indicado ({1}) você acabou de receber um e-mail para que confirme a indicação.<br/>" +
@@ -491,6 +501,31 @@ namespace Acerva.Web.Controllers
         }
 
         [AllowAnonymous]
+        public async Task<ActionResult> ResendDesignationEmail(string userId)
+        {
+            if (userId == null)
+            {
+                ViewBag.errorMessage = "Identificador do associado não foi informado!";
+                return RetornaJsonDeRetorno("Erro ao reenviar e-mail de indicação", "Identificador do associado não foi informado!");
+            }
+
+            var usuarioHibernate = _cadastroUsuarios.Busca(userId);
+
+            if (usuarioHibernate.Status != StatusUsuario.AguardandoIndicacao)
+            {
+                ViewBag.errorMessage = "Pessoa não está aguardando indicação!";
+                return RetornaJsonDeRetorno("Erro ao reenviar e-mail de indicação", "Pessoa não está aguardando indicação.");
+            }
+
+            var codigoConfirmacaoIndicacao = await UserManager.GenerateUserTokenAsync("confirmacao", usuarioHibernate.Id);
+
+            await SendDesignationEmail(usuarioHibernate, codigoConfirmacaoIndicacao);
+
+            return RetornaJsonDeRetorno("E-mail reenviado com sucesso", "O e-mail de indicação foi reenviado com sucesso!",
+                    GrowlMessageSeverity.Success, JsonNetResult.HttpOk);
+        }
+
+        [AllowAnonymous]
         public async Task<ActionResult> EnviaEmailIndicacao(string userID, string codigoConfirmacaoIndicacao)
         {
             var usuario = _cadastroUsuarios.Busca(userID);
@@ -504,22 +539,10 @@ namespace Acerva.Web.Controllers
             return new JsonNetResult(new { growlMessage });
         }
 
-        private async Task SendDesignationEmail(Usuario usuario, string codigoConfirmacaoIndicacao)
+        public async Task SendDesignationEmail(Usuario usuario, string codigoConfirmacaoIndicacao)
         {
-            var callbackUrlConfirmacao = Url.Action("ConfirmDesignation", "Account",
-               new { userId = usuario.Id, code = codigoConfirmacaoIndicacao }, protocol: Request.Url.Scheme);
-
-            var callbackUrlRecusa = Url.Action("DenyDesignation", "Account",
-               new { userId = usuario.Id, code = codigoConfirmacaoIndicacao }, protocol: Request.Url.Scheme);
-
-            var mensagem = string.Format("Olá {0},<br/><br/>" +
-                                         "Recebemos um novo pedido de associação à ACervA Carioca, de {1}, da regional {2}. Esta pessoa mencionou ter sido indicada por você.<br/><br/>" +
-                                         "Por favor confirme esta indicação clicando <a href=\"{3}\">aqui</a>.<br/><br/>" +
-                                             "Se o link para confirmar não funcionar, copie o endereço abaixo e cole em seu navegador.<br/><br/>{3}<br/><br/>" +
-                                             "Caso não tenha sido você que indicou esta pessoa, por favor recuse a indicação clicando <a href=\"{4}\">aqui</a>.<br/><br/>" +
-                                             "Se o link para recusar não funcionar, copie o endereço abaixo e cole em seu navegador.<br/><br/>{4}",
-                    usuario.UsuarioIndicacao.Name, usuario.Name, usuario.Regional.Nome, callbackUrlConfirmacao, callbackUrlRecusa);
-            await UserManager.SendEmailAsync(usuario.UsuarioIndicacao.Id, "Confirme a indicação para ACervA Carioca", mensagem);
+            var mensagemEmailIndicacao = _helper.MontaMensagemIndicacao(usuario, codigoConfirmacaoIndicacao, Url, Request);
+            await UserManager.SendEmailAsync(usuario.UsuarioIndicacao.Id, "Confirme a indicação para ACervA Carioca", mensagemEmailIndicacao);
         }
 
         //

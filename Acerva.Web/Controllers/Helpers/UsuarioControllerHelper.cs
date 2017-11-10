@@ -2,7 +2,10 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Web;
+using System.Web.Mvc;
+using Acerva.Modelo;
 using log4net;
 
 namespace Acerva.Web.Controllers.Helpers
@@ -14,6 +17,25 @@ namespace Acerva.Web.Controllers.Helpers
 
         private static readonly ILog Log =
             LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+        public string MontaMensagemIndicacao(Usuario usuario, string codigoConfirmacaoIndicacao, UrlHelper url, HttpRequestBase request)
+        {
+            var callbackUrlConfirmacao = url.Action("ConfirmDesignation", "Account",
+               new { userId = usuario.Id, code = codigoConfirmacaoIndicacao }, protocol: request.Url.Scheme);
+
+            var callbackUrlRecusa = url.Action("DenyDesignation", "Account",
+               new { userId = usuario.Id, code = codigoConfirmacaoIndicacao }, protocol: request.Url.Scheme);
+
+            var mensagem = string.Format("Olá {0},<br/><br/>" +
+                                         "Recebemos um novo pedido de associação à ACervA Carioca, de {1}, da regional {2}. Esta pessoa mencionou ter sido indicada por você.<br/><br/>" +
+                                         "Por favor confirme esta indicação clicando <a href=\"{3}\">aqui</a>.<br/><br/>" +
+                                             "Se o link para confirmar não funcionar, copie o endereço abaixo e cole em seu navegador.<br/><br/>{3}<br/><br/>" +
+                                             "Caso não tenha sido você que indicou esta pessoa, por favor recuse a indicação clicando <a href=\"{4}\">aqui</a>.<br/><br/>" +
+                                             "Se o link para recusar não funcionar, copie o endereço abaixo e cole em seu navegador.<br/><br/>{4}",
+                    usuario.UsuarioIndicacao.Name, usuario.Name, usuario.Regional.Nome, callbackUrlConfirmacao, callbackUrlRecusa);
+
+            return mensagem;
+        }
 
         public void SalvaFoto(string userId, string fotoBase64, HttpContextBase httpContext)
         {

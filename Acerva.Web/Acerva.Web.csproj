@@ -300,6 +300,7 @@
     <Compile Include="ConfigurationSections\GoogleConfigurationSection.cs" />
     <Compile Include="ConfigurationSections\FacebookConfigurationSection.cs" />
     <Compile Include="Controllers\BeneficioController.cs" />
+    <Compile Include="Controllers\LojaController.cs" />
     <Compile Include="Controllers\RegistroController.cs" />
     <Compile Include="Controllers\ListaBeneficiosController.cs" />
     <Compile Include="Models\CadastroBeneficios\BeneficioViewModel.cs" />
@@ -1370,6 +1371,7 @@
     <Content Include="Views\Usuario\_ModalHistoricoStatus.cshtml" />
     <Content Include="Views\ListaBeneficios\Index.cshtml" />
     <Content Include="Views\Usuario\_ModalTrocaFoto.cshtml" />
+    <Content Include="Views\Loja\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\vendor\angular-growl-v2\angular-growl.css" />

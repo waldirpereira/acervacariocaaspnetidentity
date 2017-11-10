@@ -443,6 +443,12 @@
                                confirm-action="ctrl.voltarParaAguardandoIndicacao(ctrl.modelo)"
                                confirm-window-type="warning"
                                confirm-text="Confirma que o associado {{ ctrl.modelo.name }} voltará para ag. indicação?">Retornar para Ag. indicação</a>
+                            <a class="btn btn-default"
+                               ng-if="ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoIndicacao.codigoBd"
+                               acerva-confirm
+                               confirm-action="ctrl.reenviarEmailIndicacao(ctrl.modelo)"
+                               confirm-window-type="warning"
+                               confirm-text="Reenviar e-mail de solicitação de confirmação de indicação?">Reenviar e-mail indicação</a>
                         </span>
                     </div>
                     <div class="pull-right">

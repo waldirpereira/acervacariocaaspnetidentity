@@ -33,6 +33,22 @@ namespace Acerva.Web.Controllers
         private readonly ICadastroArtigos _cadastroArtigos;
         private ApplicationUserManager _userManager;
 
+        private const string TextoInstrucoesPagSeguro =
+            "O pagamento deve ser realizado no site do Pag Seguro. Você deve ter recebido um e-mail deles com o link para o pagamento. No site, você pode optar por efetuar o pagamento com cartão de crédito, débito ou boleto. Também é possível parcelar, com juros, diretamente com o Pag Seguro.<br/>" +
+            "<br/>" +
+            "Caso não encontre o e-mail do Pag Seguro com o link da cobrança:<br/>" +
+            "<br/>" +
+            "1. Olhar a caixa de SPAM e procurar por um e-mail do PagSeguro (pagamento@pagseguro.com.br), com o assunto \"Solicitação de pagamento de Acerva Carioca\"<br/>" +
+            "<br/>" +
+            "2. Entre na conta do Pag Seguro associada ao seu e-mail cadastrado na ACervA e procure pela cobrança pendente.Ela aparece logo na tela principal, na lista das últimas transações(clique em extrato de transações para ter acesso à cobrança)<br/>" +
+            "<br/>" +
+            "3. Em 2015, o Pag Seguro alterou a sua política de relacionamento com os usuários.As pessoas cadastradas na época e que não aceitaram os novos termos tiveram o acesso ao Pag Seguro bloqueado. Se você recebeu o e-mail, mas não consegue entrar no Pag Seguro para efetuar o pagamento, este pode ser o motivo.Neste caso, o problema deve ser resolvido diretamente com o Pag Seguro.<br/>" +
+            "<br/>" +
+            "4. Nós não geramos boletos. Geramos cobranças através do PagSeguro, que admite diversas formas de pagamento, como cartão de crédito, cartão de débito, transferência e boleto.Caso você opte por boleto, o Pag Seguro vai gerar o boleto com uma data de vencimento. Se o pagamento não for efetuado até a data informada por eles, você pode solicitar no e-mail financeiro@acervacarioca.com.br a geração de uma segunda via do boleto, com nova data de vencimento.<br/>" +
+            "<br/>" +
+            "5. Em alguns casos, se ao efetuar o pagamento ocorrer um erro (por exemplo, os dados do cartão de crédito forem informados de forma incorreta), a cobrança pode ser cancelada pelo Pag Seguroautomaticamente e novas tentativas de pagamento serão recusadas.Nestes casos, por favor envie um e-mail para financeiro @acervacarioca.com.br e solicite a geração de uma nova cobrança";
+
+
         public UsuarioController(IValidator<Usuario> validator,
             ICadastroUsuarios cadastroUsuarios, ICadastroRegionais cadastroRegionais, UsuarioControllerHelper helper, ICadastroArtigos cadastroArtigos) : base(cadastroUsuarios)
         {
@@ -135,13 +151,15 @@ namespace Acerva.Web.Controllers
         [HttpPost]
         [ValidateAjaxAntiForgeryToken]
         [AcervaAuthorize(Roles = "ADMIN, DIRETOR, DELEGADO")]
-        public ActionResult Salva([JsonBinder]UsuarioViewModel usuarioViewModel)
+        public async Task<ActionResult> Salva([JsonBinder]UsuarioViewModel usuarioViewModel)
         {
             Log.InfoFormat("Usuário está salvando o associado {0} de código {1} e email {2}",
                 usuarioViewModel.Name, usuarioViewModel.Id, usuarioViewModel.Email);
 
             var ehNovo = string.IsNullOrEmpty(usuarioViewModel.Id);
             var usuario = ehNovo ? new Usuario() : _cadastroUsuarios.Busca(usuarioViewModel.Id);
+
+            var idUsuarioQueIndicouAnterior = usuario.UsuarioIndicacao.Id;
 
             usuarioViewModel.Name = usuarioViewModel.Name.Trim();
 
@@ -165,13 +183,30 @@ namespace Acerva.Web.Controllers
             if (_cadastroUsuarios.ExisteComMesmoCpf(usuario))
                 return RetornaJsonDeAlerta(string.Format(HtmlEncodeFormatProvider.Instance, "Já existe um associado com o CPF {0:unsafe}", usuario.Cpf));
 
+            var textoSufixoMensagemSucesso = "";
+
             if (ehNovo)
                 _cadastroUsuarios.SalvaNovo(usuario);
+            else
+            {
+                if (idUsuarioQueIndicouAnterior != usuario.UsuarioIndicacao?.Id &&
+                    usuario.Status == StatusUsuario.AguardandoIndicacao)
+                {
+                    var codigoConfirmacaoIndicacao = await UserManager.GenerateUserTokenAsync("confirmacao", usuario.Id);
+                    usuario.IndicacaoHash = codigoConfirmacaoIndicacao;
+                    var mensagemEmailIndicacao = _helper.MontaMensagemIndicacao(usuario, codigoConfirmacaoIndicacao, Url, Request);
+
+                    textoSufixoMensagemSucesso = String.Format("<br/><br/>Um novo e-mail foi enviado ao usuário {0}, pois houve alteração do usuário que indicou.", 
+                        usuario.UsuarioIndicacao.Name);
+
+                    await UserManager.SendEmailAsync(usuario.UsuarioIndicacao.Id, "Confirme a indicação para ACervA Carioca", mensagemEmailIndicacao);
+                }
+            }
 
             _helper.SalvaFoto(usuario.Id, usuarioViewModel.FotoBase64, HttpContext);
 
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success,
-                string.Format("Usuário <a href='{0}#/Edit/{1}'>{2}</a> foi salvo com sucesso", Url.Action("Index"), usuario.Id, usuario.Name),
+                string.Format("Usuário <a href='{0}#/Edit/{1}'>{2}</a> foi salvo com sucesso.{3}", Url.Action("Index"), usuario.Id, usuario.Name, textoSufixoMensagemSucesso),
                 "Usuário salvo");
 
             return new JsonNetResult(new { growlMessage });
@@ -189,6 +224,20 @@ namespace Acerva.Web.Controllers
             {
                 userId = usuarioViewModel.Id,
                 isJsonReturn = true
+            });
+        }
+
+        [HttpPost]
+        [ValidateAjaxAntiForgeryToken]
+        [AcervaAuthorize(Roles = "ADMIN, DIRETOR, DELEGADO")]
+        public ActionResult ReenviarEmailIndicacao([JsonBinder] UsuarioViewModel usuarioViewModel)
+        {
+            Log.InfoFormat("Usuário está reenviando e-mail de indicação para o associado {0} de código {1} e email {2}",
+                usuarioViewModel.Name, usuarioViewModel.Id, usuarioViewModel.Email);
+
+            return RedirectToAction("ResendDesignationEmail", "Account", new
+            {
+                userId = usuarioViewModel.Id
             });
         }
 
@@ -272,7 +321,7 @@ namespace Acerva.Web.Controllers
 
         private async Task EnviaEmailParaDelegadosDaRegional(Usuario usuario, string mensagem, string titulo)
         {
-            
+
             var delegados = _cadastroUsuarios.BuscaDelegadosDaRegional(usuario.Regional.Codigo).ToList();
 
             delegados.ForEach(async d =>
@@ -388,7 +437,8 @@ namespace Acerva.Web.Controllers
 
             await UserManager.SendEmailAsync(usuario.Id, "ACervA Carioca - Cobrança gerada", string.Format("Olá {0},<br/><br/>" +
                                  "Acabamos de gerar uma cobrança em seu nome.<br/>" +
-                                 "Seu status agora é {1} na ACervA Carioca.", usuario.Name, NomeExibicaoAttribute.GetNome(usuario.Status)));
+                                 "Seu status agora é {1} na ACervA Carioca.<br/><br/>{2}", 
+                                 usuario.Name, NomeExibicaoAttribute.GetNome(usuario.Status), TextoInstrucoesPagSeguro));
 
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Pretendente teve sua cobrança confirmada como gerada com sucesso", "Cobrança gerada confirmada");
             return new JsonNetResult(new { growlMessage });
@@ -418,7 +468,8 @@ namespace Acerva.Web.Controllers
 
                 await UserManager.SendEmailAsync(usuario.Id, "ACervA Carioca - Cobrança gerada", string.Format("Olá {0},<br/><br/>" +
                                      "Acabamos de gerar uma cobrança em seu nome.<br/>" +
-                                     "Seu status agora é {1} na ACervA Carioca.", usuario.Name, NomeExibicaoAttribute.GetNome(usuario.Status)));
+                                     "Seu status agora é {1} na ACervA Carioca.<br/><br/>{2}", 
+                                     usuario.Name, NomeExibicaoAttribute.GetNome(usuario.Status), TextoInstrucoesPagSeguro));
             }
 
             var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Pretendentes tiveram suas cobranças confirmadas como geradas com sucesso", "Cobranças geradas confirmadas");

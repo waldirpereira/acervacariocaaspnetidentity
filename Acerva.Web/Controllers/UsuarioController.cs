@@ -159,7 +159,7 @@ namespace Acerva.Web.Controllers
             var ehNovo = string.IsNullOrEmpty(usuarioViewModel.Id);
             var usuario = ehNovo ? new Usuario() : _cadastroUsuarios.Busca(usuarioViewModel.Id);
 
-            var idUsuarioQueIndicouAnterior = usuario.UsuarioIndicacao.Id;
+            var idUsuarioQueIndicouAnterior = usuario.UsuarioIndicacao?.Id;
 
             usuarioViewModel.Name = usuarioViewModel.Name.Trim();
 

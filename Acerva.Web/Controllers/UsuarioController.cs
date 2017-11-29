@@ -241,6 +241,20 @@ namespace Acerva.Web.Controllers
             });
         }
 
+        [HttpPost]
+        [ValidateAjaxAntiForgeryToken]
+        [AcervaAuthorize(Roles = "ADMIN, DIRETOR, DELEGADO")]
+        public ActionResult ReenviarEmailConfirmacaoEmail([JsonBinder] UsuarioViewModel usuarioViewModel)
+        {
+            Log.InfoFormat("Usuário está reenviando e-mail de confirmação de e-mail para o associado {0} de código {1} e email {2}",
+                usuarioViewModel.Name, usuarioViewModel.Id, usuarioViewModel.Email);
+
+            return RedirectToAction("EnviaEmailConfirmacaoEmail", "Account", new
+            {
+                userId = usuarioViewModel.Id
+            });
+        }
+
         [Transacao]
         [HttpPost]
         [ValidateAjaxAntiForgeryToken]

@@ -449,6 +449,12 @@
                                confirm-action="ctrl.reenviarEmailIndicacao(ctrl.modelo)"
                                confirm-window-type="warning"
                                confirm-text="Reenviar e-mail de solicitação de confirmação de indicação?">Reenviar e-mail indicação</a>
+                            <a class="btn btn-default"
+                               ng-if="ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoConfirmacaoEmail.codigoBd"
+                               acerva-confirm
+                               confirm-action="ctrl.reenviarEmailConfirmacaoEmail(ctrl.modelo)"
+                               confirm-window-type="warning"
+                               confirm-text="Reenviar e-mail de confirmação de e-mail?">Reenviar confirmação e-mail</a>
                         </span>
                     </div>
                     <div class="pull-right">

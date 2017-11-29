@@ -30,6 +30,7 @@
         ctrl.voltarParaAguardandoConfirmacaoEmail = voltarParaAguardandoConfirmacaoEmail;
         ctrl.voltarParaAguardandoIndicacao = voltarParaAguardandoIndicacao;
         ctrl.reenviarEmailIndicacao = reenviarEmailIndicacao;
+        ctrl.reenviarEmailConfirmacaoEmail = reenviarEmailConfirmacaoEmail;
         ctrl.voltaParaNovo = voltaParaNovo;
         ctrl.voltaParaAtivo = voltaParaAtivo;
         ctrl.mostraHistoricoStatus = mostraHistoricoStatus;
@@ -148,6 +149,10 @@
 
         function reenviarEmailIndicacao(usuario) {
             executaAcaoComUsuario(usuario, Usuario.reenviarEmailIndicacao);
+        }
+
+        function reenviarEmailConfirmacaoEmail(usuario) {
+            executaAcaoComUsuario(usuario, Usuario.reenviarEmailConfirmacaoEmail);
         }
 
         function voltaParaNovo(usuario) {

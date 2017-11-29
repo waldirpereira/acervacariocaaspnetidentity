@@ -49,6 +49,11 @@
                      { usuarioViewModel: usuario }
                 ).then(retornaDadoDoXhr);
             },
+            reenviarEmailConfirmacaoEmail: function (usuario) {
+                return $http.post(ROTAS.reenviarEmailConfirmacaoEmail,
+                     { usuarioViewModel: usuario }
+                ).then(retornaDadoDoXhr);
+            },
             recusaIndicacao: function (usuario) {
                 return $http.post(ROTAS.recusaIndicacao,
                     { userId: usuario.id }

@@ -12,10 +12,12 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.name")>
-                                            <label class="control-label" for="name">Nome</label>
+                                            <label class="control-label" for="name">Nome completo</label>
                                             <input type="text" class="form-control" name="name" autocomplete="off" required
+                                                   placeholder="Digite aqui seu nome completo"
+                                                   ng-pattern="/^[^\s]*\s[\S\s]*$/"
                                                    ng-model="ctrl.modelo.name" />
-                                            <p ng-show="formUsuario.name.$invalid && formUsuario.$submitted" class="help-block">O nome é obrigatório</p>
+                                            <p ng-show="formUsuario.name.$invalid && formUsuario.$submitted" class="help-block">O nome completo é obrigatório e precisa ter pelo menos dois nomes separados por espaço</p>
                                         </div>
                                     </div>
                                 </div>

@@ -40,7 +40,16 @@
                     <th style="width: 80px;">Regional</th>
                     <th style="width: 80px;">Papéis</th>
                     <th class="ignore-on-exporting" style="width: 45px;" title="E-mail de boas vindas enviado à lista COCECA">coceca</th>
+                    <th class="hide">CPF</th>
                     <th class="hide">Telefone</th>
+                    <th class="hide">Endereço</th>
+                    <th class="hide">Número</th>
+                    <th class="hide">Complemento</th>
+                    <th class="hide">Bairro</th>
+                    <th class="hide">Cidade</th>
+                    <th class="hide">CEP</th>
+                    <th class="hide">UF</th>
+                    <th class="hide">Sexo</th>
                     <th class="sorting_disabled ignore-on-exporting" style="width: 40px;"></th>
                 </tr>
                 </thead>
@@ -68,7 +77,16 @@
                     <td>{{m.nomesPapeis}}</td>
                     <td><span class="label" ng-class="{'label-success': m.emailBoasVindasListaEnviado, 'label-danger': !m.emailBoasVindasListaEnviado}">{{ m.emailBoasVindasListaEnviado ? "sim" : "não"}}</span></td>
 
+                    <td class="hide">{{m.cpf}}</td>
                     <td class="hide">{{m.phoneNumber}}</td>
+                    <td class="hide">{{m.endereco}}</td>
+                    <td class="hide">{{m.numero}}</td>
+                    <td class="hide">{{m.complemento}}</td>
+                    <td class="hide">{{m.bairro}}</td>
+                    <td class="hide">{{m.cidade}}</td>
+                    <td class="hide">{{m.cep}}</td>
+                    <td class="hide">{{m.siglaUf}}</td>
+                    <td class="hide">{{m.codigoBdSexo}}</td>
 
                     <td style="padding: 4px;">
                         <a class="btn btn-info btn-xs" title="Editar {{ m.name }}"

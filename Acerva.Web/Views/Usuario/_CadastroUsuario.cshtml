@@ -336,59 +336,66 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Dados adicionais</div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.sexo")>
-                                        <label class="control-label">Sexo</label><br />
-                                        <div class="btn-group hidden-xs">
-                                            <label class="btn btn-default" ng-model="ctrl.modelo.sexo" ng-repeat="item in ctrl.dominio.sexos | filter: {codigo: '!0'}"
-                                                   uib-btn-radio="item"
-                                                   ng-disabled="ctrl.formularioDesabilitado()">{{ item.nomeExibicao }}</label>
-                                        </div>
-                                        <div class="btn-group visible-xs-inline-block">
-                                            <label class="btn btn-default" ng-model="ctrl.modelo.sexo" ng-repeat="item in ctrl.dominio.sexos | filter: {codigo: '!0'}"
-                                                   uib-btn-radio="item"
-                                                   ng-disabled="ctrl.formularioDesabilitado()">{{ item.codigoBd }}</label>
-                                        </div>
+            <div class="row">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Dados adicionais</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.sexo")>
+                                    <label class="control-label">Sexo</label><br />
+                                    <div class="btn-group hidden-xs">
+                                        <label class="btn btn-default" ng-model="ctrl.modelo.sexo" ng-repeat="item in ctrl.dominio.sexos | filter: {codigo: '!0'}"
+                                               uib-btn-radio="item"
+                                               ng-disabled="ctrl.formularioDesabilitado()">{{ item.nomeExibicao }}</label>
                                     </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        @{
-                                            var limiteSuperiorDataNascimento = DateTime.Today.AddYears(-18).ToString("dd/MM/yyyy");
-                                        }
-                                        @NgHelpers.NgDatepicker("ctrl.modelo", "dataNascimento", "Data de nascimento", null, null, null, limiteSuperiorDataNascimento)
+                                    <div class="btn-group visible-xs-inline-block">
+                                        <label class="btn btn-default" ng-model="ctrl.modelo.sexo" ng-repeat="item in ctrl.dominio.sexos | filter: {codigo: '!0'}"
+                                               uib-btn-radio="item"
+                                               ng-disabled="ctrl.formularioDesabilitado()">{{ item.codigoBd }}</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.experiencia")>
-                                        <label class="control-label" for="experiencia">Experiência com cerveja</label>
-                                        <textarea rows="3" class="form-control" name="experiencia" autocomplete="off"
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    @{
+                                        var limiteSuperiorDataNascimento = DateTime.Today.AddYears(-18).ToString("dd/MM/yyyy");
+                                    }
+                                    @NgHelpers.NgDatepicker("ctrl.modelo", "dataNascimento", "Data de nascimento", null, null, null, limiteSuperiorDataNascimento)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.experiencia")>
+                                    <label class="control-label" for="experiencia">Experiência com cerveja</label>
+                                    <textarea rows="3" class="form-control" name="experiencia" autocomplete="off"
                                                   ng-disabled="ctrl.tipoCadastro !== 'registro' && ctrl.tipoCadastro !== 'meusdados' && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
                                                   ng-model="ctrl.modelo.experiencia"></textarea>
-                                    </div>
                                 </div>
                             </div>
-                            <div class="row"
-                                 ng-if="ctrl.tipoCadastro !== 'registro'">
-                                <div class="col-sm-12">
-                                    <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.observacao")>
-                                        <label class="control-label" for="observacao">Observação</label>
-                                        <textarea rows="3" class="form-control" name="observacao" autocomplete="off"
+                        </div>
+                        <div class="row"
+                             ng-if="ctrl.tipoCadastro !== 'registro'">
+                            <div class="col-sm-12">
+                                <div class="form-group" @NgHelpers.NgClassErrorOnInvalid("formUsuario.observacao")>
+                                    <label class="control-label" for="observacao">Observação</label>
+                                    <textarea rows="3" class="form-control" name="observacao" autocomplete="off"
                                                   ng-disabled="ctrl.tipoCadastro !== 'registro' && !ctrl.dominio.usuarioLogadoEhAdmin && !ctrl.dominio.usuarioLogadoEhDiretor"
                                                   ng-model="ctrl.modelo.observacao"></textarea>
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            
+            <div class="row" ng-if="ctrl.tipoCadastro === 'registro'">
+                <div class="bs-callout bs-callout-warning">
+                    <h3>Termo de responsabilidade</h3>
+                    <p>Ao enviar esta ficha de inscrição, o solicitante, tendo sua inscrição aprovada pela associação, se compromete a colaborar com objetivos da mesma e a cumprir o que está disposto em seu estatuto (disponível <a href="@Url.Action("Index","Estatuto")" target="_new">aqui</a>) e em suas eventuais alterações. O associado estará apto a usufruir dos benefícios da associação desde que esteja quite com suas obrigações financeiras com a mesma.</p>
+                </div>
+            </div>
 
             </fieldset>
         </div>

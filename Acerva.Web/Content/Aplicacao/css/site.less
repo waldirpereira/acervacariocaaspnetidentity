@@ -139,14 +139,34 @@ footer {
 
 // Base styles (regardless of theme)
 .bs-callout {
-    margin: 10px 0;
-    padding: 15px 30px 15px 15px;
-    border-left: 5px solid #eee;
-    vertical-align: top;
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
 
     code, .highlight {
         background-color: #fff;
     }
+}
+
+.bs-callout-info {
+    border-left-color: #5bc0de;
+}
+.bs-callout-default {
+    border-left-color: #777;
+}
+.bs-callout-primary {
+    border-left-color: #428bca;
+}
+.bs-callout-success {
+    border-left-color: #5cb85c;
+}
+.bs-callout-warning {
+    border-left-color: #f0ad4e;
+}
+.bs-callout-danger {
+    border-left-color: #d9534f;
 }
 
 .btn-group .btn-default.active {

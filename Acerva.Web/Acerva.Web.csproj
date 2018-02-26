@@ -275,7 +275,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Aplicacao\images\beershop-email.png" />
     <Content Include="Content\Aplicacao\images\like_facebook.png" />
+    <Content Include="Content\Aplicacao\images\LojaAcerva.jpg" />
     <Content Include="Content\Aplicacao\images\regionais\.gitignore" />
     <Content Include="Content\vendor\cropper\cropper.css" />
     <Content Include="Content\vendor\ngCropper\ngCropper.all.css" />

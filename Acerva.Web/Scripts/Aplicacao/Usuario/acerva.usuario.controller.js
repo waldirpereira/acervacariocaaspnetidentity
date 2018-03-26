@@ -36,6 +36,7 @@
         ctrl.confirmaPagamentoSelecionados = confirmaPagamentoSelecionados;
         ctrl.cobrancaGeradaSelecionados = cobrancaGeradaSelecionados;
         ctrl.enviaEmailBoasVindasNaListaSelecionados = enviaEmailBoasVindasNaListaSelecionados;
+        ctrl.cancelaSelecionados = cancelaSelecionados;
         ctrl.montaMensagemConfirmacaoOperacaoLote = montaMensagemConfirmacaoOperacaoLote;
         ctrl.getLabelStatusClass = getLabelStatusClass;
         
@@ -216,6 +217,14 @@
             processaOperacoesEmLoteParaStatusEspecifico([
                 ctrl.dominio.statusUsuario.ativo
             ], Usuario.enviaEmailBoasVindasNaListaSelecionados);
+        }
+
+        function cancelaSelecionados() {
+            processaOperacoesEmLoteParaStatusEspecifico([
+                ctrl.dominio.statusUsuario.aguardandoPagamentoAnuidade,
+                ctrl.dominio.statusUsuario.aguardandoRenovacao,
+                ctrl.dominio.statusUsuario.ativo
+            ], Usuario.cancelaSelecionados);
         }
 
         function processaOperacoesEmLoteParaStatusEspecifico(arrStatus, metodoNoService) {

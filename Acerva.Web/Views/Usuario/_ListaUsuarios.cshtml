@@ -136,18 +136,24 @@
                 <div class="pull-left hidden-xs">
                     <!-- FUNCOES QUE APENAS DIRETORES PODEM EXECUTAR -->
                     <span ng-if="(listaCtrl.dominio.usuarioLogadoEhAdmin || listaCtrl.dominio.usuarioLogadoEhDiretor)">
+                        <a class="btn btn-danger"
+                           acerva-confirm
+                           confirm-action="listaCtrl.cancelaSelecionados()"
+                           confirm-window-type="danger"
+                           confirm-text="{{listaCtrl.montaMensagemConfirmacaoOperacaoLote([listaCtrl.dominio.statusUsuario.aguardandoRenovacao, listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade, listaCtrl.dominio.statusUsuario.ativo], 'Confirma que os %QUANTIDADE% associados selecionados (com status Ag. Pagamento ou Ag. Renovação ou Ativo) serão CANCELADOS?');}}">Cancelar!</a>
+
                         <a class="btn btn-success"
                            acerva-confirm
                            confirm-action="listaCtrl.confirmaPagamentoSelecionados()"
                            confirm-window-type="success"
                            confirm-text="{{listaCtrl.montaMensagemConfirmacaoOperacaoLote([listaCtrl.dominio.statusUsuario.aguardandoRenovacao, listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade], 'Confirma que os %QUANTIDADE% associados selecionados (com status Ag. Pagamento ou Ag. Renovação) realizaram pagamento?');}}">Confirmar pagto.</a>
-                        
+
                         <a class="btn btn-primary"
                            acerva-confirm
                            confirm-action="listaCtrl.cobrancaGeradaSelecionados()"
                            confirm-window-type="success"
                            confirm-text="{{listaCtrl.montaMensagemConfirmacaoOperacaoLote([listaCtrl.dominio.statusUsuario.ativo, listaCtrl.dominio.statusUsuario.novo], 'Confirma que as cobranças foram geradas para os %QUANTIDADE% associados selecionados (com status Novo ou Ativo)?');}}">Cobrança gerada</a>
-                        
+
                         <a class="btn btn-primary"
                            acerva-confirm
                            confirm-action="listaCtrl.enviaEmailBoasVindasNaListaSelecionados()"

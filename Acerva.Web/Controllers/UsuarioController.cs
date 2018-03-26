@@ -381,6 +381,35 @@ namespace Acerva.Web.Controllers
         [HttpPost]
         [ValidateAjaxAntiForgeryToken]
         [AcervaAuthorize(Roles = "ADMIN, DIRETOR")]
+        public async Task<ActionResult> CancelaSelecionados([JsonBinder] IEnumerable<string> idsUsuarios)
+        {
+            var listaIdsUsuarios = idsUsuarios.ToList();
+            Log.InfoFormat("Usuário está cancelando os associados de códigos {0}",
+                listaIdsUsuarios.Aggregate((x, y) => x + ", " + y));
+
+            foreach (var userId in listaIdsUsuarios)
+            {
+                var usuario = _cadastroUsuarios.Busca(userId);
+                if (usuario.Status != StatusUsuario.AguardandoPagamentoAnuidade &&
+                    usuario.Status != StatusUsuario.AguardandoRenovacao &&
+                    usuario.Status != StatusUsuario.Ativo)
+                {
+                    return RetornaJsonDeAlerta(string.Format("Associado {0} não está ag. confirmação de pagamento, ag. renovação ou ativo!", usuario.Name));
+                }
+
+                usuario.Status = StatusUsuario.Cancelado;
+
+                await ProcessaCancelamentoUsuario(usuario);
+            }
+
+            var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associados foram cancelados com sucesso", "Cancelamentos efetuados");
+            return new JsonNetResult(new { growlMessage });
+        }
+
+        [Transacao]
+        [HttpPost]
+        [ValidateAjaxAntiForgeryToken]
+        [AcervaAuthorize(Roles = "ADMIN, DIRETOR")]
         public async Task<ActionResult> EnviaEmailBoasVindasNaListaSelecionados([JsonBinder] IEnumerable<string> idsUsuarios)
         {
             var listaIdsUsuarios = idsUsuarios.ToList();

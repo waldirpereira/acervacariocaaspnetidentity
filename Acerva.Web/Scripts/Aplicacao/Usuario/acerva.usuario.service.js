@@ -74,6 +74,11 @@
                     { idsUsuarios: idsUsuarios }
                 ).then(retornaDadoDoXhr);
             },
+            cancelaSelecionados: function (idsUsuarios) {
+                return $http.post(ROTAS.cancelaSelecionados,
+                    { idsUsuarios: idsUsuarios }
+                ).then(retornaDadoDoXhr);
+            },
             cobrancaGerada: function (usuario) {
                 return $http.post(ROTAS.cobrancaGerada,
                     { usuarioViewModel: usuario }

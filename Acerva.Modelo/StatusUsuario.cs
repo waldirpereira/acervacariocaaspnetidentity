@@ -13,8 +13,8 @@ namespace Acerva.Modelo
         AguardandoConfirmacaoEmail,
 
         [CodigoBd("C")]
-        [NomeExibicao("Cancelado")]
-        Cancelado,
+        [NomeExibicao("Inativado")]
+        Inativo,
 
         [CodigoBd("A")]
         [NomeExibicao("Ativo")]

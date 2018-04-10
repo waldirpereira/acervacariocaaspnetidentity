@@ -71,7 +71,7 @@
                                             <div>
                                                 <a class="btn disabled" ng-class="{
                                                                       'btn-success': ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.ativo.codigoBd,
-                                                                      'btn-danger':  ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.cancelado.codigoBd,
+                                                                      'btn-danger':  ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.inativo.codigoBd,
                                                                       'btn-warning': ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoIndicacao.codigoBd,
                                                                       'btn-default': ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoConfirmacaoEmail.codigoBd || ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.novo.codigoBd,
                                                                       'btn-primary': ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd || ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoRenovacao.codigoBd

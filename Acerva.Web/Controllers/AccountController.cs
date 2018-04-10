@@ -393,7 +393,7 @@ namespace Acerva.Web.Controllers
                 return View("Error");
 
             usuario.IndicacaoHash = null;
-            usuario.Status = StatusUsuario.Cancelado;
+            usuario.Status = StatusUsuario.Inativo;
 
             _cadastroUsuarios.Atualiza(usuario);
 

@@ -8,9 +8,9 @@
         var cacheTiposDominio;
 
         return {
-            buscaListaUsuarios: function (incluiCancelados) {
+            buscaListaUsuarios: function (incluiInativos) {
                 return $http.get(ROTAS.buscaTodos, {
-                    params: { incluiCancelados: incluiCancelados }
+                    params: { incluiInativos: incluiInativos }
                 })
                 .then(retornaDadoDoXhr);
             },
@@ -24,8 +24,8 @@
                     { usuarioViewModel: usuario }
                 ).then(retornaDadoDoXhr);
             },
-            cancelaUsuario: function (usuario) {
-                return $http.post(ROTAS.cancelaUsuario,
+            inativaUsuario: function (usuario) {
+                return $http.post(ROTAS.inativaUsuario,
                     { usuarioViewModel: usuario }
                 ).then(retornaDadoDoXhr);
             },
@@ -74,8 +74,8 @@
                     { idsUsuarios: idsUsuarios }
                 ).then(retornaDadoDoXhr);
             },
-            cancelaSelecionados: function (idsUsuarios) {
-                return $http.post(ROTAS.cancelaSelecionados,
+            inativaSelecionados: function (idsUsuarios) {
+                return $http.post(ROTAS.inativaSelecionados,
                     { idsUsuarios: idsUsuarios }
                 ).then(retornaDadoDoXhr);
             },

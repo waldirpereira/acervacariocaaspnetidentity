@@ -36,10 +36,10 @@ namespace Acerva.Infra.Repositorios
             return _session.Query<Usuario>();
         }
 
-        public IEnumerable<Usuario> BuscaParaListagem(bool incluiCancelados = false)
+        public IEnumerable<Usuario> BuscaParaListagem(bool incluiInativos = false)
         {
             return _session.Query<Usuario>()
-                .Where(u => (incluiCancelados || (!incluiCancelados && u.Status != StatusUsuario.Cancelado)));
+                .Where(u => (incluiInativos || (!incluiInativos && u.Status != StatusUsuario.Inativo)));
         }
 
         public IEnumerable<Usuario> BuscaComTermo(string termo)

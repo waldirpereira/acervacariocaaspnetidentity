@@ -25,7 +25,7 @@
         ctrl.confirmaEmail = confirmaEmail;
         ctrl.confirmaIndicacao = confirmaIndicacao;
         ctrl.recusaIndicacao = recusaIndicacao;
-        ctrl.cancelaUsuario = cancelaUsuario;
+        ctrl.inativaUsuario = inativaUsuario;
         ctrl.reativaUsuario = reativaUsuario;
         ctrl.voltarParaAguardandoConfirmacaoEmail = voltarParaAguardandoConfirmacaoEmail;
         ctrl.voltarParaAguardandoIndicacao = voltarParaAguardandoIndicacao;
@@ -131,8 +131,8 @@
             executaAcaoComUsuario(usuario, Usuario.recusaIndicacao);
         }
 
-        function cancelaUsuario(usuario) {
-            executaAcaoComUsuario(usuario, Usuario.cancelaUsuario);
+        function inativaUsuario(usuario) {
+            executaAcaoComUsuario(usuario, Usuario.inativaUsuario);
         }
 
         function reativaUsuario(usuario) {

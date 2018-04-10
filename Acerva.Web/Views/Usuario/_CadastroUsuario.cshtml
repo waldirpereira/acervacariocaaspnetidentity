@@ -47,7 +47,7 @@
                                             <div>
                                                 <a class="btn disabled" ng-class="{
                                   'btn-success': (ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.ativo.codigoBd),
-                                  'btn-danger':  ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.cancelado.codigoBd,
+                                  'btn-danger':  ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.inativo.codigoBd,
                                   'btn-warning': ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoIndicacao.codigoBd,
                                   'btn-default': ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoConfirmacaoEmail.codigoBd || ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.novo.codigoBd,
                                   'btn-primary': ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd || ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.aguardandoRenovacao.codigoBd
@@ -413,13 +413,13 @@
                         <!-- FUNCOES QUE APENAS DIRETORES PODEM EXECUTAR -->
                         <span ng-if="ctrl.tipoCadastro === 'usuario' && ctrl.modelo.id && (ctrl.dominio.usuarioLogadoEhAdmin || ctrl.dominio.usuarioLogadoEhDiretor)">
                             <a class="btn btn-danger"
-                               ng-if="ctrl.modelo.status.codigoBd !== ctrl.dominio.statusUsuario.cancelado.codigoBd"
+                               ng-if="ctrl.modelo.status.codigoBd !== ctrl.dominio.statusUsuario.inativo.codigoBd"
                                acerva-confirm
-                               confirm-action="ctrl.cancelaUsuario(ctrl.modelo)"
+                               confirm-action="ctrl.inativaUsuario(ctrl.modelo)"
                                confirm-window-type="danger"
-                               confirm-text="Confirma o cancelamento do registro do associado {{ ctrl.modelo.name }}?">Cancelar associado</a>
+                               confirm-text="Confirma a inativação do registro do associado {{ ctrl.modelo.name }}?">Inativar associado</a>
                             <a class="btn btn-success"
-                               ng-if="ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.cancelado.codigoBd"
+                               ng-if="ctrl.modelo.status.codigoBd === ctrl.dominio.statusUsuario.inativo.codigoBd"
                                acerva-confirm
                                confirm-action="ctrl.reativaUsuario(ctrl.modelo)"
                                confirm-window-type="success"

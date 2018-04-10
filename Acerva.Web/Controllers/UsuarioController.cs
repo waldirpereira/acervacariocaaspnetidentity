@@ -77,9 +77,9 @@ namespace Acerva.Web.Controllers
         }
 
         [AcervaAuthorize(Roles = "ADMIN, DIRETOR, DELEGADO")]
-        public ActionResult BuscaParaListagem(bool incluiCancelados = false)
+        public ActionResult BuscaParaListagem(bool incluiInativos = false)
         {
-            var listaUsuariosJson = _cadastroUsuarios.BuscaParaListagem(incluiCancelados).ToList();
+            var listaUsuariosJson = _cadastroUsuarios.BuscaParaListagem(incluiInativos).ToList();
 
             var usuarioLogado = HttpContext.User;
             var usuarioLogadoBd = usuarioLogado.Identity.IsAuthenticated ? _cadastroUsuarios.Busca(usuarioLogado.Identity.GetUserId()) : null;
@@ -381,10 +381,10 @@ namespace Acerva.Web.Controllers
         [HttpPost]
         [ValidateAjaxAntiForgeryToken]
         [AcervaAuthorize(Roles = "ADMIN, DIRETOR")]
-        public async Task<ActionResult> CancelaSelecionados([JsonBinder] IEnumerable<string> idsUsuarios)
+        public async Task<ActionResult> InativaSelecionados([JsonBinder] IEnumerable<string> idsUsuarios)
         {
             var listaIdsUsuarios = idsUsuarios.ToList();
-            Log.InfoFormat("Usuário está cancelando os associados de códigos {0}",
+            Log.InfoFormat("Usuário está inativando os associados de códigos {0}",
                 listaIdsUsuarios.Aggregate((x, y) => x + ", " + y));
 
             foreach (var userId in listaIdsUsuarios)
@@ -397,12 +397,12 @@ namespace Acerva.Web.Controllers
                     return RetornaJsonDeAlerta(string.Format("Associado {0} não está ag. confirmação de pagamento, ag. renovação ou ativo!", usuario.Name));
                 }
 
-                usuario.Status = StatusUsuario.Cancelado;
+                usuario.Status = StatusUsuario.Inativo;
 
-                await ProcessaCancelamentoUsuario(usuario);
+                await ProcessaInativacaoUsuario(usuario);
             }
 
-            var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associados foram cancelados com sucesso", "Cancelamentos efetuados");
+            var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associados foram inativados com sucesso", "Inativações efetuadas");
             return new JsonNetResult(new { growlMessage });
         }
 
@@ -523,31 +523,31 @@ namespace Acerva.Web.Controllers
         [HttpPost]
         [ValidateAjaxAntiForgeryToken]
         [AcervaAuthorize(Roles = "ADMIN, DIRETOR")]
-        public async Task<ActionResult> CancelaUsuario([JsonBinder] UsuarioViewModel usuarioViewModel)
+        public async Task<ActionResult> InativaUsuario([JsonBinder] UsuarioViewModel usuarioViewModel)
         {
-            Log.InfoFormat("Usuário está cancelando o registro do associado {0} de código {1} e email {2}",
+            Log.InfoFormat("Usuário está inativando o registro do associado {0} de código {1} e email {2}",
                 usuarioViewModel.Name, usuarioViewModel.Id, usuarioViewModel.Email);
 
             var usuario = _cadastroUsuarios.Busca(usuarioViewModel.Id);
-            usuario.Status = StatusUsuario.Cancelado;
+            usuario.Status = StatusUsuario.Inativo;
 
-            await ProcessaCancelamentoUsuario(usuario);
+            await ProcessaInativacaoUsuario(usuario);
 
-            var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associado cancelado com sucesso", "Cancelamento confirmado");
+            var growlMessage = new GrowlMessage(GrowlMessageSeverity.Success, "Associado inativado com sucesso", "Inativação confirmada");
             return new JsonNetResult(new { growlMessage });
         }
 
-        private async Task ProcessaCancelamentoUsuario(Usuario usuario)
+        private async Task ProcessaInativacaoUsuario(Usuario usuario)
         {
-            await EnviaEmailParaAdministrativo($"Olá Administrativo,<br/><br/>A pessoa {usuario.Name} acabou de se tornar CANCELADA. Favor removê-la ao COCECA!",
+            await EnviaEmailParaAdministrativo($"Olá Administrativo,<br/><br/>A pessoa {usuario.Name} acabou de se tornar INATIVA. Favor removê-la ao COCECA!",
                 $"Retirar do COCECA: {usuario.Email}");
 
             var mensagemDelegado = "Olá delegado,<br/><br/>" +
-                                       $"A pessoa '{usuario.Name}' (e-mail: {usuario.Email} - celular: {usuario.PhoneNumber}) acabou de ser CANCELADA!";
+                                       $"A pessoa '{usuario.Name}' (e-mail: {usuario.Email} - celular: {usuario.PhoneNumber}) acabou de ser INATIVADA!";
             await EnviaEmailParaDelegadosDaRegional(usuario, mensagemDelegado,
-                    $"ACervA Carioca - cancelamento de associado: {usuario.Name}({usuario.Email} - {usuario.PhoneNumber})");
+                    $"ACervA Carioca - Inativação de associado: {usuario.Name}({usuario.Email} - {usuario.PhoneNumber})");
 
-            await UserManager.SendEmailAsync(usuario.Id, "ACervA Carioca - Cancelamento", string.Format("Olá {0},<br/><br/>" +
+            await UserManager.SendEmailAsync(usuario.Id, "ACervA Carioca - Inativação", string.Format("Olá {0},<br/><br/>" +
                                  "Seu status agora é {1} na ACervA Carioca.", usuario.Name, NomeExibicaoAttribute.GetNome(usuario.Status)));
         }
 
@@ -562,9 +562,9 @@ namespace Acerva.Web.Controllers
 
             var usuario = _cadastroUsuarios.Busca(usuarioViewModel.Id);
 
-            if (usuario.Status != StatusUsuario.Cancelado)
+            if (usuario.Status != StatusUsuario.Inativo)
             {
-                return RetornaJsonDeAlerta(string.Format("Associado {0} não está cancelado!", usuario.Name));
+                return RetornaJsonDeAlerta(string.Format("Associado {0} não está inativo!", usuario.Name));
             }
 
             usuario.Status = StatusUsuario.Novo;

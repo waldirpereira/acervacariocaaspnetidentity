@@ -18,7 +18,7 @@
                         <td>
                             <span class="label" ng-class="{
                                   'label-success': historicoStatus.statusNovo.codigoBd === ctrl.dominio.statusUsuario.ativo.codigoBd,
-                                  'label-danger':  historicoStatus.statusNovo.codigoBd === ctrl.dominio.statusUsuario.cancelado.codigoBd,
+                                  'label-danger':  historicoStatus.statusNovo.codigoBd === ctrl.dominio.statusUsuario.inativo.codigoBd,
                                   'label-warning': historicoStatus.statusNovo.codigoBd === ctrl.dominio.statusUsuario.aguardandoIndicacao.codigoBd,
                                   'label-default': historicoStatus.statusNovo.codigoBd === ctrl.dominio.statusUsuario.aguardandoConfirmacaoEmail.codigoBd || historicoStatus.statusNovo.codigoBd === ctrl.dominio.statusUsuario.novo.codigoBd,
                                   'label-primary': historicoStatus.statusNovo.codigoBd === ctrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.codigoBd || historicoStatus.statusNovo.codigoBd === ctrl.dominio.statusUsuario.aguardandoRenovacao.codigoBd

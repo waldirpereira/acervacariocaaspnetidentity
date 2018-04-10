@@ -14,7 +14,7 @@
         ctrl.usuariosFiltrados = [];
         ctrl.usuariosSelecionados = [];
         ctrl.todosFiltrados = false;
-        ctrl.canceladosCarregados = false;
+        ctrl.inativosCarregados = false;
 
         ctrl.tabelaUsuariosDTInstance = {};
 
@@ -23,20 +23,20 @@
         };
 
         var filtroStatusKey = "usuario.filtroStatus";
-        var canceladosCarregadosKey = "usuario.canceladosCarregados";
+        var inativosCarregadosKey = "usuario.inativosCarregados";
         ctrl.filtroStatus = [];
 
         atualizaFiltrosDaLocalStorage();
 
         ctrl.selecionaTodosFiltrados = selecionaTodosFiltrados;
-        ctrl.buscaCancelados = buscaCancelados;
+        ctrl.buscaInativos = buscaInativos;
         ctrl.mudaFiltroStatus = mudaFiltroStatus;
         ctrl.abreJanelaSelecaoEmails = abreJanelaSelecaoEmails;
         ctrl.estaFiltradoPorStatus = estaFiltradoPorStatus;
         ctrl.confirmaPagamentoSelecionados = confirmaPagamentoSelecionados;
         ctrl.cobrancaGeradaSelecionados = cobrancaGeradaSelecionados;
         ctrl.enviaEmailBoasVindasNaListaSelecionados = enviaEmailBoasVindasNaListaSelecionados;
-        ctrl.cancelaSelecionados = cancelaSelecionados;
+        ctrl.inativaSelecionados = inativaSelecionados;
         ctrl.montaMensagemConfirmacaoOperacaoLote = montaMensagemConfirmacaoOperacaoLote;
         ctrl.getLabelStatusClass = getLabelStatusClass;
         
@@ -76,21 +76,21 @@
             });
         }
 
-        function atualizaListaUsuarios(incluiCancelados) {
+        function atualizaListaUsuarios(incluiInativos) {
             atualizaFiltrosDaLocalStorage();
-            incluiCancelados = !!incluiCancelados || ctrl.canceladosCarregados;
+            incluiInativos = !!incluiInativos || ctrl.inativosCarregados;
             ctrl.status.carregando = true;
-            return Usuario.buscaListaUsuarios(incluiCancelados).then(function (listaUsuarios) {
+            return Usuario.buscaListaUsuarios(incluiInativos).then(function (listaUsuarios) {
                 ctrl.status.carregando = false;
                 ctrl.listaUsuarios = listaUsuarios;
                 atualizaUsuariosFiltrados();
             });
         }
 
-        function buscaCancelados() {
-            if (!ctrl.canceladosCarregados) {
-                ctrl.listaUsuarios = ctrl.listaUsuarios.filter(function (u) { return u.status.codigoBd !== ctrl.dominio.statusUsuario.cancelado.codigoBd; });
-                ctrl.filtroStatus = ctrl.filtroStatus.filter(function (f) { return f.codigoBd !== ctrl.dominio.statusUsuario.cancelado.codigoBd; });
+        function buscaInativos() {
+            if (!ctrl.inativosCarregados) {
+                ctrl.listaUsuarios = ctrl.listaUsuarios.filter(function (u) { return u.status.codigoBd !== ctrl.dominio.statusUsuario.inativo.codigoBd; });
+                ctrl.filtroStatus = ctrl.filtroStatus.filter(function (f) { return f.codigoBd !== ctrl.dominio.statusUsuario.inativo.codigoBd; });
             }
 
             atualizaFiltrosNaLocalStorage();
@@ -188,14 +188,14 @@
         function atualizaFiltrosDaLocalStorage() {
             if (localStorageService.isSupported) {
                 ctrl.filtroStatus = localStorageService.get(filtroStatusKey) || [ctrl.dominio.statusUsuario.ativo];
-                ctrl.canceladosCarregados = localStorageService.get(canceladosCarregadosKey) || false;
+                ctrl.inativosCarregados = localStorageService.get(inativosCarregadosKey) || false;
             }
         }
 
         function atualizaFiltrosNaLocalStorage() {
             if (localStorageService.isSupported) {
                 localStorageService.set(filtroStatusKey, ctrl.filtroStatus);
-                localStorageService.set(canceladosCarregadosKey, ctrl.canceladosCarregados);
+                localStorageService.set(inativosCarregadosKey, ctrl.inativosCarregados);
             }
         }
 
@@ -219,12 +219,12 @@
             ], Usuario.enviaEmailBoasVindasNaListaSelecionados);
         }
 
-        function cancelaSelecionados() {
+        function inativaSelecionados() {
             processaOperacoesEmLoteParaStatusEspecifico([
                 ctrl.dominio.statusUsuario.aguardandoPagamentoAnuidade,
                 ctrl.dominio.statusUsuario.aguardandoRenovacao,
                 ctrl.dominio.statusUsuario.ativo
-            ], Usuario.cancelaSelecionados);
+            ], Usuario.inativaSelecionados);
         }
 
         function processaOperacoesEmLoteParaStatusEspecifico(arrStatus, metodoNoService) {
@@ -253,7 +253,7 @@
                 case ctrl.dominio.statusUsuario.ativo.codigoBd:
                     cls = "label-success";
                     break;
-                case ctrl.dominio.statusUsuario.cancelado.codigoBd:
+                case ctrl.dominio.statusUsuario.inativo.codigoBd:
                     cls = "label-danger";
                     break;
                 case ctrl.dominio.statusUsuario.aguardandoIndicacao.codigoBd:

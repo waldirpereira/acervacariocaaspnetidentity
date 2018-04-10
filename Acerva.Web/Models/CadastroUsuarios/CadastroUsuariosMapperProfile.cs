@@ -38,7 +38,7 @@ namespace Acerva.Web.Models.CadastroUsuarios
             CreateMap<Usuario, UsuarioListagemViewModel>()
                 .ForMember(d => d.NomesPapeis, o => o.ResolveUsing(s => s.Papeis.Any() ? s.Papeis.Select(p => p.Name).Aggregate((x, y) => x + ", " + y) : string.Empty))
                 .ForMember(d => d.NomeRegional, o => o.ResolveUsing(s => s.Regional.Nome))
-                .ForMember(d => d.SiglaUf, o => o.ResolveUsing(s => s.Uf.Sigla))
+                .ForMember(d => d.SiglaUf, o => o.ResolveUsing(s => s.Uf?.Sigla))
                 .ForMember(d => d.CodigoBdSexo, o => o.ResolveUsing(s => s.Sexo == null ? null :  CodigoBdAttribute.GetCodigo(s.Sexo)))
                 .ReverseMap();
         }

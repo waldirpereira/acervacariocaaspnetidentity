@@ -4,7 +4,7 @@
         <fieldset ng-disabled="listaCtrl.status.carregando">
             <div class="row" style="margin-bottom: 15px; margin-left: -15px;">
                 <div class="col-sm-12" style="margin-bottom: 5px;">
-                    <input type="checkbox" ng-model="listaCtrl.canceladosCarregados" ng-change="listaCtrl.buscaCancelados()" /> Carregar cancelados
+                    <input type="checkbox" ng-model="listaCtrl.inativosCarregados" ng-change="listaCtrl.buscaInativos()" /> Carregar inativos
                 </div>
                 <div class="col-sm-12">
                     <div class="btn-group">
@@ -14,7 +14,7 @@
                         <a ng-class="{'active': listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.aguardandoConfirmacaoEmail) }" ng-click="listaCtrl.mudaFiltroStatus(listaCtrl.dominio.statusUsuario.aguardandoConfirmacaoEmail)" class="btn btn-sm btn-default">{{ listaCtrl.dominio.statusUsuario.aguardandoConfirmacaoEmail.nomeExibicao }}</a>
                         <a ng-class="{'active': listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade) }" ng-click="listaCtrl.mudaFiltroStatus(listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade)" class="btn btn-sm btn-default">{{ listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade.nomeExibicao }}</a>
                         <a ng-class="{'active': listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.aguardandoRenovacao) }" ng-click="listaCtrl.mudaFiltroStatus(listaCtrl.dominio.statusUsuario.aguardandoRenovacao)" class="btn btn-sm btn-default">{{ listaCtrl.dominio.statusUsuario.aguardandoRenovacao.nomeExibicao }}</a>
-                        <a ng-class="{'active': listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.cancelado) }" ng-click="listaCtrl.mudaFiltroStatus(listaCtrl.dominio.statusUsuario.cancelado)" ng-if="listaCtrl.canceladosCarregados" class="btn btn-sm btn-default">{{ listaCtrl.dominio.statusUsuario.cancelado.nomeExibicao }}</a>
+                        <a ng-class="{'active': listaCtrl.estaFiltradoPorStatus(listaCtrl.dominio.statusUsuario.inativo) }" ng-click="listaCtrl.mudaFiltroStatus(listaCtrl.dominio.statusUsuario.inativo)" ng-if="listaCtrl.inativosCarregados" class="btn btn-sm btn-default">{{ listaCtrl.dominio.statusUsuario.inativo.nomeExibicao }}</a>
                     </div>
                 </div>
             </div>
@@ -138,9 +138,9 @@
                     <span ng-if="(listaCtrl.dominio.usuarioLogadoEhAdmin || listaCtrl.dominio.usuarioLogadoEhDiretor)">
                         <a class="btn btn-danger"
                            acerva-confirm
-                           confirm-action="listaCtrl.cancelaSelecionados()"
+                           confirm-action="listaCtrl.inativaSelecionados()"
                            confirm-window-type="danger"
-                           confirm-text="{{listaCtrl.montaMensagemConfirmacaoOperacaoLote([listaCtrl.dominio.statusUsuario.aguardandoRenovacao, listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade, listaCtrl.dominio.statusUsuario.ativo], 'Confirma que os %QUANTIDADE% associados selecionados (com status Ag. Pagamento ou Ag. Renovação ou Ativo) serão CANCELADOS?');}}">Cancelar!</a>
+                           confirm-text="{{listaCtrl.montaMensagemConfirmacaoOperacaoLote([listaCtrl.dominio.statusUsuario.aguardandoRenovacao, listaCtrl.dominio.statusUsuario.aguardandoPagamentoAnuidade, listaCtrl.dominio.statusUsuario.ativo], 'Confirma que os %QUANTIDADE% associados selecionados (com status Ag. Pagamento ou Ag. Renovação ou Ativo) serão INATIVADOS?');}}">Inativar!</a>
 
                         <a class="btn btn-success"
                            acerva-confirm
